@@ -1,0 +1,90 @@
+<script lang="ts">
+	import type { Any, Component, Context } from './contracts';
+	import { app } from '$lib';
+	import { setContext } from 'svelte';
+	import { compile } from './utils/compile';
+	import { useContext } from './context';
+
+	export let props: Any;
+	export let skip: string[] = [];
+	export let only: string[] = [];
+	export let context: Context | undefined = undefined;
+
+	if (context) setContext('context', context);
+
+	context ??= useContext();
+
+	const reservedNames = ['slot', 'body', 'class', 'vars'];
+
+	function parse(rawComponent: { [key: string]: any }): Component {
+		const component = {} as Component;
+		component.name = componentName(rawComponent);
+
+		component.value = app.getComponent(component.name);
+		component.schema = rawComponent[component.name];
+
+		return component;
+	}
+
+	function exists(component: any) {
+		if (typeof component === 'string') return app.hasComponent(component);
+
+		const parsed = parse(component);
+		return app.hasComponent(parsed.name);
+	}
+
+	function componentName(component: any): Component['name'] {
+		return Object.keys(component)[0];
+	}
+
+	function notFound(component: string) {
+		const isReserved = reservedNames.includes(component);
+		const isSkipped = skip.includes(component);
+
+		return !isReserved && !isSkipped;
+	}
+
+	$: propsValidEntries = Object.entries(props ?? {}).filter(([key]) => {
+		if (only.length) return only.includes(key);
+
+		return !skip.includes(key);
+	});
+
+	function text(value: Any): string {
+		return compile(String(value), context!.data);
+	}
+
+	if (!props) throw 'Something is very bad!';
+</script>
+
+{#if Array.isArray(props)}
+	{#each props as component}
+		{#if exists(component)}
+			<svelte:component this={parse(component).value} props={parse(component).schema} />
+		{:else if typeof component === 'string'}
+			{text(component)}
+		{:else}
+			<div class="border border-red-500 bg-red-50 p-3 text-red-900">
+				Component not found: <b>{parse(component).name}</b>
+			</div>
+		{/if}
+	{/each}
+{:else if ['string', 'number', 'boolean'].includes(typeof props)}
+	{text(props)}
+{:else if 'body' in (props ?? {})}
+	<svelte:self props={props.body} />
+{:else if 'if' in (props ?? {})}
+	<svelte:component this={app.getComponent('if')} {props} />
+{:else}
+	{#each propsValidEntries as [component, schema]}
+		{#if component === 'slot'}
+			<svelte:self props={schema} />
+		{:else if exists(component)}
+			<svelte:component this={app.getComponent(component)} props={schema} />
+		{:else if notFound(component)}
+			<div class="border border-red-500 bg-red-50 p-3 text-red-900">
+				Component not found: <b>{component}</b>
+			</div>
+		{/if}
+	{/each}
+{/if}

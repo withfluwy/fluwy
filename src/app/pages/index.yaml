@@ -1,0 +1,5 @@
+- button:
+    color: primary
+    text: Button is working
+- button:
+    text: Default Button

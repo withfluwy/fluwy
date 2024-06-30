@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 119 69 214;
+    --color-primary-contrast: 250 249 251;
+    --color-primary-50: 246 244 254;
+    --color-primary-100: 239 235 252;
+    --color-primary-200: 223 219 249;
+    --color-primary-300: 200 189 245;
+    --color-primary-400: 171 152 237;
+    --color-primary-500: 143 110 228;
+    --color-primary-600: 119 69 214;
+    --color-primary-700: 111 61 196;
+    --color-primary-800: 92 50 165;
+    --color-primary-900: 77 43 135;
+    --color-primary-950: 47 26 91;
+  }
+}
