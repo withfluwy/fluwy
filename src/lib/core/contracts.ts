@@ -12,7 +12,7 @@ export interface Component<T = Any> {
 
 export interface ElementProps {
 	class?: string;
-	body: Any;
+	content: Any;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,6 +21,7 @@ export type OperationSchema = Record<string, Any>;
 
 export type RenderResponse = {
 	content: Any;
+	theme?: Any;
 };
 
 export interface Operation {
@@ -28,10 +29,7 @@ export interface Operation {
 }
 
 export type AdapterData = { data: any; context: Context };
-export type Adapter = (
-	data: AdapterData['data'],
-	context: AdapterData['context']
-) => Promise<AdapterData>;
+export type Adapter = (data: AdapterData['data'], context: AdapterData['context']) => Promise<AdapterData>;
 
 export type ValidationError = Record<string, string[]>;
 

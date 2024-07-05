@@ -19,7 +19,8 @@ export class App {
 	public config = {
 		components: 'app/components',
 		pages: 'app/pages',
-		layouts: 'app/layouts'
+		layouts: 'app/layouts',
+		themes: 'app/themes',
 	};
 
 	public registerComponent(name: string, component: Any) {
@@ -42,21 +43,23 @@ export class App {
 		const route = findRoute(path || 'index', this.config.pages);
 		if (!route) throw error(404, 'Not found');
 
-		const content = this.resolveContent(route.contents);
-		const { meta, context } = await this.parseMeta(content, route.params, options);
+		const content = this.getDocument(route.contents);
+		const { meta, context } = await this.parseHead(content, route.params, options);
 
 		this.checkAuth(meta, options);
-		await this.resolveMeta(meta, context, options);
+		await this.executeHead(meta, context, options);
 
 		return {
-			content: this.newParsePage(content, { context, meta })
+			theme: this.mergeThemes(meta),
+			content: this.parsePage(content, { context, meta }),
 		};
 	}
 
-	newParsePage(
-		content: DocumentContent,
-		{ context, meta }: { context: PageContext; meta: PageMeta | undefined }
-	): Any {
+	public async parseDocument(yaml: string) {
+		return parse(yaml);
+	}
+
+	parsePage(content: DocumentContent, { context, meta }: { context: PageContext; meta: PageMeta | undefined }): Any {
 		if (!meta?.layout) return parse(compile(content.body, context));
 
 		const layoutContent = this.findLayoutFile(meta.layout, this.config.layouts);
@@ -68,14 +71,21 @@ export class App {
 		return this.replaceSlot(layout, body);
 	}
 
-	findLayoutFile(layoutName: string, layoutsDir: string): string | undefined {
+	private findLayoutFile(layoutName: string, layoutsDir: string): string | undefined {
 		const layoutFile = path.resolve(process.cwd(), layoutsDir, layoutName + '.yaml');
 		if (!fs.existsSync(layoutFile)) return;
 
 		return fs.readFileSync(layoutFile, 'utf8');
 	}
 
-	resolveContent(contents: string): DocumentContent {
+	private findThemeFile(themeName: string, themesDir: string): string | undefined {
+		const themeFile = path.resolve(process.cwd(), themesDir, themeName + '.yaml');
+		if (!fs.existsSync(themeFile)) return;
+
+		return fs.readFileSync(themeFile, 'utf8');
+	}
+
+	private getDocument(contents: string): DocumentContent {
 		const [part1, part2] = contents.split('---');
 		const head = part2 ? part1 : undefined;
 		const body = part2 ?? part1;
@@ -83,7 +93,7 @@ export class App {
 		return { head, body };
 	}
 
-	async parseMeta(
+	private async parseHead(
 		contents: DocumentContent,
 		params: RouteParams,
 		options: RenderOptions
@@ -97,11 +107,7 @@ export class App {
 		return { meta, context };
 	}
 
-	private async resolveMeta(
-		meta: PageMeta | undefined,
-		context: PageContext,
-		options: RenderOptions
-	) {
+	private async executeHead(meta: PageMeta | undefined, context: PageContext, options: RenderOptions) {
 		if (!meta) return { meta, context };
 
 		await this.resolveLoaders(meta, context, options);
@@ -155,6 +161,14 @@ export class App {
 
 		return layout;
 	}
+
+	private mergeThemes(meta: PageMeta | undefined): Any {
+		if (!meta?.theme) return;
+
+		const themeContents = this.findThemeFile(meta.theme, this.config.themes);
+
+		return themeContents ? parse(themeContents) : undefined;
+	}
 }
 
 export function createApp() {
@@ -173,6 +187,7 @@ export interface PageContext {
 
 export type PageMeta = {
 	layout?: string;
+	theme?: string;
 	auth?: string;
 	load?: string | LoadParams;
 	vars?: Record<string, string>;

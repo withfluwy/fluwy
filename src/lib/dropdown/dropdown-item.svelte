@@ -32,7 +32,7 @@
 				<Icon props={props.icon} defaultSize={16} />
 			{/if}
 
-			<Render props={props.text ?? props.body} />
+			<Render props={props.text ?? props.content} />
 		</SubTrigger>
 
 		<SubContent class="text-nowrap">

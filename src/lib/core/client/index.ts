@@ -1,3 +1,4 @@
+import { getContext } from 'svelte';
 import type { Adapter, AdapterData, Any, Context, Operation } from '../contracts';
 
 type OperationName = string;
@@ -12,13 +13,18 @@ export function useClient() {
 	return client;
 }
 
+export function useTheme(key: string) {
+	const theme: Any = getContext('theme') ?? {};
+
+	return theme[key];
+}
+
 export class Client {
 	private handlers: OperationHandlers = {};
 	private adapters: Adapters = {};
 
 	addAdapter(adapterName: string, adapter: Adapter) {
-		if (this.adapters[adapter.name])
-			throw new Error(`Adapter already exists for [${adapter.name}]`);
+		if (this.adapters[adapter.name]) throw new Error(`Adapter already exists for [${adapter.name}]`);
 
 		this.adapters[adapterName] = adapter;
 
@@ -45,15 +51,12 @@ export class Client {
 		let result = initialResults;
 
 		if (!operations) return;
-		if (typeof operations === 'string')
-			return this.handleOperation(operations, {}, context, result);
-		if (typeof operations !== 'object')
-			throw new Error(`Invalid User Action document [${JSON.stringify(operations)}]`);
+		if (typeof operations === 'string') return this.handleOperation(operations, {}, context, result);
+		if (typeof operations !== 'object') throw new Error(`Invalid User Action document [${JSON.stringify(operations)}]`);
 
 		if (Array.isArray(operations)) {
 			for (const operation of operations) {
-				if (typeof operation === 'string')
-					return this.handleOperation(operation, {}, context, result);
+				if (typeof operation === 'string') return this.handleOperation(operation, {}, context, result);
 
 				for (const [action, args] of Object.entries(operation)) {
 					result = await this.handleOperation(action, args, context, result);
@@ -70,11 +73,7 @@ export class Client {
 		return result;
 	}
 
-	async handleAdapter(
-		adapterName: string = '',
-		data: Any,
-		context: Context
-	): Promise<AdapterData> {
+	async handleAdapter(adapterName: string = '', data: Any, context: Context): Promise<AdapterData> {
 		if (!adapterName) return { data, context };
 
 		const adapter = this.adapters[adapterName];

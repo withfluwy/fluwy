@@ -15,8 +15,7 @@
 
 	$: totalPages = Math.ceil(count / pageSize);
 	$: hasPrevious = page > 1;
-	$: hasNext =
-		recordsLength > 0 ? recordsLength === pageSize && count > page * recordsLength : false;
+	$: hasNext = recordsLength > 0 ? recordsLength === pageSize && count > page * recordsLength : false;
 
 	onMount(() => {
 		if (browser) Events.on(Events.pagination(props.for), onPagination);
@@ -75,7 +74,7 @@
 <div class="flex items-center justify-between py-4">
 	<Button
 		on:click={prev}
-		props={{ text: 'Previous', icon_left: 'solar:arrow-left-linear', disabled: !hasPrevious }}
+		props={{ content: 'Previous', icon_left: 'solar:arrow-left-linear', disabled: !hasPrevious }}
 	/>
 
 	<div class="flex items-center justify-between gap-1">
@@ -89,8 +88,5 @@
 		of {totalPages} - total of {count} records
 	</div>
 
-	<Button
-		on:click={next}
-		props={{ text: 'Next', icon_right: 'solar:arrow-right-linear', disabled: !hasNext }}
-	/>
+	<Button on:click={next} props={{ content: 'Next', icon_right: 'solar:arrow-right-linear', disabled: !hasNext }} />
 </div>

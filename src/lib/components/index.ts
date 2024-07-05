@@ -1,9 +1,8 @@
 // export { default as AuthenticatedUser } from './authenticated-user.svelte';
 // export { default as Avatar } from './avatar.svelte';
-export { default as Button } from './button.svelte';
+export { default as Button } from '../button.svelte';
 // export { default as Center } from './center.svelte';
 // export { default as Column } from './column.svelte';
-// export { default as Div } from './div.svelte';
 // export { default as Header } from './header.svelte';
 // export { default as Icon } from './icon/icon.svelte';
 // export { default as If } from './condition/if.svelte';
@@ -12,7 +11,6 @@ export { default as Button } from './button.svelte';
 // export { default as Page } from './page.svelte';
 // export { default as PageTitle } from './page_title.svelte';
 // export { default as Pre } from './pre.svelte';
-// export { default as Row } from './row.svelte';
 // export { default as Search } from './search.svelte';
 // export { default as Shortcut } from './shortcut.svelte';
 // export { default as Sidenav } from './sidenav.svelte';

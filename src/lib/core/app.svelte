@@ -19,6 +19,7 @@
 	installAdapters(client);
 
 	setContext('context', context);
+	setContext('theme', data.theme);
 </script>
 
 <Toaster richColors position="top-right" closeButton />

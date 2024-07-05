@@ -1,5 +1,5 @@
-import { getContext, setContext } from 'svelte';
-import type { Any } from '../contracts';
+import { getContext } from 'svelte';
+import type { Any } from '../contracts.js';
 import { get, writable, type Writable } from 'svelte/store';
 import { goto } from '$app/navigation';
 

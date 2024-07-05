@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { App, createApp } from '.';
-import { createFiles, createTestingDir, deleteDirectory, readFile } from '../test/utils';
+import { createFiles, createTestingDir, deleteDirectory, readFile } from '../test/utils.js';
 import nock from 'nock';
+import { App, createApp } from './index.js';
 
 describe('App', () => {
 	let app: App;
@@ -22,6 +22,7 @@ describe('App', () => {
 			components: testingDir + '/components',
 			pages: testingDir + '/pages',
 			layouts: testingDir + '/layouts',
+			themes: testingDir + '/themes',
 		};
 	});
 
@@ -78,20 +79,14 @@ describe('App', () => {
 			city: 'London',
 			country: 'UK',
 		};
-		let httpCalls: { [key: string]: nock.Scope | undefined } = {
+		const httpCalls: { [key: string]: nock.Scope | undefined } = {
 			contacts: undefined,
 			address: undefined,
 		};
 
 		beforeEach(() => {
-			httpCalls.contacts = nock('http://127.0.0.1:8000')
-				.persist()
-				.get('/contacts/1')
-				.reply(200, contact);
-			httpCalls.address = nock('http://127.0.0.1:8000')
-				.persist()
-				.get('/address/1')
-				.reply(200, { data: address });
+			httpCalls.contacts = nock('http://127.0.0.1:8000').persist().get('/contacts/1').reply(200, contact);
+			httpCalls.address = nock('http://127.0.0.1:8000').persist().get('/address/1').reply(200, { data: address });
 		});
 
 		afterEach(() => {

@@ -1,5 +1,213 @@
-- button:
-    color: primary
-    text: Button is working
-- button:
-    text: Default Button
+theme: default
+---
+div:
+  class: px-10 py-4
+  content:
+    - column:
+        class: gap-3
+        content:
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Normal
+                - button:
+                    loading: true
+                    text: Loading
+                - button:
+                    disabled: true
+                    text: Disabled
+          - div: { class: font-semibold, content: Colors }
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    icon_left: solar:hand-money-linear
+                    text: Default
+                - button:
+                    text: Primary
+                    color: primary
+                - button:
+                    text: Danger
+                    color: danger
+                - button:
+                    text: Success
+                    color: success
+                - button:
+                    text: Warning
+                    color: warning
+                - button:
+                    text: Info
+                    color: info
+                - button:
+                    text: Gray
+                    color: gray
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    icon_left: solar:hand-money-linear
+                - button:
+                    icon_left: solar:hand-money-linear
+                    color: primary
+                - button:
+                    icon_left: solar:hand-money-linear
+                    color: danger
+                - button:
+                    icon_left: solar:hand-money-linear
+                    color: success
+                - button:
+                    icon_left: solar:hand-money-linear
+                    color: warning
+                - button:
+                    icon_left: solar:hand-money-linear
+                    color: info
+                - button:
+                    icon_left: solar:hand-money-linear
+                    color: gray
+          - div: { class: font-semibold, content: Shapes }
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: default
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: default
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: default
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: default
+                    shape: link
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: primary
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: primary
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: primary
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: primary
+                    shape: link
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: danger
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: danger
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: danger
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: danger
+                    shape: link
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: success
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: success
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: success
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: success
+                    shape: link
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: warning
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: warning
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: warning
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: warning
+                    shape: link
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: info
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: info
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: info
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: info
+                    shape: link
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled (Default)
+                    color: gray
+                    shape: filled
+                - button:
+                    text: Outline
+                    color: gray
+                    shape: outline
+                - button:
+                    text: Ghost
+                    color: gray
+                    shape: ghost
+                - button:
+                    text: Link
+                    color: gray
+                    shape: link
+          - div: { class: font-semibold, content: Custom Buttons }
+          - row:
+              class: gap-2
+              content:
+                - button:
+                    text: Custom
+                    color: primary
+                    class: bg-gradient-to-r from-primary to-pink-500 text-pink-100 shadow-lg shadow-green-200
+                - button:
+                    text: Small
+                    color: primary
+                    class: h-6 text-sm

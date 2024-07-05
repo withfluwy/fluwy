@@ -1,26 +1,12 @@
+import { extractTailwindOnYaml } from './src/lib/core/utils/extract-tailwind-on-yaml/index.js';
+
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: {
 		files: ['./src/**/*.{html,js,svelte,ts,yml,yaml}'],
 		extract: {
-			yaml: (content) => {
-				const regex = /^class: (.*)$/g;
-				let match = content.match(regex) || [];
-
-				if (!match.length) return [];
-
-				const classes = match
-					.map((m) =>
-						m
-							.split(' ')
-							.filter((s) => s !== 'class:')
-							.flat()
-					)
-					.flat();
-
-				return classes;
-			}
-		}
+			yaml: extractTailwindOnYaml,
+		},
 	},
 	theme: {
 		extend: {
@@ -28,8 +14,8 @@ export default {
 				center: true,
 				padding: '2rem',
 				screens: {
-					'2xl': '1400px'
-				}
+					'2xl': '1400px',
+				},
 			},
 			colors: {
 				primary: {
@@ -45,10 +31,10 @@ export default {
 					700: 'rgb(var(--color-primary-700) / <alpha-value>)',
 					800: 'rgb(var(--color-primary-800) / <alpha-value>)',
 					900: 'rgb(var(--color-primary-900) / <alpha-value>)',
-					950: 'rgb(var(--color-primary-950) / <alpha-value>)'
-				}
-			}
-		}
+					950: 'rgb(var(--color-primary-950) / <alpha-value>)',
+				},
+			},
+		},
 	},
-	plugins: []
+	plugins: [],
 };

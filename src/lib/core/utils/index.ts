@@ -1,9 +1,10 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import type { Any } from '../contracts';
-import { Durations } from '../constants';
-export { Random } from './random';
-export { parseUriParams } from './parsers/parse-uri-params';
+import type { Any } from '../contracts.js';
+import { Durations } from '../constants.js';
+export { Random } from './random/index.js';
+export { parseUriParams } from './parsers/parse-uri-params.js';
+export { str } from './str/index.js';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -95,7 +96,7 @@ export function exclude(props: Any, ...keys: string[]): Any {
 	return result;
 }
 
-export function deferred(fn: Function) {
+export function deferred(fn: () => void) {
 	setTimeout(fn, Durations.transition);
 }
 
