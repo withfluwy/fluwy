@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import Button from '../button.svelte';
+	import Button from '../components/forms/button/button.svelte';
 	import { Input } from '../form';
 	import { Events } from '../core/utils/events';
 	import type { Paginate, PaginationPayload, PaginationProps } from './types';

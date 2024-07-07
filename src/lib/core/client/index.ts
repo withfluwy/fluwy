@@ -1,5 +1,7 @@
 import { getContext } from 'svelte';
 import type { Adapter, AdapterData, Any, Context, Operation } from '../contracts';
+import { get } from '../utils/index.js';
+import { useContext } from '../context/index.js';
 
 type OperationName = string;
 type OperationHandlers = {
@@ -14,9 +16,9 @@ export function useClient() {
 }
 
 export function useTheme(key: string) {
-	const theme: Any = getContext('theme') ?? {};
+	const theme: Any = getContext('theme');
 
-	return theme[key];
+	return get(theme, key);
 }
 
 export class Client {
@@ -52,7 +54,8 @@ export class Client {
 
 		if (!operations) return;
 		if (typeof operations === 'string') return this.handleOperation(operations, {}, context, result);
-		if (typeof operations !== 'object') throw new Error(`Invalid User Action document [${JSON.stringify(operations)}]`);
+		if (typeof operations !== 'object')
+			throw new Error(`Invalid User Action document [${JSON.stringify(operations)}]`);
 
 		if (Array.isArray(operations)) {
 			for (const operation of operations) {

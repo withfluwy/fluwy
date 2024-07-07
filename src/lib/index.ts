@@ -7,13 +7,13 @@ const app = createApp();
 
 // Register primitive components
 for (const [key, value] of Object.entries(primitives)) {
-	app.registerComponent(str(key).snakeCase(), value);
+	app.registerComponent(str(key).kebabCase(), value);
 }
 
 for (const [key, value] of Object.entries(component)) {
 	if (key in primitives) throw new Error(`Component [${key}] already registered as primitive`);
 
-	app.registerComponent(str(key).snakeCase(), value);
+	app.registerComponent(str(key).kebabCase(), value);
 }
 
 export { app };

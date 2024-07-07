@@ -37,6 +37,7 @@
 		"@sveltejs/package": "^2.3.2",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"@testing-library/svelte": "^5.2.0",
+		"@types/color": "^3.0.6",
 		"@types/eslint": "^8.56.10",
 		"@types/node": "^20.14.9",
 		"autoprefixer": "^10.4.19",
@@ -65,6 +66,7 @@
 	"type": "module",
 	"dependencies": {
 		"clsx": "^2.1.1",
+		"color": "^4.2.3",
 		"iconify-icon": "^2.1.0",
 		"svelte-sonner": "^0.3.24",
 		"tailwind-merge": "^2.3.0",

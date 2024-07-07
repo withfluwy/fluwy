@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Render, withClasses, type ElementProps } from '@/lib/core/index.js';
 
-	export let props: ElementProps | any[];
+	const props: ElementProps | any[] = $props();
 
-	$: classes = withClasses(props, '');
+	const classes = $derived(withClasses(props, ''));
 </script>
 
 <div class={classes}>

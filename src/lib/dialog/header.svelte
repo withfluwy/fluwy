@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Dialog } from 'bits-ui';
-	import Button from '../button.svelte';
+	import Button from '../components/forms/button/button.svelte';
 	import { cn } from '../core/utils';
 
 	export let props: HeaderProps = {};

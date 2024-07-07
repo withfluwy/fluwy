@@ -4,13 +4,22 @@ div:
   class: px-10 py-4
   content:
     - column:
+        content:
+          loop:
+            each: ${theme.colors}
+            as: color
+            content:
+              - button:
+                  color: ${color}
+                  text: ${color}
+
+    - column:
         class: gap-3
         content:
           - row:
               class: gap-2
               content:
-                - button:
-                    text: Normal
+                - button: { text: Normal With Color?, variant: filled, color: primary }
                 - button:
                     loading: true
                     text: Loading
@@ -26,21 +35,27 @@ div:
                     text: Default
                 - button:
                     text: Primary
+                    variant: filled
                     color: primary
                 - button:
                     text: Danger
+                    variant: filled
                     color: danger
                 - button:
                     text: Success
+                    variant: filled
                     color: success
                 - button:
                     text: Warning
+                    variant: filled
                     color: warning
                 - button:
                     text: Info
+                    variant: filled
                     color: info
                 - button:
                     text: Gray
+                    variant: filled
                     color: gray
           - row:
               class: gap-2
@@ -72,133 +87,133 @@ div:
                 - button:
                     text: Filled (Default)
                     color: default
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: default
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: default
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: default
-                    shape: link
+                    variant: link
           - row:
               class: gap-2
               content:
                 - button:
                     text: Filled (Default)
                     color: primary
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: primary
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: primary
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: primary
-                    shape: link
+                    variant: link
           - row:
               class: gap-2
               content:
                 - button:
                     text: Filled (Default)
                     color: danger
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: danger
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: danger
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: danger
-                    shape: link
+                    variant: link
           - row:
               class: gap-2
               content:
                 - button:
                     text: Filled (Default)
                     color: success
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: success
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: success
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: success
-                    shape: link
+                    variant: link
           - row:
               class: gap-2
               content:
                 - button:
                     text: Filled (Default)
                     color: warning
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: warning
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: warning
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: warning
-                    shape: link
+                    variant: link
           - row:
               class: gap-2
               content:
                 - button:
                     text: Filled (Default)
                     color: info
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: info
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: info
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: info
-                    shape: link
+                    variant: link
           - row:
               class: gap-2
               content:
                 - button:
                     text: Filled (Default)
                     color: gray
-                    shape: filled
+                    variant: filled
                 - button:
                     text: Outline
                     color: gray
-                    shape: outline
+                    variant: outline
                 - button:
                     text: Ghost
                     color: gray
-                    shape: ghost
+                    variant: ghost
                 - button:
                     text: Link
                     color: gray
-                    shape: link
+                    variant: link
           - div: { class: font-semibold, content: Custom Buttons }
           - row:
               class: gap-2

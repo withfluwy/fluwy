@@ -1,6 +1,6 @@
 // export { default as AuthenticatedUser } from './authenticated-user.svelte';
 // export { default as Avatar } from './avatar.svelte';
-export { default as Button } from '../button.svelte';
+export { default as Button } from './forms/button/button.svelte';
 // export { default as Center } from './center.svelte';
 // export { default as Column } from './column.svelte';
 // export { default as Header } from './header.svelte';

@@ -1,7 +1,7 @@
-import type { Context } from './context';
+import type { Context } from './context/index.js';
 
-export { Client } from './client';
-export type { ContextData, RawContextData } from './context';
+export { Client } from './client/index.js';
+export type { ContextData, RawContextData } from './context/index.js';
 export type { Context };
 
 export interface Component<T = Any> {
@@ -25,16 +25,16 @@ export type RenderResponse = {
 };
 
 export interface Operation {
-	(args: Any, context: Context, previousResult?: any): Any;
+	(args: Any, context: Context, previousResult?: Any): Any;
 }
 
-export type AdapterData = { data: any; context: Context };
+export type AdapterData = { data: Any; context: Context };
 export type Adapter = (data: AdapterData['data'], context: AdapterData['context']) => Promise<AdapterData>;
 
 export type ValidationError = Record<string, string[]>;
 
 export type SimpleResponse = {
 	status: number;
-	data?: any;
+	data?: Any;
 	errors?: ValidationError;
 };

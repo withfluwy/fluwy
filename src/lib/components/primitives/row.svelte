@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Render, withClasses, type ElementProps } from '@/lib/core/index.js';
 
-	export let props: ElementProps | any[];
+	const props: ElementProps | any[] = $props();
 
-	$: rowClasses = withClasses(props, 'flex');
+	const rowClasses = $derived(withClasses(props, 'flex'));
 </script>
 
 <div class={rowClasses}>
