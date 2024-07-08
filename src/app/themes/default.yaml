@@ -6,7 +6,6 @@ typography:
     font-family: Inter
     sizes:
 
-# TODO: make colors work.
 colors:
   primary:
     DEFAULT: '#3B82F6'

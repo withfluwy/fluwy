@@ -4,14 +4,46 @@ div:
   class: px-10 py-4
   content:
     - column:
+        class: gap-2 mb-4
         content:
-          loop:
-            each: ${theme.colors}
-            as: color
+          for-each:
+            item_in: $theme.colors
+            as: color, _
             content:
-              - button:
-                  color: ${color}
-                  text: ${color}
+              - div:
+                  class: text-sm uppercase font-semibold
+                  content: ${color}
+              - row:
+                  class: mb-3 gap-2
+                  content:
+                    - button:
+                        class: capitalize
+                        color: ${color}
+                        text: Default
+                    - button:
+                        class: capitalize
+                        color: ${color}
+                        variant: filled
+                        text: Filled
+                    - button:
+                        class: capitalize
+                        color: ${color}
+                        variant: outline
+                        text: Outline
+                    - button:
+                        class: capitalize
+                        color: ${color}
+                        variant: ghost
+                        text: Ghost
+                    - button:
+                        class: capitalize
+                        color: ${color}
+                        variant: link
+                        text: Link
+                    - button:
+                        class: capitalize
+                        variant: primary-strong
+                        text: Primary Strong
 
     - column:
         class: gap-3

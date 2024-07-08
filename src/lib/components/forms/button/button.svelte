@@ -1,13 +1,13 @@
 <script lang="ts">
     import type { Any, Component } from '@/lib/core/contracts.js';
-    import { cn, deferred } from '../../../core/utils/index.js';
+    import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '../../../icon/index.js';
     import { useClient, useTheme } from '../../../core/client/index.js';
     import { useContext } from '../../../core/context/index.js';
     import { type Snippet } from 'svelte';
-    import type { ElementProps } from '../../../core/index.js';
-    import { mergeTheme } from '../../../core/utils/merge-theme/index.js';
-    import { setCurrentColor } from '../../../core/utils/color/index.js';
+    import { compile, type ElementProps } from '@/lib/core/index.js';
+    import { mergeTheme } from '@/lib/core/utils/merge-theme/index.js';
+    import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { ButtonVariants } from './styles.js';
 
     interface ButtonProps extends Omit<ElementProps, 'content'> {
@@ -29,18 +29,19 @@
 
     const variantThemes = useTheme(`forms.${component?.name ?? 'button'}.variants`);
 
-    let innerLoading = false;
-
-    let variant = $derived(props.variant || 'default');
-    let color = $derived(props.color || 'primary');
-    let loading = $derived(props.loading || innerLoading);
-    let disabled = $derived(props.disabled || loading);
-
     const colors = useTheme('colors');
     const Colors: Record<string, Record<string, string>> = mergeTheme(ButtonVariants, variantThemes);
 
     const context = useContext();
     const client = useClient();
+
+    let innerLoading = false;
+
+    let variant = $derived(compile(props.variant || 'default', context.data));
+    let color = $derived(compile(props.color || 'primary', context.data));
+    let loading = $derived(props.loading || innerLoading);
+    let disabled = $derived(props.disabled || loading);
+    let content = $derived(compile(props.text ?? '', context.data));
 
     async function handleClick(e: MouseEvent) {
         if (!props.on_click) {
@@ -87,8 +88,8 @@
         <Icon props={{ name: 'svg-spinners:90-ring-with-bg' }} />
     {/if}
 
-    {#if props.text}
-        <span>{props.text}</span>
+    {#if content}
+        <span>{content}</span>
     {/if}
 
     {#if props.icon_right}
