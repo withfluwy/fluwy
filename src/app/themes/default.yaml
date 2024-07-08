@@ -66,6 +66,11 @@ forms:
     sizes:
       sm:
       md:
+      lg: h-12 px-4 text-base # custom size
+    border_radius:
+      sm:
+      md:
+      lg: rounded-lg # custom size
   button:
     variants:
       default:

@@ -7,7 +7,7 @@
     import { type Snippet } from 'svelte';
     import { compile, Render, type ElementProps } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
-    import { ButtonSizes, ButtonVariants } from './styles.js';
+    import { BorderRadius, Sizes, Variants } from './styles.js';
 
     interface ButtonProps extends Omit<ElementProps, 'content'> {
         text?: string;
@@ -29,21 +29,22 @@
 
     const componentName = component?.name ?? 'button';
     const context = useContext();
-
-    const variants = useTheme(`forms.${componentName}.variants`, ButtonVariants);
-    const defaultSize = useTheme('forms.common.default_size', 'md');
-    const sizes = useTheme('forms.common.sizes', ButtonSizes);
-    const colors = useTheme('colors');
     const client = useClient();
+
+    const sizes = useTheme('forms.common.sizes', Sizes);
+    const colors = useTheme('colors');
+    const variants = useTheme(`forms.${componentName}.variants`, Variants);
+    const defaultSize = useTheme('forms.common.default_size', 'md');
+    const borderRadius = useTheme('forms.common.border_radius', BorderRadius);
 
     let innerLoading = false;
 
-    let variant = $derived(compile(props.variant || 'default', context.data));
-    let color = $derived(compile(props.color || 'primary', context.data));
     let size = $derived(compile(props.size || defaultSize, context.data));
+    let color = $derived(compile(props.color || 'primary', context.data));
+    let variant = $derived(compile(props.variant || 'default', context.data));
     let loading = $derived(props.loading || innerLoading);
-    let disabled = $derived(props.disabled || loading);
     let content = $derived(compile(props.text ?? '', context.data));
+    let disabled = $derived(props.disabled || loading);
 
     async function handleClick(e: MouseEvent) {
         if (!props.on_click) {
@@ -76,9 +77,10 @@
 <button
     onclick={handleClick}
     class={cn(
-        `flex items-center justify-center gap-1 rounded-lg shadow-sm transition-all duration-75 enabled:active:scale-[0.99]`,
+        `flex items-center justify-center gap-1 shadow-sm transition-all duration-75 enabled:active:scale-[0.99]`,
         variants[variant],
         sizes[size],
+        borderRadius[size],
         props.class,
         disabled ? 'hover:none cursor-not-allowed opacity-50' : ''
     )}
