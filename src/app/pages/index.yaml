@@ -3,6 +3,9 @@ theme: default
 div:
   class: px-10 py-4
   content:
+    - div:
+        class: text-2xl mb-2 font-semibold
+        content: Variants
     - column:
         class: gap-2 mb-4
         content:
@@ -44,7 +47,30 @@ div:
                         class: capitalize
                         variant: primary-strong
                         text: Primary Strong
-
+    - div:
+        class: text-2xl mb-2 font-semibold
+        content: Sizes
+    - row:
+        class: gap-2
+        content:
+          - for-each:
+              item_of: $theme.forms.common.sizes
+              as: size, value
+              content:
+                - button:
+                    class: capitalize
+                    icon_left: solar:hand-money-linear
+                    text: ${size}
+                    size: ${size}
+    - div:
+        class: text-2xl mb-2 font-semibold
+        content: Icons
+    - div:
+        class: text-2xl mb-2 font-semibold
+        content: States
+    - div:
+        class: text-2xl mb-2 font-semibold
+        content: Custom buttons
     - column:
         class: gap-3
         content:

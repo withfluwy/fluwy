@@ -56,4 +56,10 @@ describe('mergeTheme', () => {
     it('merges nested objects and ignore null values', () => {
         expect(mergeTheme(theme1, theme2).button.third).toEqual('value');
     });
+
+    it('merges other values then objects', () => {
+        expect(mergeTheme('md', 'lg')).toEqual('lg');
+        expect(mergeTheme(true, false)).toEqual(false);
+        expect(mergeTheme(10, 12)).toEqual(12);
+    });
 });

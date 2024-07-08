@@ -5,10 +5,9 @@
     import { useClient, useTheme } from '../../../core/client/index.js';
     import { useContext } from '../../../core/context/index.js';
     import { type Snippet } from 'svelte';
-    import { compile, type ElementProps } from '@/lib/core/index.js';
-    import { mergeTheme } from '@/lib/core/utils/merge-theme/index.js';
+    import { compile, Render, type ElementProps } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
-    import { ButtonVariants } from './styles.js';
+    import { ButtonSizes, ButtonVariants } from './styles.js';
 
     interface ButtonProps extends Omit<ElementProps, 'content'> {
         text?: string;
@@ -18,6 +17,7 @@
         disabled?: boolean;
         class?: string;
         variant?: string;
+        size?: string;
         color?: string;
         on_click?: Any;
         onclick?: Function;
@@ -27,18 +27,20 @@
 
     const { component, children, ...props }: ButtonProps = $props();
 
-    const variantThemes = useTheme(`forms.${component?.name ?? 'button'}.variants`);
-
-    const colors = useTheme('colors');
-    const Colors: Record<string, Record<string, string>> = mergeTheme(ButtonVariants, variantThemes);
-
+    const componentName = component?.name ?? 'button';
     const context = useContext();
+
+    const variants = useTheme(`forms.${componentName}.variants`, ButtonVariants);
+    const defaultSize = useTheme('forms.common.default_size', 'md');
+    const sizes = useTheme('forms.common.sizes', ButtonSizes);
+    const colors = useTheme('colors');
     const client = useClient();
 
     let innerLoading = false;
 
     let variant = $derived(compile(props.variant || 'default', context.data));
     let color = $derived(compile(props.color || 'primary', context.data));
+    let size = $derived(compile(props.size || defaultSize, context.data));
     let loading = $derived(props.loading || innerLoading);
     let disabled = $derived(props.disabled || loading);
     let content = $derived(compile(props.text ?? '', context.data));
@@ -74,8 +76,9 @@
 <button
     onclick={handleClick}
     class={cn(
-        `flex h-9 items-center justify-center gap-1 rounded-lg px-2 py-1 shadow-sm transition-all duration-75 enabled:active:scale-[0.99]`,
-        Colors[variant],
+        `flex items-center justify-center gap-1 rounded-lg shadow-sm transition-all duration-75 enabled:active:scale-[0.99]`,
+        variants[variant],
+        sizes[size],
         props.class,
         disabled ? 'hover:none cursor-not-allowed opacity-50' : ''
     )}
@@ -89,7 +92,7 @@
     {/if}
 
     {#if content}
-        <span>{content}</span>
+        <Render props={content} />
     {/if}
 
     {#if props.icon_right}

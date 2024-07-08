@@ -62,7 +62,10 @@ colors:
 
 forms:
   common:
-    border-radius: 0.25rem
+    default_size: md
+    sizes:
+      sm:
+      md:
   button:
     variants:
       default:

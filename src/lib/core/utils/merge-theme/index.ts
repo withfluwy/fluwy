@@ -3,12 +3,24 @@ import { cn } from '../index.js';
 
 export function mergeTheme(theme1: Any, theme2: Any) {
     const result: Any = {};
-    if (!theme1 || !theme2) {
-        return theme1 || theme2;
+    const isUndefined = (value: unknown) => typeof value === 'undefined';
+
+    if (isUndefined(theme1) || isUndefined(theme2)) {
+        return theme2 ?? theme1;
+    }
+
+    if (typeof theme1 !== typeof theme2) {
+        throw new Error(`Type mismatch on mergeTheme. One is ${typeof theme1} and the other is ${typeof theme2}`);
+    }
+
+    if (typeof theme1 !== 'object') {
+        return theme2 ?? theme1;
     }
 
     for (const key in theme1) {
-        if (key in theme2) {
+        if (typeof theme2 === 'string') {
+            result[key] = cn(theme1[key], theme2);
+        } else if (key in theme2) {
             const val1 = theme1[key];
             const val2 = theme2[key];
             if (typeof val1 === 'string' && typeof val2 === 'string') {
