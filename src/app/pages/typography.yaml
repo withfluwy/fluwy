@@ -1,0 +1,14 @@
+theme: default
+---
+div:
+  class: px-10 py-4
+  content:
+    - h1: H1 Heading
+    - h2: H2 Heading
+    - h3: H3 Heading
+    - h4: H4 Heading
+    - h5: H5 Heading
+    - h6: H6 Heading
+    - p: Mussum Ipsum, cacilds vidis litro abertis.  Bota 1 metro de cachacis aí pra viagem! Manduma pindureta quium dia nois paga. Per aumento de cachacis, eu reclamis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.
+    - p: Eu nunca mais boto a boca num copo de cachaça, agora eu só uso canudis! Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus. Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.
+    - p: Pellentesque nec nulla ligula. Donec gravida turpis a vulputate ultricies. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. Manduma pindureta quium dia nois paga.

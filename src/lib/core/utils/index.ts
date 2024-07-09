@@ -7,97 +7,98 @@ export { parseUriParams } from './parsers/parse-uri-params.js';
 export { str } from './str/index.js';
 
 export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
+    return twMerge(clsx(inputs));
 }
 
 export const withClasses = (props: { class?: string } | Any[], initialClasses: string) =>
-	Array.isArray(props) ? initialClasses : `${initialClasses} ${props.class}`;
+    Array.isArray(props) ? initialClasses : `${initialClasses} ${props.class}`;
 
 export function titleToCamelCase(titleCaseString: string): string {
-	// Split the string into words
-	const words = titleCaseString
-		.replace(/_+/g, ' ')
-		.split(' ')
-		.map((word) => word.toLowerCase());
+    // Split the string into words
+    const words = titleCaseString
+        .replace(/_+/g, ' ')
+        .split(' ')
+        .map((word) => word.toLowerCase());
 
-	// Convert the first word to lowercase
-	let camelCaseString = words[0];
+    // Convert the first word to lowercase
+    let camelCaseString = words[0];
 
-	// Convert the first character of each subsequent word to uppercase and append to the camelCaseString
-	for (let i = 1; i < words.length; i++) {
-		const word = words[i];
-		camelCaseString += word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-	}
+    // Convert the first character of each subsequent word to uppercase and append to the camelCaseString
+    for (let i = 1; i < words.length; i++) {
+        const word = words[i];
+        camelCaseString += word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }
 
-	return camelCaseString;
+    return camelCaseString;
 }
 
 export function hasBrackets(str: string) {
-	return str.includes('[') && str.includes(']');
+    return str.includes('[') && str.includes(']');
 }
 
 export function get(record: Record<string, Any>, path: string, defaultValue?: Any): Any {
-	if (!path.includes('.')) return record[path] ?? defaultValue;
+    if (record === undefined) return defaultValue;
+    if (!path.includes('.')) return record[path] ?? defaultValue;
 
-	let value = record;
+    let value = record;
 
-	if (isNil(value)) return value;
+    if (isNil(value)) return value;
 
-	const pathParts = path.split('.');
+    const pathParts = path.split('.');
 
-	for (const part of pathParts) {
-		value = value[part];
-		if (isNil(value)) break;
-	}
+    for (const part of pathParts) {
+        value = value[part];
+        if (isNil(value)) break;
+    }
 
-	return value ?? defaultValue;
+    return value ?? defaultValue;
 }
 
 export function set(record: Record<string, Any>, path: string, value: Any): void {
-	const keys = path.split('.');
-	let current = record;
+    const keys = path.split('.');
+    let current = record;
 
-	for (let i = 0; i < keys.length - 1; i++) {
-		const key = keys[i];
+    for (let i = 0; i < keys.length - 1; i++) {
+        const key = keys[i];
 
-		if (!(key in current)) {
-			current[key] = {};
-		}
+        if (!(key in current)) {
+            current[key] = {};
+        }
 
-		current = current[key] as Record<string, Any>;
-	}
+        current = current[key] as Record<string, Any>;
+    }
 
-	current[keys[keys.length - 1]] = value;
+    current[keys[keys.length - 1]] = value;
 }
 
 export function isNil(value: Any) {
-	return [undefined, null, NaN].includes(value);
+    return [undefined, null, NaN].includes(value);
 }
 
 export function has(obj: Record<string, unknown>, path: string): boolean {
-	const keys = path.split('.');
-	let current = obj;
+    const keys = path.split('.');
+    let current = obj;
 
-	for (const key of keys) {
-		if (!(key in current)) return false;
-		current = current[key] as Record<string, unknown>;
-	}
+    for (const key of keys) {
+        if (!(key in current)) return false;
+        current = current[key] as Record<string, unknown>;
+    }
 
-	return true;
+    return true;
 }
 
 export function exclude(props: Any, ...keys: string[]): Any {
-	const result = { ...props };
+    const result = { ...props };
 
-	for (const key of keys) {
-		delete result[key];
-	}
+    for (const key of keys) {
+        delete result[key];
+    }
 
-	return result;
+    return result;
 }
 
 export function deferred(fn: () => void) {
-	setTimeout(fn, Durations.transition);
+    setTimeout(fn, Durations.transition);
 }
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

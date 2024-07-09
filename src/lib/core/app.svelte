@@ -22,7 +22,7 @@
     setContext('context', context);
     setContext('theme', data.theme);
 
-    const colors = useTheme('colors');
+    const colors = useTheme('colors', {});
 </script>
 
 <div style={generateColorVariables(colors)}>

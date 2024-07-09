@@ -21,7 +21,7 @@
         component.name = componentName(rawComponent);
 
         component.value = app.getComponent(component.name);
-        component.schema = rawComponent[component.name];
+        component.schema = parseSchema(rawComponent[component.name]);
 
         return component;
     }
@@ -54,10 +54,16 @@
         return compile(String(value), context!.data);
     }
 
-    if (!props) throw 'Something is very bad!';
+    function parseSchema(schema: Any) {
+        if (typeof schema === 'string') return { content: schema };
+
+        return schema;
+    }
 </script>
 
-{#if Array.isArray(props)}
+{#if props === undefined || props === null}
+    <!-- empty -->
+{:else if Array.isArray(props)}
     {#each props as component}
         {#if exists(component)}
             <svelte:component this={parse(component).value} component={parse(component)} {...parse(component).schema} />
@@ -80,11 +86,17 @@
         {#if component === 'slot'}
             <svelte:self props={schema} component={{ name: 'slot' }} />
         {:else if exists(component)}
-            <svelte:component this={app.getComponent(component)} component={{ name: component }} {...schema as Any} />
+            <svelte:component
+                this={app.getComponent(component)}
+                component={{ name: component }}
+                {...parseSchema(schema)}
+            />
         {:else if notFound(component)}
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{component}</b>
             </div>
+        {:else}
+            UNKNOWN
         {/if}
     {/each}
 {/if}
