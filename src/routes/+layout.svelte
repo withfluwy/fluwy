@@ -1,6 +1,6 @@
 <script>
-	import '$lib/index.scss';
-	import 'iconify-icon';
+    import '$lib/styles.css';
+    import 'iconify-icon';
 </script>
 
 <slot></slot>

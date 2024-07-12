@@ -7,7 +7,7 @@
     import { Typography } from './styles.js';
 
     interface H1Props extends ElementProps {
-        children: Snippet;
+        children?: Snippet;
     }
 
     const { children, ...props }: H1Props = $props();

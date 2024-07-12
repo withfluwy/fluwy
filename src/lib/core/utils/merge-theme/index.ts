@@ -5,6 +5,8 @@ export function mergeTheme(theme1: Any, theme2: Any) {
     const result: Any = {};
     const isUndefined = (value: unknown) => typeof value === 'undefined';
 
+    if (theme1 === theme2) return theme2;
+
     if (isUndefined(theme1) || isUndefined(theme2)) {
         return theme2 ?? theme1;
     }
@@ -23,8 +25,12 @@ export function mergeTheme(theme1: Any, theme2: Any) {
         } else if (key in theme2) {
             const val1 = theme1[key];
             const val2 = theme2[key];
-            if (typeof val1 === 'string' && typeof val2 === 'string') {
-                result[key] = cn(val1, val2);
+
+            if (val1 === val2) {
+                result[key] = val2;
+            } else if (typeof val1 === 'string' && typeof val2 === 'string') {
+                const oneOfThemIsColor = isColor(val1) || isColor(val2);
+                result[key] = oneOfThemIsColor ? val2 : cn(val1, val2);
             } else if (typeof val1 === typeof val2 && typeof val1 === 'object') {
                 result[key] = mergeTheme(val1, val2);
             } else if (val1 === null || val2 === null) {
@@ -47,3 +53,6 @@ export function mergeTheme(theme1: Any, theme2: Any) {
 
     return result;
 }
+
+
+const isColor = (value: string) => /^#[0-9a-fA-F]{3,6}$/.test(value);

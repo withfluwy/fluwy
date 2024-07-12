@@ -1,8 +1,15 @@
 theme: default
 ---
-div:
+column:
   class: px-10 py-4
   content:
+    - button:
+        text: Home
+        variant: link
+        color: primary
+        icon_left: solar:alt-arrow-left-linear
+        on_click:
+          goto: /
     - h1: H1 Heading
     - h2: H2 Heading
     - h3: H3 Heading

@@ -39,6 +39,8 @@
     }
 </script>
 
-{#each Object.entries(items) as entry}
-    <Render props={content} context={createContextWith(entry)} />
-{/each}
+{#if items && (items?.length || Object.keys(items).length)}
+    {#each Object.entries(items) as entry}
+        <Render props={content} context={createContextWith(entry)} />
+    {/each}
+{/if}

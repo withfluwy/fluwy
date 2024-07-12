@@ -1,11 +1,10 @@
 import type { SvelteComponent } from 'svelte';
-import { error, redirect } from '@sveltejs/kit';
 import { findRoute, type RouteParams } from '../router/route.js';
 import { parse } from 'yaml';
 import { compile } from '../utils/compile/index.js';
 import fs from 'fs';
 import path from 'path';
-import type { Any, RenderResponse } from '../contracts.js';
+import type { Any, AppConfig, RenderResponse } from '../contracts.js';
 import { get } from '../utils/index.js';
 
 type DocumentContent = {
@@ -16,11 +15,16 @@ type DocumentContent = {
 export class App {
     private components: Record<string, SvelteComponent> = {};
 
-    public config = {
-        components: 'app/components',
+    public config: AppConfig = {
         pages: 'app/pages',
         layouts: 'app/layouts',
         themes: 'app/themes',
+        error: () => {
+            throw new Error('Uninitialized [error] function in app config');
+        },
+        redirect: () => {
+            throw new Error('Uninitialized [redirect] function in app config');
+        },
     };
 
     public registerComponent(name: string, component: Any) {
@@ -41,16 +45,16 @@ export class App {
 
     public async render(path: string, options: RenderOptions = {}): Promise<RenderResponse> {
         const route = findRoute(path || 'index', this.config.pages);
-        if (!route) throw error(404, 'Not found');
+        if (!route) throw this.config.error(404, 'Not found');
 
         const content = this.getDocument(route.contents);
-        const { meta, context } = await this.parseHead(content, route.params, options);
+        const { meta, context } = await this.parseHead(content, route.params);
 
         this.checkAuth(meta, options);
         await this.executeHead(meta, context, options);
 
         return {
-            theme: this.mergeThemes(meta),
+            theme: this.mergeThemes(meta) ?? {},
             content: this.parsePage(content, { context, meta }),
         };
     }
@@ -95,8 +99,7 @@ export class App {
 
     private async parseHead(
         contents: DocumentContent,
-        params: RouteParams,
-        options: RenderOptions
+        params: RouteParams
     ): Promise<{ meta?: PageMeta; context: PageContext }> {
         const context: PageContext = { params };
 
@@ -117,7 +120,7 @@ export class App {
     }
 
     private checkAuth(meta: PageMeta | undefined, options: RenderOptions) {
-        if (meta?.auth && !options.auth_token) redirect(307, meta.auth);
+        if (meta?.auth && !options.auth_token) this.config.redirect(307, meta.auth);
     }
 
     private async resolveLoaders(meta: PageMeta, context: PageContext, options: RenderOptions) {
@@ -130,8 +133,8 @@ export class App {
             if (options.auth_token) headers.append('Authorization', `Bearer ${options.auth_token}`);
             const response = await fetch(parsedUrl, { headers });
 
-            if (response.status === 404) throw error(404, 'Not found');
-            if (!response.ok) throw error(response.status, 'Error loading data');
+            if (response.status === 404) throw this.config.error(404, 'Not found');
+            if (!response.ok) throw this.config.error(response.status, 'Error loading data');
 
             const data = await response.json();
 

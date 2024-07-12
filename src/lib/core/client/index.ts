@@ -15,7 +15,7 @@ export function useClient() {
     return client;
 }
 
-export function useTheme(key: string, defaultValue?: Any) {
+export function useTheme(key: string, defaultValue: Any) {
     const theme: Any = getContext('theme');
 
     return mergeTheme(defaultValue, get(theme, key, defaultValue));

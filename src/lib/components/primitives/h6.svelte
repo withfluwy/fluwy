@@ -7,14 +7,14 @@
     import { Typography } from './styles.js';
 
     interface H1Props extends ElementProps {
-        children: Snippet;
+        children?: Snippet;
     }
 
     const { children, ...props }: H1Props = $props();
     const theme = useTheme('typography.h6', Typography.h6);
 </script>
 
-<h1 class={cn(theme, props.class)}>
+<h6 class={cn(theme, props.class)}>
     {#if props.content}
         {#if typeof props === 'string'}
             {props}
@@ -24,4 +24,4 @@
     {:else if children}
         {@render children()}
     {/if}
-</h1>
+</h6>

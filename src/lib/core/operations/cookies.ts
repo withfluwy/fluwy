@@ -1,9 +1,8 @@
-import type { RequestEvent } from '@sveltejs/kit';
-import type { Operation } from '../contracts';
-import { compile } from '../utils/compile';
+import type { Any, Operation } from '../contracts.js';
+import { compile } from '../utils/compile/index.js';
 
-export const set_operation: Operation = async (cookie: Record<string, any>, context) => {
-	const cookies: Record<string, any> = {};
+export const set_operation: Operation = async (cookie: Record<string, Any>, context) => {
+	const cookies: Record<string, Any> = {};
 
 	for (const [key, rawValue] of Object.entries(cookie)) {
 		cookies[key] = compile(rawValue, context.data);
@@ -22,7 +21,7 @@ export const unset_operation: Operation = async (cookie: string, context) => {
 	});
 };
 
-type ServerFunction = (event: RequestEvent) => Promise<any>;
+type ServerFunction = (event: Any) => Promise<Any>;
 
 export const endpoints: Record<string, ServerFunction> = {
 	'/__server__/set-cookie': async (event) => {

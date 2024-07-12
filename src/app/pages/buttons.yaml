@@ -3,9 +3,110 @@ theme: default
 div:
   class: px-10 py-4
   content:
-    - div:
-        class: text-2xl mb-2 font-semibold
+    - button:
+        variant: link
+        icon_left: solar:alt-arrow-left-linear
+        text: Home
+        color: primary
+        on_click:
+          goto: /
+          log: navigate back
+    - h4:
         content: Variants
+        class: mb-3 mt-6
+    - column:
+        content:
+          - h6: Default Button
+          - row:
+              class: gap-2 mt-1 mb-4
+              content:
+                - button: Default (filled)
+                - button:
+                    text: Default (Outline)
+                    variant: outline
+                - button:
+                    text: Default (Ghost)
+                    variant: ghost
+                - button:
+                    text: Default (Link)
+                    variant: link
+          - h6: Primary Button
+          - row:
+              class: gap-2 mt-1 mb-4
+              content:
+                - button:
+                    text: Default (filled)
+                    color: primary
+                - button:
+                    text: Default (Outline)
+                    color: primary
+                    variant: outline
+                - button:
+                    text: Default (Ghost)
+                    color: primary
+                    variant: ghost
+                - button:
+                    text: Default (Link)
+                    color: primary
+                    variant: link
+          - h6: Gray Button
+          - row:
+              class: gap-2 mt-1 mb-4
+              content:
+                - button:
+                    text: Default (filled)
+                    color: gray
+                - button:
+                    text: Default (Outline)
+                    color: gray
+                    variant: outline
+                - button:
+                    text: Default (Ghost)
+                    color: gray
+                    variant: ghost
+                - button:
+                    text: Default (Link)
+                    color: gray
+                    variant: link
+          - h6: Destructive Button
+          - row:
+              class: gap-2 mt-1 mb-4
+              content:
+                - button:
+                    text: Default (filled)
+                    color: destructive
+                - button:
+                    text: Default (Outline)
+                    color: destructive
+                    variant: outline
+                - button:
+                    text: Default (Ghost)
+                    color: destructive
+                    variant: ghost
+                - button:
+                    text: Default (Link)
+                    color: destructive
+                    variant: link
+          - h6: Positive Button
+          - row:
+              class: gap-2 mt-1 mb-4
+              content:
+                - button:
+                    text: Default (filled)
+                    color: positive
+                - button:
+                    text: Default (Outline)
+                    color: positive
+                    variant: outline
+                - button:
+                    text: Default (Ghost)
+                    color: positive
+                    variant: ghost
+                - button:
+                    text: Default (Link)
+                    color: positive
+                    variant: link
+
     - column:
         class: gap-2 mb-4
         content:
@@ -71,216 +172,3 @@ div:
     - div:
         class: text-2xl mb-2 font-semibold
         content: Custom buttons
-    - column:
-        class: gap-3
-        content:
-          - row:
-              class: gap-2
-              content:
-                - button: { text: Normal With Color?, variant: filled, color: primary }
-                - button:
-                    loading: true
-                    text: Loading
-                - button:
-                    disabled: true
-                    text: Disabled
-          - div: { class: font-semibold, content: Colors }
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    icon_left: solar:hand-money-linear
-                    text: Default
-                - button:
-                    text: Primary
-                    variant: filled
-                    color: primary
-                - button:
-                    text: Danger
-                    variant: filled
-                    color: danger
-                - button:
-                    text: Success
-                    variant: filled
-                    color: success
-                - button:
-                    text: Warning
-                    variant: filled
-                    color: warning
-                - button:
-                    text: Info
-                    variant: filled
-                    color: info
-                - button:
-                    text: Gray
-                    variant: filled
-                    color: gray
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    icon_left: solar:hand-money-linear
-                - button:
-                    icon_left: solar:hand-money-linear
-                    color: primary
-                - button:
-                    icon_left: solar:hand-money-linear
-                    color: danger
-                - button:
-                    icon_left: solar:hand-money-linear
-                    color: success
-                - button:
-                    icon_left: solar:hand-money-linear
-                    color: warning
-                - button:
-                    icon_left: solar:hand-money-linear
-                    color: info
-                - button:
-                    icon_left: solar:hand-money-linear
-                    color: gray
-          - div: { class: font-semibold, content: Shapes }
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: default
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: default
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: default
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: default
-                    variant: link
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: primary
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: primary
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: primary
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: primary
-                    variant: link
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: danger
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: danger
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: danger
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: danger
-                    variant: link
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: success
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: success
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: success
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: success
-                    variant: link
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: warning
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: warning
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: warning
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: warning
-                    variant: link
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: info
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: info
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: info
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: info
-                    variant: link
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Filled (Default)
-                    color: gray
-                    variant: filled
-                - button:
-                    text: Outline
-                    color: gray
-                    variant: outline
-                - button:
-                    text: Ghost
-                    color: gray
-                    variant: ghost
-                - button:
-                    text: Link
-                    color: gray
-                    variant: link
-          - div: { class: font-semibold, content: Custom Buttons }
-          - row:
-              class: gap-2
-              content:
-                - button:
-                    text: Custom
-                    color: primary
-                    class: bg-gradient-to-r from-primary to-pink-500 text-pink-100 shadow-lg shadow-green-200
-                - button:
-                    text: Small
-                    color: primary
-                    class: h-6 text-sm

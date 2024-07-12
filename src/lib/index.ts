@@ -4,6 +4,7 @@ import * as controls from './components/controls/index.js';
 import { createApp } from './core/app/index.js';
 import { str } from './core/utils/index.js';
 import type { Any } from './core/contracts.js';
+import App from './core/app.svelte';
 
 const app = createApp();
 
@@ -19,4 +20,7 @@ registerAll(primitives);
 registerAll(components);
 registerAll(controls);
 
-export { app };
+// Exports
+
+export type { ElementProps } from './core/contracts.js';
+export { app, registerAll, App, primitives, components, controls, str };

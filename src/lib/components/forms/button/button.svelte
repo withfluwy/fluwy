@@ -8,8 +8,9 @@
     import { compile, Render, type ElementProps } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { BorderRadius, Sizes, Variants } from './styles.js';
+    import { Colors } from '@/lib/core/styles.js';
 
-    interface ButtonProps extends Omit<ElementProps, 'content'> {
+    interface ButtonProps extends ElementProps {
         text?: string;
         icon_left?: IconProps | string;
         icon_right?: IconProps | string;
@@ -32,18 +33,18 @@
     const client = useClient();
 
     const sizes = useTheme('forms.common.sizes', Sizes);
-    const colors = useTheme('colors');
+    const colors = useTheme('colors', Colors);
     const variants = useTheme(`forms.${componentName}.variants`, Variants);
     const defaultSize = useTheme('forms.common.default_size', 'md');
     const borderRadius = useTheme('forms.common.border_radius', BorderRadius);
 
     let innerLoading = false;
 
+    let text = $derived(compile(props.text ?? '', context.data));
     let size = $derived(compile(props.size || defaultSize, context.data));
-    let color = $derived(compile(props.color || 'primary', context.data));
-    let variant = $derived(compile(props.variant || 'default', context.data));
+    let color = $derived(compile(props.color || 'default', context.data));
+    let variant: keyof typeof Variants = $derived(compile(props.variant || 'filled', context.data));
     let loading = $derived(props.loading || innerLoading);
-    let content = $derived(compile(props.text ?? '', context.data));
     let disabled = $derived(props.disabled || loading);
 
     async function handleClick(e: MouseEvent) {
@@ -67,25 +68,34 @@
         }
     }
 
-    function getButtonColor() {
-        if (color === 'default') return '--color: 255 255 255; --color-contrast: 0 0 0';
-
-        return setCurrentColor(color, colors);
-    }
+    let setButtonColor = $derived(
+        color === 'default' ? setCurrentColor('gray', colors) : setCurrentColor(color, colors)
+    );
+    let defaultColorClasses: typeof Variants = $derived(
+        color === 'default'
+            ? {
+                  filled: 'text-color-900 focus:ring-color-300 bg-color-contrast enabled:hover:bg-color-100 border-color-300',
+                  outline: 'text-color-900 focus:ring-color-400 border-color-400',
+                  ghost: 'text-color-900 focus:ring-color-300 enabled:hover:bg-color-100',
+                  link: 'text-color-900 focus:ring-color-300',
+              }
+            : ({} as typeof Variants)
+    );
 </script>
 
 <button
     onclick={handleClick}
     class={cn(
-        `flex items-center justify-center gap-1 shadow-sm transition-all duration-75 enabled:active:scale-[0.99]`,
-        variants[variant],
+        `flex items-center justify-center gap-1 shadow-sm transition-all duration-75 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99]`,
         sizes[size],
+        variants[variant],
         borderRadius[size],
+        defaultColorClasses[variant],
         props.class,
         disabled ? 'hover:none cursor-not-allowed opacity-50' : ''
     )}
     {disabled}
-    style={getButtonColor()}
+    style={setButtonColor}
 >
     {#if props.icon_left && !loading}
         <Icon props={props.icon_left} />
@@ -93,8 +103,10 @@
         <Icon props={{ name: 'svg-spinners:90-ring-with-bg' }} />
     {/if}
 
-    {#if content}
-        <Render props={content} />
+    {#if props.content}
+        <Render props={props.content} />
+    {:else if text}
+        <Render props={text} />
     {/if}
 
     {#if props.icon_right}

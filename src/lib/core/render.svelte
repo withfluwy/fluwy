@@ -59,11 +59,16 @@
 
         return schema;
     }
+    function isArray() {
+        const array = Boolean(Array.isArray(props) || props['0']);
+
+        return array && typeof props !== 'string';
+    }
 </script>
 
 {#if props === undefined || props === null}
     <!-- empty -->
-{:else if Array.isArray(props)}
+{:else if isArray()}
     {#each props as component}
         {#if exists(component)}
             <svelte:component this={parse(component).value} component={parse(component)} {...parse(component).schema} />

@@ -4,11 +4,12 @@
     import Render from './render.svelte';
     import { useDialogs } from './stores/dialogs.js';
     import { installOperations } from './operations/index.js';
-    import { Toaster } from '$lib/ui/sonner/index.js';
     import { createContext } from './context/index.js';
     import { installAdapters } from './adapters/index.js';
     import { setContext } from 'svelte';
     import { generateColorVariables } from './utils/color/index.js';
+    import { Toaster } from '../ui/sonner/index.js';
+    import { Colors } from './styles.js';
 
     export let data: RenderResponse;
 
@@ -22,7 +23,7 @@
     setContext('context', context);
     setContext('theme', data.theme);
 
-    const colors = useTheme('colors', {});
+    const colors = useTheme('colors', Colors);
 </script>
 
 <div style={generateColorVariables(colors)}>

@@ -1,75 +1,86 @@
 {
-	"name": "fluwy",
-	"version": "0.0.1",
-	"license": "MIT",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build && npm run package",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
-		"prepublishOnly": "npm run package",
-		"test:all": "npm run test:integration && npm run test:unit",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write .",
-		"test:integration": "playwright test",
-		"test": "vitest"
-	},
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
-		}
-	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
-	"peerDependencies": {
-		"svelte": "^5.0.0-next.1"
-	},
-	"devDependencies": {
-		"@playwright/test": "^1.45.1",
-		"@sveltejs/adapter-auto": "^3.2.2",
-		"@sveltejs/kit": "^2.5.18",
-		"@sveltejs/package": "^2.3.2",
-		"@sveltejs/vite-plugin-svelte": "^3.1.1",
-		"@testing-library/svelte": "^5.2.0",
-		"@types/color": "^3.0.6",
-		"@types/eslint": "^8.56.10",
-		"@types/node": "^20.14.9",
-		"autoprefixer": "^10.4.19",
-		"eslint": "^9.6.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.41.0",
-		"globals": "^15.8.0",
-		"jsdom": "^24.1.0",
-		"nock": "14.0.0-beta.7",
-		"postcss": "^8.4.39",
-		"prettier": "^3.3.2",
-		"prettier-plugin-svelte": "^3.2.5",
-		"publint": "^0.1.16",
-		"sass": "^1.77.6",
-		"svelte": "5.0.0-next.171",
-		"svelte-check": "^3.8.4",
-		"tailwindcss": "^3.4.4",
-		"tslib": "^2.6.3",
-		"typescript": "^5.5.3",
-		"typescript-eslint": "8.0.0-alpha.39",
-		"vite": "^5.3.2",
-		"vitest": "^1.6.0"
-	},
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"type": "module",
-	"dependencies": {
-		"clsx": "^2.1.1",
-		"color": "^4.2.3",
-		"iconify-icon": "^2.1.0",
-		"svelte-sonner": "^0.3.24",
-		"tailwind-merge": "^2.3.0",
-		"yaml": "^2.4.5"
-	}
+    "name": "fluwy",
+    "version": "0.0.1",
+    "license": "MIT",
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build && npm run package",
+        "postbuild": "tailwindcss -i ./src/lib/styles.css -o ./dist/styles.css --minify",
+        "preview": "vite preview",
+        "package": "svelte-kit sync && svelte-package && publint",
+        "prepublishOnly": "npm run package",
+        "test:all": "npm run test:integration && npm run test:unit",
+        "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+        "lint": "prettier --check . && eslint .",
+        "format": "prettier --write .",
+        "test:integration": "playwright test",
+        "test": "vitest"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "svelte": "./dist/index.js"
+        },
+        "./tailwind": {
+            "types": "./dist/integrations/tailwind/index.d.ts",
+            "node": "./dist/integrations/tailwind/index.js"
+        },
+        "./styles.css": {
+            "import": "./dist/styles.css",
+            "require": "./dist/styles.css"
+        }
+    },
+    "files": [
+        "dist",
+        "!dist/**/*.test.*",
+        "!dist/**/*.spec.*"
+    ],
+    "peerDependencies": {
+        "svelte": "^5.0.0-next.1"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.45.1",
+        "@sveltejs/adapter-auto": "^3.2.2",
+        "@sveltejs/kit": "^2.5.18",
+        "@sveltejs/package": "^2.3.2",
+        "@sveltejs/vite-plugin-svelte": "^3.1.1",
+        "@tailwindcss/typography": "^0.5.13",
+        "@testing-library/svelte": "^5.2.0",
+        "@types/color": "^3.0.6",
+        "@types/eslint": "^8.56.10",
+        "@types/node": "^20.14.9",
+        "autoprefixer": "^10.4.19",
+        "eslint": "^9.6.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-svelte": "^2.41.0",
+        "globals": "^15.8.0",
+        "jsdom": "^24.1.0",
+        "nock": "14.0.0-beta.7",
+        "postcss": "^8.4.38",
+        "prettier": "^3.3.2",
+        "prettier-plugin-svelte": "^3.2.5",
+        "prettier-plugin-tailwindcss": "^0.6.4",
+        "publint": "^0.1.16",
+        "sass": "^1.77.6",
+        "svelte": "5.0.0-next.171",
+        "svelte-check": "^3.8.4",
+        "tailwindcss": "^3.4.4",
+        "tslib": "^2.6.3",
+        "typescript": "^5.5.3",
+        "typescript-eslint": "8.0.0-alpha.39",
+        "vite": "^5.3.2",
+        "vitest": "^1.6.0"
+    },
+    "svelte": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "type": "module",
+    "dependencies": {
+        "clsx": "^2.1.1",
+        "color": "^4.2.3",
+        "iconify-icon": "^2.1.0",
+        "svelte-sonner": "^0.3.24",
+        "tailwind-merge": "^2.3.0",
+        "yaml": "^2.4.5"
+    }
 }

@@ -62,4 +62,9 @@ describe('mergeTheme', () => {
         expect(mergeTheme(true, false)).toEqual(false);
         expect(mergeTheme(10, 12)).toEqual(12);
     });
+
+    it('doesnt duplicate values', () => {
+        expect(mergeTheme({ primary: '#fff' }, { primary: '#fff' })).toEqual({ primary: '#fff' });
+        expect(mergeTheme({ primary: '#ff1' }, { primary: '#ff2' })).toEqual({ primary: '#ff2' });
+    });
 });
