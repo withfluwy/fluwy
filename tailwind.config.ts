@@ -4,7 +4,7 @@ import path from 'path';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: {
-        files: ['./src/**/*.{html,js,svelte,ts,yml,yaml}'],
+        files: ['./src/**/*.{html,js,svelte,ts,yml,yaml}', './app/**/*.{yml,yaml}'],
         extract: {
             yaml: extractTailwindOnYaml,
         },
@@ -18,7 +18,7 @@ export default {
                     '2xl': '1400px',
                 },
             },
-            colors: getColors(path.join(__dirname, './src/app/themes')),
+            colors: getColors(path.join(__dirname, './app/themes')),
         },
     },
     plugins: [import('@tailwindcss/typography')],

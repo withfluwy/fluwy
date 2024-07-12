@@ -4,9 +4,9 @@ import { app } from '$lib/index.js';
 
 export const load: PageServerLoad = async (event) => {
     app.config = {
-        pages: 'src/app/pages',
-        layouts: 'src/app/layouts',
-        themes: 'src/app/themes',
+        pages: 'app/pages',
+        layouts: 'app/layouts',
+        themes: 'app/themes',
         error,
         redirect,
     };

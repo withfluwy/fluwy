@@ -1,0 +1,20 @@
+theme: default
+---
+column:
+  - button:
+      text: Go to Buttons
+      variant: link
+      color: primary
+      on_click:
+        goto: /buttons
+        log: something
+  - button:
+      text: Go to Typography
+      variant: link
+      color: primary
+      on_click:
+        goto: /typography
+  - column:
+      - button: Primary
+      - button: Secondary
+      - button: Tertiary
