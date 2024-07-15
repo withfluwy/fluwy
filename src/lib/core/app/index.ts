@@ -125,7 +125,7 @@ export class App {
     private async resolveLoaders(meta: PageMeta, context: PageContext, options: RenderOptions) {
         for (const [varName, loadPath] of Object.entries(meta.load || {})) {
             const url = typeof loadPath === 'string' ? loadPath : (loadPath as LoadParams).url;
-            const path = typeof loadPath === 'string' ? '' : (loadPath as LoadParams).path ?? '';
+            const path = typeof loadPath === 'string' ? '' : ((loadPath as LoadParams).path ?? '');
             const parsedUrl = compile(url, context);
 
             const headers = new Headers();
