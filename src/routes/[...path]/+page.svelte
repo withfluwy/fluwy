@@ -1,8 +1,7 @@
 <script lang="ts">
-	import App from '$lib/core/app.svelte';
-	// import Render from '../../components/core/render.svelte';
+    import App from '$lib/core/app.svelte';
 
-	export let data;
+    export let data;
 </script>
 
 <App {data} />
