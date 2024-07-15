@@ -1,67 +1,66 @@
 <script lang="ts">
-	import { fade, slide } from 'svelte/transition';
-	import { Random, cn } from '../core/utils';
-	import { Icon } from '../icon';
-	import type { InputProps } from './types';
+    import { fade, slide } from 'svelte/transition';
+    import { Random, cn } from '../core/utils/index.js';
+    import { Icon } from '../icon/index.js';
+    import type { InputProps } from './types.js';
 
-	export let props: InputProps;
-	export let value: any = '';
-	export let errors: string[] | undefined = undefined;
-	const id = Random.id();
+    export let props: InputProps;
+    export let value: any = '';
+    export let errors: string[] | undefined = undefined;
+    const id = Random.id();
 
-	const iconDefaultClasses =
-		'absolute text-gray-300 transition duration-100 peer-focus:text-primary';
+    const iconDefaultClasses = 'absolute text-gray-300 transition duration-100 peer-focus:text-primary';
 </script>
 
 <div>
-	{#if props.label}
-		<label for={id} class="flex flex-col gap-1">
-			<div class="text-sm font-medium leading-6 text-gray-700">{props.label}</div>
-		</label>
-	{/if}
+    {#if props.label}
+        <label for={id} class="flex flex-col gap-1">
+            <div class="text-sm font-medium leading-6 text-gray-700">{props.label}</div>
+        </label>
+    {/if}
 
-	<div class="relative flex items-center">
-		<input
-			{id}
-			{...props}
-			class={cn(
-				'peer h-9 w-full rounded-lg border px-3 shadow-sm outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1',
-				props.class,
-				props.icon_left ? 'pl-8' : '',
-				props.icon_right ? 'pr-8' : '',
-				errors?.length ? 'border-destructive ring-destructive focus:border-destructive' : ''
-			)}
-			bind:value
-			on:input
-			style:width={props.width_dynamic ? `${value.toString().length + 1}ch` : undefined}
-		/>
+    <div class="relative flex items-center">
+        <input
+            {id}
+            {...props}
+            class={cn(
+                'peer h-9 w-full rounded-lg border px-3 shadow-sm outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1',
+                props.class,
+                props.icon_left ? 'pl-8' : '',
+                props.icon_right ? 'pr-8' : '',
+                errors?.length ? 'border-destructive ring-destructive focus:border-destructive' : ''
+            )}
+            bind:value
+            on:input
+            style:width={props.width_dynamic ? `${value.toString().length + 1}ch` : undefined}
+        />
 
-		{#if props.icon_left}
-			<Icon
-				props={{
-					name: props.icon_left,
-					class: `left-2 ${iconDefaultClasses}`,
-				}}
-			/>
-		{/if}
+        {#if props.icon_left}
+            <Icon
+                props={{
+                    name: props.icon_left,
+                    class: `left-2 ${iconDefaultClasses}`,
+                }}
+            />
+        {/if}
 
-		{#if props.icon_right}
-			<Icon
-				props={{
-					name: props.icon_right,
-					class: `right-2 ${iconDefaultClasses}`,
-				}}
-			/>
-		{/if}
-	</div>
+        {#if props.icon_right}
+            <Icon
+                props={{
+                    name: props.icon_right,
+                    class: `right-2 ${iconDefaultClasses}`,
+                }}
+            />
+        {/if}
+    </div>
 
-	{#if errors?.length}
-		<div transition:fade class="mt-0.5 flex flex-col gap-1">
-			{#each errors as error}
-				<div transition:slide|global={{ duration: 150 }} class="text-xs text-destructive">
-					{error}
-				</div>
-			{/each}
-		</div>
-	{/if}
+    {#if errors?.length}
+        <div transition:fade class="mt-0.5 flex flex-col gap-1">
+            {#each errors as error}
+                <div transition:slide|global={{ duration: 150 }} class="text-xs text-destructive">
+                    {error}
+                </div>
+            {/each}
+        </div>
+    {/if}
 </div>

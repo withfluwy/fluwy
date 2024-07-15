@@ -2,6 +2,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from
 import { createFiles, createTestingDir, deleteDirectory, readFile } from '../test/utils.js';
 import nock from 'nock';
 import { App, createApp } from './index.js';
+import type { Any } from '../contracts.js';
 
 describe('App', () => {
     let app: App;
@@ -19,10 +20,15 @@ describe('App', () => {
         createFiles(testingDir, testingAppFiles);
 
         app.config = {
-            components: testingDir + '/components',
             pages: testingDir + '/pages',
             layouts: testingDir + '/layouts',
             themes: testingDir + '/themes',
+            error: (status: number, body: Any) => {
+                throw new Error(`${status}: ${body}`);
+            },
+            redirect: (status: number, location: string | URL) => {
+                throw new Error(`${status}: ${location}`);
+            },
         };
     });
 
@@ -38,7 +44,6 @@ describe('App', () => {
 
         it('has default configs', () => {
             expect(app.config).toBeDefined();
-            expect(app.config.components).toBe(testingDir + '/components');
             expect(app.config.pages).toBe(testingDir + '/pages');
             expect(app.config.layouts).toBe(testingDir + '/layouts');
         });

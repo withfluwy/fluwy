@@ -1,4 +1,3 @@
-import type { SvelteComponent } from 'svelte';
 import { findRoute, type RouteParams } from '../router/route.js';
 import { parse } from 'yaml';
 import { compile } from '../utils/compile/index.js';
@@ -13,7 +12,7 @@ type DocumentContent = {
 };
 
 export class App {
-    private components: Record<string, SvelteComponent> = {};
+    private components: Record<string, Any> = {};
 
     public config: AppConfig = {
         pages: 'app/pages',
@@ -126,7 +125,7 @@ export class App {
     private async resolveLoaders(meta: PageMeta, context: PageContext, options: RenderOptions) {
         for (const [varName, loadPath] of Object.entries(meta.load || {})) {
             const url = typeof loadPath === 'string' ? loadPath : (loadPath as LoadParams).url;
-            const path = typeof loadPath === 'string' ? '' : (loadPath as LoadParams).path ?? '';
+            const path = typeof loadPath === 'string' ? '' : ((loadPath as LoadParams).path ?? '');
             const parsedUrl = compile(url, context);
 
             const headers = new Headers();

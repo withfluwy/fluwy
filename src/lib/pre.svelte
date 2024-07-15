@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Render, withClasses } from './core';
-	import type { Any } from './core/contracts';
+    import { Render, withClasses } from './core/index.js';
+    import type { Any } from './core/contracts.js';
 
-	export let props: Any;
+    export let props: Any;
 
-	$: classes = withClasses(props, '');
+    $: classes = withClasses(props, '');
 </script>
 
 <pre class={classes}><Render {props} /></pre>

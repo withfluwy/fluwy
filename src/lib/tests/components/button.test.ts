@@ -22,20 +22,20 @@ button:
 `;
 
 describe('button component', () => {
-	let app: App;
+    let app: App;
 
-	beforeEach(() => {
-		app = createApp();
-	});
+    beforeEach(() => {
+        app = createApp();
+    });
 
-	describe('.parseDocument', () => {
-		it('should parse', async () => {
-			expect(await app.parseDocument(button)).toEqual({ button: 'Test' });
-			expect(await app.parseDocument(button2)).toEqual({
-				button: {
-					text: 'Another Test'
-				}
-			});
-		});
-	});
+    describe('.parseDocument', () => {
+        it('should parse', async () => {
+            expect(await app.parseDocument(button)).toEqual({ button: 'Test' });
+            expect(await app.parseDocument(button2)).toEqual({
+                button: {
+                    text: 'Another Test',
+                },
+            });
+        });
+    });
 });

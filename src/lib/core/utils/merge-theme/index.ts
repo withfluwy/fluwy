@@ -54,5 +54,4 @@ export function mergeTheme(theme1: Any, theme2: Any) {
     return result;
 }
 
-
 const isColor = (value: string) => /^#[0-9a-fA-F]{3,6}$/.test(value);

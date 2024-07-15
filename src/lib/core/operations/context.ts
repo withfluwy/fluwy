@@ -1,5 +1,5 @@
-import type { Operation } from '../contracts';
+import type { Operation } from '../contracts.js';
 
 export const context: Operation = async (variable: string, context) => {
-	return context.get(variable);
+    return context.get(variable);
 };

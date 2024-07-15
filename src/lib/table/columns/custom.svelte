@@ -1,20 +1,26 @@
 <script lang="ts">
-	import type { Column, Table } from '../types';
+    import type { Column, Table } from '../types.js';
 
-	import { cn } from '../../core/utils';
-	import { Render } from '../../core';
-	import { createContext } from '../../core/context';
-	import { setContext } from 'svelte';
+    import { cn } from '../../core/utils/index.js';
+    import { Render } from '../../core/index.js';
+    import { createContext } from '../../core/context/index.js';
+    import { setContext } from 'svelte';
 
-	export let column: Column;
-	export let table: Table;
+    interface CustomProps {
+        column: Column;
+        table?: Table;
+    }
 
-	const context = createContext();
-	setContext('context', context);
+    const { column }: CustomProps = $props();
 
-	$: context.set('record', column.record);
+    const context = createContext();
+    setContext('context', context);
+
+    $effect(() => {
+        context.set('record', column.record);
+    });
 </script>
 
 <td class={cn('flex gap-0.5 whitespace-nowrap px-4 py-3.5', column?.class)}>
-	<Render props={column.content} />
+    <Render props={column.content} />
 </td>
