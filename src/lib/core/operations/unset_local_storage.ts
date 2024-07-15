@@ -1,5 +1,5 @@
-import type { Operation } from '../contracts';
+import type { Operation } from '../contracts.js';
 
-export const unset_local_storage: Operation = (key: string, context) => {
-	window.localStorage.removeItem(key);
+export const unset_local_storage: Operation = (key: string) => {
+    window.localStorage.removeItem(key);
 };

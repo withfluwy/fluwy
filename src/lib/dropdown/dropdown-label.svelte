@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { DropdownMenuLabel } from '$lib/components/ui/dropdown-menu/index.js';
-	import { Render } from '../core';
+    import { Render } from '../core/index.js';
+    import { DropdownMenuLabel } from '../ui/dropdown-menu/index.js';
 
-	export let props;
+    export let props;
 </script>
 
 <DropdownMenuLabel>
-	<Render {props} />
+    <Render {props} />
 </DropdownMenuLabel>

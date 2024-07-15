@@ -1,4 +1,5 @@
 <script lang="ts">
-import { DropdownMenuSeparator } from '$lib/components/ui/dropdown-menu/index.js';
+    import { DropdownMenuSeparator } from '../ui/dropdown-menu/index.js';
 </script>
+
 <DropdownMenuSeparator />

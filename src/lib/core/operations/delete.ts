@@ -1,15 +1,15 @@
-import type { Operation } from '../contracts';
-import { compile, hasPlaceholders } from '../utils/compile';
+import type { Operation } from '../contracts.js';
+import { compile, hasPlaceholders } from '../utils/compile/index.js';
 
 export const deleteOperation: Operation = async (args: string, context) => {
-	const url = compile(args, context.data);
+    const url = compile(args, context.data);
 
-	if (hasPlaceholders(url)) throw new Error(`DELETE URL still has unresolved placeholders [${url}]`);
+    if (hasPlaceholders(url)) throw new Error(`DELETE URL still has unresolved placeholders [${url}]`);
 
-	const response = await context.fetch(url, { method: 'DELETE' });
+    const response = await context.fetch(url, { method: 'DELETE' });
 
-	if (response.status >= 400) {
-		const responseData = await response.json();
-		throw new Error(responseData);
-	}
+    if (response.status >= 400) {
+        const responseData = await response.json();
+        throw new Error(responseData);
+    }
 };

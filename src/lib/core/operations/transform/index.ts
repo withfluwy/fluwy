@@ -1,23 +1,23 @@
-import type { Operation } from '../../contracts';
-import { collapseObject } from '../../utils/normalize-object';
+import type { Operation } from '../../contracts.js';
+import { collapseObject } from '../../utils/normalize-object/index.js';
 
 type TransformMapSchema = Record<string, string>;
 
 export const transform: Operation = async (map: TransformMapSchema, _, result) => {
-	const collapsedResult = collapseObject(result);
-	validateMap(map);
+    const collapsedResult = collapseObject(result);
+    validateMap(map);
 
-	const transformedResult: Record<string, unknown> = {};
+    const transformedResult: Record<string, unknown> = {};
 
-	for (const [key, value] of Object.entries(map)) {
-		transformedResult[value] = collapsedResult[key];
-	}
+    for (const [key, value] of Object.entries(map)) {
+        transformedResult[value] = collapsedResult[key];
+    }
 
-	return transformedResult;
+    return transformedResult;
 };
 
 function validateMap(map: TransformMapSchema) {
-	const allValuesAreStrings = Object.values(map).every((value) => typeof value === 'string');
+    const allValuesAreStrings = Object.values(map).every((value) => typeof value === 'string');
 
-	if (!allValuesAreStrings) throw new Error('Values in the map must be strings');
+    if (!allValuesAreStrings) throw new Error('Values in the map must be strings');
 }

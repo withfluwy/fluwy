@@ -1,4 +1,3 @@
-import type { SvelteComponent } from 'svelte';
 import { findRoute, type RouteParams } from '../router/route.js';
 import { parse } from 'yaml';
 import { compile } from '../utils/compile/index.js';
@@ -13,7 +12,7 @@ type DocumentContent = {
 };
 
 export class App {
-    private components: Record<string, SvelteComponent> = {};
+    private components: Record<string, Any> = {};
 
     public config: AppConfig = {
         pages: 'app/pages',

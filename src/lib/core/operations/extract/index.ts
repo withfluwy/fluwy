@@ -1,14 +1,14 @@
-import type { Operation } from '../../contracts';
-import { collapseObject, expandObject } from '../../utils/normalize-object';
+import type { Any, Operation } from '../../contracts.js';
+import { collapseObject, expandObject } from '../../utils/normalize-object/index.js';
 
 export const extract: Operation = async (map: Record<string, string>, _, result) => {
-	const collapsedResult = collapseObject(result);
+    const collapsedResult = collapseObject(result);
 
-	const extractedResult = {} as any;
+    const extractedResult = {} as Any;
 
-	for (const [key, value] of Object.entries(map)) {
-		extractedResult[key] = collapsedResult[value];
-	}
+    for (const [key, value] of Object.entries(map)) {
+        extractedResult[key] = collapsedResult[value];
+    }
 
-	return expandObject(extractedResult);
+    return expandObject(extractedResult);
 };

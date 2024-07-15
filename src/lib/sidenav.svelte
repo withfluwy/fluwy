@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { cn } from './core/utils';
+	import { cn } from './core/utils/index.js';
 	import Shortcut from './shortcut.svelte';
 
 	export let props: SidenavProps;
@@ -68,7 +68,7 @@
                     `}
 						icon={getIcon(item).name}
 						height={getIcon(item).size}
-					/>
+					></iconify-icon>
 					<span>{item.title}</span>
 
 					{#if item.shortcut}
