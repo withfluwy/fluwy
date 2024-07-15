@@ -2,6 +2,10 @@
 
 FROM node:20-alpine
 
+ARG PORT=3000
+
+ENV PORT=${PORT}
+
 RUN corepack enable
 
 WORKDIR /app
@@ -15,6 +19,6 @@ COPY . .
 
 RUN pnpm build
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
-CMD ["pnpm", "preview", "--port", "3000", "--host", "0.0.0.0"]
+CMD ["pnpm", "preview", "--host", "0.0.0.0", "--port", "${PORT}"]
