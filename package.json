@@ -40,7 +40,7 @@
         "svelte": "^5.0.0-next.1"
     },
     "devDependencies": {
-        "@playwright/test": "^1.45.1",
+        "@playwright/test": "^1.45.2",
         "@sveltejs/adapter-auto": "^3.2.2",
         "@sveltejs/adapter-vercel": "^5.4.1",
         "@sveltejs/kit": "^2.5.18",
@@ -50,7 +50,7 @@
         "@testing-library/svelte": "^5.2.0",
         "@types/color": "^3.0.6",
         "@types/eslint": "^8.56.10",
-        "@types/lodash": "^4.17.6",
+        "@types/lodash": "^4.17.7",
         "@types/node": "^20.14.10",
         "@vitest/coverage-istanbul": "^2.0.3",
         "autoprefixer": "^10.4.19",
@@ -72,7 +72,7 @@
         "tslib": "^2.6.3",
         "typescript": "^5.5.3",
         "typescript-eslint": "8.0.0-alpha.39",
-        "vite": "^5.3.3",
+        "vite": "^5.3.4",
         "vitest": "^2.0.3"
     },
     "svelte": "./dist/index.js",
