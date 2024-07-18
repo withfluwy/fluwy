@@ -2,7 +2,7 @@ theme: default
 ---
 column:
   - button:
-      text: Go to Buttons Failed
+      text: Go to Buttons
       variant: link
       color: primary
       on_click:
