@@ -8,6 +8,7 @@ node_modules
 /dist
 test-results/
 coverage/
+.pnpm-store/
 
 # OS
 .DS_Store
