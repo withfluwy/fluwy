@@ -7,7 +7,9 @@ node_modules
 /build
 /dist
 test-results/
+playwright-report/
 coverage/
+.pnpm-store/
 
 # OS
 .DS_Store
