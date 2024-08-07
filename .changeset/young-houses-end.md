@@ -1,5 +1,5 @@
 ---
-'@fluwy/ui': minor
+'@fluwy/ui': patch
 ---
 
 First release with button component

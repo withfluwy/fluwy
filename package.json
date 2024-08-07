@@ -8,6 +8,7 @@
         "postbuild": "tailwindcss -i ./src/lib/styles.css -o ./dist/styles.css --minify",
         "preview": "vite preview",
         "package": "svelte-kit sync && svelte-package && publint",
+        "release": "npm run build && changeset publish",
         "prepublishOnly": "npm run package",
         "test:all": "npm run test:integration && npm run test:unit",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
