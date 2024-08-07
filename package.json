@@ -1,6 +1,6 @@
 {
-    "name": "fluwy",
-    "version": "0.0.1",
+    "name": "@fluwy/ui",
+    "version": "0.0.0",
     "license": "MIT",
     "scripts": {
         "dev": "vite dev",
@@ -40,6 +40,7 @@
         "svelte": "^5.0.0-next.1"
     },
     "devDependencies": {
+        "@changesets/cli": "^2.27.7",
         "@playwright/test": "^1.45.2",
         "@sveltejs/adapter-auto": "^3.2.2",
         "@sveltejs/adapter-vercel": "^5.4.1",
