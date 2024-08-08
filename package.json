@@ -7,8 +7,8 @@
     },
     "scripts": {
         "dev": "vite dev",
-        "build": "vite build && npm run package",
-        "postbuild": "tailwindcss -i ./src/lib/styles.css -o ./dist/styles.css --minify",
+        "build": "vite build && npm run styles && npm run package",
+        "styles": "tailwindcss -i ./src/lib/styles.css -o ./dist/styles.css --minify",
         "preview": "vite preview",
         "package": "svelte-kit sync && svelte-package && publint",
         "release": "npm run build && changeset publish",
