@@ -7,7 +7,7 @@
     },
     "scripts": {
         "dev": "vite dev",
-        "build": "vite build && npm run styles && npm run package",
+        "build": "vite build && npm run package && npm run styles",
         "styles": "tailwindcss -i ./src/lib/styles.css -o ./dist/styles.css --minify",
         "preview": "vite preview",
         "package": "svelte-kit sync && svelte-package && publint",
