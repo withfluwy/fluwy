@@ -5,6 +5,7 @@ import { createApp } from './core/app/index.js';
 import { str } from './core/utils/index.js';
 import type { Any } from './core/contracts.js';
 import App from './core/app.svelte';
+import 'iconify-icon';
 
 const app = createApp();
 
