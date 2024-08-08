@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.0.4
+
+### Patch Changes
+
+- b3ec270: Fix `prepublishOnly` script to use the build script that solves the css generation file with tailwind.
+
 ## 0.0.3
 
 ### Patch Changes
