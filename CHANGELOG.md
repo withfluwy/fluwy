@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.0.3
+
+### Patch Changes
+
+- a88e11a: Fix styles again
+
 ## 0.0.2
 
 ### Patch Changes
