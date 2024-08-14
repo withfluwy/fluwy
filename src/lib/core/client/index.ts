@@ -1,7 +1,7 @@
 import { getContext } from 'svelte';
 import type { Adapter, AdapterData, Any, Context, Operation } from '../contracts.js';
 import { get } from '../utils/index.js';
-import { mergeTheme } from '../utils/merge-theme/index.js';
+import { mergeObjects } from '../utils/merge-objects/index.js';
 
 type OperationName = string;
 type OperationHandlers = {
@@ -15,10 +15,16 @@ export function useClient() {
     return client;
 }
 
-export function useTheme(key: string, defaultValue: Any) {
+export function useTheme(key: string, defaultValue?: Any): Any {
     const theme: Any = getContext('theme');
 
-    return mergeTheme(defaultValue, get(theme, key, defaultValue));
+    return get(theme, key, defaultValue);
+}
+
+export function mergeThemes(key: string, defaultValue: Any) {
+    const theme: Any = getContext('theme');
+
+    return mergeObjects(defaultValue, get(theme, key, defaultValue));
 }
 
 export class Client {

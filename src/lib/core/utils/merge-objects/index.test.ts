@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
-import { mergeTheme } from './index.js';
+import { mergeObjects } from './index.js';
+import { Typography } from '@/lib/components/primitives/styles.js';
 
 const theme1 = parse(`
 button:
@@ -29,7 +30,7 @@ button:
 
 describe('mergeTheme', () => {
     it('merge two yaml files into one', () => {
-        expect(mergeTheme(theme1, theme2)).toEqual({
+        expect(mergeObjects(theme1, theme2)).toEqual({
             button: {
                 filled: 'text-primary-foreground bg-red-500',
                 outline: 'border border-primary uppercase',
@@ -43,28 +44,28 @@ describe('mergeTheme', () => {
     });
 
     it('throws an error if the values are not of the same type', () => {
-        expect(() => mergeTheme(theme1, wrongTheme)).toThrowError(
+        expect(() => mergeObjects(theme1, wrongTheme)).toThrowError(
             'Property "filled" is of type string but the second one is of type object'
         );
     });
 
     it('return the defined object if one is undefined', () => {
-        expect(mergeTheme(theme1, undefined)).toEqual(theme1);
-        expect(mergeTheme(undefined, theme2)).toEqual(theme2);
+        expect(mergeObjects(theme1, undefined)).toEqual(theme1);
+        expect(mergeObjects(undefined, theme2)).toEqual(theme2);
     });
 
     it('merges nested objects and ignore null values', () => {
-        expect(mergeTheme(theme1, theme2).button.third).toEqual('value');
+        expect(mergeObjects(theme1, theme2).button.third).toEqual('value');
     });
 
     it('merges other values then objects', () => {
-        expect(mergeTheme('md', 'lg')).toEqual('lg');
-        expect(mergeTheme(true, false)).toEqual(false);
-        expect(mergeTheme(10, 12)).toEqual(12);
+        expect(mergeObjects('md', 'lg')).toEqual('lg');
+        expect(mergeObjects(true, false)).toEqual(false);
+        expect(mergeObjects(10, 12)).toEqual(12);
     });
 
     it('doesnt duplicate values', () => {
-        expect(mergeTheme({ primary: '#fff' }, { primary: '#fff' })).toEqual({ primary: '#fff' });
-        expect(mergeTheme({ primary: '#ff1' }, { primary: '#ff2' })).toEqual({ primary: '#ff2' });
+        expect(mergeObjects({ primary: '#fff' }, { primary: '#fff' })).toEqual({ primary: '#fff' });
+        expect(mergeObjects({ primary: '#ff1' }, { primary: '#ff2' })).toEqual({ primary: '#ff2' });
     });
 });

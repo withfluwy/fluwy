@@ -2,7 +2,7 @@
     import type { Any, Component } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '../../../icon/index.js';
-    import { useClient, useTheme } from '../../../core/client/index.js';
+    import { useClient, mergeThemes } from '../../../core/client/index.js';
     import { useContext } from '../../../core/context/index.js';
     import { type Snippet } from 'svelte';
     import { compile, Render, type ElementProps } from '@/lib/core/index.js';
@@ -32,11 +32,11 @@
     const context = useContext();
     const client = useClient();
 
-    const sizes = useTheme('forms.common.sizes', Sizes);
-    const colors = useTheme('colors', Colors);
-    const variants = useTheme(`forms.${componentName}.variants`, Variants);
-    const defaultSize = useTheme('forms.common.default_size', 'md');
-    const borderRadius = useTheme('forms.common.border_radius', BorderRadius);
+    const sizes = mergeThemes('forms.common.sizes', Sizes);
+    const colors = mergeThemes('colors', Colors);
+    const variants = mergeThemes(`forms.${componentName}.variants`, Variants);
+    const defaultSize = mergeThemes('forms.common.default_size', 'md');
+    const borderRadius = mergeThemes('forms.common.border_radius', BorderRadius);
 
     let innerLoading = false;
 

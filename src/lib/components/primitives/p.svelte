@@ -11,10 +11,9 @@
     }
 
     const { children, ...props }: H1Props = $props();
-    const theme = useTheme('typography.p', Typography.p);
 </script>
 
-<h1 class={cn(theme, props.class)}>
+<p class={cn(Typography.p, useTheme('typography.p'), props.class)}>
     {#if props.content}
         {#if typeof props === 'string'}
             {props}
@@ -24,4 +23,4 @@
     {:else if children}
         {@render children()}
     {/if}
-</h1>
+</p>
