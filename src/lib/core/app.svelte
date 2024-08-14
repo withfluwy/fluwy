@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { useClient, useTheme } from './client/index.js';
+    import { useClient, mergeThemes } from './client/index.js';
     import type { RenderResponse } from './contracts.js';
     import Render from './render.svelte';
     import { useDialogs } from './stores/dialogs.js';
@@ -23,7 +23,7 @@
     setContext('context', context);
     setContext('theme', data.theme);
 
-    const colors = useTheme('colors', Colors);
+    const colors = mergeThemes('colors', Colors);
 </script>
 
 <div style={generateColorVariables(colors)}>

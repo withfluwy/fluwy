@@ -14,7 +14,7 @@
     const theme = useTheme('typography.h1', Typography.h1);
 </script>
 
-<h1 class={cn(theme, props.class)}>
+<h1 class={cn(Typography.h1, theme, props.class)}>
     {#if props.content}
         {#if typeof props === 'string'}
             {props}

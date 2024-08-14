@@ -1,30 +1,30 @@
 import type { Any } from '$lib/core/contracts.js';
 import { cn } from '../index.js';
 
-export function mergeTheme(theme1: Any, theme2: Any) {
+export function mergeObjects(obj1: Any, obj2: Any) {
     const result: Any = {};
     const isUndefined = (value: unknown) => typeof value === 'undefined';
 
-    if (theme1 === theme2) return theme2;
+    if (obj1 === obj2) return obj2;
 
-    if (isUndefined(theme1) || isUndefined(theme2)) {
-        return theme2 ?? theme1;
+    if (isUndefined(obj1) || isUndefined(obj2)) {
+        return obj2 ?? obj1;
     }
 
-    if (typeof theme1 !== typeof theme2) {
-        throw new Error(`Type mismatch on mergeTheme. One is ${typeof theme1} and the other is ${typeof theme2}`);
+    if (typeof obj1 !== typeof obj2) {
+        throw new Error(`Type mismatch on mergeObjects. One is ${typeof obj1} and the other is ${typeof obj2}`);
     }
 
-    if (typeof theme1 !== 'object') {
-        return theme2 ?? theme1;
+    if (typeof obj1 !== 'object') {
+        return obj2 ?? obj1;
     }
 
-    for (const key in theme1) {
-        if (typeof theme2 === 'string') {
-            result[key] = cn(theme1[key], theme2);
-        } else if (key in theme2) {
-            const val1 = theme1[key];
-            const val2 = theme2[key];
+    for (const key in obj1) {
+        if (typeof obj2 === 'string') {
+            result[key] = cn(obj1[key], obj2);
+        } else if (key in obj2) {
+            const val1 = obj1[key];
+            const val2 = obj2[key];
 
             if (val1 === val2) {
                 result[key] = val2;
@@ -32,7 +32,7 @@ export function mergeTheme(theme1: Any, theme2: Any) {
                 const oneOfThemIsColor = isColor(val1) || isColor(val2);
                 result[key] = oneOfThemIsColor ? val2 : cn(val1, val2);
             } else if (typeof val1 === typeof val2 && typeof val1 === 'object') {
-                result[key] = mergeTheme(val1, val2);
+                result[key] = mergeObjects(val1, val2);
             } else if (val1 === null || val2 === null) {
                 result[key] = val1 || val2;
             } else {
@@ -41,13 +41,13 @@ export function mergeTheme(theme1: Any, theme2: Any) {
                 );
             }
         } else {
-            result[key] = theme1[key];
+            result[key] = obj1[key];
         }
     }
 
-    for (const key in theme2) {
-        if (!(key in theme1)) {
-            result[key] = theme2[key];
+    for (const key in obj2) {
+        if (!(key in obj1)) {
+            result[key] = obj2[key];
         }
     }
 
