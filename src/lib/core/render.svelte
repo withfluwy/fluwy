@@ -74,6 +74,8 @@
             <svelte:component this={parse(component).value} component={parse(component)} {...parse(component).schema} />
         {:else if typeof component === 'string'}
             {text(component)}
+        {:else if 'slot' in (component ?? {})}
+            <svelte:self props={component.slot} component={{ name: 'slot' }} />
         {:else}
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{parse(component).name}</b>

@@ -46,15 +46,17 @@ export class App {
         const route = findRoute(path || 'index', this.config.pages);
         if (!route) throw this.config.error(404, 'Not found');
 
-        const content = this.getDocument(route.contents);
-        const { meta, context } = await this.parseHead(content, route.params);
+        const pageDocument = this.getDocument(route.contents);
+        const { meta, context } = await this.parseHead(pageDocument, route.params);
 
         this.checkAuth(meta, options);
         await this.executeHead(meta, context, options);
 
+        const content = this.parsePage(pageDocument, { context, meta });
+
         return {
             theme: this.mergeThemes(meta) ?? {},
-            content: this.parsePage(content, { context, meta }),
+            content,
         };
     }
 
@@ -62,16 +64,35 @@ export class App {
         return parse(yaml);
     }
 
-    parsePage(content: DocumentContent, { context, meta }: { context: PageContext; meta: PageMeta | undefined }): Any {
-        if (!meta?.layout) return parse(compile(content.body, context));
+    parsePage(
+        pageDocument: DocumentContent,
+        { context, meta }: { context: PageContext; meta: PageMeta | undefined }
+    ): Any {
+        if (!meta?.layout) return parse(compile(pageDocument.body, context));
 
-        const layoutContent = this.findLayoutFile(meta.layout, this.config.layouts);
-        if (!layoutContent) throw `Layout not found: [${meta.layout}]`;
-
-        const layout = parse(compile(layoutContent, context));
-        const body = parse(compile(content.body, context)) as Any;
+        const layout = this.parseLayout(meta, context);
+        const body = parse(compile(pageDocument.body, context)) as Any;
 
         return this.replaceSlot(layout, body);
+    }
+
+    private parseLayout(meta: PageMeta, context: PageContext): Any {
+        const layoutContent = this.findLayoutFile(meta.layout!, this.config.layouts);
+        if (!layoutContent) throw `Layout not found: [${meta.layout}]`;
+
+        const layoutDocument = this.getDocument(layoutContent);
+
+        this.resolveMeta(meta, layoutDocument);
+
+        return parse(compile(layoutDocument.body, context));
+    }
+
+    private resolveMeta(meta: PageMeta, layoutDocument: DocumentContent) {
+        if (!layoutDocument.head) return;
+
+        const layoutMeta = parse(layoutDocument.head) as PageMeta;
+
+        meta.theme = meta.theme ?? layoutMeta?.theme;
     }
 
     private findLayoutFile(layoutName: string, layoutsDir: string): string | undefined {
@@ -193,6 +214,10 @@ export type PageMeta = {
     auth?: string;
     load?: string | LoadParams;
     vars?: Record<string, string>;
+};
+
+type LayoutMeta = {
+    theme?: string;
 };
 
 type LoadParams = { url: string; path?: string };

@@ -19,7 +19,8 @@
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write .",
         "test": "vitest",
-        "test:integration": "playwright test"
+        "test:integration": "playwright test",
+        "test:integration:update": "playwright test --update-snapshots"
     },
     "exports": {
         ".": {
