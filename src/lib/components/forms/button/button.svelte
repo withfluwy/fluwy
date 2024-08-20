@@ -81,6 +81,12 @@
               }
             : ({} as typeof Variants)
     );
+
+    function getIcon(propValue: Any): IconProps {
+        if (typeof propValue === 'string') return { name: propValue };
+
+        return propValue as IconProps;
+    }
 </script>
 
 <button
@@ -98,9 +104,9 @@
     style={setButtonColor}
 >
     {#if props.icon_left && !loading}
-        <Icon props={props.icon_left} />
+        <Icon {...getIcon(props.icon_left)} />
     {:else if loading}
-        <Icon props={{ name: 'svg-spinners:90-ring-with-bg' }} />
+        <Icon {...{ name: 'svg-spinners:90-ring-with-bg' }} />
     {/if}
 
     {#if props.content}
@@ -110,7 +116,7 @@
     {/if}
 
     {#if props.icon_right}
-        <Icon props={props.icon_right} />
+        <Icon {...getIcon(props.icon_right)} />
     {/if}
 
     {#if children}
