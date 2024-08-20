@@ -7,7 +7,7 @@
     import type { Any, Context } from '../core/contracts.js';
     import { Render } from '../core/index.js';
     import { cn, deferred, flyAndScale } from '../core/utils/index.js';
-    import { Icon } from '../icon/index.js';
+    import { Icon } from '../components/common/icon/index.js';
     import { useContext } from '../core/context/index.js';
     import { useClient } from '../core/client/index.js';
     import { Durations, Operation } from '../core/constants.js';

@@ -2,7 +2,7 @@
     import { DropdownMenuItem, Sub, SubContent, SubTrigger } from '$lib/ui/dropdown-menu/index.js';
     import { type ElementProps, Render, useClient, useContext } from '../core/index.js';
     import { cn } from '../core/utils/index.js';
-    import Icon from '../icon/icon.svelte';
+    import Icon from '../components/common/icon/icon.svelte';
 
     export let props: DropdownItemProps;
 

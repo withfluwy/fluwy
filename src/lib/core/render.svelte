@@ -14,7 +14,7 @@
 
     context ??= useContext();
 
-    const reservedNames = ['slot', 'content', 'class', 'vars'];
+    const reservedNames = ['slot', 'content', 'component', 'class', 'vars'];
 
     function parse(rawComponent: { [key: string]: any }): Component {
         const component = {} as Component;
@@ -59,6 +59,7 @@
 
         return schema;
     }
+
     function isArray() {
         const array = Boolean(Array.isArray(props) || props['0']);
 
@@ -102,6 +103,8 @@
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{component}</b>
             </div>
+        {:else if reservedNames.includes(component)}
+            <!-- reserved -->
         {:else}
             UNKNOWN
         {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Any, Component } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
-    import { Icon, type IconProps } from '../../../icon/index.js';
+    import { Icon, type IconProps } from '../../common/icon/index.js';
     import { useClient, mergeThemes } from '../../../core/client/index.js';
     import { useContext } from '../../../core/context/index.js';
     import { type Snippet } from 'svelte';

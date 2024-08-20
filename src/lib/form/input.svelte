@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fade, slide } from 'svelte/transition';
     import { Random, cn } from '../core/utils/index.js';
-    import { Icon } from '../icon/index.js';
+    import { Icon } from '../components/common/icon/index.js';
     import type { InputProps } from './types.js';
 
     export let props: InputProps;

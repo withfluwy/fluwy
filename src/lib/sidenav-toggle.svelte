@@ -1,6 +1,6 @@
 <script lang="ts">
     import Button from './components/forms/button/button.svelte';
-    import { type IconProps } from './icon/index.js';
+    import { type IconProps } from './components/common/icon/index.js';
 
     export let props: SidenavToggleProps;
 
