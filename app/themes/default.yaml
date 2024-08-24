@@ -10,6 +10,17 @@ typography:
     font-family: Inter
     sizes:
 
+layout:
+  screen:
+
+common:
+  # icon_size: 40
+  dropdown:
+    # arrow_icon_right: solar:alt-arrow-right-bold
+    # content: p-0 rounded-none border-black
+    # separator: my-0 bg-black mx-0
+    # item: rounded-none hover:bg-primary-50 focus:bg-primary focus:text-white
+
 # colors:
 #   primary:
 #     DEFAULT: '#ee2233'

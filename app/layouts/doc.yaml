@@ -1,3 +1,44 @@
 theme: default
 ---
-slot: default
+screen:
+  banner: This is the banner
+  header:
+    link:
+      url: /
+      image:
+        class: h-6
+        src: /tunder-logo-light.svg
+    row:
+      class: gap-4 w-auto items-center
+      content:
+        - dropdown:
+            trigger:
+              button:
+                class: size-8
+                variant: ghost
+                color: gray
+                icon_left:
+                  name: material-symbols:brightness-auto-rounded
+                  size: 24
+            content:
+              - dropdown_item:
+                  icon: solar:sun-2-linear
+                  text: Light
+              - dropdown_item:
+                  icon: solar:moon-stars-bold
+                  text: Dark
+              - dropdown_item:
+                  icon: material-symbols:brightness-auto-rounded
+                  class: text-primary
+                  text: System
+        - button:
+            class: size-8
+            variant: ghost
+            color: gray
+            icon_left:
+              name: mdi:github
+              size: 24
+            on_click:
+              - goto: https://github.com/marcotas/
+  content:
+    - slot: default

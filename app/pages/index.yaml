@@ -14,7 +14,45 @@ column:
       color: primary
       on_click:
         goto: /typography
-  - column:
-      - button: Primary
-      - button: Secondary
-      - button: Tertiary
+  - dropdown:
+      trigger:
+        button: This is a Dropdown
+      content:
+        - dropdown_label: Configurations
+        - dropdown_separator:
+        - dropdown_item:
+            icon: solar:user-circle-linear
+            content: Profile
+        - dropdown_item:
+            icon: solar:inbox-line-linear
+            class: text-primary
+            content: Billing
+        - dropdown_item:
+            icon: solar:settings-linear
+            content: Settings
+        - dropdown_item:
+            icon: solar:danger-triangle-linear
+            class: text-destructive
+            content: Close account
+        - dropdown_separator:
+        - dropdown_item:
+            icon: solar:user-plus-rounded-linear
+            content: Invite users
+            sub_content:
+              - dropdown_item:
+                  icon: solar:letter-linear
+                  content: via e-mail
+              - dropdown_item:
+                  icon: solar:chat-line-linear
+                  content: via text message
+              - dropdown_separator:
+              - dropdown_item:
+                  icon: solar:menu-dots-linear
+                  content: More...
+                  sub_content:
+                    - dropdown_item: Option 1
+                    - dropdown_item: Option 2
+                    - dropdown_item: Option 3
+  - repeat:
+      times: 100
+      div: lorem ipsum dolor sit amet consectetur adipisicing elit dolor sit amet consectetur adipisicing elit
