@@ -110,7 +110,7 @@ div:
     - column:
         class: gap-2 mb-4
         content:
-          for-each:
+          for_each:
             item_in: $theme.colors
             as: color, _
             content:
@@ -154,7 +154,7 @@ div:
     - row:
         class: gap-2
         content:
-          - for-each:
+          - for_each:
               item_of: $theme.forms.common.sizes
               as: size, value
               content:

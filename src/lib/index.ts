@@ -15,7 +15,7 @@ function registerAll(imports: Record<string, Any>) {
     for (const [key, value] of Object.entries(imports)) {
         if (app.hasComponent(key)) throw new Error(`Component [${key}] already registered`);
 
-        app.registerComponent(str(key).kebabCase(), value);
+        app.registerComponent(str(key).snakeCase(), value);
     }
 }
 
