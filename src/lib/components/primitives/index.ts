@@ -9,3 +9,4 @@ export { default as H5 } from './h5.svelte';
 export { default as H6 } from './h6.svelte';
 export { default as P } from './p.svelte';
 export { default as Image } from './image.svelte';
+export { default as Link } from './link.svelte';
