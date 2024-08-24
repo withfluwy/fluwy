@@ -16,10 +16,11 @@
         on_click?: any;
     }
 
-    const itemClasses = $derived(cn(useTheme('common.dropdown.item', Dropdown.Item), props?.class));
+    const itemClasses = $derived(cn(Dropdown.Item, useTheme('common.dropdown.item'), props?.class));
     const client = useClient();
     const context = useContext();
-    const dropdownContent = useTheme('common.dropdown.content', Dropdown.Content);
+    const dropdownContent = $derived(cn(Dropdown.Content, useTheme('common.dropdown.content')));
+    const arrowIcon = $state(useTheme('common.dropdown.arrow_icon_right', Dropdown.ArrowIconRight));
 
     async function onClick() {
         if (!props.on_click) return;
@@ -44,7 +45,7 @@
             <div class="w-full">
                 <Render props={props.text ?? props.content} />
             </div>
-            <Icon size={16} name="solar:alt-arrow-right-linear" />
+            <Icon size={16} name={arrowIcon} />
         </DropdownMenu.SubTrigger>
 
         <DropdownMenu.SubContent class={dropdownContent} transition={flyAndScale}>

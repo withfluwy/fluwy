@@ -8,6 +8,6 @@
     const props = $props();
 </script>
 
-<DropdownMenu.Label class={cn(useTheme('common.dropdown.label', Dropdown.Label), props?.class)}>
+<DropdownMenu.Label class={cn(Dropdown.Label, useTheme('common.dropdown.label'), props?.class)}>
     <Render {props} />
 </DropdownMenu.Label>

@@ -7,4 +7,4 @@
     const props = $props();
 </script>
 
-<DropdownMenu.Separator class={cn(useTheme('common.dropdown.separator', Dropdown.Separator), props?.class)} />
+<DropdownMenu.Separator class={cn(Dropdown.Separator, useTheme('common.dropdown.separator'), props?.class)} />

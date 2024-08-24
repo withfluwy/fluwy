@@ -1,7 +1,7 @@
 <script lang="ts">
     import { DropdownMenu } from 'bits-ui';
     import { Render } from '@/lib/core/index.js';
-    import { flyAndScale } from '@/lib/core/utils/index.js';
+    import { cn, flyAndScale } from '@/lib/core/utils/index.js';
     import { useTheme } from '@/lib/core/client/index.js';
     import { Dropdown } from './styles.js';
 
@@ -11,8 +11,7 @@
         content: any;
     }
 
-    const dropdownContent = useTheme('common.dropdown.content', Dropdown.Content);
-
+    const dropdownContent = $derived(cn(Dropdown.Content, useTheme('common.dropdown.content')));
     const props: DropdownProps = $props();
 </script>
 
