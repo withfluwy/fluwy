@@ -37,21 +37,11 @@
         />
 
         {#if props.icon_left}
-            <Icon
-                props={{
-                    name: props.icon_left,
-                    class: `left-2 ${iconDefaultClasses}`,
-                }}
-            />
+            <Icon name={props.icon_left} class={`left-2 ${iconDefaultClasses}`} />
         {/if}
 
         {#if props.icon_right}
-            <Icon
-                props={{
-                    name: props.icon_right,
-                    class: `right-2 ${iconDefaultClasses}`,
-                }}
-            />
+            <Icon name={props.icon_right} class={`right-2 ${iconDefaultClasses}`} />
         {/if}
     </div>
 

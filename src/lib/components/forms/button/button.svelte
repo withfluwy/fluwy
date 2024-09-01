@@ -49,7 +49,7 @@
 
     async function handleClick(e: MouseEvent) {
         if (!props.on_click) {
-            return props.onclick?.(e);
+            return props.onclick?.();
         }
 
         e.stopPropagation();

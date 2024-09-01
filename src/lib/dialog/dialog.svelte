@@ -99,13 +99,7 @@
                             transition:fade
                             class="absolute inset-0 z-20 flex items-center justify-center bg-white/90 backdrop-blur-sm"
                         >
-                            <Icon
-                                props={{
-                                    name: 'svg-spinners:90-ring-with-bg',
-                                    size: 40,
-                                    class: 'text-gray-500',
-                                }}
-                            />
+                            <Icon name="svg-spinners:90-ring-with-bg" size={40} class="text-gray-500" />
                         </div>
                     {:else}
                         <div class="overflow-auto bg-white">
