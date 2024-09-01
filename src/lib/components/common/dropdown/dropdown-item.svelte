@@ -16,10 +16,12 @@
         on_click?: any;
     }
 
-    const itemClasses = $derived(cn(Dropdown.Item, useTheme('common.dropdown.item'), props?.class));
+    const dropdownItemTheme = useTheme('common.dropdown.item');
+    const dropdownContentTheme = useTheme('common.dropdown.content');
+    const itemClasses = $derived(cn(Dropdown.Item, dropdownItemTheme, props?.class));
     const client = useClient();
     const context = useContext();
-    const dropdownContent = $derived(cn(Dropdown.Content, useTheme('common.dropdown.content')));
+    const dropdownContent = $derived(cn(Dropdown.Content, dropdownContentTheme));
     const arrowIcon = $state(useTheme('common.dropdown.arrow_icon_right', Dropdown.ArrowIconRight));
 
     async function onClick() {

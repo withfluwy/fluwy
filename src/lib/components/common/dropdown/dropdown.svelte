@@ -4,14 +4,16 @@
     import { cn, flyAndScale } from '@/lib/core/utils/index.js';
     import { useTheme } from '@/lib/core/client/index.js';
     import { Dropdown } from './styles.js';
+    import type { Any } from '@/lib/core/contracts.js';
 
     interface DropdownProps {
         align?: 'start' | 'center' | 'end';
-        trigger: any;
-        content: any;
+        trigger: Any;
+        content: Any;
     }
 
-    const dropdownContent = $derived(cn(Dropdown.Content, useTheme('common.dropdown.content')));
+    const dropdownContentTheme = useTheme('common.dropdown.content');
+    const dropdownContent = $derived(cn(Dropdown.Content, dropdownContentTheme));
     const props: DropdownProps = $props();
 </script>
 

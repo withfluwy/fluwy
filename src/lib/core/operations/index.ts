@@ -18,6 +18,7 @@ import { submit } from './submit.js';
 import { transform } from './transform/index.js';
 import { unset_local_storage } from './unset_local_storage.js';
 import { wrap_into } from './wrap_into/index.js';
+import { set_mode } from './set_mode/index.js';
 
 export function installOperations(client: Client) {
     client.addOperation('close_dialog', close_dialog);
@@ -42,4 +43,5 @@ export function installOperations(client: Client) {
     client.addOperation('unset_cookie', cookies.unset_operation);
     client.addOperation('unset_local_storage', unset_local_storage);
     client.addOperation('wrap_into', wrap_into);
+    client.addOperation('set_mode', set_mode);
 }

@@ -10,6 +10,7 @@
     import { generateColorVariables } from './utils/color/index.js';
     import { Toaster } from '../ui/sonner/index.js';
     import { Colors } from './styles.js';
+    import { ModeWatcher } from 'mode-watcher';
 
     export let data: RenderResponse;
 
@@ -31,6 +32,7 @@
     });
 </script>
 
+<ModeWatcher />
 <Toaster richColors position="top-right" closeButton />
 
 {#each $dialogs as dialog}
