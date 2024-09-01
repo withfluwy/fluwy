@@ -6,31 +6,12 @@ screen:
     link:
       url: /
       image:
-        class: h-6
-        src: /tunder-logo-light.svg
+        class: h-10
+        src: /fluwy-logo-black.svg
     row:
       class: gap-4 w-auto items-center
       content:
-        - dropdown:
-            trigger:
-              button:
-                class: size-8
-                variant: ghost
-                color: gray
-                icon_left:
-                  name: material-symbols:brightness-auto-rounded
-                  size: 24
-            content:
-              - dropdown_item:
-                  icon: solar:sun-2-linear
-                  text: Light
-              - dropdown_item:
-                  icon: solar:moon-stars-bold
-                  text: Dark
-              - dropdown_item:
-                  icon: material-symbols:brightness-auto-rounded
-                  class: text-primary
-                  text: System
+        - dark_mode_toggler:
         - button:
             class: size-8
             variant: ghost
