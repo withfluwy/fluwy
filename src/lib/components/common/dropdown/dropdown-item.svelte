@@ -6,6 +6,7 @@
     import type { IconProps } from '../icon/types.js';
     import { useTheme } from '@/lib/core/client/index.js';
     import { Dropdown } from './styles.js';
+    import type { Any } from '@/lib/core/contracts.js';
 
     const props: DropdownItemProps = $props();
 
@@ -13,7 +14,7 @@
         icon?: string;
         sub_content?: unknown;
         text?: string;
-        on_click?: any;
+        on_click?: Any;
     }
 
     const dropdownItemTheme = useTheme('common.dropdown.item');
@@ -30,7 +31,7 @@
         await client.handleOperations(props.on_click, context);
     }
 
-    function getIcon(propValue: any): IconProps {
+    function getIcon(propValue: Any): IconProps {
         if (typeof propValue === 'string') return { name: propValue };
 
         return propValue;

@@ -14,7 +14,7 @@
 
     const context = useContext();
 
-    let records: any[] = [];
+    let records: Any[] = [];
     let count = 0;
     let credentials = props.credentials || 'omit';
 

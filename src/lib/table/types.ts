@@ -1,5 +1,5 @@
 import type { Any } from '../core/contracts.js';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 import * as columns from './columns/index.js';
 
 export interface Table {

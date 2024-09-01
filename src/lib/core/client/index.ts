@@ -47,7 +47,7 @@ export class Client {
         return this;
     }
 
-    async handleOperation(event: OperationName, args: Any, context: Context, previousResult: any) {
+    async handleOperation(event: OperationName, args: Any, context: Context, previousResult: Any) {
         const handle = this.handlers[event];
 
         if (!handle) throw new Error(`No operation defined for [${event}]`);
@@ -55,7 +55,7 @@ export class Client {
         return handle(args, context, previousResult);
     }
 
-    async handleOperations(operations: Any, context: Context, initialResults?: any): Promise<Any> {
+    async handleOperations(operations: Any, context: Context, initialResults?: Any): Promise<Any> {
         let result = initialResults;
 
         if (!operations) return;

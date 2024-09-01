@@ -16,7 +16,7 @@
 
     const reservedNames = ['slot', 'content', 'component', 'class', 'vars'];
 
-    function parse(rawComponent: { [key: string]: any }): Component {
+    function parse(rawComponent: { [key: string]: Any }): Component {
         const component = {} as Component;
         component.name = componentName(rawComponent);
 
@@ -26,14 +26,14 @@
         return component;
     }
 
-    function exists(component: any) {
+    function exists(component: Any) {
         if (typeof component === 'string') return app.hasComponent(component);
 
         const parsed = parse(component);
         return app.hasComponent(parsed.name);
     }
 
-    function componentName(component: any): Component['name'] {
+    function componentName(component: Any): Component['name'] {
         return Object.keys(component)[0];
     }
 

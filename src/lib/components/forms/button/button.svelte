@@ -21,7 +21,7 @@
         size?: string;
         color?: string;
         on_click?: Any;
-        onclick?: Function;
+        onclick?: () => Any;
         component?: Partial<Component>;
         children?: Snippet;
     }

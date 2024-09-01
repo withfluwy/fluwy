@@ -11,6 +11,7 @@
     const props: RepeatProps = $props();
 </script>
 
-{#each Array(props.times) as _, i}
+<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+{#each Array(props.times) as _}
     <Render props={exclude(props, 'times')} />
 {/each}

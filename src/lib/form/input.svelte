@@ -3,9 +3,10 @@
     import { Random, cn } from '../core/utils/index.js';
     import { Icon } from '../components/common/icon/index.js';
     import type { InputProps } from './types.js';
+    import type { Any } from '../core/contracts.js';
 
     export let props: InputProps;
-    export let value: any = '';
+    export let value: Any = '';
     export let errors: string[] | undefined = undefined;
     const id = Random.id();
 

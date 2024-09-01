@@ -216,10 +216,6 @@ export type PageMeta = {
     vars?: Record<string, string>;
 };
 
-type LayoutMeta = {
-    theme?: string;
-};
-
 type LoadParams = { url: string; path?: string };
 
 export type RenderOptions = {
