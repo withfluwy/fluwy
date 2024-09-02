@@ -30,7 +30,7 @@
             {/if}
 
             {#if header}
-                <section class="bg-white/80 px-6 py-4 shadow-sm backdrop-blur">
+                <section class="bg-white/80 px-6 py-4 shadow-sm backdrop-blur dark:bg-gray-800/80">
                     <div class="flex items-center justify-between">
                         <Render props={header} />
                     </div>
