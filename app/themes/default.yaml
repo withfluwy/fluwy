@@ -11,7 +11,7 @@ typography:
     sizes:
 
 layout:
-  screen:
+  header:
 
 common:
   # icon_size: 40

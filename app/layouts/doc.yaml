@@ -7,7 +7,9 @@ screen:
       url: /
       image:
         class: h-10
-        src: /fluwy-logo-black.svg
+        src:
+          light: /fluwy-logo-black.svg
+          dark: /fluwy-logo-white.svg
     row:
       class: gap-4 w-auto items-center
       content:
