@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import { mergeObjects } from './index.js';
-import { Typography } from '@/lib/components/primitives/styles.js';
 
 const theme1 = parse(`
 button:

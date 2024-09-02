@@ -82,7 +82,7 @@ describe('findRoute', () => {
             const fileNotFound = `File ${file} not found`;
             const contentDoesNotMatch = `Content of file ${file} does not match`;
 
-            expect(fs.existsSync(path.resolve(`${testingDir}/${file}`)), fileNotFound).to.be.true;
+            expect(fs.existsSync(path.resolve(`${testingDir}/${file}`)), fileNotFound).toBe(true);
             expect(fs.readFileSync(path.resolve(`${testingDir}/${file}`), 'utf8'), contentDoesNotMatch).toBe(
                 testCase.contents
             );

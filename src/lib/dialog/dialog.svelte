@@ -7,7 +7,7 @@
     import type { Any, Context } from '../core/contracts.js';
     import { Render } from '../core/index.js';
     import { cn, deferred, flyAndScale } from '../core/utils/index.js';
-    import { Icon } from '../icon/index.js';
+    import { Icon } from '../components/common/icon/index.js';
     import { useContext } from '../core/context/index.js';
     import { useClient } from '../core/client/index.js';
     import { Durations, Operation } from '../core/constants.js';
@@ -99,13 +99,7 @@
                             transition:fade
                             class="absolute inset-0 z-20 flex items-center justify-center bg-white/90 backdrop-blur-sm"
                         >
-                            <Icon
-                                props={{
-                                    name: 'svg-spinners:90-ring-with-bg',
-                                    size: 40,
-                                    class: 'text-gray-500',
-                                }}
-                            />
+                            <Icon name="svg-spinners:90-ring-with-bg" size={40} class="text-gray-500" />
                         </div>
                     {:else}
                         <div class="overflow-auto bg-white">

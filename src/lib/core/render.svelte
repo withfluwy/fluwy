@@ -14,9 +14,9 @@
 
     context ??= useContext();
 
-    const reservedNames = ['slot', 'content', 'class', 'vars'];
+    const reservedNames = ['slot', 'content', 'component', 'class', 'vars'];
 
-    function parse(rawComponent: { [key: string]: any }): Component {
+    function parse(rawComponent: { [key: string]: Any }): Component {
         const component = {} as Component;
         component.name = componentName(rawComponent);
 
@@ -26,14 +26,14 @@
         return component;
     }
 
-    function exists(component: any) {
+    function exists(component: Any) {
         if (typeof component === 'string') return app.hasComponent(component);
 
         const parsed = parse(component);
         return app.hasComponent(parsed.name);
     }
 
-    function componentName(component: any): Component['name'] {
+    function componentName(component: Any): Component['name'] {
         return Object.keys(component)[0];
     }
 
@@ -59,6 +59,7 @@
 
         return schema;
     }
+
     function isArray() {
         const array = Boolean(Array.isArray(props) || props['0']);
 
@@ -102,6 +103,8 @@
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{component}</b>
             </div>
+        {:else if reservedNames.includes(component)}
+            <!-- reserved -->
         {:else}
             UNKNOWN
         {/if}

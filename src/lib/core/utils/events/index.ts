@@ -1,9 +1,11 @@
-export type Listener = (args: any) => void;
+import type { Any } from '@/lib/core/contracts.js';
+
+export type Listener = (args: Any) => void;
 
 class EventManager {
     private listeners: { [key: string]: Listener[] } = {};
 
-    emit(event: string, args?: any) {
+    emit(event: string, args?: Any) {
         const listeners = this.listeners[event];
 
         if (!listeners) return;

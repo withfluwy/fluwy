@@ -1,11 +1,12 @@
 <script lang="ts">
     import { fade, slide } from 'svelte/transition';
     import { Random, cn } from '../core/utils/index.js';
-    import { Icon } from '../icon/index.js';
+    import { Icon } from '../components/common/icon/index.js';
     import type { InputProps } from './types.js';
+    import type { Any } from '../core/contracts.js';
 
     export let props: InputProps;
-    export let value: any = '';
+    export let value: Any = '';
     export let errors: string[] | undefined = undefined;
     const id = Random.id();
 
@@ -36,21 +37,11 @@
         />
 
         {#if props.icon_left}
-            <Icon
-                props={{
-                    name: props.icon_left,
-                    class: `left-2 ${iconDefaultClasses}`,
-                }}
-            />
+            <Icon name={props.icon_left} class={`left-2 ${iconDefaultClasses}`} />
         {/if}
 
         {#if props.icon_right}
-            <Icon
-                props={{
-                    name: props.icon_right,
-                    class: `right-2 ${iconDefaultClasses}`,
-                }}
-            />
+            <Icon name={props.icon_right} class={`right-2 ${iconDefaultClasses}`} />
         {/if}
     </div>
 

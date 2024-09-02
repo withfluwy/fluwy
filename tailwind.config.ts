@@ -3,6 +3,7 @@ import path from 'path';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'selector',
     content: {
         files: ['./src/**/*.{html,js,svelte,ts,yml,yaml}', './app/**/*.{yml,yaml}'],
         extract: {

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Any, Component } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
-    import { Icon, type IconProps } from '../../../icon/index.js';
+    import { Icon, type IconProps } from '../../common/icon/index.js';
     import { useClient, mergeThemes } from '../../../core/client/index.js';
     import { useContext } from '../../../core/context/index.js';
     import { type Snippet } from 'svelte';
@@ -21,7 +21,7 @@
         size?: string;
         color?: string;
         on_click?: Any;
-        onclick?: Function;
+        onclick?: () => Any;
         component?: Partial<Component>;
         children?: Snippet;
     }
@@ -49,7 +49,7 @@
 
     async function handleClick(e: MouseEvent) {
         if (!props.on_click) {
-            return props.onclick?.(e);
+            return props.onclick?.();
         }
 
         e.stopPropagation();
@@ -81,6 +81,12 @@
               }
             : ({} as typeof Variants)
     );
+
+    function getIcon(propValue: Any): IconProps {
+        if (typeof propValue === 'string') return { name: propValue };
+
+        return propValue as IconProps;
+    }
 </script>
 
 <button
@@ -98,9 +104,9 @@
     style={setButtonColor}
 >
     {#if props.icon_left && !loading}
-        <Icon props={props.icon_left} />
+        <Icon {...getIcon(props.icon_left)} />
     {:else if loading}
-        <Icon props={{ name: 'svg-spinners:90-ring-with-bg' }} />
+        <Icon {...{ name: 'svg-spinners:90-ring-with-bg' }} />
     {/if}
 
     {#if props.content}
@@ -110,7 +116,7 @@
     {/if}
 
     {#if props.icon_right}
-        <Icon props={props.icon_right} />
+        <Icon {...getIcon(props.icon_right)} />
     {/if}
 
     {#if children}
