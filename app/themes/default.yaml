@@ -12,6 +12,7 @@ typography:
 
 layout:
   header:
+  brand:
 
 common:
   # icon_size: 40

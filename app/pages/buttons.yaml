@@ -1,4 +1,4 @@
-theme: default
+layout: doc
 ---
 div:
   class: px-10 py-4
