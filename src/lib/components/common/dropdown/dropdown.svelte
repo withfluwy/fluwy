@@ -5,6 +5,7 @@
     import { useTheme } from '@/lib/core/client/index.js';
     import { Dropdown } from './styles.js';
     import type { Any } from '@/lib/core/contracts.js';
+    import { useCommon } from '../styles.js';
 
     interface DropdownProps {
         align?: 'start' | 'center' | 'end';
@@ -13,7 +14,8 @@
     }
 
     const dropdownContentTheme = useTheme('common.dropdown.content');
-    const dropdownContent = $derived(cn(Dropdown.Content, dropdownContentTheme));
+    const commonBorderColor = useCommon('border_color');
+    const dropdownContent = $derived(cn(Dropdown.Content, commonBorderColor, dropdownContentTheme));
     const props: DropdownProps = $props();
 </script>
 

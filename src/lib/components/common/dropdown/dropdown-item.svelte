@@ -7,6 +7,7 @@
     import { useTheme } from '@/lib/core/client/index.js';
     import { Dropdown } from './styles.js';
     import type { Any } from '@/lib/core/contracts.js';
+    import { useCommon } from '../styles.js';
 
     const props: DropdownItemProps = $props();
 
@@ -19,10 +20,11 @@
 
     const dropdownItemTheme = useTheme('common.dropdown.item');
     const dropdownContentTheme = useTheme('common.dropdown.content');
+    const commonBorderColor = useCommon('border_color');
     const itemClasses = $derived(cn(Dropdown.Item, dropdownItemTheme, props?.class));
     const client = useClient();
     const context = useContext();
-    const dropdownContent = $derived(cn(Dropdown.Content, dropdownContentTheme));
+    const dropdownContent = $derived(cn(Dropdown.Content, commonBorderColor, dropdownContentTheme));
     const arrowIcon = $state(useTheme('common.dropdown.arrow_icon_right', Dropdown.ArrowIconRight));
 
     async function onClick() {

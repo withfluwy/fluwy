@@ -7,23 +7,16 @@ screen:
         light: /fluwy-logo-black.svg
         dark: /fluwy-logo-white.svg
         url: /
-    - brand:
-        class: h-6
-        light: /tunder-logo-black.svg
-        dark: /tunder-logo-white.svg
-        url: /
-    - row:
-        class: gap-4 w-auto items-center
-        content:
-          - dark_mode_toggler:
-          - button:
-              class: size-8
-              variant: ghost
-              color: gray
-              icon_left:
-                name: mdi:github
-                size: 24
-              on_click:
-                - goto: https://github.com/marcotas/
+    - spacer:
+    - dark_mode_toggler:
+    - button:
+        class: size-8
+        variant: ghost
+        color: gray
+        icon_left:
+          name: mdi:github
+          size: 24
+        on_click:
+          - goto: https://github.com/marcotas/
   content:
     - slot: default
