@@ -12,9 +12,9 @@
 <div
     id="header"
     class={cn(
-        'sticky top-0 z-[2] flex items-center gap-3 border-b bg-gray-100/50 p-3 dark:bg-gray-800/80',
         useCommon('border_color'),
         useCommon('foreground_color'),
+        'sticky top-0 z-[2] flex items-center gap-3 border-b bg-gray-100/50 px-4 py-3 dark:bg-gray-800/80',
         useTheme('layout.header'),
         props.class
     )}
