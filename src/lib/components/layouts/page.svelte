@@ -1,0 +1,35 @@
+<script lang="ts">
+    import { browser } from '$app/environment';
+    import { useTheme } from '@/lib/core/client/index.js';
+    import type { Any } from '@/lib/core/contracts.js';
+    import { Render } from '@/lib/core/index.js';
+    import { cn } from '@/lib/core/utils/index.js';
+    import { useCommon } from '../common/styles.js';
+
+    interface PageProps {
+        class?: string;
+        content?: Any;
+    }
+
+    const pageTheme = useTheme('layout.page');
+    const props: PageProps = $props();
+
+    function elementIsVisible(element: HTMLElement | null | false) {
+        return Boolean(element && element.computedStyleMap().get('display') !== 'none');
+    }
+
+    const sidebar = $derived(browser && document?.getElementById('sidebar'));
+    const aside = $derived(browser && document?.getElementById('aside'));
+    const hasSidebar = $derived(elementIsVisible(sidebar));
+    const hasAside = $derived(elementIsVisible(aside));
+</script>
+
+<div
+    id="page"
+    class={cn('h-screen overflow-auto', useCommon('background_color'), pageTheme, props?.class, {
+        'no-sidebar': !hasSidebar,
+        'no-aside': !hasAside,
+    })}
+>
+    <Render {props} />
+</div>

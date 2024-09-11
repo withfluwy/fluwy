@@ -13,9 +13,6 @@
         content: Any;
     }
 
-    const dropdownContentTheme = useTheme('common.dropdown.content');
-    const commonBorderColor = useCommon('border_color');
-    const dropdownContent = $derived(cn(Dropdown.Content, commonBorderColor, dropdownContentTheme));
     const props: DropdownProps = $props();
 </script>
 
@@ -26,7 +23,17 @@
         </div>
     </DropdownMenu.Trigger>
 
-    <DropdownMenu.Content align={props.align} class={dropdownContent} transition={flyAndScale} sideOffset={2}>
+    <DropdownMenu.Content
+        align={props.align}
+        class={cn(
+            useCommon('border_color'),
+            useCommon('foreground_color'),
+            Dropdown.Content,
+            useTheme('common.dropdown.content')
+        )}
+        transition={flyAndScale}
+        sideOffset={2}
+    >
         <DropdownMenu.Group>
             <Render props={props.content} />
         </DropdownMenu.Group>

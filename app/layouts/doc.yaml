@@ -1,22 +1,36 @@
 theme: default
 ---
-screen:
-  banner: This is the banner
+page:
   header:
-    - brand:
-        light: /fluwy-logo-black.svg
-        dark: /fluwy-logo-white.svg
-        url: /
-    - spacer:
-    - dark_mode_toggler:
-    - button:
-        class: size-8
-        variant: ghost
-        color: gray
-        icon_left:
-          name: mdi:github
-          size: 24
-        on_click:
-          - goto: https://github.com/marcotas/
-  content:
-    - slot: default
+    class: pt-14
+    banner:
+      class: absolute top-0 inset-x-0 flex items-center px-3 h-11
+      container: This is the banner
+    container_row:
+      - brand:
+          light: /fluwy-logo-black.svg
+          dark: /fluwy-logo-white.svg
+          url: /
+      - spacer:
+      - link:
+          content: Doc Layout
+          url: /
+      - link:
+          content: Dashboard Layout
+          url: /dashboard-layout
+      - dark_mode_toggler:
+      - button:
+          class: size-8
+          variant: ghost
+          color: gray
+          icon_left:
+            name: mdi:github
+            size: 24
+          on_click:
+            - goto: https://github.com/marcotas/
+  container:
+    body:
+      sidebar:
+      slot: default
+      aside:
+  footer:
