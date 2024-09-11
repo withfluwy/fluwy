@@ -1,4 +1,4 @@
-theme: default
+layout: doc
 ---
 column:
   class: px-10 py-4

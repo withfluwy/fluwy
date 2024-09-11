@@ -11,30 +11,39 @@ typography:
     sizes:
 
 layout:
+  banner: bg-purple-100 sticky top-0 border-purple-500 p-3 border
   header:
+  body:
+  main: p-10
+  page:
+  sidebar: border-4
+  aside: bg-green-100 w-64 z-[1] sticky h-screen overflow-y-auto top-0 border-green-500 p-3 border
+  footer: bg-purple-50 border-purple-500 p-3 border
 
 common:
   # icon_size: 40
-  dropdown:
-    # arrow_icon_right: solar:alt-arrow-right-bold
-    # content: p-0 rounded-none border-black
-    # separator: my-0 bg-black mx-0
-    # item: rounded-none hover:bg-primary-50 focus:bg-primary focus:text-white
+  # border_color:
+  # foreground_color:
+  # dropdown:
+  #   arrow_icon_right: solar:alt-arrow-right-bold
+  #   content: p-0 rounded-none border-black
+  #   separator: my-0 bg-black mx-0
+  #   item: rounded-none hover:bg-primary-50 focus:bg-primary focus:text-white
 
-# colors:
-#   primary:
-#     DEFAULT: '#ee2233'
-#     50: '#EBF2FE'
-#     100: '#D7E6FD'
-#     200: '#B0CDFB'
-#     300: '#89B4FA'
-#     400: '#629BF8'
-#     500: '#ee2233'
-#     600: '#0B61EE'
-#     700: '#084BB8'
-#     800: '#063583'
-#     900: '#041F4D'
-#     950: '#021532'
+colors:
+  primary:
+    DEFAULT: '#34d399'
+    50: '#ecfdf5'
+    100: '#d1fae5'
+    200: '#a7f3d0'
+    300: '#6ee7b7'
+    400: '#34d399'
+    500: '#10b981'
+    600: '#059669'
+    700: '#047857'
+    800: '#065f46'
+    900: '#064e3b'
+    950: '#022c22'
 #   gray:
 #     DEFAULT: '#6b7280'
 #     50: '#f9fafb'
