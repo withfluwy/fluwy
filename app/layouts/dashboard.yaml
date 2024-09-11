@@ -5,8 +5,8 @@ page:
     class: pt-14
     content:
       - banner:
-          class: absolute top-0 inset-x-0 flex items-center px-3 h-11
-          container: This is the banner
+          class: absolute top-0 inset-x-0 flex items-center px-4 h-11
+          content: This is the banner
       - brand:
           light: /fluwy-logo-black.svg
           dark: /fluwy-logo-white.svg
