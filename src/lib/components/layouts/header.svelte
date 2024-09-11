@@ -4,9 +4,7 @@
     import { cn } from '@/lib/core/utils/index.js';
     import { useCommon } from '../common/styles.js';
 
-    interface BannerProps extends ElementProps {}
-
-    const props: BannerProps = $props();
+    const props: ElementProps = $props();
 </script>
 
 <div
