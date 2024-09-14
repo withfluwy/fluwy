@@ -16,9 +16,12 @@ layout:
   body:
   main: p-10
   page:
-  sidebar: border-4
-  aside: bg-green-100 w-64 z-[1] sticky h-screen overflow-y-auto top-0 border-green-500 p-3 border
+  sidebar:
+  aside:
   footer: bg-purple-50 border-purple-500 p-3 border
+  menu_item:
+    # default: text-red-500
+    # active: text-white
 
 common:
   # icon_size: 40

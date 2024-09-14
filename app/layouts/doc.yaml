@@ -2,7 +2,7 @@ theme: default
 ---
 page:
   header:
-    class: pt-14
+    class: pt-14 bg-white/90 dark:bg-black/80
     banner:
       class: absolute top-0 inset-x-0 flex items-center px-3 h-11
       container: This is the banner
@@ -31,6 +31,20 @@ page:
   container:
     body:
       sidebar:
+        - menu_item:
+            icon: solar:notebook-minimalistic-linear
+            text: Documentation
+            url: /
+        - menu_item:
+            icon: solar:notebook-minimalistic-linear
+            text: Dashboard
+            url: /dashboard-layout
+        - menu_item:
+            icon: flowbite:google-solid
+            text: Google
+            url: https://google.com
+            trailing_icon: solar:arrow-right-up-linear
+
       slot: default
       aside:
   footer:

@@ -4,22 +4,36 @@
     import { cn } from '@/lib/core/utils/index.js';
     import Sidebar from './sidebar.svelte';
     import Aside from './aside.svelte';
+    import Header from './header.svelte';
+    import Footer from './footer.svelte';
 
     interface BodyProps extends ElementProps {
+        header?: ElementProps;
+        footer?: ElementProps;
         sidebar?: ElementProps;
         aside?: ElementProps;
     }
 
-    const { sidebar, aside, ...props }: BodyProps = $props();
+    const { sidebar, aside, header, footer, ...props }: BodyProps = $props();
 </script>
 
-<div class={cn('relative flex w-full items-start', useTheme('layout.body'), props.class)}>
+<div class={cn('relative flex h-full items-start', useTheme('layout.body'), props.class)}>
     {#if sidebar}
         <Sidebar {...sidebar} />
     {/if}
 
-    <main id="main" class={cn('w-full', useTheme('layout.main'))}>
-        <Render {props} />
+    <main class="relative flex h-full w-full flex-col">
+        {#if header}
+            <Header id="main-header" {...header} />
+        {/if}
+
+        <div id="main" class={cn('w-full grow', useTheme('layout.main'))}>
+            <Render {props} />
+        </div>
+
+        {#if footer}
+            <Footer {...footer} />
+        {/if}
     </main>
 
     {#if aside}

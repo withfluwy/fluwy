@@ -28,6 +28,7 @@
         class={cn(
             useCommon('border_color'),
             useCommon('foreground_color'),
+            useCommon('border_radius.lg'),
             Dropdown.Content,
             useTheme('common.dropdown.content')
         )}

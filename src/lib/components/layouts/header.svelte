@@ -4,11 +4,15 @@
     import { cn } from '@/lib/core/utils/index.js';
     import { useCommon } from '../common/styles.js';
 
-    const props: ElementProps = $props();
+    interface HeaderProps extends ElementProps {
+        id?: string;
+    }
+
+    const { id = 'header', ...props }: HeaderProps = $props();
 </script>
 
 <div
-    id="header"
+    {id}
     class={cn(
         useCommon('border_color'),
         useCommon('foreground_color'),
