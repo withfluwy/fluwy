@@ -22,7 +22,7 @@
     });
 </script>
 
-<div class="ml-auto flex items-center gap-1 text-gray-500">
+<div class="ml-auto flex items-center gap-1 text-neutral-500">
     {#each keys as shortcut}
         {#if icons[shortcut]}
             <iconify-icon icon={icons[shortcut]} class="h-6 w-6 rounded bg-white p-1 shadow-sm"></iconify-icon>

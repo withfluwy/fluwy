@@ -10,13 +10,13 @@
     export let errors: string[] | undefined = undefined;
     const id = Random.id();
 
-    const iconDefaultClasses = 'absolute text-gray-300 transition duration-100 peer-focus:text-primary';
+    const iconDefaultClasses = 'absolute text-neutral-300 transition duration-100 peer-focus:text-primary';
 </script>
 
 <div>
     {#if props.label}
         <label for={id} class="flex flex-col gap-1">
-            <div class="text-sm font-medium leading-6 text-gray-700">{props.label}</div>
+            <div class="text-sm font-medium leading-6 text-neutral-700">{props.label}</div>
         </label>
     {/if}
 

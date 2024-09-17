@@ -35,7 +35,7 @@
     class={cn(
         useCommon('border_color'),
         useCommon('border_radius.md'),
-        'relative flex min-h-10 w-full select-none items-center gap-2 px-3 py-1 text-sm opacity-70 transition-all duration-75 hover:bg-gray-50 hover:opacity-100 lg:min-h-8 dark:hover:bg-gray-800',
+        'relative flex min-h-10 w-full select-none items-center gap-2 px-3 py-1 text-sm opacity-70 transition-all duration-75 hover:bg-neutral-50 hover:opacity-100 lg:min-h-8 dark:hover:bg-neutral-800',
         useTheme('layout.menu_item.default'),
         {
             [activeTheme]: isActive,

@@ -88,10 +88,10 @@
 
 <div class="overflow-x-auto rounded-xl border shadow-sm">
     <table class="w-full">
-        <thead class="border-b bg-gray-50">
+        <thead class="border-b bg-neutral-50">
             <tr>
                 {#each props.columns as column}
-                    <th class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    <th class="px-4 py-3.5 text-left text-sm font-semibold text-neutral-900">
                         {column.header ?? ''}
                     </th>
                 {/each}
@@ -99,7 +99,7 @@
         </thead>
         <tbody>
             {#each records as record}
-                <tr on:click={() => onRowClick(record)} class="cursor-pointer hover:bg-gray-50/80">
+                <tr on:click={() => onRowClick(record)} class="cursor-pointer hover:bg-neutral-50/80">
                     {#each props.columns as column}
                         <svelte:component
                             this={columnComponents[column.type ?? 'text']}
