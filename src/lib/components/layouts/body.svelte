@@ -27,7 +27,7 @@
             <Header id="main-header" {...header} />
         {/if}
 
-        <div id="main" class={cn('w-full grow', useTheme('layout.main'))}>
+        <div id="main" class={cn('w-full grow p-10', useTheme('layout.main'))}>
             <Render {props} />
         </div>
 

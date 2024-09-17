@@ -33,10 +33,10 @@ page:
       sidebar:
         - menu_item:
             icon: solar:notebook-minimalistic-linear
-            text: Documentation
+            text: Documentation with very long text
             url: /
         - menu_item:
-            icon: solar:notebook-minimalistic-linear
+            icon: mage:dashboard-check
             text: Dashboard
             url: /dashboard-layout
         - menu_item:
@@ -44,6 +44,41 @@ page:
             text: Google
             url: https://google.com
             trailing_icon: solar:arrow-right-up-linear
+        - menu_item:
+            text: No icon menu
+            url: https://google.com
+        - menu_group:
+            header: Getting Started
+            icon: solar:skateboarding-round-line-duotone
+            active_if_starts_with: /getting-started
+            content:
+              - menu_item:
+                  text: What is Fluwy?
+                  url: /getting-started/what-is-fluwy
+              - menu_item:
+                  text: Concepts
+                  url: /getting-started/concepts
+              - menu_item:
+                  text: Installation
+                  url: /getting-started/installation
+        - menu_group:
+            header: Components
+            active_if_starts_with: /components
+            # icon: solar:three-squares-outline
+            icon: solar:three-squares-line-duotone
+            content:
+              - menu_item:
+                  text: Button
+                  url: /components/buttons
+              - menu_item:
+                  text: Sidebar
+                  url: /components/sidebar
+              - menu_item:
+                  text: Dropdown
+                  url: /components/dropdown
+              - menu_item:
+                  text: Typography
+                  url: /components/typography
 
       slot: default
       aside:

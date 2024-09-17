@@ -8,6 +8,7 @@
     import Spacer from './spacer.svelte';
     import { useCommon } from '../common/styles.js';
     import { useTheme } from '@/lib/core/client/index.js';
+    import { icon } from '../common/utils.js';
 
     interface MenuItemProps extends ElementProps {
         icon?: IconProps | string;
@@ -20,31 +21,38 @@
     const element = $derived(url ? 'a' : 'div');
     const isActive = $derived($page.url.pathname === url);
 
-    const defaultTheme = cn(
-        'flex w-full select-none items-center gap-2 p-3 opacity-70 transition-all duration-75 hover:bg-gray-50 hover:opacity-100 dark:[&.active]:hover:bg-primary dark:[&:not(.active)]:hover:bg-gray-800 dark:[&:not(.active)]:hover:text-white',
-        useTheme('layout.menu_item.default')
-    );
     const activeTheme = cn(
-        'active bg-primary text-primary-contrast border-primary font-bold opacity-100',
+        'active bg-primary-50 dark:bg-primary-950 dark:hover:bg-primary-950 text-primary-700 dark:text-primary-400 hover:bg-primary-50 border-primary opacity-100',
         useTheme('layout.menu_item.active')
     );
 
-    function icon(givenIcon: IconProps | string): IconProps {
-        if (typeof givenIcon === 'string') {
-            return { name: givenIcon };
-        }
-
-        return givenIcon as IconProps;
-    }
+    const indicatorActive = cn('opacity-100', useTheme('layout.menu_item.indicator.active'));
 </script>
 
 <svelte:element
     this={element}
     href={url ? url : undefined}
-    class={cn(useCommon('border_color'), useCommon('border_radius.md'), defaultTheme, {
-        [activeTheme]: isActive,
-    })}
+    class={cn(
+        useCommon('border_color'),
+        useCommon('border_radius.md'),
+        'relative flex min-h-10 w-full select-none items-center gap-2 px-3 py-1 text-sm opacity-70 transition-all duration-75 hover:bg-gray-50 hover:opacity-100 lg:min-h-8 dark:hover:bg-gray-800',
+        useTheme('layout.menu_item.default'),
+        {
+            [activeTheme]: isActive,
+        }
+    )}
 >
+    <div
+        class={cn(
+            useCommon('border_radius.md'),
+            'pointer-events-none invisible absolute inset-x-0 -left-[6.5px] flex h-full w-1 items-center bg-primary opacity-0 transition-all duration-200',
+            useTheme('layout.menu_item.indicator.default'),
+            {
+                [indicatorActive]: isActive,
+            }
+        )}
+    ></div>
+
     {#if iconProp}
         <Icon {...icon(iconProp)} />
     {/if}

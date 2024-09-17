@@ -49,6 +49,59 @@ page:
         - menu_item:
             text: No icon menu
             url: https://google.com
+        - menu_group:
+            header: Getting Started
+            icon: solar:skateboarding-bold-duotone
+            active_if_starts_with: /getting-started
+            content:
+              - menu_item:
+                  text: What is Fluwy?
+                  url: /getting-started/what-is-fluwy
+              - menu_item:
+                  text: Concepts
+                  url: /getting-started/concepts
+              - menu_item:
+                  text: Installation
+                  url: /getting-started/installation
+        - menu_group:
+            header: Components
+            active_if_starts_with: /components
+            icon: solar:three-squares-bold-duotone
+            content:
+              - menu_item:
+                  text: Button
+                  url: /components/buttons
+              - menu_item:
+                  text: Sidebar
+                  url: /components/sidebar
+              - menu_item:
+                  text: Dropdown
+                  url: /components/dropdown
+              - menu_item:
+                  text: Typography
+                  url: /components/typography
+        - menu_group:
+            header: Settings
+            active_if_starts_with: /settings
+            # icon: solar:three-squares-outline
+            icon: solar:settings-bold-duotone
+            content:
+              - menu_item:
+                  text: Overview
+                  url: /settings
+              - menu_item:
+                  text: I18n
+                  url: /settings/i18n
+              - menu_group:
+                  header: Themes
+                  content:
+                    - menu_item:
+                        text: Light
+                        url: /settings/themes/light
+                    - menu_item:
+                        text: Dark
+                        url: /settings/themes/dark
+
     slot: default
     # aside:
     # footer:

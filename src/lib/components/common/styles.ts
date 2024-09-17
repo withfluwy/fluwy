@@ -3,9 +3,9 @@ import { cn, get } from '@/lib/core/utils/index.js';
 
 const Common = {
     border_radius: {
-        lg: 'rounded-2xl',
-        md: 'rounded-xl',
-        sm: 'rounded-lg',
+        lg: 'rounded-xl',
+        md: 'rounded-lg',
+        sm: 'rounded-md',
     },
     border_color: 'border-gray-200 dark:border-gray-700',
     foreground_color: 'bg-gray-50 dark:bg-gray-800 backdrop-blur',
