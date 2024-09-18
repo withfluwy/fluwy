@@ -46,6 +46,10 @@ class EventManager {
     paginate(id: string) {
         return `Paginate::${id}`;
     }
+
+    toggleSidebar() {
+        return 'ToggleSidebar';
+    }
 }
 
 export function createEventManager() {

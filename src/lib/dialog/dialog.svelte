@@ -99,7 +99,7 @@
                             transition:fade
                             class="absolute inset-0 z-20 flex items-center justify-center bg-white/90 backdrop-blur-sm"
                         >
-                            <Icon name="svg-spinners:90-ring-with-bg" size={40} class="text-gray-500" />
+                            <Icon name="svg-spinners:90-ring-with-bg" size={40} class="text-neutral-500" />
                         </div>
                     {:else}
                         <div class="overflow-auto bg-white">
@@ -128,7 +128,10 @@
 
                         {#if props.footer}
                             <div
-                                class={cn('flex w-full justify-end gap-3 border-t bg-gray-50 p-5', props.footer.class)}
+                                class={cn(
+                                    'flex w-full justify-end gap-3 border-t bg-neutral-50 p-5',
+                                    props.footer.class
+                                )}
                             >
                                 <Render props={props.footer} />
                             </div>

@@ -87,11 +87,11 @@
 
 <form class={cn('flex flex-col gap-3', props.class)} enctype="multipart/form-data">
     {#each Object.entries(props.fields) as [field, input]}
-        <svelte:component
+        <!-- <svelte:component
             this={components[input.type ?? 'default'] ?? components['default']}
             bind:value={data[field]}
             errors={errors[field]}
             props={input}
-        />
+        /> -->
     {/each}
 </form>

@@ -18,12 +18,19 @@
         on_click?: Any;
     }
 
-    const itemClasses = cn(useCommon('border_color'), Dropdown.Item, useTheme('common.dropdown.item'), props?.class);
+    const itemClasses = cn(
+        useCommon('border_color'),
+        useCommon('border_radius.sm'),
+        Dropdown.Item,
+        useTheme('common.dropdown.item'),
+        props?.class
+    );
     const client = useClient();
     const context = useContext();
     const dropdownContent = cn(
         useCommon('border_color'),
         useCommon('foreground_color'),
+        useCommon('border_radius.lg'),
         Dropdown.Content,
         useTheme('common.dropdown.content')
     );

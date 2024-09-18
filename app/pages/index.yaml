@@ -17,7 +17,7 @@ column:
         goto: /typography
   - dropdown:
       trigger:
-        button: This is a Dropdown
+        - button: This is a Dropdown
       content:
         - dropdown_label: Configurations
         - dropdown_separator:

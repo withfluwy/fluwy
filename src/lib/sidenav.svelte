@@ -42,7 +42,7 @@
 	};
 </script>
 
-<div class={cn('w-64 h-full p-3 shrink-0 bg-gray-50', props.class)}>
+<div class={cn('w-64 h-full p-3 shrink-0 bg-neutral-50', props.class)}>
 	{#if props.logo}
 		<img
 			src={props.logo.light}
@@ -59,7 +59,7 @@
 					href={item.link}
 					class={`
                     cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg
-                    ${isActive(item) ? 'opacity-100 font-semibold bg-gray-100' : 'opacity-50 hover:opacity-100 hover:bg-gray-100'}
+                    ${isActive(item) ? 'opacity-100 font-semibold bg-neutral-100' : 'opacity-50 hover:opacity-100 hover:bg-neutral-100'}
                 `}
 				>
 					<iconify-icon

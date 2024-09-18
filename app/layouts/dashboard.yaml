@@ -1,35 +1,114 @@
 theme: default
 ---
 page:
-  header:
-    class: pt-14
-    content:
-      - banner:
-          class: absolute top-0 inset-x-0 flex items-center px-4 h-11
-          content: This is the banner
-      - brand:
-          light: /fluwy-logo-black.svg
-          dark: /fluwy-logo-white.svg
-          url: /
-      - spacer:
-      - link:
-          content: Doc Layout
-          url: /
-      - link:
-          content: Dashboard Layout
-          url: /dashboard-layout
-      - dark_mode_toggler:
-      - button:
-          class: size-8
-          variant: ghost
-          color: gray
-          icon_left:
-            name: mdi:github
-            size: 24
-          on_click:
-            - goto: https://github.com/marcotas/
   body:
+    header:
+      content:
+        # - brand:
+        #     light: /fluwy-logo-black.svg
+        #     dark: /fluwy-logo-white.svg
+        #     url: /
+        - button:
+            class: size-8 lg:hidden
+            icon_left: gravity-ui:bars
+            variant: ghost
+            color: gray
+            on_click:
+              emit: ToggleSidebar
+        - spacer:
+        - link:
+            content: Doc Layout
+            url: /
+        - link:
+            content: Dashboard Layout
+            url: /dashboard-layout
+        - dark_mode_toggler:
+        - button:
+            class: size-8
+            variant: ghost
+            color: gray
+            icon_left:
+              name: mdi:github
+              size: 24
+            on_click:
+              - goto: https://github.com/marcotas/
     sidebar:
+      class: 'first:border-4 first:border-red-500'
+      content:
+        - brand:
+            class: mx-4 my-3
+            light: /fluwy-logo-black.svg
+            dark: /fluwy-logo-white.svg
+            url: /
+        - menu_item:
+            icon: solar:notebook-minimalistic-linear
+            text: Documentation
+            url: /
+        - menu_item:
+            icon: mage:dashboard-check
+            text: Dashboard
+            url: /dashboard-layout
+        - menu_item:
+            icon: flowbite:google-solid
+            text: Google
+            url: https://google.com
+            trailing_icon: solar:arrow-right-up-linear
+        - menu_item:
+            text: No icon menu
+            url: https://google.com
+        - menu_group:
+            header: Getting Started
+            icon: solar:skateboarding-bold-duotone
+            active_if_starts_with: /getting-started
+            content:
+              - menu_item:
+                  text: What is Fluwy?
+                  url: /getting-started/what-is-fluwy
+              - menu_item:
+                  text: Concepts
+                  url: /getting-started/concepts
+              - menu_item:
+                  text: Installation
+                  url: /getting-started/installation
+        - menu_group:
+            header: Components
+            active_if_starts_with: /components
+            icon: solar:three-squares-bold-duotone
+            content:
+              - menu_item:
+                  text: Button
+                  url: /components/buttons
+              - menu_item:
+                  text: Sidebar
+                  url: /components/sidebar
+              - menu_item:
+                  text: Dropdown
+                  url: /components/dropdown
+              - menu_item:
+                  text: Typography
+                  url: /components/typography
+        - menu_group:
+            header: Settings
+            active_if_starts_with: /settings
+            # icon: solar:three-squares-outline
+            icon: solar:settings-bold-duotone
+            content:
+              - menu_item:
+                  text: Overview
+                  url: /settings
+              - menu_item:
+                  text: I18n
+                  url: /settings/i18n
+              - menu_group:
+                  header: Themes
+                  content:
+                    - menu_item:
+                        text: Light
+                        url: /settings/themes/light
+                    - menu_item:
+                        text: Dark
+                        url: /settings/themes/dark
+
     slot: default
-    aside:
-  footer:
+    # aside:
+    # footer:
