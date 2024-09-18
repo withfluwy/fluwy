@@ -7,6 +7,13 @@ page:
       class: absolute top-0 inset-x-0 flex items-center px-3 h-11
       container: This is the banner
     container_row:
+      - button:
+          class: size-8 lg:hidden
+          icon_left: gravity-ui:bars
+          variant: ghost
+          color: gray
+          on_click:
+            - emit: ToggleSidebar
       - brand:
           light: /fluwy-logo-black.svg
           dark: /fluwy-logo-white.svg

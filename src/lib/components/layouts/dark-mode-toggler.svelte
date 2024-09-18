@@ -9,11 +9,11 @@
     const getIconForSelectedMode = $derived(() => {
         switch ($userPrefersMode) {
             case 'light':
-                return 'solar:sun-2-linear';
+                return 'ph:sun';
             case 'dark':
-                return 'solar:moon-stars-bold';
+                return 'ph:moon';
             case 'system':
-                return 'material-symbols:brightness-auto-rounded';
+                return 'material-symbols:contrast';
         }
     });
 </script>
@@ -33,7 +33,7 @@
     content={[
         {
             dropdown_item: {
-                icon: 'solar:sun-2-linear',
+                icon: 'ph:sun',
                 text: 'Light',
                 class: `${isMode('light') ? 'text-primary' : ''}`,
                 on_click: {
@@ -43,7 +43,7 @@
         },
         {
             dropdown_item: {
-                icon: 'solar:moon-stars-bold',
+                icon: 'ph:moon',
                 class: `${isMode('dark') ? 'text-primary' : ''}`,
                 text: 'Dark',
                 on_click: {
@@ -53,7 +53,7 @@
         },
         {
             dropdown_item: {
-                icon: 'material-symbols:brightness-auto-rounded',
+                icon: 'material-symbols:contrast',
                 class: `${isMode('system') ? 'text-primary' : ''}`,
                 text: 'System',
                 on_click: {

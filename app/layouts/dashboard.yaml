@@ -8,6 +8,13 @@ page:
         #     light: /fluwy-logo-black.svg
         #     dark: /fluwy-logo-white.svg
         #     url: /
+        - button:
+            class: size-8 lg:hidden
+            icon_left: gravity-ui:bars
+            variant: ghost
+            color: gray
+            on_click:
+              emit: ToggleSidebar
         - spacer:
         - link:
             content: Doc Layout
