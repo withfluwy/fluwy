@@ -89,7 +89,6 @@
 </script>
 
 {#if isMobile}
-    <!-- Mobile Sidebar -->
     {#if open}
         <div
             role="button"
@@ -131,7 +130,6 @@
         <Render {props} />
     </div>
 {:else}
-    <!-- Desktop Sidebar -->
     <div
         id="sidebar"
         bind:this={sidebar}
@@ -139,7 +137,7 @@
         style:height
         class={cn(
             useCommon('border_color'),
-            'sticky inset-y-0 z-10 h-screen w-64 shrink-0 overflow-y-auto border-r bg-white p-3 dark:bg-neutral-900',
+            'sticky inset-y-0 z-[1] h-screen w-64 shrink-0 overflow-y-auto border-r bg-white p-3 dark:bg-neutral-900',
             useTheme('layout.sidebar'),
             props.class
         )}

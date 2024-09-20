@@ -17,17 +17,17 @@
     const { sidebar, aside, header, footer, ...props }: BodyProps = $props();
 </script>
 
-<div class={cn('relative flex h-full items-start', useTheme('layout.body'), props.class)}>
+<div class={cn('relative flex h-full items-stretch', useTheme('layout.body'), props.class)}>
     {#if sidebar}
         <Sidebar {...sidebar} />
     {/if}
 
-    <main class="relative flex h-full w-full flex-col">
+    <main class="relative flex w-full flex-col">
         {#if header}
             <Header id="main-header" {...header} />
         {/if}
 
-        <div id="main" class={cn('w-full grow p-10', useTheme('layout.main'))}>
+        <div id="main" class={cn('w-full grow p-10 dark:bg-neutral-800', useTheme('layout.main'))}>
             <Render {props} />
         </div>
 

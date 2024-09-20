@@ -26,7 +26,7 @@
 
 <div
     id="page"
-    class={cn('h-screen overflow-auto', useCommon('background_color'), pageTheme, props?.class, {
+    class={cn(useCommon('background_color'), 'h-screen overflow-auto dark:bg-neutral-900', pageTheme, props?.class, {
         'no-sidebar': !hasSidebar,
         'no-aside': !hasAside,
     })}

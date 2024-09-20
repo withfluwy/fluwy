@@ -92,7 +92,7 @@
 <button
     onclick={handleClick}
     class={cn(
-        `flex items-center justify-center gap-1 shadow-sm transition-all duration-75 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99]`,
+        `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
         sizes[size],
         variants[variant],
         borderRadius[size],
