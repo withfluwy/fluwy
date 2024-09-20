@@ -1,9 +1,9 @@
 import type { IconProps } from './icon/types.js';
 
-export function icon(iconProp: IconProps | string): IconProps {
+export function icon(iconProp: IconProps | string, defaults: Partial<IconProps> = {}): IconProps {
     if (typeof iconProp === 'string') {
-        return { name: iconProp, size: 16 };
+        return { name: iconProp, size: 16, ...defaults };
     }
 
-    return iconProp;
+    return { ...iconProp, ...defaults };
 }

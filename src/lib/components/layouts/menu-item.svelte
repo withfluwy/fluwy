@@ -20,6 +20,7 @@
     const { url, icon: iconProp, trailing_icon, text, ...props }: MenuItemProps = $props();
     const element = $derived(url ? 'a' : 'div');
     const isActive = $derived($page.url.pathname === url);
+    const iconTheme = useTheme('layout.menu_item.icon');
 
     const activeTheme = cn(
         'active bg-primary-50 dark:bg-primary-950 dark:hover:bg-primary-950 text-primary-700 dark:text-primary-400 hover:bg-primary-50 border-primary opacity-100',
@@ -39,11 +40,13 @@
         useTheme('layout.menu_item.default'),
         {
             [activeTheme]: isActive,
-        }
+        },
+        props.class
     )}
 >
     <div
         class={cn(
+            'menu-item-indicator',
             useCommon('border_radius.md'),
             'pointer-events-none invisible absolute inset-x-0 -left-[6.5px] flex h-full w-1 items-center bg-primary opacity-0 transition-all duration-200',
             useTheme('layout.menu_item.indicator.default'),
@@ -54,7 +57,7 @@
     ></div>
 
     {#if iconProp}
-        <Icon {...icon(iconProp)} />
+        <Icon {...icon(iconProp, { class: iconTheme })} />
     {/if}
 
     <Render props={text ?? props} />
