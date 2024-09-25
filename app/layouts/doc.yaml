@@ -77,7 +77,7 @@ page:
         class: hidden xl:block pt-10
         table_of_contents:
           max_level: 3
-          selector: "#content"
+          selector: "#content, .doc-content"
 
       slot: default
   # footer:

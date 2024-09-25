@@ -156,7 +156,7 @@
 </script>
 
 {#snippet itemElement(tocItem: TocItem)}
-    <li class={cn(useCommon('border_color'), 'text-bold ml-4 flex flex-col border-l leading-5')}>
+    <li class={cn(useCommon('border_color'), 'text-bold ml-4 flex flex-col border-l leading-7')}>
         <a
             href={`#${tocItem.id}`}
             class={cn(

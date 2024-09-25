@@ -2,69 +2,36 @@ layout: doc
 ---
 h1: Getting Started
 markdown:
-  id: content
+  class: doc-content
   generate_ids: true
   content: |
-    Welcome to **Fluwy**, an innovative UI App Framework that lets you build enterprise-level applications using human-friendly YML files. Fluwy simplifies development by eliminating the need for complex coding, allowing you to create and deploy applications faster.
+    Welcome to the **Getting Started** guide for **Fluwy**! This guide will help you set up your environment and create your first application using Fluwy's human-friendly YML (YAML) configuration files. Let's dive in and see how Fluwy simplifies UI development for everyone.
 
-    ## Prerequisites
+    ## The Fastest Way to Start: Use the Fluwy StackBlitz Starter
 
-    Before you start, make sure you have:
+    The quickest way to start building with Fluwy is by using the StackBlitz project we've set up for you. This online editor lets you experiment with Fluwy right in your browser — no installation required.
 
-    - **Node.js** (version 14.x or later)
-    - A code editor (e.g., **VS Code**)
-    - Basic understanding of **YAML** and **API integration** (optional but helpful)
+    **[Open the Fluwy Starter Project](https://stackblitz.com/github/withfluwy/fluwy-starter?file=app/pages/index.yaml)**
 
-    ## Installation
-
-    To begin using Fluwy, follow these steps to set up your project:
-
-    ### Option 1: Install Fluwy locally
-
-    You can install Fluwy in your local environment by using npm or yarn:
-
-    ```bash
-    npm install fluwy
-    ```
-    or
-    ```bash
-    yarn add fluwy
-    ```
-
-    ### Option 2: Start with StackBlitz
-
-    You can start right away using this Fluwy app template on StackBlitz. It comes with all dependencies installed and pre-configured for rapid development.
-
-    **[Start a Fluwy App on StackBlitz](<Insert_Your_StackBlitz_Link_Here>)**
-
-    ## Creating Your First Fluwy App
-
-    Once you have Fluwy set up, it’s time to create your first app.
-
-    1. Define your UI with **YAML** files that describe the structure and components of your app.
-    2. Use TailwindCSS settings to customize the design and appearance.
-    3. Integrate your backend services by connecting the UI with **API endpoints** or **GraphQL services**.
-
-    Example:
-
-    ```yaml
-    ui:
-      components:
-        - type: button
-          label: "Submit"
-          onClick: submitForm
-    ```
+    Click the link above to launch the Fluwy Starter project on StackBlitz.
 
     ## Next Steps
 
-    Now that you’ve got your first app running, explore more features of Fluwy, such as:
+    - **Experiment**: Use the StackBlitz project to explore Fluwy's capabilities.
+    - **Customize**: Modify the YML file to create unique interfaces.
+    - **Share**: Show your creations to the community and get feedback.
 
-    - **Advanced UI Customization** with TailwindCSS
-    - **Connecting with Backend APIs** through simple configurations
-    - **Extending your App** with custom Svelte components
+    ## Join the Community
 
-    For more detailed documentation, head over to our [API Documentation](#).
+    We're building Fluwy together with our community on Discord and YouTube. Join us to follow the development process, contribute ideas, and stay updated on the latest features.
+
+    - **Discord**: [Join our community](#)
+    - **YouTube**: [Subscribe to our channel](#)
+
+    ## Support and Contributions
+
+    We're excited to have you on board! If you encounter any issues or have suggestions, please reach out through our community channels.
 
     ---
 
-    This is a basic structure to guide you in setting up Fluwy. Would you like to adjust or expand any of these sections?
+    Thank you for being part of the Fluwy journey. Together, we're making UI development more accessible, efficient, and enjoyable for everyone!
