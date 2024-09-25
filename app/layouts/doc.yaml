@@ -2,6 +2,7 @@ theme: doc
 ---
 page:
   header:
+    class: px-0 sm:px-4
     container_row:
       - button:
           class: size-8 lg:hidden
@@ -71,6 +72,12 @@ page:
                   trailing_icon: solar:clock-circle-linear
                   class: opacity-50 hover:text-orange-600 dark:hover:text-orange-300
                   url: /components/typography
+
+      aside:
+        class: hidden xl:block pt-10
+        table_of_contents:
+          max_level: 3
+          selector: "#content, .doc-content"
 
       slot: default
   # footer:

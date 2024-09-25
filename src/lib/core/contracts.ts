@@ -19,6 +19,7 @@ export interface Component<T = Any> {
 }
 
 export interface ElementProps {
+    id?: string;
     class?: string;
     content?: Any;
 }

@@ -1,28 +1,44 @@
 <script lang="ts">
     import type { ElementProps } from '@/lib/core/contracts.js';
-    import { marked } from 'marked';
+    import { marked, type Tokens } from 'marked';
     import dom from 'dompurify';
     import { browser } from '$app/environment';
-    import { cn } from '@/lib/core/utils/index.js';
+    import { cn, str } from '@/lib/core/utils/index.js';
     import { Typography } from './styles.js';
     import { useTheme } from '@/lib/core/client/index.js';
-    import type { Tokens } from 'marked';
+    import { Events } from '@/lib/core/utils/events/index.js';
 
-    interface Props extends ElementProps {}
+    interface Props extends ElementProps {
+        generate_ids?: boolean;
+    }
 
-    const { content, ...props }: Props = $props();
+    const { content, generate_ids, ...props }: Props = $props();
+    const classes = {
+        h1: cn(Typography.h1, useTheme('typography.h1')),
+        h2: cn(Typography.h2, useTheme('typography.h2')),
+        h3: cn(Typography.h3, useTheme('typography.h3')),
+        h4: cn(Typography.h4, useTheme('typography.h4')),
+        h5: cn(Typography.h5, useTheme('typography.h5')),
+        h6: cn(Typography.h6, useTheme('typography.h6')),
+        p: cn(Typography.p, useTheme('typography.p')),
+        ol: cn(Typography.ol, useTheme('typography.ol')),
+        ul: cn(Typography.ul, useTheme('typography.ul')),
+        link: cn(Typography.link, useTheme('typography.link')),
+    };
+
     marked.use({
         extensions: [
             {
                 name: 'heading',
                 renderer(token) {
+                    const id = generate_ids ? str(token.text).slugCase() : '';
                     const headings: Record<number, string> = {
-                        1: `<h1 class="${cn(Typography.h1, useTheme('typography.h1'))}">${token.text}</h1>`,
-                        2: `<h2 class="${cn(Typography.h2, useTheme('typography.h2'))}">${token.text}</h2>`,
-                        3: `<h3 class="${cn(Typography.h3, useTheme('typography.h3'))}">${token.text}</h3>`,
-                        4: `<h4 class="${cn(Typography.h4, useTheme('typography.h4'))}">${token.text}</h4>`,
-                        5: `<h5 class="${cn(Typography.h5, useTheme('typography.h5'))}">${token.text}</h5>`,
-                        6: `<h6 class="${cn(Typography.h6, useTheme('typography.h6'))}">${token.text}</h6>`,
+                        1: `<h1 id="${id}" class="${classes.h1}">${token.text}</h1>`,
+                        2: `<h2 id="${id}" class="${classes.h2}">${token.text}</h2>`,
+                        3: `<h3 id="${id}" class="${classes.h3}">${token.text}</h3>`,
+                        4: `<h4 id="${id}" class="${classes.h4}">${token.text}</h4>`,
+                        5: `<h5 id="${id}" class="${classes.h5}">${token.text}</h5>`,
+                        6: `<h6 id="${id}" class="${classes.h6}">${token.text}</h6>`,
                     };
                     return headings[token.depth] || token.text;
                 },
@@ -30,7 +46,7 @@
             {
                 name: 'paragraph',
                 renderer(token) {
-                    return `<p class="${cn(Typography.p, useTheme('typography.p'))}">${this.parser.parseInline(token.tokens ?? [])}</p>`;
+                    return `<p class="${classes.p}">${this.parser.parseInline(token.tokens ?? [])}</p>`;
                 },
             },
             {
@@ -41,14 +57,14 @@
                         .map((item) => `<li>${this.parser.parseInline(item.tokens)}</li>`)
                         .join('');
                     const style = list.ordered ? Typography.ol : Typography.ul;
-                    return `<${list.ordered ? 'ol' : 'ul'} class="${cn(style, useTheme('typography.p'))}">${listItems}</${list.ordered ? 'ol' : 'ul'}>`;
+                    return `<${list.ordered ? 'ol' : 'ul'} class="${classes.ol}">${listItems}</${list.ordered ? 'ol' : 'ul'}>`;
                 },
             },
             {
                 name: 'link',
                 renderer(token) {
                     const link = token as Tokens.Link;
-                    return `<a href="${link.href}" class="${cn(Typography.link, useTheme('typography.link'))}">${link.text}</a>`;
+                    return `<a href="${link.href}" class="${classes.link}">${link.text}</a>`;
                 },
             },
         ],
@@ -59,15 +75,20 @@
             const JSDOM = (await import('jsdom')).JSDOM;
             const window = new JSDOM('').window;
             const purify = dom(window);
-
             return purify.sanitize(marked(content) as string);
         }
-
+        /**
+         * Workaround for the issue that the table-of-contents component is not rendered yet
+         * when the markdown component is rendered.
+         *
+         * @FIXME: Find a better solution.
+         */
+        setTimeout(() => Events.emit(Events.markdownReady), 10);
         return dom.sanitize(marked(content) as string);
     });
 </script>
 
-<div class={cn('content', props.class)}>
+<div id={props.id} class={cn('content', props.class)}>
     {#await html}
         <!-- empty -->
     {:then $html}

@@ -5,6 +5,8 @@ export type Listener = (args: Any) => void;
 class EventManager {
     private listeners: { [key: string]: Listener[] } = {};
 
+    public markdownReady = 'MarkdownReady';
+
     emit(event: string, args?: Any) {
         const listeners = this.listeners[event];
 

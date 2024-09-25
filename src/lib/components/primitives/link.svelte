@@ -1,7 +1,8 @@
 <script lang="ts">
+    import { useTheme } from '@/lib/core/client/index.js';
     import type { Any } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
-    import { exclude } from '@/lib/core/utils/index.js';
+    import { cn, exclude } from '@/lib/core/utils/index.js';
 
     interface LinkProps {
         class?: string;
@@ -13,6 +14,6 @@
     const props: LinkProps = $props();
 </script>
 
-<a href={props.url} class={props.class} target={props.open_new_tab ? '_blank' : ''}>
+<a href={props.url} class={cn(useTheme('typography.link'), props.class)} target={props.open_new_tab ? '_blank' : ''}>
     <Render props={exclude(props, 'url', 'open_new_tab')} />
 </a>

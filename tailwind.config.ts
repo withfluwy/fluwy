@@ -1,5 +1,6 @@
 import { extractTailwindOnYaml, getColors } from './src/lib/integrations/tailwind/index.js';
 import path from 'path';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -12,6 +13,9 @@ export default {
     },
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['Mulish', ...defaultTheme.fontFamily.sans],
+            },
             container: {
                 center: true,
                 padding: '2rem',

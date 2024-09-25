@@ -1,13 +1,11 @@
 typography:
-  link: bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:to-primary
+  link: bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:to-primary transition-all duration-300
 
 layout:
   footer: bg-purple-50 border-purple-500 p-3 border
   main: dark:bg-neutral-900
   menu_item:
-    active: bg-transparent text-primary-500 font-semibold hover:bg-transparent
-    # indicator:
-    #   default: visible w-2.5 h-2.5 border-2 border-white dark:border-black -left-[9.3px]
+    active: bg-transparent text-primary-500 font-semibold hover:bg-transparent dark:bg-transparent dark:hover:bg-transparent
     indicator:
       default: visible
   menu_group:

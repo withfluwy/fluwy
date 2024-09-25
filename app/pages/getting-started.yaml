@@ -1,3 +1,37 @@
 layout: doc
 ---
 h1: Getting Started
+markdown:
+  class: doc-content
+  generate_ids: true
+  content: |
+    Welcome to the **Getting Started** guide for **Fluwy**! This guide will help you set up your environment and create your first application using Fluwy's human-friendly YML (YAML) configuration files. Let's dive in and see how Fluwy simplifies UI development for everyone.
+
+    ## The Fastest Way to Start: Use the Fluwy StackBlitz Starter
+
+    The quickest way to start building with Fluwy is by using the StackBlitz project we've set up for you. This online editor lets you experiment with Fluwy right in your browser — no installation required.
+
+    **[Open the Fluwy Starter Project](https://stackblitz.com/github/withfluwy/fluwy-starter?file=app/pages/index.yaml)**
+
+    Click the link above to launch the Fluwy Starter project on StackBlitz.
+
+    ## Next Steps
+
+    - **Experiment**: Use the StackBlitz project to explore Fluwy's capabilities.
+    - **Customize**: Modify the YML file to create unique interfaces.
+    - **Share**: Show your creations to the community and get feedback.
+
+    ## Join the Community
+
+    We're building Fluwy together with our community on Discord and YouTube. Join us to follow the development process, contribute ideas, and stay updated on the latest features.
+
+    - **Discord**: [Join our community](#)
+    - **YouTube**: [Subscribe to our channel](#)
+
+    ## Support and Contributions
+
+    We're excited to have you on board! If you encounter any issues or have suggestions, please reach out through our community channels.
+
+    ---
+
+    Thank you for being part of the Fluwy journey. Together, we're making UI development more accessible, efficient, and enjoyable for everyone!

@@ -1,63 +1,75 @@
 layout: doc
 ---
-markdown: |
-  # Introduction
+column:
+  class: gap-2
+  h1:
+    class: mb-0
+    content: Introduction
+  div:
+    class: mt-0 font-bold text-lg mb-8 text-neutral-500/50 dark:text-neutral-200/50
+    content: Fluid UI Development with YAML Simplicity
+markdown:
+  id: content
+  generate_ids: true
+  content: |
+    Welcome to [Fluwy](/), an innovative **UI App Framework** designed to revolutionize the way you build enterprise-level applications. Fluwy empowers developers, designers, and organizations to create sophisticated user interfaces quickly and efficiently using simple YML (YAML) files. By eliminating the need for extensive coding knowledge, Fluwy streamlines the development process, allowing you to focus on delivering exceptional user experiences.
 
-  Welcome to **Fluwy**, an innovative [UI App Framework](/) designed to revolutionize the way you build enterprise-level applications. Fluwy empowers developers, designers, and organizations to create sophisticated user interfaces quickly and efficiently using simple YML (YAML) files. By eliminating the need for extensive coding knowledge, Fluwy streamlines the development process, allowing you to focus on delivering exceptional user experiences.
+    ## What is Fluwy?
 
-  ## What is Fluwy?
+    Fluwy is a powerful tool that interprets YML descriptions to seamlessly integrate with API endpoints. It leverages the simplicity of YML-based configuration to define UI structures, enabling rapid development and deployment of full-stack applications. Whether you're building UIs for backend APIs or leveraging Backend-as-a-Service (BaaS) solutions like [Strapi](https://strapi.io/) or [Directus](https://directus.io/), Fluwy accelerates your workflow and reduces time to market.
 
-  Fluwy is a powerful tool that interprets YML descriptions to seamlessly integrate with API endpoints. It leverages the simplicity of YML-based configuration to define UI structures, enabling rapid development and deployment of full-stack applications. Whether you're building UIs for backend APIs or leveraging Backend-as-a-Service (BaaS) solutions like Strapi or Directus, Fluwy accelerates your workflow and reduces time to market.
+    ## Key Features
 
-  ## Key Features
+    - **YML-Based Configuration**: Define your UI structure effortlessly using simple YML files. This approach makes it accessible for both developers and designers to contribute without deep coding expertise.
 
-  - **YML-Based Configuration**: Define your UI structure effortlessly using simple YML files. This approach makes it accessible for both developers and designers to contribute without deep coding expertise.
+    - **Rapid UI Development**: Accelerate your development process by quickly creating sophisticated user interfaces. Ideal for prototyping and building production-ready UIs connected to your backend services.
 
-  - **Rapid UI Development**: Accelerate your development process by quickly creating sophisticated user interfaces. Ideal for prototyping and building production-ready UIs connected to your backend services.
+    - **No Coding Required**: Minimize traditional programming. Fluwy allows non-developers to focus on visual aspects using TailwindCSS without needing to learn complex programming languages.
 
-  - **No Coding Required**: Minimize traditional programming. Fluwy allows non-developers to focus on visual aspects using TailwindCSS without needing to learn complex programming languages.
+    - **TailwindCSS Integration**: Customize the look and feel of your application easily. Fluwy supports design customization through TailwindCSS, providing flexibility in styling.
 
-  - **TailwindCSS Integration**: Customize the look and feel of your application easily. Fluwy supports design customization through TailwindCSS, providing flexibility in styling.
+    - **Seamless API Integration**: Effortlessly connect your UIs to APIs or GraphQL backend services. Fluwy is designed to work effectively with API-driven architectures.
 
-  - **Seamless API Integration**: Effortlessly connect your UIs to APIs or GraphQL backend services. Fluwy is designed to work effectively with API-driven architectures.
+    - **Extendable with Svelte Components**: While Fluwy simplifies UI development, it also allows for the creation and extension of Svelte components when necessary, offering additional flexibility.
 
-  - **Extendable with Svelte Components**: While Fluwy simplifies UI development, it also allows for the creation and extension of Svelte components when necessary, offering additional flexibility.
+    ## Who is Fluwy For?
 
-  ## Who is Fluwy For?
+    ### Developers & Solopreneurs
 
-  ### Developers & Solopreneurs
+    For those looking to rapidly develop UI applications connected to backend APIs without building everything from scratch. Fluwy reduces complexity and accelerates development time.
 
-  For those looking to rapidly develop UI applications connected to backend APIs without building everything from scratch. Fluwy reduces complexity and accelerates development time.
+    #### Another level
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. This level of depth is not visible in the TOC.
 
-  ### Designers
+    ### Designers
 
-  Designers can create applications without deep programming involvement. With simplified UI customization using YML and TailwindCSS, designers can focus on the visual experience.
+    Designers can create applications without deep programming involvement. With simplified UI customization using YML and TailwindCSS, designers can focus on the visual experience.
 
-  ### Enterprises
+    ### Enterprises
 
-  Larger teams can centralize the development of web products using a shared design system. Fluwy ensures collaborative work within a unified framework, providing a single source of truth for updates.
+    Larger teams can centralize the development of web products using a shared design system. Fluwy ensures collaborative work within a unified framework, providing a single source of truth for updates.
 
-  ## Benefits
+    ## Benefits
 
-  - **Accelerated Development**: Build applications faster with YML-based configurations, reducing the time spent on coding UI elements.
+    - **Accelerated Development**: Build applications faster with YML-based configurations, reducing the time spent on coding UI elements.
 
-  - **Simplified Maintenance**: Centralize UI configurations in YML files for easier maintenance and scalability of your application.
+    - **Simplified Maintenance**: Centralize UI configurations in YML files for easier maintenance and scalability of your application.
 
-  - **Flexibility and Customization**: Extend or customize components using Svelte when needed, without losing the simplicity of Fluwy's core approach.
+    - **Flexibility and Customization**: Extend or customize components using Svelte when needed, without losing the simplicity of Fluwy's core approach.
 
-  - **Efficient Full-Stack Development**: Designed for seamless integration with backend services, making full-stack application development more efficient.
+    - **Efficient Full-Stack Development**: Designed for seamless integration with backend services, making full-stack application development more efficient.
 
-  ## Join the Community
+    ## Join the Community
 
-  We're building Fluwy together with our community on Discord and YouTube. Join us to follow the development process, contribute ideas, and stay updated on the latest features.
+    We're building Fluwy together with our community on Discord and YouTube. Join us to follow the development process, contribute ideas, and stay updated on the latest features.
 
-  - **Discord**: [Join our community](#)
-  - **YouTube**: [Subscribe to our channel](#)
+    - **Discord**: [Join our community](#)
+    - **YouTube**: [Subscribe to our channel](#)
 
-  ## Origin of the Name
+    ## Origin of the Name
 
-  The name **"Fluwy"** is a blend of three words: **Fluent**, **Flow**, and **Fluid**. It represents our commitment to providing a fluid and intuitive experience in UI development, making the process as seamless and enjoyable as possible.
+    The name **"Fluwy"** is a blend of three words: **Fluent**, **Flow**, and **Fluid**. It represents our commitment to providing a fluid and intuitive experience in UI development, making the process as seamless and enjoyable as possible.
 
-  ---
+    ---
 
-  In summary, Fluwy is a user-friendly framework that simplifies and accelerates the UI development process. It enables a wide range of users—from developers to designers—to build scalable and maintainable applications with ease. Welcome to the future of UI development with Fluwy!
+    In summary, Fluwy is a user-friendly framework that simplifies and accelerates the UI development process. It enables a wide range of users—from developers to designers—to build scalable and maintainable applications with ease. Welcome to the future of UI development with Fluwy!
