@@ -24,10 +24,10 @@
 
     <main class="relative flex w-full flex-col">
         {#if header}
-            <Header id="main-header" {...header} />
+            <Header {...header} id="main-header" />
         {/if}
 
-        <div id="main" class={cn('w-full grow p-10 dark:bg-neutral-800', useTheme('layout.main'))}>
+        <div id="main" class={cn('w-full grow sm:p-10 dark:bg-neutral-800', useTheme('layout.main'))}>
             <Render {props} />
         </div>
 

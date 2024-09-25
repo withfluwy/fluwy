@@ -4,11 +4,7 @@
     import { cn } from '@/lib/core/utils/index.js';
     import { useCommon } from '../common/styles.js';
 
-    interface HeaderProps extends ElementProps {
-        id?: string;
-    }
-
-    const { id = 'header', ...props }: HeaderProps = $props();
+    const { id = 'header', ...props }: ElementProps = $props();
 </script>
 
 <div

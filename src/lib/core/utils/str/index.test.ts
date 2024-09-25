@@ -23,6 +23,11 @@ describe('str function', () => {
         expect(str('HelloWorld').titleCase()).toBe('Hello World');
     });
 
+    it('converts to slug case removing special characters', () => {
+        expect(str('Hello World').slugCase()).toBe('hello-world');
+        expect(str(`What's fluwy?`).slugCase()).toBe('whats-fluwy');
+    });
+
     describe('.words()', () => {
         it('supports pascal case', () => {
             expect(str('HelloWorld').words()).toEqual(['Hello', 'World']);

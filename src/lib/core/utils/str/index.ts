@@ -30,6 +30,11 @@ export class Str extends String {
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
             .join(' ');
     }
+
+    slugCase() {
+        const specialChars = /[^\w\s]/gi;
+        return new Str(`${this.text}`.replace(specialChars, '')).words().join('-').toLowerCase();
+    }
 }
 
 export function str(text: string) {

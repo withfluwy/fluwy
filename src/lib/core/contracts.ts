@@ -18,7 +18,7 @@ export interface Component<T = Any> {
     schema: T;
 }
 
-export interface ElementProps {
+export interface ElementProps extends HTMLElement {
     class?: string;
     content?: Any;
 }

@@ -1,3 +1,70 @@
 layout: doc
 ---
 h1: Getting Started
+markdown:
+  id: content
+  generate_ids: true
+  content: |
+    Welcome to **Fluwy**, an innovative UI App Framework that lets you build enterprise-level applications using human-friendly YML files. Fluwy simplifies development by eliminating the need for complex coding, allowing you to create and deploy applications faster.
+
+    ## Prerequisites
+
+    Before you start, make sure you have:
+
+    - **Node.js** (version 14.x or later)
+    - A code editor (e.g., **VS Code**)
+    - Basic understanding of **YAML** and **API integration** (optional but helpful)
+
+    ## Installation
+
+    To begin using Fluwy, follow these steps to set up your project:
+
+    ### Option 1: Install Fluwy locally
+
+    You can install Fluwy in your local environment by using npm or yarn:
+
+    ```bash
+    npm install fluwy
+    ```
+    or
+    ```bash
+    yarn add fluwy
+    ```
+
+    ### Option 2: Start with StackBlitz
+
+    You can start right away using this Fluwy app template on StackBlitz. It comes with all dependencies installed and pre-configured for rapid development.
+
+    **[Start a Fluwy App on StackBlitz](<Insert_Your_StackBlitz_Link_Here>)**
+
+    ## Creating Your First Fluwy App
+
+    Once you have Fluwy set up, it’s time to create your first app.
+
+    1. Define your UI with **YAML** files that describe the structure and components of your app.
+    2. Use TailwindCSS settings to customize the design and appearance.
+    3. Integrate your backend services by connecting the UI with **API endpoints** or **GraphQL services**.
+
+    Example:
+
+    ```yaml
+    ui:
+      components:
+        - type: button
+          label: "Submit"
+          onClick: submitForm
+    ```
+
+    ## Next Steps
+
+    Now that you’ve got your first app running, explore more features of Fluwy, such as:
+
+    - **Advanced UI Customization** with TailwindCSS
+    - **Connecting with Backend APIs** through simple configurations
+    - **Extending your App** with custom Svelte components
+
+    For more detailed documentation, head over to our [API Documentation](#).
+
+    ---
+
+    This is a basic structure to guide you in setting up Fluwy. Would you like to adjust or expand any of these sections?

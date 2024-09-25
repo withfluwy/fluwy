@@ -1,6 +1,7 @@
 <script lang="ts">
     import { useTheme } from '@/lib/core/client/index.js';
     import type { ElementProps } from '@/lib/core/contracts.js';
+    import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
 
     const props: ElementProps = $props();
@@ -21,11 +22,7 @@
     bind:this={aside}
     style:top
     style:height
-    class={cn(
-        'sticky z-[1] h-screen w-64 shrink-0 overflow-y-auto border border-green-500 bg-green-100 p-3',
-        useTheme('layout.aside'),
-        props.class
-    )}
+    class={cn('sticky z-[1] h-screen w-64 shrink-0 overflow-y-auto p-3', useTheme('layout.aside'), props.class)}
 >
-    aside
+    <Render {props} />
 </div>
