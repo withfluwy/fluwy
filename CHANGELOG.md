@@ -1,5 +1,12 @@
 # @fluwy/ui
 
+## 0.2.0
+
+### Minor Changes
+
+- e2c80c2: New component TableOfContents for documentation
+- 5088f26: New markdown component
+
 ## 0.1.0
 
 ### Minor Changes
