@@ -11,5 +11,6 @@ export { default as MenuGroup } from './menu-group.svelte';
 export { default as MenuItem } from './menu-item.svelte';
 export { default as Page } from './page.svelte';
 export { default as Sidebar } from './sidebar.svelte';
+export { default as SidebarToggler } from './sidebar-toggler.svelte';
 export { default as Spacer } from './spacer.svelte';
 export { default as TableOfContents } from './table-of-contents.svelte';
