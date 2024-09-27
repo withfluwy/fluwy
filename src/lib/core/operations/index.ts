@@ -1,5 +1,6 @@
 import { Client } from '../client/index.js';
 
+import { alert } from './alert.js';
 import { close_dialog } from './close_dialog.js';
 import { context } from './context.js';
 import { deleteOperation } from './delete.js';
@@ -13,12 +14,12 @@ import { open_dialog } from './open_dialog.js';
 import { refresh } from './refresh.js';
 import { set_auth_token } from './set_auth_token.js';
 import { set_auth_user } from './set_auth_user.js';
-import * as cookies from './cookies.js';
+import { set_mode } from './set_mode/index.js';
 import { submit } from './submit.js';
 import { transform } from './transform/index.js';
 import { unset_local_storage } from './unset_local_storage.js';
 import { wrap_into } from './wrap_into/index.js';
-import { set_mode } from './set_mode/index.js';
+import * as cookies from './cookies.js';
 
 export function installOperations(client: Client) {
     client.addOperation('close_dialog', close_dialog);
@@ -44,4 +45,5 @@ export function installOperations(client: Client) {
     client.addOperation('unset_local_storage', unset_local_storage);
     client.addOperation('wrap_into', wrap_into);
     client.addOperation('set_mode', set_mode);
+    client.addOperation('alert', alert);
 }
