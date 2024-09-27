@@ -7,7 +7,7 @@ column:
         text: Home
         variant: link
         color: primary
-        icon_left: solar:alt-arrow-left-linear
+        icon: solar:alt-arrow-left-linear
         on_click:
           goto: /
     - h1: H1 Heading

@@ -111,7 +111,7 @@
         )}
     >
         <Button
-            icon_left={{
+            icon={{
                 name: 'ph:x-bold',
                 size: 16,
             }}

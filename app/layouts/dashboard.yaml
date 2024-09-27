@@ -17,13 +17,13 @@ page:
             class: size-8
             variant: ghost
             color: gray
-            icon_left:
+            icon:
               name: mdi:github
               size: 24
             on_click:
               - goto: https://github.com/marcotas/
     sidebar:
-      class: 'first:border-4 first:border-red-500'
+      class: "first:border-4 first:border-red-500"
       content:
         - brand:
             class: mx-4 my-3

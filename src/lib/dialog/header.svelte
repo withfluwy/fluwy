@@ -24,7 +24,7 @@
     >
         <Button
             {...{
-                icon_left: 'ph:x',
+                icon: 'ph:x',
                 shape: 'ghost',
                 class: 'opacity-50 hover:opacity-100',
                 on_click: 'close_dialog',

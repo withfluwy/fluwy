@@ -24,7 +24,7 @@
             class: 'size-8',
             variant: 'ghost',
             color: 'gray',
-            icon_left: {
+            icon: {
                 name: getIconForSelectedMode(),
                 size: 24,
             },

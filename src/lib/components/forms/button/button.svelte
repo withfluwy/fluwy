@@ -12,7 +12,7 @@
 
     interface ButtonProps extends ElementProps {
         text?: string;
-        icon_left?: IconProps | string;
+        icon?: IconProps | string;
         icon_right?: IconProps | string;
         loading?: boolean;
         disabled?: boolean;
@@ -103,8 +103,8 @@
     {disabled}
     style={setButtonColor}
 >
-    {#if props.icon_left && !loading}
-        <Icon {...getIcon(props.icon_left)} />
+    {#if props.icon && !loading}
+        <Icon {...getIcon(props.icon)} />
     {:else if loading}
         <Icon {...{ name: 'svg-spinners:90-ring-with-bg' }} />
     {/if}

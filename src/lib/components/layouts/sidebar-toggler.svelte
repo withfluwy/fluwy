@@ -16,7 +16,7 @@
         button: {
             class: cn('size-8', useTheme('layout.sidebar_toggler'), props.class),
             variant: 'ghost',
-            icon_left: icon ?? useTheme('layout.sidebar_toggler_icon') ?? 'gravity-ui:bars',
+            icon: icon ?? useTheme('layout.sidebar_toggler_icon') ?? 'gravity-ui:bars',
             on_click: {
                 emit: 'ToggleSidebar',
             },

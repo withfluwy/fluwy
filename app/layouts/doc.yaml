@@ -6,7 +6,7 @@ page:
     container_row:
       - button:
           class: size-8 lg:hidden
-          icon_left: gravity-ui:bars
+          icon: gravity-ui:bars
           variant: ghost
           color: gray
           on_click:
@@ -27,7 +27,7 @@ page:
           class: size-8
           variant: ghost
           color: gray
-          icon_left:
+          icon:
             name: mdi:github
             size: 24
           on_click:

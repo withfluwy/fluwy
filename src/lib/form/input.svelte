@@ -27,7 +27,7 @@
             class={cn(
                 'peer h-9 w-full rounded-lg border px-3 shadow-sm outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1',
                 props.class,
-                props.icon_left ? 'pl-8' : '',
+                props.icon ? 'pl-8' : '',
                 props.icon_right ? 'pr-8' : '',
                 errors?.length ? 'border-destructive ring-destructive focus:border-destructive' : ''
             )}
@@ -36,8 +36,8 @@
             style:width={props.width_dynamic ? `${value.toString().length + 1}ch` : undefined}
         />
 
-        {#if props.icon_left}
-            <Icon name={props.icon_left} class={`left-2 ${iconDefaultClasses}`} />
+        {#if props.icon}
+            <Icon name={props.icon} class={`left-2 ${iconDefaultClasses}`} />
         {/if}
 
         {#if props.icon_right}

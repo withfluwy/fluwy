@@ -15,4 +15,4 @@
     };
 </script>
 
-<Button {...{ icon_left: icon, class: 'h-9 w-9', shape: 'ghost' }}></Button>
+<Button {...{ icon: icon, class: 'h-9 w-9', shape: 'ghost' }}></Button>
