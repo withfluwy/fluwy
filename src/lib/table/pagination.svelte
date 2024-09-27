@@ -84,5 +84,5 @@
         of {totalPages} - total of {count} records
     </div>
 
-    <Button on:click={next} {...{ content: 'Next', icon_right: 'solar:arrow-right-linear', disabled: !hasNext }} />
+    <Button on:click={next} {...{ content: 'Next', trailing_icon: 'solar:arrow-right-linear', disabled: !hasNext }} />
 </div>

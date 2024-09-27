@@ -28,7 +28,7 @@
                 'peer h-9 w-full rounded-lg border px-3 shadow-sm outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1',
                 props.class,
                 props.icon ? 'pl-8' : '',
-                props.icon_right ? 'pr-8' : '',
+                props.trailing_icon ? 'pr-8' : '',
                 errors?.length ? 'border-destructive ring-destructive focus:border-destructive' : ''
             )}
             bind:value
@@ -40,8 +40,8 @@
             <Icon name={props.icon} class={`left-2 ${iconDefaultClasses}`} />
         {/if}
 
-        {#if props.icon_right}
-            <Icon name={props.icon_right} class={`right-2 ${iconDefaultClasses}`} />
+        {#if props.trailing_icon}
+            <Icon name={props.trailing_icon} class={`right-2 ${iconDefaultClasses}`} />
         {/if}
     </div>
 

@@ -13,7 +13,7 @@
     interface ButtonProps extends ElementProps {
         text?: string;
         icon?: IconProps | string;
-        icon_right?: IconProps | string;
+        trailing_icon?: IconProps | string;
         loading?: boolean;
         disabled?: boolean;
         class?: string;
@@ -115,8 +115,8 @@
         <Render props={text} />
     {/if}
 
-    {#if props.icon_right}
-        <Icon {...getIcon(props.icon_right)} />
+    {#if props.trailing_icon}
+        <Icon {...getIcon(props.trailing_icon)} />
     {/if}
 
     {#if children}

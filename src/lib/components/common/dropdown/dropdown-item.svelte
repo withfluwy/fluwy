@@ -34,7 +34,7 @@
         Dropdown.Content,
         useTheme('common.dropdown.content')
     );
-    const arrowIcon = $state(useTheme('common.dropdown.arrow_icon_right', Dropdown.ArrowIconRight));
+    const arrowIcon = $state(useTheme('common.dropdown.arrow_trailing_icon', Dropdown.ArrowIconRight));
 
     async function onClick() {
         if (!props.on_click) return;

@@ -6,7 +6,7 @@ export interface InputProps {
     label?: string;
     class?: string;
     icon?: string;
-    icon_right?: string;
+    trailing_icon?: string;
     required?: boolean;
     width_dynamic?: boolean;
 }
