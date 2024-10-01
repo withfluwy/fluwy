@@ -9,6 +9,7 @@
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { BorderRadius, Sizes, Variants } from './styles.js';
     import { Colors } from '@/lib/core/styles.js';
+    import { useCommon } from '../../common/styles.js';
 
     interface ButtonProps extends ElementProps {
         text?: string;
@@ -74,10 +75,11 @@
     let defaultColorClasses: typeof Variants = $derived(
         color === 'default'
             ? {
-                  filled: 'text-color-900 focus:ring-color-300 bg-color-contrast enabled:hover:bg-color-100 border-color-300',
-                  outline: 'text-color-900 focus:ring-color-400 border-color-400',
-                  ghost: 'text-color-900 focus:ring-color-300 enabled:hover:bg-color-100',
-                  link: 'text-color-900 focus:ring-color-300',
+                  filled: 'text-color-900 dark:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 bg-color-contrast dark:bg-color-700/50 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 border-color-200 dark:border-color-700',
+                  outline:
+                      'text-color-900 dark:text-color-contrast bg-white enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 focus:ring-color dark:focus:ring-color border-color-500 dark:border-color-500',
+                  ghost: 'text-color-900 dark:text-color-contrast/75 enabled:dark:hover:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 border-transparent dark:border-transparent',
+                  link: 'text-color-900 underline decoration-color-500 enabled:hover:decoration-2 dark:text-color-contrast focus:ring-color-200',
               }
             : ({} as typeof Variants)
     );
@@ -92,7 +94,8 @@
 <button
     onclick={handleClick}
     class={cn(
-        `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
+        useCommon('border_color'),
+        `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
         sizes[size],
         variants[variant],
         borderRadius[size],

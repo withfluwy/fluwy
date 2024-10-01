@@ -1,6 +1,12 @@
 <script lang="ts">
     import { userPrefersMode } from 'mode-watcher';
     import { Dropdown } from '@/lib/components/common/index.js';
+    import type { ElementProps } from '@/lib/core/contracts.js';
+    import { cn } from '@/lib/core/utils/index.js';
+
+    interface Props extends ElementProps {
+        color?: string;
+    }
 
     const isMode = (current: 'light' | 'dark' | 'system') => {
         return $userPrefersMode === current;
@@ -16,14 +22,16 @@
                 return 'material-symbols:contrast';
         }
     });
+
+    const { color, ...props }: Props = $props();
 </script>
 
 <Dropdown
     trigger={{
         button: {
-            class: 'size-8',
+            class: cn('size-8 opacity-75 hover:opacity-100', props.class),
             variant: 'ghost',
-            color: 'gray',
+            color,
             icon: {
                 name: getIconForSelectedMode(),
                 size: 24,

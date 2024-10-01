@@ -23,7 +23,7 @@
     const iconTheme = useTheme('layout.menu_item.icon');
 
     const activeTheme = cn(
-        'active bg-primary-50 dark:bg-primary-950 dark:hover:bg-primary-950 text-primary-700 dark:text-primary-400 hover:bg-primary-50 border-primary opacity-100',
+        'active bg-primary-50 dark:bg-primary/20 dark:hover:bg-primary/20 text-primary-700 dark:text-primary-400 hover:bg-primary-50 border-primary opacity-100',
         useTheme('layout.menu_item.active')
     );
 

@@ -4,34 +4,21 @@ page:
   header:
     class: px-0 sm:px-4
     container_row:
-      - button:
-          class: size-8 lg:hidden
-          icon: gravity-ui:bars
-          variant: ghost
-          color: gray
-          on_click:
-            - emit: ToggleSidebar
+      - sidebar_toggler:
       - brand:
           light: /fluwy-logo-black.svg
           dark: /fluwy-logo-white.svg
           url: /
       - spacer:
-      - link:
-          content: Doc Layout
-          url: /
-      - link:
-          content: Dashboard Layout
-          url: /dashboard-layout
       - dark_mode_toggler:
       - button:
           class: size-8
           variant: ghost
-          color: gray
           icon:
             name: mdi:github
             size: 24
           on_click:
-            - goto: https://github.com/marcotas/
+            goto: https://github.com/withfluwy/fluwy
   container:
     body:
       sidebar:
@@ -74,7 +61,7 @@ page:
                   url: /components/typography
 
       aside:
-        class: hidden xl:block pt-10
+        class: pt-10 border-0
         table_of_contents:
           max_level: 3
           selector: "#content, .doc-content"

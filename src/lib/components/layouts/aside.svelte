@@ -3,6 +3,7 @@
     import type { ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
+    import { useCommon } from '../common/styles.js';
 
     const props: ElementProps = $props();
     let aside: HTMLDivElement;
@@ -22,7 +23,12 @@
     bind:this={aside}
     style:top
     style:height
-    class={cn('sticky z-[1] h-screen w-64 shrink-0 overflow-y-auto p-3', useTheme('layout.aside'), props.class)}
+    class={cn(
+        useCommon('border_color'),
+        'sticky z-[1] hidden h-screen w-64 shrink-0 overflow-y-auto border-l p-3 xl:block',
+        useTheme('layout.aside'),
+        props.class
+    )}
 >
     <Render {props} />
 </div>

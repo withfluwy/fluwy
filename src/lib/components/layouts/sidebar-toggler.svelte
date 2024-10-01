@@ -6,16 +6,18 @@
 
     interface Props extends ElementProps {
         icon?: string | IconProps;
+        color?: string;
     }
 
-    const { icon, ...props }: Props = $props();
+    const { icon, color, ...props }: Props = $props();
 </script>
 
 <Render
     props={{
         button: {
-            class: cn('size-8', useTheme('layout.sidebar_toggler'), props.class),
+            class: cn('size-8 lg:hidden', useTheme('layout.sidebar_toggler'), props.class),
             variant: 'ghost',
+            color,
             icon: icon ?? useTheme('layout.sidebar_toggler_icon') ?? 'gravity-ui:bars',
             on_click: {
                 emit: 'ToggleSidebar',

@@ -1,174 +1,171 @@
 layout: doc
 ---
-div:
-    class: px-10 py-4
+- button:
+    variant: link
+    icon: solar:alt-arrow-left-linear
+    text: Home
+    color: primary
+    on_click:
+      goto: /
+      log: navigate back
+- h4:
+    content: Variants
+    class: mb-3 mt-6
+- column:
     content:
-        - button:
-              variant: link
-              icon: solar:alt-arrow-left-linear
-              text: Home
-              color: primary
-              on_click:
-                  goto: /
-                  log: navigate back
-        - h4:
-              content: Variants
-              class: mb-3 mt-6
-        - column:
-              content:
-                  - h6: Default Button
-                  - row:
-                        class: gap-2 mt-1 mb-4
-                        content:
-                            - button: Default (filled)
-                            - button:
-                                  text: Default (Outline)
-                                  variant: outline
-                            - button:
-                                  text: Default (Ghost)
-                                  variant: ghost
-                            - button:
-                                  text: Default (Link)
-                                  variant: link
-                  - h6: Primary Button
-                  - row:
-                        class: gap-2 mt-1 mb-4
-                        content:
-                            - button:
-                                  text: Default (filled)
-                                  color: primary
-                            - button:
-                                  text: Default (Outline)
-                                  color: primary
-                                  variant: outline
-                            - button:
-                                  text: Default (Ghost)
-                                  color: primary
-                                  variant: ghost
-                            - button:
-                                  text: Default (Link)
-                                  color: primary
-                                  variant: link
-                  - h6: Gray Button
-                  - row:
-                        class: gap-2 mt-1 mb-4
-                        content:
-                            - button:
-                                  text: Default (filled)
-                                  color: gray
-                            - button:
-                                  text: Default (Outline)
-                                  color: gray
-                                  variant: outline
-                            - button:
-                                  text: Default (Ghost)
-                                  color: gray
-                                  variant: ghost
-                            - button:
-                                  text: Default (Link)
-                                  color: gray
-                                  variant: link
-                  - h6: Destructive Button
-                  - row:
-                        class: gap-2 mt-1 mb-4
-                        content:
-                            - button:
-                                  text: Default (filled)
-                                  color: destructive
-                            - button:
-                                  text: Default (Outline)
-                                  color: destructive
-                                  variant: outline
-                            - button:
-                                  text: Default (Ghost)
-                                  color: destructive
-                                  variant: ghost
-                            - button:
-                                  text: Default (Link)
-                                  color: destructive
-                                  variant: link
-                  - h6: Positive Button
-                  - row:
-                        class: gap-2 mt-1 mb-4
-                        content:
-                            - button:
-                                  text: Default (filled)
-                                  color: positive
-                            - button:
-                                  text: Default (Outline)
-                                  color: positive
-                                  variant: outline
-                            - button:
-                                  text: Default (Ghost)
-                                  color: positive
-                                  variant: ghost
-                            - button:
-                                  text: Default (Link)
-                                  color: positive
-                                  variant: link
+      - h6: Default Button
+      - row:
+          class: gap-2 mt-1 mb-4
+          content:
+            - button: Default (filled)
+            - button:
+                text: Default (Outline)
+                variant: outline
+            - button:
+                text: Default (Ghost)
+                variant: ghost
+            - button:
+                text: Default (Link)
+                variant: link
+      - h6: Primary Button
+      - row:
+          class: gap-2 mt-1 mb-4
+          content:
+            - button:
+                text: Default (filled)
+                color: primary
+            - button:
+                text: Default (Outline)
+                color: primary
+                variant: outline
+            - button:
+                text: Default (Ghost)
+                color: primary
+                variant: ghost
+            - button:
+                text: Default (Link)
+                color: primary
+                variant: link
+      - h6: Gray Button
+      - row:
+          class: gap-2 mt-1 mb-4
+          content:
+            - button:
+                text: Default (filled)
+                color: gray
+            - button:
+                text: Default (Outline)
+                color: gray
+                variant: outline
+            - button:
+                text: Default (Ghost)
+                color: gray
+                variant: ghost
+            - button:
+                text: Default (Link)
+                color: gray
+                variant: link
+      - h6: Destructive Button
+      - row:
+          class: gap-2 mt-1 mb-4
+          content:
+            - button:
+                text: Default (filled)
+                color: destructive
+            - button:
+                text: Default (Outline)
+                color: destructive
+                variant: outline
+            - button:
+                text: Default (Ghost)
+                color: destructive
+                variant: ghost
+            - button:
+                text: Default (Link)
+                color: destructive
+                variant: link
+      - h6: Positive Button
+      - row:
+          class: gap-2 mt-1 mb-4
+          content:
+            - button:
+                text: Default (filled)
+                color: positive
+            - button:
+                text: Default (Outline)
+                color: positive
+                variant: outline
+            - button:
+                text: Default (Ghost)
+                color: positive
+                variant: ghost
+            - button:
+                text: Default (Link)
+                color: positive
+                variant: link
 
-        - column:
-              class: gap-2 mb-4
+- column:
+    class: gap-2 mb-4
+    content:
+      for_each:
+        item_in: $theme.colors
+        as: color, _
+        content:
+          - div:
+              class: text-sm uppercase font-semibold
+              content: ${color}
+          - row:
+              class: mb-3 gap-2
               content:
-                  for_each:
-                      item_in: $theme.colors
-                      as: color, _
-                      content:
-                          - div:
-                                class: text-sm uppercase font-semibold
-                                content: ${color}
-                          - row:
-                                class: mb-3 gap-2
-                                content:
-                                    - button:
-                                          class: capitalize
-                                          color: ${color}
-                                          text: Default
-                                    - button:
-                                          class: capitalize
-                                          color: ${color}
-                                          variant: filled
-                                          text: Filled
-                                    - button:
-                                          class: capitalize
-                                          color: ${color}
-                                          variant: outline
-                                          text: Outline
-                                    - button:
-                                          class: capitalize
-                                          color: ${color}
-                                          variant: ghost
-                                          text: Ghost
-                                    - button:
-                                          class: capitalize
-                                          color: ${color}
-                                          variant: link
-                                          text: Link
-                                    - button:
-                                          class: capitalize
-                                          variant: primary-strong
-                                          text: Primary Strong
-        - div:
-              class: text-2xl mb-2 font-semibold
-              content: Sizes
-        - row:
-              class: gap-2
-              content:
-                  - for_each:
-                        item_of: $theme.forms.common.sizes
-                        as: size, value
-                        content:
-                            - button:
-                                  class: capitalize
-                                  icon: solar:hand-money-linear
-                                  text: ${size}
-                                  size: ${size}
-        - div:
-              class: text-2xl mb-2 font-semibold
-              content: Icons
-        - div:
-              class: text-2xl mb-2 font-semibold
-              content: States
-        - div:
-              class: text-2xl mb-2 font-semibold
-              content: Custom buttons
+                - button:
+                    class: capitalize
+                    color: ${color}
+                    text: Default
+                - button:
+                    class: capitalize
+                    color: ${color}
+                    variant: filled
+                    text: Filled
+                - button:
+                    class: capitalize
+                    color: ${color}
+                    variant: outline
+                    text: Outline
+                - button:
+                    class: capitalize
+                    color: ${color}
+                    variant: ghost
+                    text: Ghost
+                - button:
+                    class: capitalize
+                    color: ${color}
+                    variant: link
+                    text: Link
+                - button:
+                    class: capitalize
+                    variant: primary-strong
+                    text: Primary Strong
+- div:
+    class: text-2xl mb-2 font-semibold
+    content: Sizes
+- row:
+    class: gap-2
+    content:
+      - for_each:
+          item_of: $theme.forms.common.sizes
+          as: size, value
+          content:
+            - button:
+                class: capitalize
+                icon: solar:hand-money-linear
+                text: ${size}
+                size: ${size}
+- div:
+    class: text-2xl mb-2 font-semibold
+    content: Icons
+- div:
+    class: text-2xl mb-2 font-semibold
+    content: States
+- div:
+    class: text-2xl mb-2 font-semibold
+    content: Custom buttons

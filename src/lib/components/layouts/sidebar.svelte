@@ -104,7 +104,7 @@
         bind:this={sidebar}
         class={cn(
             useCommon('border_color'),
-            'fixed inset-y-0 left-0 z-50 h-screen w-64 shrink-0 overflow-y-auto border-r bg-white p-3 transition-transform duration-300 ease-in-out dark:bg-neutral-900',
+            'fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r bg-white p-3 transition-transform duration-300 ease-in-out dark:bg-neutral-900',
             open ? 'translate-x-0' : '-translate-x-full',
             useTheme('layout.sidebar'),
             props.class
@@ -115,9 +115,8 @@
                 name: 'ph:x-bold',
                 size: 16,
             }}
-            class="absolute right-4 !size-6 p-0 text-gray-500 hover:text-gray-700"
+            class="absolute right-3 top-3 z-40 !size-6 p-0"
             variant="ghost"
-            color="gray"
             onclick={toggleSidebar}
         ></Button>
         <div
@@ -137,7 +136,7 @@
         style:height
         class={cn(
             useCommon('border_color'),
-            'sticky inset-y-0 z-[1] h-screen w-64 shrink-0 overflow-y-auto border-r bg-white p-3 dark:bg-neutral-900',
+            'sticky inset-y-0 z-[1] flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r bg-white p-3 dark:bg-neutral-900',
             useTheme('layout.sidebar'),
             props.class
         )}
