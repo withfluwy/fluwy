@@ -13,7 +13,12 @@ markdown:
 
     **[Open the Fluwy Starter Project](https://stackblitz.com/github/withfluwy/fluwy-starter?file=app/pages/index.yaml)**
 
-    Click the link above to launch the Fluwy Starter project on StackBlitz.
+    Click the link above to launch the Fluwy Starter project on StackBlitz. Or if you are a developer with Nodejs installed,
+    you can start with the template using `degit`:
+
+    ```bash
+    pnpx degit withfluwy/fluwy-starter my-app
+    ```
 
     ## Next Steps
 
@@ -25,8 +30,8 @@ markdown:
 
     We're building Fluwy together with our community on Discord and YouTube. Join us to follow the development process, contribute ideas, and stay updated on the latest features.
 
-    - **Discord**: [Join our community](https://discord.gg/cpQGUEvHH7)
-    - **YouTube**: [Subscribe to our channel](https://youtube.com/@fluwyofficial?si=k5g9EJw18_wzjv5K)
+    - **Discord**: [Join our community](#)
+    - **YouTube**: [Subscribe to our channel](#)
 
     ## Support and Contributions
 
