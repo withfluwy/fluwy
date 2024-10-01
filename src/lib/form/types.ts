@@ -5,8 +5,8 @@ export interface InputProps {
     placeholder?: string;
     label?: string;
     class?: string;
-    icon_left?: string;
-    icon_right?: string;
+    icon?: string;
+    trailing_icon?: string;
     required?: boolean;
     width_dynamic?: boolean;
 }

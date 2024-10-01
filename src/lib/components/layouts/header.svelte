@@ -12,7 +12,7 @@
     class={cn(
         useCommon('border_color'),
         useCommon('background_color'),
-        'sticky top-0 z-[2] flex items-center gap-3 border-b bg-gray-50/90 px-4 py-3 backdrop-blur dark:bg-neutral-800/80',
+        'sticky top-0 z-[2] flex min-h-14 items-center gap-3 border-b bg-gray-50/90 px-4 py-3 backdrop-blur dark:bg-neutral-800/80',
         useTheme('layout.header'),
         props.class
     )}

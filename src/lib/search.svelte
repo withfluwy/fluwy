@@ -16,7 +16,7 @@
 <Input
     props={{
         placeholder: 'Search...',
-        icon_left: icon,
+        icon: icon,
         class: cn('w-96', props.class),
     }}
 />

@@ -35,6 +35,14 @@ export class Str extends String {
         const specialChars = /[^\w\s]/gi;
         return new Str(`${this.text}`.replace(specialChars, '')).words().join('-').toLowerCase();
     }
+
+    initials({ onlyFirstAndLast = false }: { onlyFirstAndLast?: boolean } = {}) {
+        return new Str(`${this.text}`)
+            .words()
+            .map((w, i) => (onlyFirstAndLast && i !== 0 && i !== this.words().length - 1 ? '' : w.charAt(0)))
+            .join('')
+            .toUpperCase();
+    }
 }
 
 export function str(text: string) {

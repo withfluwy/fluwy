@@ -65,7 +65,7 @@
         transition={slide}
         class={cn(
             commonBorderColor,
-            'ml-5 pl-1 opacity-0 transition-all duration-75',
+            'ml-[19.5px] pl-1 opacity-0 transition-all duration-75',
             { 'opacity-100': open },
             contentTheme
         )}

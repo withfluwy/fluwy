@@ -28,6 +28,19 @@ describe('str function', () => {
         expect(str(`What's fluwy?`).slugCase()).toBe('whats-fluwy');
     });
 
+    describe('.initials()', () => {
+        it('returns initials', () => {
+            expect(str('John Doe').initials()).toBe('JD');
+            expect(str('John').initials()).toBe('J');
+            expect(str('Marco Aurelio Pereira').initials()).toBe('MAP');
+        });
+
+        it('can specify if uses only the first and last name', () => {
+            expect(str('Marco Aurelio Pereira').initials({ onlyFirstAndLast: true })).toBe('MP');
+            expect(str('John Doe Mac Lucene').initials({ onlyFirstAndLast: true })).toBe('JL');
+        });
+    });
+
     describe('.words()', () => {
         it('supports pascal case', () => {
             expect(str('HelloWorld').words()).toEqual(['Hello', 'World']);

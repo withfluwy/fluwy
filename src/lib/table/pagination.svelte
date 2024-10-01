@@ -72,10 +72,7 @@
 </script>
 
 <div class="flex items-center justify-between py-4">
-    <Button
-        on:click={prev}
-        {...{ content: 'Previous', icon_left: 'solar:arrow-left-linear', disabled: !hasPrevious }}
-    />
+    <Button on:click={prev} {...{ content: 'Previous', icon: 'solar:arrow-left-linear', disabled: !hasPrevious }} />
 
     <div class="flex items-center justify-between gap-1">
         Page
@@ -87,5 +84,5 @@
         of {totalPages} - total of {count} records
     </div>
 
-    <Button on:click={next} {...{ content: 'Next', icon_right: 'solar:arrow-right-linear', disabled: !hasNext }} />
+    <Button on:click={next} {...{ content: 'Next', trailing_icon: 'solar:arrow-right-linear', disabled: !hasNext }} />
 </div>
