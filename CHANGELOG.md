@@ -1,5 +1,26 @@
 # @fluwy/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- bbb1275: New Avatar component
+- 9a0b0b5: Fix jsdom dependency
+- 8199324: Exposed Render component for custom integration with the framework.
+- f7368e9: New component SidebarToggler to toggle the sidebar on small screens.
+
+### Patch Changes
+
+- c7defce: update layout colors and more
+
+  Fixes:
+
+  - buttons dark/light mode
+  - adds support to spacer on sidebar
+  - foreground colors for light and dark modes
+  - padding on body's main content
+  - aside border left is not part of the default style
+
 ## 0.2.0
 
 ### Minor Changes
