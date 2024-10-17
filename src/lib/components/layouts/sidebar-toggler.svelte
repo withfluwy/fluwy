@@ -10,15 +10,17 @@
     }
 
     const { icon, color, ...props }: Props = $props();
+    const sidebarTogglerTheme = useTheme('layout.sidebar_toggler');
+    const sidebarTogglerIconTheme = useTheme('layout.sidebar_toggler_icon');
 </script>
 
 <Render
     props={{
         button: {
-            class: cn('size-8 lg:hidden', useTheme('layout.sidebar_toggler'), props.class),
+            class: cn('size-8 lg:hidden', sidebarTogglerTheme, props.class),
             variant: 'ghost',
             color,
-            icon: icon ?? useTheme('layout.sidebar_toggler_icon') ?? 'gravity-ui:bars',
+            icon: icon ?? sidebarTogglerIconTheme ?? 'gravity-ui:bars',
             on_click: {
                 emit: 'ToggleSidebar',
             },

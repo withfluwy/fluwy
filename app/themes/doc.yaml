@@ -3,7 +3,7 @@ typography:
 
 layout:
   footer: bg-purple-50 border-purple-500 p-3 border
-  main: dark:bg-neutral-900 px-0 sm:px-4 lg:p-10
+  main: px-0 sm:px-4 lg:p-10
   menu_item:
     active: bg-transparent text-primary-500 font-semibold hover:bg-transparent dark:bg-transparent dark:hover:bg-transparent
     indicator:
