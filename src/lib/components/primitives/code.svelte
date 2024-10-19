@@ -23,7 +23,7 @@
     });
 </script>
 
-<pre bind:this={element} class={cn(commonBorderRadius, 'bg-slate-900 p-4', props.class)}><code
+<pre bind:this={element} class={cn(commonBorderRadius, 'overflow-auto bg-slate-900 p-4', props.class)}><code
         class={`language-${language}`}>{content}</code
     ></pre>
 

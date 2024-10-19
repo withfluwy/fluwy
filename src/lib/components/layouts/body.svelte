@@ -25,7 +25,7 @@
         <Sidebar {...sidebar} />
     {/if}
 
-    <main class="relative flex w-full flex-col">
+    <main class="relative flex w-full min-w-0 flex-col">
         {#if header}
             <Header {...header} id="main-header" />
         {/if}

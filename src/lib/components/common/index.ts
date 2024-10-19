@@ -6,5 +6,5 @@ export { default as DropdownSeparator } from './dropdown/dropdown-separator.svel
 export { default as Icon } from './icon/icon.svelte';
 export { default as Repeat } from './repeat/repeat.svelte';
 export { default as Tab } from './tabs/tab.svelte';
-export { default as TabContent } from './tabs/tab-content.svelte';
+export { default as TabPanel } from './tabs/tab-panel.svelte';
 export { default as Tabs } from './tabs/tabs.svelte';

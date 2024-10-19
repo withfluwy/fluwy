@@ -7,12 +7,15 @@
     import { onMount } from 'svelte';
     import { userPrefersMode } from 'mode-watcher';
     import { browser } from '$app/environment';
+    import { useTheme } from '@/lib/core/client/index.js';
 
     interface Props extends ElementProps {
         id: string;
+        outer_radius?: boolean | 'off';
     }
 
     const props: Props = $props();
+    let outerRadius = $derived(props.outer_radius === false || props.outer_radius === 'off' ? false : true);
     let tab: any = $state(null);
     let cachedBgColor = 'rgb(255 255 255)';
     let style: CSSStyleDeclaration | undefined = $derived.by(() => (browser ? getComputedStyle(tab) : undefined));
@@ -21,8 +24,14 @@
     const commonBorderColor = useCommon('border_color');
     const commonBorderRadius = useCommon('border_radius.md');
     const commonBackgroundColor = useCommon('background_color');
+    const tabTheme = useTheme('common.tabs.tab');
 
     onMount(() => {
+        if (!outerRadius) return;
+
+        /**
+         * This initialization is only used when the outer radius is enabled which is true by default.
+         */
         initialize();
 
         observeDOMChanges(tab, (mutations) => {
@@ -33,6 +42,7 @@
 
     $effect(() => {
         if (!browser) return;
+        if (!outerRadius) return;
 
         $userPrefersMode && updateStyle(style!);
     });
@@ -77,6 +87,7 @@
         commonBorderColor,
         commonBackgroundColor,
         'relative -mb-px border-x border-t px-4 py-1.5 text-sm [&:not([data-state=active])]:border-transparent [&:not([data-state=active])]:bg-transparent',
+        tabTheme,
         props.class
     )}
 >

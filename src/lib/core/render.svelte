@@ -56,6 +56,7 @@
 
     function parseSchema(schema: Any) {
         if (typeof schema === 'string') return { content: schema };
+        if (Array.isArray(schema)) return { content: schema };
 
         return schema;
     }

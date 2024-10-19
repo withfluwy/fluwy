@@ -1,22 +1,75 @@
 <script lang="ts">
+    import { useTheme } from '@/lib/core/client/index.js';
     import type { Any, ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
-    import { cn } from '@/lib/core/utils/index.js';
+    import { cn, str } from '@/lib/core/utils/index.js';
     import { Tabs } from 'bits-ui';
+    import { Random } from '@/lib/core/utils/random/index.js';
 
     interface Props extends ElementProps {
         triggers: Any;
+        content: TabObject[];
     }
 
-    const { triggers, content, ...props }: Props = $props();
+    interface Tab {
+        id?: string;
+        class?: string;
+        title: Any;
+        panel: Any;
+        outer_radius?: boolean | 'off';
+    }
+
+    interface TabObject {
+        tab: Tab;
+    }
+
+    const { content, ...props }: Props = $props();
+    const tabTheme = useTheme('common.tabs.root');
+    const tabListTheme = useTheme('common.tabs.list');
+    const tabs = $derived(content.map(buildTab));
+
+    function buildTab({ tab }: TabObject): Tab {
+        const id = getId(tab);
+        const title = typeof tab.title === 'object' ? tab.title : { content: tab.title };
+        const panel = typeof tab.panel === 'object' ? tab.panel : { content: tab.panel };
+
+        return {
+            id,
+            title: {
+                ...title,
+                id,
+                class: cn(tab.class, tab.title.class),
+                outer_radius: tab.outer_radius,
+                content: tab.title.content ?? tab.title,
+            },
+            panel: {
+                ...panel,
+                for: id,
+                class: cn(tab.class, tab.panel.class),
+                outer_radius: tab.outer_radius,
+                content: tab.panel.content ?? tab.panel,
+            },
+        };
+    }
+
+    function getId(tab: Tab): string {
+        if (tab.id) return tab.id;
+
+        return Random.id();
+    }
+
+    const titles = $derived(tabs.map((tab) => tab.title));
+    const panels = $derived(tabs.map((tab) => tab.panel));
 </script>
 
-<Tabs.Root class={cn('w-full [&>[role="tabpanel"]:nth-of-type(2)]:rounded-tl-none', props.class)}>
-    <Tabs.List class="relative">
-        {#if triggers}
-            <Render props={triggers} />
-        {/if}
+<Tabs.Root class={cn('w-full min-w-0', tabTheme, props.class)}>
+    <Tabs.List class={cn('relative', tabListTheme)}>
+        {#each titles as title}
+            <Render props={{ tab: title }} />
+        {/each}
     </Tabs.List>
 
-    <Render props={content} />
+    {#each panels as panel}
+        <Render props={{ tab_panel: panel }} />
+    {/each}
 </Tabs.Root>

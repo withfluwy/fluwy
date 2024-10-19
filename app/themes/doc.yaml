@@ -43,3 +43,10 @@ colors:
 #   button:
 #     variants:
 #       primary: bg-gradient-to-r from-primary to-secondary text-white active:ring-secondary focus:ring-primary
+
+common:
+  tabs:
+    tab:
+    tab_panel:
+    root:
+    list:
