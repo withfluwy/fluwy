@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.4.0
+
+### Minor Changes
+
+- 28031d9: New Tabs Component
+
 ## 0.3.0
 
 ### Minor Changes
