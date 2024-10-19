@@ -2,7 +2,7 @@
     import { useTheme } from '$lib/core/client/index.js';
     import type { ElementProps } from '$lib/core/contracts.js';
     import { Render } from '$lib/core/index.js';
-    import { cn } from '$lib/core/utils/index.js';
+    import { cn, str } from '$lib/core/utils/index.js';
     import type { Snippet } from 'svelte';
     import { Typography } from './styles.js';
 
@@ -11,9 +11,14 @@
     }
 
     const { children, ...props }: H1Props = $props();
+    const id = $derived.by(() => {
+        if (typeof props.content !== 'string') return props.id;
+
+        return props.id ?? str(props.content).slugCase();
+    });
 </script>
 
-<h1 class={cn(Typography.h1, useTheme('typography.h1'), props.class)}>
+<h1 {id} class={cn(Typography.h1, useTheme('typography.h1'), props.class)}>
     {#if props.content}
         {#if typeof props === 'string'}
             {props}

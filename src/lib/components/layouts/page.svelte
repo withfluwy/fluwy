@@ -11,8 +11,9 @@
         content?: Any;
     }
 
-    const pageTheme = useTheme('layout.page');
     const props: PageProps = $props();
+    const pageTheme = useTheme('layout.page');
+    const commonBackgroundColor = useCommon('background_color');
 
     function elementIsVisible(element: HTMLElement | null | false) {
         return Boolean(element && element.computedStyleMap().get('display') !== 'none');
@@ -26,7 +27,7 @@
 
 <div
     id="page"
-    class={cn(useCommon('background_color'), 'h-screen overflow-auto dark:bg-neutral-900', pageTheme, props?.class, {
+    class={cn(commonBackgroundColor, 'h-screen overflow-auto', pageTheme, props?.class, {
         'no-sidebar': !hasSidebar,
         'no-aside': !hasAside,
     })}

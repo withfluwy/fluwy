@@ -15,19 +15,22 @@
     }
 
     const { sidebar, aside, header, footer, ...props }: BodyProps = $props();
+
+    const layoutBodyTheme = useTheme('layout.body');
+    const layoutMainTheme = useTheme('layout.main');
 </script>
 
-<div class={cn('relative flex h-full items-stretch', useTheme('layout.body'), props.class)}>
+<div class={cn('relative flex h-full items-stretch', layoutBodyTheme, props.class)}>
     {#if sidebar}
         <Sidebar {...sidebar} />
     {/if}
 
-    <main class="relative flex w-full flex-col">
+    <main class="relative flex w-full min-w-0 flex-col">
         {#if header}
             <Header {...header} id="main-header" />
         {/if}
 
-        <div id="main" class={cn('w-full grow p-4 dark:bg-neutral-800', useTheme('layout.main'))}>
+        <div id="main" class={cn('w-full grow p-4', layoutMainTheme)}>
             <Render {props} />
         </div>
 

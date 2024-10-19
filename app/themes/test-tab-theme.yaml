@@ -1,0 +1,8 @@
+common:
+  tab:
+    class: text-primary bg-gray-50
+    outer_radius: false
+    title: uppercase font-bold border
+    panel: text-lg text-red-500
+    root: border-2 border-purple-500 p-4 rounded-xl
+    list: bg-gray-200 px-2 py-1.5 rounded-lg mb-2

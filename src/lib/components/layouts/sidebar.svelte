@@ -13,6 +13,10 @@
 
     const props: ElementProps = $props();
 
+    const commonBorderColor = useCommon('border_color');
+    const commonBackgroundColor = useCommon('background_color');
+    const layoutSidebarTheme = useTheme('layout.sidebar');
+    const layoutSidebarIndicatorTheme = useTheme('layout.sidebar_indicator');
     let sidebar = $state<HTMLDivElement>();
     let sidebarIndicator = $state<HTMLDivElement>();
     let top = $state('0px');
@@ -103,10 +107,11 @@
         id="sidebar"
         bind:this={sidebar}
         class={cn(
-            useCommon('border_color'),
-            'fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r bg-white p-3 transition-transform duration-300 ease-in-out dark:bg-neutral-900',
+            commonBorderColor,
+            commonBackgroundColor,
+            'fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3 transition-transform duration-300 ease-in-out',
             open ? 'translate-x-0' : '-translate-x-full',
-            useTheme('layout.sidebar'),
+            layoutSidebarTheme,
             props.class
         )}
     >
@@ -124,7 +129,7 @@
             bind:this={sidebarIndicator}
             class={cn('invisible absolute flex items-center transition-all duration-200')}
         >
-            <div class={cn('h-full w-1 rounded-full bg-primary', useTheme('layout.sidebar_indicator'))}></div>
+            <div class={cn('h-full w-1 rounded-full bg-primary', layoutSidebarIndicatorTheme)}></div>
         </div>
         <Render {props} />
     </div>
@@ -135,9 +140,10 @@
         style:top
         style:height
         class={cn(
-            useCommon('border_color'),
-            'sticky inset-y-0 z-[1] flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r bg-white p-3 dark:bg-neutral-900',
-            useTheme('layout.sidebar'),
+            commonBorderColor,
+            commonBackgroundColor,
+            'sticky inset-y-0 z-[1] flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3',
+            layoutSidebarTheme,
             props.class
         )}
     >
@@ -146,7 +152,7 @@
             bind:this={sidebarIndicator}
             class={cn('invisible absolute flex items-center transition-all duration-200')}
         >
-            <div class={cn('h-full w-1 rounded-full bg-primary', useTheme('layout.sidebar_indicator'))}></div>
+            <div class={cn('h-full w-1 rounded-full bg-primary', layoutSidebarIndicatorTheme)}></div>
         </div>
         <Render {props} />
     </div>

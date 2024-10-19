@@ -1,0 +1,11 @@
+theme: test-tab-theme
+---
+div:
+  class: p-4
+  tabs:
+    - tab:
+        title: Tab 1
+        panel: Content of tab 1
+    - tab:
+        title: Tab 2
+        panel: Content of tab 2

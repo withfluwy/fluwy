@@ -1,0 +1,138 @@
+layout: doc
+---
+h2: Tabs Component
+p: Tabs can be used to create a tabbed interface to switch between different views.
+doc_content:
+  - h3:
+      class: "!mt-12"
+      content: Simple Tabs
+  - tabs:
+      - tab:
+          class: bg-neutral-50 dark:bg-neutral-800
+          title: Preview
+          panel:
+            class: p-10
+            tabs:
+              - tab:
+                  title: Tab 1
+                  panel: Content of tab 1
+              - tab:
+                  title: Tab 2
+                  panel: Content of tab 2
+      - tab:
+          id: code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          title: Code
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              class: bg-neutral-800
+              content: |
+                tabs:
+                  - tab:
+                      title: "Tab 1"
+                      panel: "Content of tab 1"
+                  - tab:
+                      title: "Tab 2"
+                      panel: "Content of tab 2"
+      - tab:
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          title: Structure
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              class: bg-neutral-800
+              content: |
+                # minimum
+                tabs:
+                  - tab:
+                      title: # required
+                      panel: # required
+
+                # all properties
+                tabs:
+                  - tab:
+                      id: # optional, auto generated
+                      class:
+                      outer_radius: # boolean
+                      title:
+                        class:
+                        content:
+                      panel:
+                        class:
+                        content:
+
+  - h3: Custom Tabs
+  - markdown: |
+      You can customize the tabs by using tailwind classes on the `title` and `panel` properties or in the tab's `class`
+      property. Both the `title` and `panel` properties inherits the tab's `class` property.
+  - tabs:
+      - tab:
+          class: bg-neutral-50 dark:bg-neutral-800
+          title: Preview
+          panel:
+            class: p-10
+            tabs:
+              - tab:
+                  class: rounded-[20px] border mb-2
+                  outer_radius: off
+                  title:
+                    class: bg-primary dark:bg-primary text-primary-contrast dark:text-primary-contrast border-primary dark:border-primary dark:[&:is([data-state=active])]:bg-primary dark:[&:is([data-state=active])]:text-primary-contrast dark:text-white
+                    content: Tab 1
+                  panel:
+                    class:
+                    content: Content of tab 1
+              - tab:
+                  class: rounded-[20px] border mb-2
+                  outer_radius: off
+                  title:
+                    class: bg-red-500 dark:bg-red-500 border-red-500 dark:border-red-500 [&:is([data-state=active])]:text-white dark:[&:is([data-state=active])]:text-white
+                    content: Tab 2
+                  panel: Content of tab 2
+      - tab:
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          title: Code
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              class: p-6
+              content: |
+                tabs:
+                  - tab:
+                      class: rounded-[20px] border mb-2
+                      outer_radius: off
+                      title:
+                        class: bg-primary dark:bg-primary text-primary-contrast dark:text-primary-contrast border-primary dark:border-primary dark:[&:is([data-state=active])]:bg-primary dark:[&:is([data-state=active])]:text-primary-contrast dark:text-white
+                        content: Tab 1
+                      panel:
+                        class:
+                        content: Content of tab 1
+                  - tab:
+                      class: rounded-[20px] border mb-2
+                      outer_radius: off
+                      title:
+                        class: bg-red-500 dark:bg-red-500 border-red-500 dark:border-red-500 [&:is([data-state=active])]:text-white dark:[&:is([data-state=active])]:text-white
+                        content: Tab 2
+                      panel: Content of tab 2
+  - h3: Theme Variables
+  - p: You can customize the tabs by using theme variables.
+  - tabs:
+      - tab:
+          title: Variables
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                common:
+                  tab:
+                    class:
+                    outer_radius: # defaults to true
+                    title:
+                    panel:
+                    root:
+                    list:
