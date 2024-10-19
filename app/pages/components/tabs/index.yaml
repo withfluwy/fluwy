@@ -45,10 +45,24 @@ doc_content:
               language: yaml
               class: bg-neutral-800
               content: |
+                # minimum
                 tabs:
                   - tab:
                       title: # required
                       panel: # required
+
+                # all properties
+                tabs:
+                  - tab:
+                      id: # optional, auto generated
+                      class:
+                      outer_radius: # boolean
+                      title:
+                        class:
+                        content:
+                      panel:
+                        class:
+                        content:
 
   - h3: Custom Tabs
   - markdown: |
@@ -115,8 +129,10 @@ doc_content:
               language: yaml
               content: |
                 common:
-                  tabs:
-                    tab:
-                    tab_panel:
+                  tab:
+                    class:
+                    outer_radius: # defaults to true
+                    title:
+                    panel:
                     root:
                     list:

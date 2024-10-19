@@ -58,6 +58,14 @@ common:
   #   content: p-0 rounded-none border-black
   #   separator: my-0 bg-black mx-0
   #   item: rounded-none hover:bg-primary-50 focus:bg-primary focus:text-white
+  common:
+    tab:
+      class:
+      outer_radius: # defaults to true
+      title:
+      panel:
+      root:
+      list:
 
 colors:
   primary:

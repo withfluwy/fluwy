@@ -15,7 +15,8 @@
     }
 
     const props: Props = $props();
-    let outerRadius = $derived(props.outer_radius === false || props.outer_radius === 'off' ? false : true);
+    const themeOuterRadius = useTheme('common.tab.outer_radius') ?? true;
+    let outerRadius = $derived(props.outer_radius === false || props.outer_radius === 'off' ? false : themeOuterRadius);
     let tab: any = $state(null);
     let cachedBgColor = 'rgb(255 255 255)';
     let style: CSSStyleDeclaration | undefined = $derived.by(() => (browser ? getComputedStyle(tab) : undefined));
@@ -24,7 +25,8 @@
     const commonBorderColor = useCommon('border_color');
     const commonBorderRadius = useCommon('border_radius.md');
     const commonBackgroundColor = useCommon('background_color');
-    const tabTheme = useTheme('common.tabs.tab');
+    const tabClassTheme = useTheme('common.tab.class');
+    const tabTitleTheme = useTheme('common.tab.title');
 
     onMount(() => {
         if (!outerRadius) return;
@@ -87,7 +89,8 @@
         commonBorderColor,
         commonBackgroundColor,
         'relative -mb-px border-x border-t px-4 py-1.5 text-sm [&:not([data-state=active])]:border-transparent [&:not([data-state=active])]:bg-transparent',
-        tabTheme,
+        tabClassTheme,
+        tabTitleTheme,
         props.class
     )}
 >

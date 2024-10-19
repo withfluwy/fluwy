@@ -14,12 +14,14 @@
 
     const { for: id, outer_radius = true, ...props }: Props = $props();
 
-    let outerRadius = $derived(outer_radius === false || outer_radius === 'off' ? false : true);
+    const themeOuterRadius = useTheme('common.tab.outer_radius') ?? true;
+    let outerRadius = $derived(outer_radius === false || outer_radius === 'off' ? false : themeOuterRadius);
 
     const commonBgColor = useCommon('background_color');
     const commonBorderColor = useCommon('border_color');
     const commonBorderRadius = useCommon('border_radius.lg');
-    const tabContentTheme = useTheme('common.tabs.tab_panel');
+    const tabClassTheme = useTheme('common.tab.class');
+    const tabPanelTheme = useTheme('common.tab.panel');
 
     onMount(() => {
         const tabs = document.querySelectorAll(`button[role=tab][data-value="${id}"]`) as NodeListOf<HTMLElement>;
@@ -54,7 +56,8 @@
         commonBorderRadius,
         commonBorderColor,
         'overflow-auto border p-4',
-        tabContentTheme,
+        tabClassTheme,
+        tabPanelTheme,
         props.class
     )}
     value={id}

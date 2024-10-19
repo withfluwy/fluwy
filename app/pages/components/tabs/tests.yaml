@@ -1,0 +1,42 @@
+column:
+  class: gap-4 p-4
+  content:
+    - tabs:
+        - tab:
+            title: Tab 1.1
+            panel: Content of tab 1.1
+        - tab:
+            title: Tab 1.2
+            panel: Content of tab 1.2
+    - tabs:
+        - tab:
+            outer_radius: off
+            class: rounded-[20px] border
+            title:
+              content: Tab 2.1
+            panel: Content of tab 2.1
+        - tab:
+            class: rounded-none border-b mb-1 [&:is([data-state=active])]:border-primary [&:is([data-state=active])]:bg-primary [&:is([data-state=active])]:text-primary-contrast
+            title:
+              class: uppercase underline
+              content: Tab 2.2
+            panel: Content of tab 2.2
+    - tabs:
+        - tab:
+            class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white dark:[&:is([data-state=active])]:text-white
+            title: Code
+            panel:
+              class: p-0
+              code:
+                language: yaml
+                content: |
+                  tabs:
+                    - tab:
+                        title: Tab 3.1
+                        panel: Content of tab 3.1
+                    - tab:
+                        title: Tab 3.2
+                        panel: Content of tab 3.2
+        - tab:
+            title: Tab 3.1
+            panel: Content of tab 3.1

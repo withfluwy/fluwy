@@ -24,8 +24,8 @@
     }
 
     const { content, ...props }: Props = $props();
-    const tabTheme = useTheme('common.tabs.root');
-    const tabListTheme = useTheme('common.tabs.list');
+    const tabRootTheme = useTheme('common.tab.root');
+    const tabListTheme = useTheme('common.tab.list');
     const tabs = $derived(content.map(buildTab));
 
     function buildTab({ tab }: TabObject): Tab {
@@ -62,7 +62,7 @@
     const panels = $derived(tabs.map((tab) => tab.panel));
 </script>
 
-<Tabs.Root class={cn('w-full min-w-0', tabTheme, props.class)}>
+<Tabs.Root class={cn('w-full min-w-0', tabRootTheme, props.class)}>
     <Tabs.List class={cn('relative', tabListTheme)}>
         {#each titles as title}
             <Render props={{ tab: title }} />
