@@ -38,6 +38,7 @@
     const variants = mergeThemes(`forms.${componentName}.variants`, Variants);
     const defaultSize = mergeThemes('forms.common.default_size', 'md');
     const borderRadius = mergeThemes('forms.common.border_radius', BorderRadius);
+    const commonBorderColor = useCommon('border_color');
 
     let innerLoading = false;
 
@@ -94,7 +95,7 @@
 <button
     onclick={handleClick}
     class={cn(
-        useCommon('border_color'),
+        commonBorderColor,
         `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
         sizes[size],
         variants[variant],

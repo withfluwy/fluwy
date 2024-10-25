@@ -6,6 +6,8 @@
     import { useCommon } from '../common/styles.js';
 
     const props: ElementProps = $props();
+    const commonBorderColor = useCommon('border_color');
+    const layoutAsideTheme = useTheme('layout.aside');
     let aside: HTMLDivElement;
     let top = $state('0px');
     let height = $state('100vh');
@@ -24,9 +26,9 @@
     style:top
     style:height
     class={cn(
-        useCommon('border_color'),
+        commonBorderColor,
         'sticky z-[1] hidden h-screen w-64 shrink-0 overflow-y-auto border-l p-3 xl:block',
-        useTheme('layout.aside'),
+        layoutAsideTheme,
         props.class
     )}
 >

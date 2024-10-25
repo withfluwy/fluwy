@@ -26,6 +26,7 @@
     const selector = $derived(props.selector || props.content);
     const max_level = $derived(props.max_level);
     const scrollDelay = 750;
+    const commonBorderColor = useCommon('border_color');
 
     let tocData: TocItem[] = $state([]);
     let activeIds: string[] = $state([]);
@@ -156,11 +157,11 @@
 </script>
 
 {#snippet itemElement(tocItem: TocItem)}
-    <li class={cn(useCommon('border_color'), 'text-bold ml-4 flex flex-col border-l leading-7')}>
+    <li class={cn(commonBorderColor, 'text-bold ml-4 flex flex-col border-l leading-7')}>
         <a
             href={`#${tocItem.id}`}
             class={cn(
-                useCommon('border_color'),
+                commonBorderColor,
                 '-ml-px truncate whitespace-nowrap border-l-2 border-transparent pl-4 opacity-50 transition-all duration-100 hover:border-black/40 hover:opacity-100 dark:hover:border-white',
                 {
                     'border-l-2 border-black opacity-100 hover:border-black dark:border-white dark:hover:border-white':
