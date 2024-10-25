@@ -109,7 +109,7 @@
         class={cn(
             commonBorderColor,
             commonBackgroundColor,
-            'fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3 transition-transform duration-300 ease-in-out',
+            'fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3 transition-transform duration-300 ease-in-out lg:hidden',
             open ? 'translate-x-0' : '-translate-x-full',
             layoutSidebarTheme,
             props.class
@@ -142,7 +142,7 @@
         class={cn(
             commonBorderColor,
             commonBackgroundColor,
-            'sticky inset-y-0 z-[1] flex h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3',
+            'sticky inset-y-0 z-[1] hidden h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3 lg:flex',
             layoutSidebarTheme,
             props.class
         )}
