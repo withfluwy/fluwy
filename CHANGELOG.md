@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.4.2
+
+### Patch Changes
+
+- fb178be: Fix sidebar on mobile devices while loading the app with tailwind classes instead of javascript.
+
 ## 0.4.1
 
 ### Patch Changes
