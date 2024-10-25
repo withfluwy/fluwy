@@ -12,8 +12,9 @@
     }
 
     const props: LinkProps = $props();
+    const linkTheme = useTheme('typography.link');
 </script>
 
-<a href={props.url} class={cn(useTheme('typography.link'), props.class)} target={props.open_new_tab ? '_blank' : ''}>
+<a href={props.url} class={cn(linkTheme, props.class)} target={props.open_new_tab ? '_blank' : ''}>
     <Render props={exclude(props, 'url', 'open_new_tab')} />
 </a>

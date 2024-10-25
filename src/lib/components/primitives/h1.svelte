@@ -11,6 +11,7 @@
     }
 
     const { children, ...props }: H1Props = $props();
+    const headingTheme = useTheme('typography.h1');
     const id = $derived.by(() => {
         if (typeof props.content !== 'string') return props.id;
 
@@ -18,7 +19,7 @@
     });
 </script>
 
-<h1 {id} class={cn(Typography.h1, useTheme('typography.h1'), props.class)}>
+<h1 {id} class={cn(Typography.h1, headingTheme, props.class)}>
     {#if props.content}
         {#if typeof props === 'string'}
             {props}

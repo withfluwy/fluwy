@@ -21,23 +21,29 @@
     const element = $derived(url ? 'a' : 'div');
     const isActive = $derived($page.url.pathname === url);
     const iconTheme = useTheme('layout.menu_item.icon');
+    const layoutMenuItemActiveTheme = useTheme('layout.menu_item.active');
+    const commonBorderColor = useCommon('border_color');
+    const commonBorderRadius = useCommon('border_radius.md');
+    const layoutMenuItemDefaultTheme = useTheme('layout.menu_item.default');
+    const layoutMenuItemIndicatorDefaultTheme = useTheme('layout.menu_item.indicator.default');
+    const layoutMenuItemIndicatorActiveTheme = useTheme('layout.menu_item.indicator.active');
 
     const activeTheme = cn(
         'active bg-primary-50 dark:bg-primary/20 dark:hover:bg-primary/20 text-primary-700 dark:text-primary-400 hover:bg-primary-50 border-primary opacity-100',
-        useTheme('layout.menu_item.active')
+        layoutMenuItemActiveTheme
     );
 
-    const indicatorActive = cn('opacity-100', useTheme('layout.menu_item.indicator.active'));
+    const indicatorActive = cn('opacity-100', layoutMenuItemIndicatorActiveTheme);
 </script>
 
 <svelte:element
     this={element}
     href={url ? url : undefined}
     class={cn(
-        useCommon('border_color'),
-        useCommon('border_radius.md'),
+        commonBorderColor,
+        commonBorderRadius,
         'relative flex min-h-10 w-full select-none items-center gap-2 px-3 py-1 text-sm opacity-70 transition-all duration-75 hover:bg-neutral-50 hover:opacity-100 lg:min-h-8 dark:hover:bg-neutral-800',
-        useTheme('layout.menu_item.default'),
+        layoutMenuItemDefaultTheme,
         {
             [activeTheme]: isActive,
         },
@@ -47,9 +53,9 @@
     <div
         class={cn(
             'menu-item-indicator',
-            useCommon('border_radius.md'),
+            commonBorderRadius,
             'pointer-events-none invisible absolute inset-x-0 -left-[6.5px] flex h-full w-1 items-center bg-primary opacity-0 transition-all duration-200',
-            useTheme('layout.menu_item.indicator.default'),
+            layoutMenuItemIndicatorDefaultTheme,
             {
                 [indicatorActive]: isActive,
             }
