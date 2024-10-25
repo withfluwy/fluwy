@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.4.1
+
+### Patch Changes
+
+- 98baa53: Fix usage of context with useCommon, and useTheme functions. Those functions should be used outside the html code, and should be assigned to a const variable inside the script.
+
 ## 0.4.0
 
 ### Minor Changes
