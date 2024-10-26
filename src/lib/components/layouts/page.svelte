@@ -16,7 +16,9 @@
     const commonBackgroundColor = useCommon('background_color');
 
     function elementIsVisible(element: HTMLElement | null | false) {
-        return Boolean(element && element.computedStyleMap().get('display') !== 'none');
+        if (!element) return false;
+        const style = getComputedStyle(element);
+        return style.display !== 'none';
     }
 
     const sidebar = $derived(browser && document?.getElementById('sidebar'));
