@@ -134,7 +134,11 @@
 
     function calculateScrollMarginTop(element: Element): number {
         const headerSize = document.querySelector('#header')?.getBoundingClientRect().height || 0;
-        const currentMarginTop = element.computedStyleMap().get('margin-top')?.toString() || '0';
+
+        if (!element) return headerSize;
+
+        const style = getComputedStyle(element);
+        const currentMarginTop = style.marginBottom || '0';
 
         return headerSize + parseInt(currentMarginTop);
     }
