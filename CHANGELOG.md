@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.4.3
+
+### Patch Changes
+
+- 44304bc: Fix firefox compatibility issues. Firefox doesn't support `computedStyleMap` function on DOM elements which was breaking fluwy.
+
 ## 0.4.2
 
 ### Patch Changes
