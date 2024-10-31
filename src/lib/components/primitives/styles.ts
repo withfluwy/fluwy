@@ -9,4 +9,11 @@ export const Typography = {
     ul: 'list-disc space-y-1 pl-6 m-3 mt-6 first:mt-0',
     ol: 'list-decimal space-y-1 pl-6 m-3 mt-6 first:mt-0',
     link: 'underline decoration-primary/50 hover:decoration-primary/100 hover:decoration-2 font-semibold text-primary transition-all duration-200',
+    hr: 'border-t my-6',
+    codespan: 'border bg-black/5 dark:bg-white/10 px-1 py-0.5',
+};
+
+export const Blocks = {
+    code: 'bg-neutral-800 dark:bg-neutral-800 p-4 mb-3 text-white/90',
+    blockquote: 'border-l-4 p-4 mb-4 bg-neutral-100 dark:bg-neutral-800',
 };
