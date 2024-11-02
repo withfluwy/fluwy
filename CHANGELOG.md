@@ -1,5 +1,11 @@
 # @fluwy/ui
 
+## 0.5.0
+
+### Minor Changes
+
+- f445786: New components for the markdown: code block, code span, hr, blockquote.
+
 ## 0.4.3
 
 ### Patch Changes
