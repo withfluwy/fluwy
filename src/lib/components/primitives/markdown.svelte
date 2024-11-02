@@ -4,15 +4,17 @@
     import dom from 'dompurify';
     import { browser } from '$app/environment';
     import { cn, str } from '@/lib/core/utils/index.js';
-    import { Typography } from './styles.js';
+    import { Typography, Blocks } from './styles.js';
     import { useTheme } from '@/lib/core/client/index.js';
     import { Events } from '@/lib/core/utils/events/index.js';
+    import { useCommon } from '../common/styles.js';
+    import hljs from 'highlight.js';
 
     interface Props extends ElementProps {
         generate_ids?: boolean;
     }
 
-    const { content, generate_ids, ...props }: Props = $props();
+    const { content, generate_ids = true, ...props }: Props = $props();
     const classes = {
         h1: cn(Typography.h1, useTheme('typography.h1')),
         h2: cn(Typography.h2, useTheme('typography.h2')),
@@ -24,6 +26,20 @@
         ol: cn(Typography.ol, useTheme('typography.ol')),
         ul: cn(Typography.ul, useTheme('typography.ul')),
         link: cn(Typography.link, useTheme('typography.link')),
+        hr: cn(useCommon('border_color'), Typography.hr, useTheme('typography.hr')),
+        code: cn(useCommon('border_radius.lg'), useCommon('border_color'), Blocks.code),
+        codespan: cn(
+            useCommon('border_radius.sm'),
+            useCommon('border_color'),
+            Typography.codespan,
+            useTheme('typography.codespan')
+        ),
+        blockquote: cn(
+            useCommon('border_color'),
+            useCommon('border_radius.lg'),
+            Blocks.blockquote,
+            useTheme('typography.blockquote')
+        ),
     };
 
     marked.use({
@@ -33,12 +49,12 @@
                 renderer(token) {
                     const id = generate_ids ? str(token.text).slugCase() : '';
                     const headings: Record<number, string> = {
-                        1: `<h1 id="${id}" class="${classes.h1}">${token.text}</h1>`,
-                        2: `<h2 id="${id}" class="${classes.h2}">${token.text}</h2>`,
-                        3: `<h3 id="${id}" class="${classes.h3}">${token.text}</h3>`,
-                        4: `<h4 id="${id}" class="${classes.h4}">${token.text}</h4>`,
-                        5: `<h5 id="${id}" class="${classes.h5}">${token.text}</h5>`,
-                        6: `<h6 id="${id}" class="${classes.h6}">${token.text}</h6>`,
+                        1: `<h1 id="${id}" class="${classes.h1}">${marked.parseInline(token.text)}</h1>`,
+                        2: `<h2 id="${id}" class="${classes.h2}">${marked.parseInline(token.text)}</h2>`,
+                        3: `<h3 id="${id}" class="${classes.h3}">${marked.parseInline(token.text)}</h3>`,
+                        4: `<h4 id="${id}" class="${classes.h4}">${marked.parseInline(token.text)}</h4>`,
+                        5: `<h5 id="${id}" class="${classes.h5}">${marked.parseInline(token.text)}</h5>`,
+                        6: `<h6 id="${id}" class="${classes.h6}">${marked.parseInline(token.text)}</h6>`,
                     };
                     return headings[token.depth] || token.text;
                 },
@@ -65,6 +81,32 @@
                 renderer(token) {
                     const link = token as Tokens.Link;
                     return `<a href="${link.href}" class="${classes.link}">${link.text}</a>`;
+                },
+            },
+            {
+                name: 'hr',
+                renderer() {
+                    return `<hr class="${classes.hr}">`;
+                },
+            },
+            {
+                name: 'code',
+                renderer(token) {
+                    const code = hljs.highlight(token.text, { language: token.lang || 'plaintext' }).value;
+
+                    return `<pre class="${classes.code}"><code style="background: none;" class="language-${token.lang}">${code}</code></pre>`;
+                },
+            },
+            {
+                name: 'codespan',
+                renderer(token) {
+                    return `<code class="${classes.codespan}">${token.text}</code>`;
+                },
+            },
+            {
+                name: 'blockquote',
+                renderer(token) {
+                    return `<blockquote class="${classes.blockquote}">${marked.parseInline(token.text)}</blockquote>`;
                 },
             },
         ],
