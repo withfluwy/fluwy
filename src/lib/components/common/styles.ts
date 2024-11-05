@@ -1,5 +1,7 @@
 import { useTheme } from '@/lib/core/client/index.js';
+import type { Any } from '@/lib/core/contracts.js';
 import { cn, get } from '@/lib/core/utils/index.js';
+import { mergeObjects } from '@/lib/core/utils/merge-objects/index.js';
 
 const Common = {
     border_radius: {
@@ -13,5 +15,16 @@ const Common = {
 };
 
 export function useCommon(key: string): string {
-    return cn(get(Common, key, ''), useTheme(`common.${key}`));
+    const common = get(Common, key, '');
+    const theme = useTheme(`common.${key}`);
+
+    if (isObject(common) || isObject(theme)) {
+        return mergeObjects(common, theme);
+    }
+
+    return cn(common, theme);
+}
+
+function isObject(value: Any) {
+    return typeof value === 'object' && value !== null;
 }

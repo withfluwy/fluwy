@@ -1,15 +1,16 @@
 <script lang="ts">
     import type { Any, Component } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
-    import { Icon, type IconProps } from '../../common/icon/index.js';
-    import { useClient, mergeThemes } from '../../../core/client/index.js';
-    import { useContext } from '../../../core/context/index.js';
+    import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
+    import { useClient, mergeThemes } from '@/lib/core/client/index.js';
+    import { useContext } from '@/lib/core/context/index.js';
     import { type Snippet } from 'svelte';
     import { compile, Render, type ElementProps } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
-    import { BorderRadius, Sizes, Variants } from './styles.js';
+    import { Variants } from './styles.js';
+    import { Sizes, DefaultSize } from '@/lib/components/forms/styles.js';
     import { Colors } from '@/lib/core/styles.js';
-    import { useCommon } from '../../common/styles.js';
+    import { useCommon } from '@/lib/components/common/styles.js';
 
     interface ButtonProps extends ElementProps {
         text?: string;
@@ -36,8 +37,8 @@
     const sizes = mergeThemes('forms.common.sizes', Sizes);
     const colors = mergeThemes('colors', Colors);
     const variants = mergeThemes(`forms.${componentName}.variants`, Variants);
-    const defaultSize = mergeThemes('forms.common.default_size', 'md');
-    const borderRadius = mergeThemes('forms.common.border_radius', BorderRadius);
+    const defaultSize = mergeThemes('forms.common.default_size', DefaultSize);
+    const commonBorderRadiuses = useCommon('border_radius');
     const commonBorderColor = useCommon('border_color');
 
     let innerLoading = false;
@@ -78,7 +79,7 @@
             ? {
                   filled: 'text-color-900 dark:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 bg-color-contrast dark:bg-color-700/50 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 border-color-200 dark:border-color-700',
                   outline:
-                      'text-color-900 dark:text-color-contrast bg-white enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 focus:ring-color dark:focus:ring-color border-color-500 dark:border-color-500',
+                      'text-color-900 dark:text-color-contrast enabled:bg-white enabled:dark:bg-color-700/50 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 focus:ring-color dark:focus:ring-color border-color-400 dark:border-color-400',
                   ghost: 'text-color-900 dark:text-color-contrast/75 enabled:dark:hover:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 border-transparent dark:border-transparent',
                   link: 'text-color-900 underline decoration-color-500 enabled:hover:decoration-2 dark:text-color-contrast focus:ring-color-200',
               }
@@ -99,7 +100,7 @@
         `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
         sizes[size],
         variants[variant],
-        borderRadius[size],
+        commonBorderRadiuses[size],
         defaultColorClasses[variant],
         props.class,
         disabled ? 'hover:none cursor-not-allowed opacity-50' : ''

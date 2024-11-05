@@ -1,0 +1,637 @@
+layout: doc
+---
+h1: Buttons
+p: |
+  Buttons are really simple to use and super customizable in Fluwy. 
+  They come with a set of predefined variants, but you can easily add more variants with your theme file. They also
+  support all the colors defined in your palette, and you can also create variants that support all the colors you have.
+doc_content:
+  - h2: Button
+  - markdown: |
+      The most basic button you can use in your app.
+  - tabs:
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                button:
+                  text: Click me!
+                  icon: solar:heart-linear
+                  on_click:
+                    alert: Button clicked!
+      - tab:
+          title: Preview
+          panel:
+            button:
+              text: Click me!
+              icon: solar:heart-linear
+              on_click:
+                alert: Button clicked!
+      - tab:
+          title: Properties
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                button:
+                  text: # string
+                  icon: # IconProps | string
+                  trailing_icon: # IconProps | string
+                  loading: # boolean
+                  disabled: # boolean
+                  class: # string
+                  variant: # string
+                  size: # string
+                  color: # string
+                  on_click: # Operations
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                forms:
+                  button:
+                    variants:
+                      default:
+                      filled:
+                      outline:
+                      ghost:
+                      link:
+
+  - h2: Icon Buttons
+  - markdown: |
+      Buttons can also have icons or be used as icon buttons.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Love it!
+                    icon: solar:heart-linear
+                - button:
+                    icon: solar:like-linear
+                - button:
+                    icon: solar:share-linear
+                - button:
+                    icon: solar:trash-bin-trash-linear
+                - button:
+                    text: Upload
+                    trailing_icon: solar:cloud-upload-linear
+                - button:
+                    text: Loading...
+                    loading: true
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Love it!
+                    icon: solar:heart-linear
+                - button:
+                    icon: solar:like-linear
+                - button:
+                    icon: solar:share-linear
+                - button:
+                    icon: solar:trash-bin-trash-linear
+                - button:
+                    text: Upload
+                    trailing_icon: solar:cloud-upload-linear
+                - button:
+                    text: Loading...
+                    loading: true
+  - markdown:
+      class: mt-2
+      content: |
+        > **Pro Tip:** If you can the button to have the same width and height you can use the `size` class from
+        Tailwind CSS. For example, `size-9` will make the button 36px wide and 36px high.
+
+  - h2: Variants
+  - markdown: |
+      Buttons come in 4 variants by default: `filled` (the default), `outline`, `ghost`, and `link`.
+      You can also define your own variants in your theme file. See the [Customization](#customization) section for more details.
+  - tabs:
+      - tab:
+          title: Preview Default
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    color: secondary
+                    variant: filled
+                - button:
+                    text: Outline
+                    color: secondary
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: secondary
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: secondary
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    color: primary
+                    variant: filled # this is the default. You can omit this property.
+                - button:
+                    text: Outline
+                    color: primary
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: primary
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: primary
+                    variant: link
+
+  - h2: Sizes
+  - markdown: |
+      Buttons come with a set of 3 predefined sizes: `sm`, `md`, and `lg`. You can easily override the sizes in your theme file.
+      Or add your own sizes.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2 items-center
+              content:
+                - button:
+                    text: Small
+                    icon: solar:heart-linear
+                    size: sm
+                - button:
+                    text: Medium
+                    icon: solar:heart-linear
+                    size: md
+                - button:
+                    text: Large
+                    icon: solar:heart-linear
+                    size: lg
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Small
+                    size: sm
+                - button:
+                    text: Medium
+                    size: md
+                - button:
+                    text: Large
+                    size: lg
+
+  - h2: Colors
+  - p: |
+      Buttons also come with the default color palette, but you can easily override the colors with your own.
+  - h3: Default
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    variant: outline
+                - button:
+                    text: Ghost
+                    variant: ghost
+                - button:
+                    text: Link
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    variant: outline
+                - button:
+                    text: Ghost
+                    variant: ghost
+                - button:
+                    text: Link
+                    variant: link
+
+  - h3: Primary
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    color: secondary
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: secondary
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: secondary
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: secondary
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    color: primary
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: primary
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: primary
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: primary
+                    variant: link
+
+  - h3: Gray
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    color: gray
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: gray
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: gray
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: gray
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    color: gray
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: gray
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: gray
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: gray
+                    variant: link
+
+  - h3: Positive
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    color: positive
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: positive
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: positive
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: positive
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    color: positive
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: positive
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: positive
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: positive
+                    variant: link
+
+  - h3: Destructive
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    color: destructive
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: destructive
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: destructive
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: destructive
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    color: destructive
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: destructive
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: destructive
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: destructive
+                    variant: link
+
+  - h2: Customization
+  - h3: Custom Variants
+  - markdown: |
+      You can also define **change** or **add** your own variants using the `forms.button.variants` setting in your theme file.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Primary Gradient
+                    color: secondary
+                    variant: my-gradient-variant
+                - button:
+                    text: Secondary Gradient
+                    color: primary
+                    variant: my-gradient-variant
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Primary Gradient
+                    color: primary
+                    variant: my-gradient-variant
+                - button:
+                    text: Secondary Gradient
+                    color: secondary
+                    variant: my-gradient-variant
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                forms:
+                  button:
+                    variants:
+                      my-gradient-variant: bg-gradient-to-r from-color-500 to-purple-500 text-white
+
+  - h3: Custom Sizes
+  - markdown: |
+      You can also define your own sizes in your theme file.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            button:
+              text: My Size
+              size: my-size
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                button:
+                  text: My Size
+                  size: my-size
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                forms:
+                  common:
+                    sizes:
+                      my-size: h-14 px-5 text-2xl
+  - markdown:
+      class: mt-2
+      content: |
+        > **Pro Tip:** when adding a new size you should consider adding a `common.border_radius` setting to the size as well.
+        For example, if you add a `my-size` size, you should also add a `common.border_radius.my-size` setting in your theme file.
+
+  - h3: Custom Colors
+  - markdown: |
+      You can also define your own colors by overriding the `colors` theme or even adding new ones.
+      In this example, we'll add a new color called `my-custom-color` to the palette.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2
+              content:
+                - button:
+                    text: Filled
+                    color: primary
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: primary
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: primary
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: primary
+                    variant: link
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                - button:
+                    text: Filled
+                    color: my-custom-color
+                    variant: filled # the default
+                - button:
+                    text: Outline
+                    color: my-custom-color
+                    variant: outline
+                - button:
+                    text: Ghost
+                    color: my-custom-color
+                    variant: ghost
+                - button:
+                    text: Link
+                    color: my-custom-color
+                    variant: link
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                colors:
+                  my-custom-color:
+                    DEFAULT: "#34d399"
+                    50: "#ecfdf5"
+                    100: "#d1fae5"
+                    200: "#a7f3d0"
+                    300: "#6ee7b7"
+                    400: "#34d399"
+                    500: "#10b981"
+                    600: "#059669"
+                    700: "#047857"
+                    800: "#065f46"
+                    900: "#064e3b"
+                    950: "#022c22"
+  - markdown:
+      class: mt-2
+      content: |
+        > **Pro Tip:** You can **change** or **add** colors to the palette in your theme file. The built-in colors are: `primary`, `gray`, `positive`, and `destructive`.
+
+  - h3: Support Colors on Variants
+  - markdown: |
+      Let's say you want to create a new variant for your buttons that supports **all the colors defined in your palette**. 
+      For this we have a special `color` variable for tailwindcss color classes that dynamically changes accordingly to
+      the `color` property. So if you want to support different colors in your variants, you can do something like this:
+
+      ```yaml
+      # In your theme forms.button.variants setting:
+      my-custom-variant: bg-color-500 text-color-contrast
+      ```
+
+      The `bg-color-500` and `text-color-contrast` will be automatically replaced with the correct color values you define
+      in the `color` property of the button. So if your button has the property `color: primary`, the background color will be `bg-primary-500`
+      and the text color will be `text-primary-contrast`.
+
+      > **Pro Tip:** The `*-color-*` classes are special classes that dynamically sets the color based on the current CSS Variable for that CSS class.

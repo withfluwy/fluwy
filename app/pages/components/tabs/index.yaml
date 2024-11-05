@@ -95,10 +95,9 @@ doc_content:
           class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
           title: Code
           panel:
-            class: p-0
+            class: p-2
             code:
               language: yaml
-              class: p-6
               content: |
                 tabs:
                   - tab:
@@ -124,7 +123,7 @@ doc_content:
           title: Variables
           class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
           panel:
-            class: p-0
+            class: p-2
             code:
               language: yaml
               content: |

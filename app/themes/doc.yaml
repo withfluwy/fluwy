@@ -39,12 +39,25 @@ colors:
     800: "#1e40af"
     900: "#1e3a8a"
     950: "#172554"
-# forms:
-#   button:
-#     variants:
-#       primary: bg-gradient-to-r from-primary to-secondary text-white active:ring-secondary focus:ring-primary
+
+forms:
+  common:
+    default_size: # md
+    sizes:
+      sm:
+      md: p-2.5
+      lg:
+      my-size: h-14 px-5 text-2xl
+
+  button:
+    variants:
+      my-gradient-variant: bg-gradient-to-r from-color-500 to-purple-500 text-white
 
 common:
+  border_radius:
+    sm:
+    md:
+    lg:
   tabs:
     tab:
     tab_panel:
