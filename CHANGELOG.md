@@ -1,5 +1,15 @@
 # @fluwy/ui
 
+## 0.6.0
+
+### Minor Changes
+
+- 71d4bf8: Add new theme setting `common.spinner` to customize spinner of buttons and other components.
+
+### Patch Changes
+
+- 6bbb272: Fix button outline style and settings.
+
 ## 0.5.0
 
 ### Minor Changes
