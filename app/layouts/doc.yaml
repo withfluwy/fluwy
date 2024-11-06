@@ -40,13 +40,11 @@ page:
             icon: solar:three-squares-linear
             content:
               - menu_item:
+                  text: Button
+                  url: /components/buttons
+              - menu_item:
                   text: Tabs
                   url: /components/tabs
-              - menu_item:
-                  text: Button
-                  trailing_icon: solar:clock-circle-linear
-                  class: opacity-50 hover:text-orange-600 dark:hover:text-orange-300
-                  url: /components/buttons
               - menu_item:
                   text: Sidebar
                   trailing_icon: solar:clock-circle-linear

@@ -58,14 +58,13 @@ common:
   #   content: p-0 rounded-none border-black
   #   separator: my-0 bg-black mx-0
   #   item: rounded-none hover:bg-primary-50 focus:bg-primary focus:text-white
-  common:
-    tab:
-      class:
-      outer_radius: # defaults to true
-      title:
-      panel:
-      root:
-      list:
+  tab:
+    class:
+    outer_radius: # defaults to true
+    title:
+    panel:
+    root:
+    list:
 
 colors:
   primary:
@@ -123,20 +122,18 @@ colors:
 
 forms:
   common:
-    default_size: md
+    default_size:
     sizes:
-      sm: # h-6
-      md: # h-8
-      lg: h-12 px-4 text-base # custom size
+      sm:
+      md:
+      lg:
     border_radius:
-      sm: #rounded-none
-      md: #rounded-none
-      lg: rounded-lg # custom size
+      sm:
+      md:
+      lg:
   button:
     variants:
-      default:
       filled:
       outline:
       ghost:
       link:
-      primary-strong: bg-primary font-semibold text-primary-contrast enabled:hover:bg-primary/90

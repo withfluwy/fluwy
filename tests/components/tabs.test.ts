@@ -1,8 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
-
-function checkScreenshot(page: Page) {
-    return expect(page).toHaveScreenshot({ maxDiffPixelRatio: 0.2, fullPage: true });
-}
+import { expect, test } from '@playwright/test';
+import { checkScreenshot } from '../utils.js';
 
 test('tabs doc page', async ({ page }) => {
     await page.goto('http://localhost:4173/components/tabs');

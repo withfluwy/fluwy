@@ -1,6 +1,6 @@
 <script lang="ts">
     import { browser } from '$app/environment';
-    import { afterNavigate, goto } from '$app/navigation';
+    import { afterNavigate } from '$app/navigation';
     import type { ElementProps } from '@/lib/core/contracts.js';
     import { Events } from '@/lib/core/utils/events/index.js';
     import { cn } from '@/lib/core/utils/index.js';
