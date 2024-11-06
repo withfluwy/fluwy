@@ -127,7 +127,7 @@ doc_content:
       You can also define your own variants in your theme file. See the [Customization](#customization) section for more details.
   - tabs:
       - tab:
-          title: Preview Default
+          title: Preview
           panel:
             row:
               class: gap-2
