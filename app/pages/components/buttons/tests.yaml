@@ -1,0 +1,157 @@
+theme: tests
+---
+container:
+  class: pt-6
+  content:
+    - h4: Button with Icons
+    - row:
+        class: gap-2
+        content:
+          - button:
+              icon: solar:heart-linear
+          - button:
+              icon: solar:heart-linear
+              loading: true
+          - button:
+              icon: solar:heart-linear
+              text: Icon
+          - button:
+              trailing_icon: solar:heart-linear
+              text: Trailing Icon
+          - button:
+              icon: solar:heart-linear
+              trailing_icon: solar:heart-linear
+              text: Both Icons
+          - button:
+              icon: solar:heart-linear
+              loading: true
+              trailing_icon: solar:heart-linear
+              text: Loading
+    - h4: Sizes
+    - row:
+        class: gap-2 items-center
+        content:
+          - button:
+              text: Button
+              icon: solar:heart-linear
+              size: sm
+          - button:
+              text: Button
+              icon: solar:heart-linear
+              size: md
+          - button:
+              text: Button
+              icon: solar:heart-linear
+              size: lg
+          - button:
+              text: Custom Icon Size
+              size: lg
+              icon:
+                name: solar:heart-linear
+                size: 26
+    - h4: Variants
+    - row:
+        class: gap-3
+        content:
+          - button:
+              text: Filled
+          - button:
+              text: Outline
+              variant: outline
+          - button:
+              text: Ghost
+              variant: ghost
+          - button:
+              text: Link
+              variant: link
+          - button:
+              text: Custom
+              variant: testing
+    - row:
+        class: gap-3 mt-2
+        content:
+          - button:
+              text: Filled
+              color: gray
+          - button:
+              text: Outline
+              color: gray
+              variant: outline
+          - button:
+              text: Ghost
+              color: gray
+              variant: ghost
+          - button:
+              text: Link
+              color: gray
+              variant: link
+          - button:
+              text: Custom
+              color: gray
+              variant: testing
+    - row:
+        class: gap-3 mt-2
+        content:
+          - button:
+              text: Filled
+              color: primary
+          - button:
+              text: Outline
+              color: primary
+              variant: outline
+          - button:
+              text: Ghost
+              color: primary
+              variant: ghost
+          - button:
+              text: Link
+              color: primary
+              variant: link
+          - button:
+              text: Custom
+              color: primary
+              variant: testing
+    - row:
+        class: gap-3 mt-2
+        content:
+          - button:
+              text: Filled
+              color: positive
+          - button:
+              text: Outline
+              color: positive
+              variant: outline
+          - button:
+              text: Ghost
+              color: positive
+              variant: ghost
+          - button:
+              text: Link
+              color: positive
+              variant: link
+          - button:
+              text: Custom
+              color: positive
+              variant: testing
+    - row:
+        class: gap-3 mt-2
+        content:
+          - button:
+              text: Filled
+              color: destructive
+          - button:
+              text: Outline
+              color: destructive
+              variant: outline
+          - button:
+              text: Ghost
+              color: destructive
+              variant: ghost
+          - button:
+              text: Link
+              color: destructive
+              variant: link
+          - button:
+              text: Custom
+              color: destructive
+              variant: testing

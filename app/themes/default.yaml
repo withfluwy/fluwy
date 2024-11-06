@@ -122,15 +122,15 @@ colors:
 
 forms:
   common:
-    default_size: md
+    default_size:
     sizes:
-      sm: # h-6
-      md: # h-8
-      lg: h-12 px-4 text-base # custom size
+      sm:
+      md:
+      lg:
     border_radius:
-      sm: #rounded-none
-      md: #rounded-none
-      lg: rounded-lg # custom size
+      sm:
+      md:
+      lg:
   button:
     variants:
       filled:

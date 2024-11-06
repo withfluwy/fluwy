@@ -2,7 +2,7 @@
     import type { Any, Component } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
-    import { useClient, mergeThemes } from '@/lib/core/client/index.js';
+    import { useClient, mergeThemes, useTheme } from '@/lib/core/client/index.js';
     import { useContext } from '@/lib/core/context/index.js';
     import { type Snippet } from 'svelte';
     import { compile, Render, type ElementProps } from '@/lib/core/index.js';
@@ -10,7 +10,7 @@
     import { Variants } from './styles.js';
     import { Sizes, DefaultSize } from '@/lib/components/forms/styles.js';
     import { Colors } from '@/lib/core/styles.js';
-    import { useCommon } from '@/lib/components/common/styles.js';
+    import { useCommon, Common } from '@/lib/components/common/styles.js';
 
     interface ButtonProps extends ElementProps {
         text?: string;
@@ -40,6 +40,7 @@
     const defaultSize = mergeThemes('forms.common.default_size', DefaultSize);
     const commonBorderRadiuses = useCommon('border_radius');
     const commonBorderColor = useCommon('border_color');
+    const spinner = useTheme('common.spinner', Common.spinner);
 
     let innerLoading = false;
 
@@ -111,7 +112,7 @@
     {#if props.icon && !loading}
         <Icon {...getIcon(props.icon)} />
     {:else if loading}
-        <Icon {...{ name: 'svg-spinners:90-ring-with-bg' }} />
+        <Icon {...{ name: spinner }} />
     {/if}
 
     {#if props.content}

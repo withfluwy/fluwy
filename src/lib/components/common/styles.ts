@@ -3,7 +3,8 @@ import type { Any } from '@/lib/core/contracts.js';
 import { cn, get } from '@/lib/core/utils/index.js';
 import { mergeObjects } from '@/lib/core/utils/merge-objects/index.js';
 
-const Common = {
+export const Common = {
+    spinner: 'svg-spinners:90-ring-with-bg',
     border_radius: {
         lg: 'rounded-xl',
         md: 'rounded-lg',
