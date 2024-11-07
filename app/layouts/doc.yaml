@@ -23,7 +23,7 @@ page:
     body:
       sidebar:
         - menu_item:
-            icon: solar:file-favourite-linear
+            icon: solar:hand-stars-linear
             text: Introduction
             url: /
         - menu_item:
@@ -34,6 +34,10 @@ page:
             icon: solar:pallete-2-linear
             text: Theming
             url: /theming
+        - menu_item:
+            icon: solar:file-check-linear
+            text: YAML Key Concepts
+            url: /yaml-key-concepts
         - menu_group:
             header: Components
             active_if_starts_with: /components

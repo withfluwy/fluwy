@@ -1,0 +1,64 @@
+layout: doc
+---
+h1: YAML Key Concepts
+doc_content:
+  markdown: |
+    In Fluwy, YAML is used to describe UI components in a clean, human-readable way. This guide will explain several key concepts in Fluwy, including how to use array styles to avoid duplicated keys, and how to use classes effectively with components.
+
+    ## Avoiding Duplicated Keys in YAML Files
+    YAML does not support repeated keys within the same object. For example, if you attempt to use two `<div>` elements under the same parent component using object syntax, you'll encounter an error:
+
+    ```yaml
+    column:
+      div: ...
+      div: ...  # <- This is not allowed in YAML
+    ```
+
+    To overcome this, you can use an array style:
+
+    ```yaml
+    column:
+      - div: ...
+      - div: ...
+    ```
+
+    In this format, each element is part of an array, indicated by the `-` symbol. This ensures there are no duplicate keys and provides a flexible way to manage multiple nested components.
+
+    ## Using Classes and Content with Components
+    In Fluwy, every component has implicit `class` and `content` properties that can be used for styling and content organization. Here's how you can use these properties effectively:
+
+    - If you do not need to add classes to your components, you can directly nest content under the component, omitting the `content` property for simplicity.
+    - If you need to add a class to a component, use the `class` property explicitly and use the `content` property to define the nested content.
+
+    ### Example
+    Consider the following scenario where you want to add a class to a `column` containing multiple `div` elements:
+
+    ```yaml
+    column:
+      class: my-column-class
+      content:
+        - div: ...
+        - div: ...
+    ```
+
+    In this example:
+    - The `class` property is used to apply styles to the `column`.
+    - The `content` property contains an array of child components, ensuring a clear and organized structure.
+
+    If you do not need to use a class, you can simplify the structure by omitting the `content` property:
+
+    ```yaml
+    column:
+      - div: ...
+      - div: ...
+    ```
+
+    This keeps your YAML code concise while still allowing for multiple child components.
+
+    ## Summary
+    - YAML does not allow duplicated keys in objects; use array style (`-`) to add multiple elements under the same parent.
+    - In Fluwy, components have implicit `class` and `content` properties.
+    - Omit `content` for simpler nesting when no classes are needed.
+    - Use `class` and `content` explicitly when adding styles to components.
+
+    By using these patterns, you can keep your YAML code clean, organized, and free of errors related to duplicated keys.
