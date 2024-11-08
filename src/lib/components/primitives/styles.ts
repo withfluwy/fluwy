@@ -14,6 +14,6 @@ export const Typography = {
 };
 
 export const Blocks = {
-    code: 'bg-neutral-800 dark:bg-neutral-800 p-4 mb-3 text-white/90',
+    code: 'overflow-auto bg-neutral-800 dark:bg-neutral-800 p-4 mb-3 text-white/90',
     blockquote: 'border-l-4 p-4 mb-4 bg-neutral-100 dark:bg-neutral-800',
 };
