@@ -71,18 +71,21 @@
     }
 </script>
 
+{#snippet pageInput()}
+    <Input
+        value={page}
+        on:input={onInputPageChange}
+        props={{ type: 'text', class: 'min-w-9 px-0 text-center', width_dynamic: true }}
+    />
+{/snippet}
+
 <div class="flex items-center justify-between py-4">
     <Button onclick={prev} {...{ content: 'Previous', icon: 'solar:arrow-left-linear', disabled: !hasPrevious }} />
 
-    <div class="flex items-center justify-between gap-1">
-        Page
-        <Input
-            value={page}
-            on:input={onInputPageChange}
-            props={{ type: 'text', class: 'min-w-9 px-0 text-center', width_dynamic: true }}
-        />
-        of {totalPages} - total of {count} records
+    <div class="flex items-center justify-between gap-1 text-sm">
+        Page {@render pageInput()} of {totalPages}
+        <span class="hidden sm:inline">- total of {count} records</span>
     </div>
 
-    <Button onclick={next} {...{ content: 'Next', trailing_icon: 'solar:arrow-right-linear', disabled: !hasNext }} />
+    <Button onclick={next} {...{ content: 'Next', icon: 'solar:arrow-right-linear', disabled: !hasNext }} />
 </div>

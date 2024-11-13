@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte';
-    import type { Column, Paginate, PaginationPayload, Table } from './types.js';
-    import { getColumnValue } from './utils.js';
+    import type { Paginate, PaginationPayload, Table } from './types.js';
     import { get } from '@/lib/core/utils/index.js';
     import { goto } from '$app/navigation';
     import type { Any } from '@/lib/core/contracts.js';
@@ -83,14 +82,6 @@
         if (uri.startsWith('http')) return (window.location.href = uri);
 
         goto(uri);
-    }
-
-    function getColumn(column: Column, record: Record<string, Any>): Column {
-        return {
-            ...column,
-            record,
-            value: getColumnValue(record, column),
-        };
     }
 </script>
 
