@@ -3,6 +3,7 @@ import * as primitives from './components/primitives/index.js';
 import * as controls from './components/controls/index.js';
 import * as layouts from './components/layouts/index.js';
 import * as common from './components/common/index.js';
+import * as displays from './components/displays/index.js';
 import { createApp } from './core/app/index.js';
 import { str } from './core/utils/index.js';
 import type { Any } from './core/contracts.js';
@@ -25,7 +26,7 @@ registerAll(primitives);
 registerAll(controls);
 registerAll(layouts);
 registerAll(common);
-
+registerAll(displays);
 // Exports
 
 export type { ElementProps } from './core/contracts.js';

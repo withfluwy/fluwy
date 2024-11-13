@@ -4,13 +4,14 @@
     import Render from './render.svelte';
     import { useDialogs } from './stores/dialogs.js';
     import { installOperations } from './operations/index.js';
-    import { createContext } from './context/index.js';
     import { installAdapters } from './adapters/index.js';
-    import { onMount, setContext } from 'svelte';
+    import { onMount } from 'svelte';
     import { generateColorVariables } from './utils/color/index.js';
     import { Toaster } from '../ui/sonner/index.js';
     import { Colors } from './styles.js';
     import { ModeWatcher } from 'mode-watcher';
+    import { createContext } from './context.svelte.js';
+    import { addContext, setupContext } from './context/index.js';
 
     export let data: RenderResponse;
 
@@ -21,8 +22,8 @@
     installOperations(client);
     installAdapters(client);
 
-    setContext('context', context);
-    setContext('theme', data.theme);
+    setupContext(context);
+    addContext('theme', data.theme);
 
     const colors = mergeThemes('colors', Colors);
     const style = generateColorVariables(colors);

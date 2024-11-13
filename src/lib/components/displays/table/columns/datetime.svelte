@@ -3,6 +3,7 @@
     import dayjs from 'dayjs';
     import { TableSettings, formatDate } from '../utils.js';
     import type { Column, Table } from '../types.js';
+    import { cn } from '@/lib/core/utils/index.js';
 
     dayjs.extend(localizedFormat);
 
@@ -16,4 +17,4 @@
     let formattedDatetime = $derived(formatDate(column.value, TableSettings.datetimeFormat));
 </script>
 
-<td class="whitespace-nowrap px-4 py-3.5">{formattedDatetime}</td>
+<td class={cn('whitespace-nowrap px-4 py-3.5', column.class)}>{formattedDatetime}</td>

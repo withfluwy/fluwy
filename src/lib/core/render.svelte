@@ -1,16 +1,19 @@
 <script lang="ts">
     import type { Any, Component, Context } from './contracts.js';
     import { app } from '$lib/index.js';
-    import { setContext } from 'svelte';
     import { compile } from './utils/compile/index.js';
-    import { useContext } from './context/index.js';
+    import { setupContext, useContext } from './context/index.js';
 
-    export let props: Any;
-    export let skip: string[] = [];
-    export let only: string[] = [];
-    export let context: Context | undefined = undefined;
+    interface RenderProps {
+        props: Any;
+        skip?: string[];
+        only?: string[];
+        context?: Context;
+    }
 
-    if (context) setContext('context', context);
+    let { props, skip = [], only = [], context }: RenderProps = $props();
+
+    if (context) setupContext(context);
 
     context ??= useContext();
 
@@ -44,11 +47,13 @@
         return !isReserved && !isSkipped;
     }
 
-    $: propsValidEntries = Object.entries(props ?? {}).filter(([key]) => {
-        if (only.length) return only.includes(key);
+    const propsValidEntries = $derived(
+        Object.entries(props ?? {}).filter(([key]) => {
+            if (only.length) return only.includes(key);
 
-        return !skip.includes(key);
-    });
+            return !skip.includes(key);
+        })
+    );
 
     function text(value: Any): string {
         return compile(String(value), context!.data);

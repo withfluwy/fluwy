@@ -3,9 +3,8 @@
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
     import { useClient, mergeThemes, useTheme } from '@/lib/core/client/index.js';
-    import { useContext } from '@/lib/core/context/index.js';
     import { type Snippet } from 'svelte';
-    import { compile, Render, type ElementProps } from '@/lib/core/index.js';
+    import { compile, Render, useContext, type ElementProps } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { Variants } from './styles.js';
     import { Sizes, DefaultSize } from '@/lib/components/forms/styles.js';

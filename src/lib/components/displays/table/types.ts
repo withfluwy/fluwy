@@ -1,5 +1,5 @@
-import type { Any } from '../core/contracts.js';
- 
+import type { Any } from '@/lib/core/contracts.js';
+
 import * as columns from './columns/index.js';
 
 export interface Table {

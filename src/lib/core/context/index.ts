@@ -1,4 +1,4 @@
-import { getContext } from 'svelte';
+import { getContext, setContext as setContextSvelte } from 'svelte';
 import type { Any } from '../contracts.js';
 import { get, writable, type Writable } from 'svelte/store';
 import { goto } from '$app/navigation';
@@ -11,10 +11,23 @@ export type Context = {
     get: (key: string) => Any;
 };
 
+const contextKey = Symbol('context');
+
 export function useContext(): Context {
-    return getContext<Context>('context');
+    return getContext<Context>(contextKey);
 }
 
+export function setupContext(context: Context) {
+    setContextSvelte(contextKey, context);
+}
+
+export function addContext(key: string, value: Any) {
+    useContext().set(key, value);
+}
+
+/**
+ * @deprecated use from context.svelte.js instead
+ */
 export function createContext() {
     const store = writable<RawContextData>({
         svelteKit: { goto: (url: string) => goto(url) },

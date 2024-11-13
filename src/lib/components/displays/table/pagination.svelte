@@ -1,21 +1,21 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte';
-    import Button from '../components/forms/button/button.svelte';
-    import { Input } from '../form/index.js';
-    import { Events } from '../core/utils/events/index.js';
+    import Button from '@/lib/components/forms/button/button.svelte';
+    import { Input } from '@/lib/form/index.js';
+    import { Events } from '@/lib/core/utils/events/index.js';
     import type { Paginate, PaginationPayload, PaginationProps } from './types.js';
     import { browser } from '$app/environment';
 
-    export let props: PaginationProps;
+    const props: PaginationProps = $props();
 
-    let page: number = 1;
-    let count = 0;
-    let pageSize = 10;
-    let recordsLength = 0;
+    let page = $state(1);
+    let count = $state(0);
+    let pageSize = $state(10);
+    let recordsLength = $state(0);
 
-    $: totalPages = Math.ceil(count / pageSize);
-    $: hasPrevious = page > 1;
-    $: hasNext = recordsLength > 0 ? recordsLength === pageSize && count > page * recordsLength : false;
+    const totalPages = $derived(Math.ceil(count / pageSize));
+    const hasPrevious = $derived(page > 1);
+    const hasNext = $derived(recordsLength > 0 ? recordsLength === pageSize && count > page * recordsLength : false);
 
     onMount(() => {
         if (browser) Events.on(Events.pagination(props.for), onPagination);

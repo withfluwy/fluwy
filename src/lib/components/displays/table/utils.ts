@@ -1,8 +1,8 @@
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import dayjs from 'dayjs';
 import type { ColumnSchema } from './types.js';
-import { get, titleToCamelCase } from '../core/utils/index.js';
-import type { Any } from '../core/contracts.js';
+import { get, titleToCamelCase } from '@/lib/core/utils/index.js';
+import type { Any } from '@/lib/core/contracts.js';
 
 dayjs.extend(localizedFormat);
 
