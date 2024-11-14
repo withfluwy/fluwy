@@ -26,8 +26,6 @@
     context.set('record', record);
 
     setupContext(context);
-
-    console.log('CONTEXT ON ROW', context.data);
 </script>
 
 <tr {onclick} class="cursor-pointer hover:bg-neutral-50/80">

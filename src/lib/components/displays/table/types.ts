@@ -85,8 +85,8 @@ export interface TablePaginationParams {
 
 export type ColumnType = keyof typeof columns;
 export interface ColumnSchema {
-    header: string;
-    path?: string;
+    header: Any;
+    path: string;
     type?: ColumnType;
     class?: string;
 }

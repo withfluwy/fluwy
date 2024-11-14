@@ -19,6 +19,7 @@ export function formatDate(value: string, format: string): string {
 export function getColumnValue(record: Any, column: ColumnSchema) {
     if (column.type === 'custom') return record;
     if (column.path) return get(record, column.path);
+    if (typeof column.header === 'object') return record;
 
     return get(record, titleToCamelCase(column.header));
 }

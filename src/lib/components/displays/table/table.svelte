@@ -8,6 +8,7 @@
     import { browser } from '$app/environment';
     import { useContext, compile } from '@/lib/core/index.js';
     import TableRow from './table-row.svelte';
+    import TableHeader from './table-header.svelte';
 
     const props: Table = $props();
 
@@ -91,9 +92,10 @@
             <thead class="border-b bg-neutral-50">
                 <tr>
                     {#each props.columns as column}
-                        <th class="whitespace-nowrap px-4 py-3.5 text-left text-sm font-semibold text-neutral-900">
+                        <!-- <th class="whitespace-nowrap px-4 py-3.5 text-left text-sm font-semibold text-neutral-900">
                             {column.header ?? ''}
-                        </th>
+                        </th> -->
+                        <TableHeader {column} />
                     {/each}
                 </tr>
             </thead>
