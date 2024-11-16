@@ -1,0 +1,43 @@
+layout: test
+theme: table-theme
+---
+container:
+  - spacer:
+  - h3: Simple Table (Example 1)
+  - table:
+      id: contacts_table
+      url: http://localhost:8055/items/contacts?limit=10&meta=*&fields=*.*
+      on_row_click:
+        log: ${record.first_name}
+      hoverable: true
+      pagination:
+        params:
+          page_size: limit
+        paths:
+          results: data
+          count: meta.filter_count
+      columns:
+        - content: ${record.first_name} ${record.last_name}
+          header:
+            row:
+              class: font-bold dark:text-white gap-2
+              content:
+                - icon: solar:user-circle-bold
+                - text: Name
+        - header: Email
+          content:
+            text:
+              class: font-bold text-primary hover:underline
+              content: ${record.email}
+        - header: Phone
+          class: italic underline opacity-50 hover:opacity-100 duration-75 transition-opacity
+        - header: Created At
+          type: datetime
+          path: created_at
+        - header: Updated At
+          type: datetime
+          path: updated_at
+        - header: Created By
+          path: created_by.first_name
+  - pagination:
+      for: contacts_table

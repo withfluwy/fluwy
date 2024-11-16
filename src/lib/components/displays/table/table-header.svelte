@@ -1,14 +1,26 @@
 <script lang="ts">
     import { Render } from '@/lib/core/index.js';
     import type { Column } from './types.js';
+    import { useTheme } from '@/lib/core/client/index.js';
+    import { cn } from '@/lib/core/utils/index.js';
+    import { useCommon } from '../../common/styles.js';
 
     interface TableHeaderProps {
         column: Column;
     }
 
     const { column }: TableHeaderProps = $props();
+    const tableHeaderTheme = useTheme('tables.header');
+    const commonBorderColor = useCommon('border_color');
 </script>
 
-<th class="whitespace-nowrap px-4 py-3.5 text-left text-sm font-semibold text-neutral-900">
+<th
+    class={cn(
+        commonBorderColor,
+        'whitespace-nowrap border-b bg-neutral-50 px-4 py-3.5 text-left text-sm font-semibold text-neutral-900 dark:bg-neutral-800 dark:text-white/80',
+        tableHeaderTheme,
+        column.header?.class
+    )}
+>
     <Render props={column.header} />
 </th>

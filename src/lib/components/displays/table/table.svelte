@@ -1,14 +1,15 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte';
     import type { Paginate, PaginationPayload, Table } from './types.js';
-    import { get } from '@/lib/core/utils/index.js';
-    import { goto } from '$app/navigation';
+    import { cn, get } from '@/lib/core/utils/index.js';
     import type { Any } from '@/lib/core/contracts.js';
     import { Events } from '@/lib/core/utils/events/index.js';
     import { browser } from '$app/environment';
-    import { useContext, compile } from '@/lib/core/index.js';
+    import { useContext } from '@/lib/core/index.js';
     import TableRow from './table-row.svelte';
     import TableHeader from './table-header.svelte';
+    import { useTheme } from '@/lib/core/client/index.js';
+    import { useCommon } from '../../common/styles.js';
 
     const props: Table = $props();
 
@@ -21,6 +22,8 @@
     const params = $derived(props.pagination?.params ?? { page: 'page', page_size: 'page_size' });
     const resultsPath = $derived(props.pagination?.paths?.results || 'results');
     const countPath = $derived(props.pagination?.paths?.count || 'count');
+    const tableWrapperTheme = useTheme('tables.wrapper');
+    const commonBorderColor = useCommon('border_color');
 
     onMount(async () => {
         if (props.id && browser) {
@@ -73,35 +76,21 @@
             recordsLength: records.length,
         } as PaginationPayload);
     }
-
-    function onRowClick(record: Record<string, unknown>) {
-        if (!props.on_row_click) return;
-        if (!props.on_row_click.goto) throw 'on_row_click.goto is required';
-
-        const uri = compile(props.on_row_click.goto, { record });
-
-        if (uri.startsWith('http')) return (window.location.href = uri);
-
-        goto(uri);
-    }
 </script>
 
-<div class="overflow-hidden rounded-xl border">
+<div class={cn(commonBorderColor, 'overflow-hidden rounded-xl border bg-white dark:bg-neutral-800', tableWrapperTheme)}>
     <div class="overflow-x-auto">
         <table class="w-full">
-            <thead class="border-b bg-neutral-50">
+            <thead>
                 <tr>
                     {#each props.columns as column}
-                        <!-- <th class="whitespace-nowrap px-4 py-3.5 text-left text-sm font-semibold text-neutral-900">
-                            {column.header ?? ''}
-                        </th> -->
                         <TableHeader {column} />
                     {/each}
                 </tr>
             </thead>
             <tbody>
                 {#each records as record}
-                    <TableRow columns={props.columns} table={props} {record} onclick={() => onRowClick(record)} />
+                    <TableRow columns={props.columns} table={props} {record} />
                 {/each}
             </tbody>
         </table>

@@ -7,6 +7,9 @@ export { parseUriParams } from './parsers/parse-uri-params.js';
 export { str } from './str/index.js';
 import type { TransitionConfig } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
+import _ from 'lodash';
+
+export const { cloneDeep } = _;
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));

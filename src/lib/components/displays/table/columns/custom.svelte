@@ -7,11 +7,12 @@
     interface CustomProps {
         column: Column;
         table?: Table;
+        class?: string;
     }
 
-    const { column }: CustomProps = $props();
+    const { column, ...props }: CustomProps = $props();
 </script>
 
-<td class={cn('flex gap-0.5 whitespace-nowrap px-4 py-3.5', column?.class)}>
+<td class={cn(props.class, 'whitespace-nowrap px-4 py-3.5', column?.class)}>
     <Render props={column.content} />
 </td>
