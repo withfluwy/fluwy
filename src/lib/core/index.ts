@@ -4,3 +4,4 @@ export { default as Render } from './render.svelte';
 export { useClient } from './client/index.js';
 export { useContext } from './context/index.js';
 export { compile } from './utils/compile/index.js';
+export * as utils from './utils/index.js';

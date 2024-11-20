@@ -9,7 +9,9 @@ import { str } from './core/utils/index.js';
 import type { Any } from './core/contracts.js';
 import App from './core/app.svelte';
 import 'iconify-icon';
+
 export { default as Render } from './core/render.svelte';
+export { utils } from './core/index.js';
 
 const app = createApp();
 

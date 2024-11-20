@@ -2,13 +2,14 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import type { Any } from '../contracts.js';
 import { Durations } from '../constants.js';
-export { Random } from './random/index.js';
-export { parseUriParams } from './parsers/parse-uri-params.js';
-export { str } from './str/index.js';
 import type { TransitionConfig } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import _ from 'lodash';
 
+export { Random } from './random/index.js';
+export { parseUriParams } from './parsers/parse-uri-params.js';
+export { str } from './str/index.js';
+export { delay } from './delay/index.js';
 export const { cloneDeep } = _;
 
 export function cn(...inputs: ClassValue[]) {
