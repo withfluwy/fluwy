@@ -14,6 +14,12 @@
     const href = $derived(hasEmail ? `mailto:${compiledEmail}` : undefined);
 </script>
 
-<a {href} class={cn('text-primary hover:underline', emailTheme, props?.class)}>
-    <Render props={email} />
-</a>
+<Render
+    props={{
+        link: {
+            url: href,
+            class: cn(emailTheme, props?.class),
+            content: email,
+        },
+    }}
+/>
