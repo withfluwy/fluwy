@@ -1,6 +1,6 @@
 import { Client } from '../client/index.js';
 
-import { alert } from './alert.js';
+import { alert } from './alert/index.js';
 import { close_dialog } from './close_dialog.js';
 import { context } from './context.js';
 import { deleteOperation } from './delete.js';
