@@ -17,7 +17,7 @@
 <th
     class={cn(
         commonBorderColor,
-        'whitespace-nowrap border-b bg-neutral-50 px-4 py-2 text-left text-sm font-semibold text-neutral-900 dark:bg-neutral-800 dark:text-white/80',
+        'whitespace-nowrap border-b bg-neutral-50 px-4 py-2 text-left text-sm font-semibold text-neutral-900 dark:bg-neutral-900 dark:text-white/80',
         tableHeaderTheme,
         column.header?.class
     )}
