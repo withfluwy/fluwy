@@ -1,4 +1,4 @@
-import type { OperationSchema } from '../core/contracts.js';
+import type { Any, OperationSchema } from '../core/contracts.js';
 
 export interface InputProps {
     type?: 'text' | 'date' | 'number' | 'email' | 'password';
@@ -6,9 +6,13 @@ export interface InputProps {
     label?: string;
     class?: string;
     icon?: string;
+    value?: Any;
+    errors?: string[];
     trailing_icon?: string;
     required?: boolean;
+    disabled?: boolean;
     width_dynamic?: boolean;
+    oninput?: (event: Event) => void;
 }
 
 export interface FormProps {

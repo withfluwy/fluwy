@@ -6,6 +6,7 @@ import { mergeObjects } from '@/lib/core/utils/merge-objects/index.js';
 export const Common = {
     spinner: 'svg-spinners:90-ring-with-bg',
     delay: 100,
+    debounce: 500,
     border_radius: {
         lg: 'rounded-xl',
         md: 'rounded-lg',
@@ -24,9 +25,25 @@ export function useCommon(key: string) {
         return mergeObjects(common, theme);
     }
 
-    return cn(common, theme);
+    if (isNumber(common) || isNumber(theme)) {
+        return theme ?? common;
+    }
+
+    if (isBoolean(common) || isBoolean(theme)) {
+        return theme ?? common;
+    }
+
+    if (isString(common) || isString(theme)) {
+        return cn(common, theme);
+    }
+
+    throw new Error(`Common type not supported for key [${key}]. Type: ${typeof (theme ?? common)}`);
 }
 
 function isObject(value: Any) {
     return typeof value === 'object' && value !== null;
 }
+
+const isNumber = (value: Any) => typeof value === 'number';
+const isBoolean = (value: Any) => typeof value === 'boolean';
+const isString = (value: Any) => typeof value === 'string';

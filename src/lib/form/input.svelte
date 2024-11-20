@@ -3,11 +3,8 @@
     import { Random, cn } from '../core/utils/index.js';
     import { Icon } from '../components/common/icon/index.js';
     import type { InputProps } from './types.js';
-    import type { Any } from '../core/contracts.js';
 
-    export let props: InputProps;
-    export let value: Any = '';
-    export let errors: string[] | undefined = undefined;
+    let { value, errors, oninput, ...props }: InputProps = $props();
     const id = Random.id();
 
     const iconDefaultClasses = 'absolute text-neutral-300 transition duration-100 peer-focus:text-primary';
@@ -32,7 +29,7 @@
                 errors?.length ? 'border-destructive ring-destructive focus:border-destructive' : ''
             )}
             bind:value
-            on:input
+            {oninput}
             style:width={props.width_dynamic ? `${value.toString().length + 1}ch` : undefined}
         />
 

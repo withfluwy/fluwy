@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte';
-    import type { Paginate, PaginationPayload, Table } from './types.js';
+    import type { Paginate, Table } from './types.js';
     import { cn, delay, get } from '@/lib/core/utils/index.js';
     import type { Any } from '@/lib/core/contracts.js';
     import { Events } from '@/lib/core/utils/events/index.js';
@@ -52,14 +52,8 @@
         const url = new URL(props.url);
         const alreadyHasPageSize = url.searchParams.has(params.page_size ?? 'page_size');
         const alreadyHasPage = url.searchParams.has(params.page ?? 'page');
-        fetching = true;
 
-        delay(() => (loading = true), {
-            after: commonDelay,
-            if: () => fetching,
-        });
-        // TODO: dispatch event to notify that the table is loading. So pagination
-        // component can change to loading state
+        fetching = true;
 
         pageSize = alreadyHasPageSize
             ? parseInt(url.searchParams.get(params.page_size ?? 'page_size') as string)
@@ -75,22 +69,41 @@
 
         const responseBody = await response.json();
 
-        if (resultsPath === 'root') {
+        const hasMetadata = resultsPath !== 'root';
+
+        if (!hasMetadata) {
             records = responseBody;
+            fetching = false;
             return;
         }
 
         records = get(responseBody, resultsPath, []);
         count = get(responseBody, countPath, 0);
         fetching = false;
-        loading = false;
-        Events.emit(Events.pagination(props.id), {
+
+        Events.dispatchPagination(props.id, {
             page,
             count,
             pageSize,
             recordsLength: records.length,
-        } as PaginationPayload);
+        });
     }
+
+    $effect(() => {
+        Events.dispatchTableFetching(props.id, fetching);
+    });
+
+    $effect(() => {
+        if (!fetching) {
+            loading = false;
+            return;
+        }
+
+        delay(() => (loading = true), {
+            if: () => fetching,
+            after: commonDelay,
+        });
+    });
 </script>
 
 <div

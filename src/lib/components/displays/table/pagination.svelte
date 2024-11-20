@@ -5,13 +5,17 @@
     import { Events } from '@/lib/core/utils/events/index.js';
     import type { Paginate, PaginationPayload, PaginationProps } from './types.js';
     import { browser } from '$app/environment';
+    import { useCommon } from '@/lib/components/common/styles.js';
 
     const props: PaginationProps = $props();
+
+    const commonDebounce: number = useCommon('debounce');
 
     let page = $state(1);
     let count = $state(0);
     let pageSize = $state(10);
     let recordsLength = $state(0);
+    let fetching = $state(false);
 
     const totalPages = $derived(Math.ceil(count / pageSize));
     const hasPrevious = $derived(page > 1);
@@ -19,10 +23,12 @@
 
     onMount(() => {
         if (browser) Events.on(Events.pagination(props.for), onPagination);
+        if (browser) Events.on(Events.tableFetching(props.for), onTableFetching);
     });
 
     onDestroy(() => {
         if (browser) Events.removeListener(Events.pagination(props.for), onPagination);
+        if (browser) Events.removeListener(Events.tableFetching(props.for), onTableFetching);
     });
 
     function onPagination(pagination: PaginationPayload) {
@@ -32,13 +38,17 @@
         recordsLength = pagination.recordsLength;
     }
 
+    function onTableFetching(value: boolean) {
+        fetching = value;
+    }
+
     function paginate(page: number): void {
         const paginateData: Paginate = {
             page,
             pageSize,
         };
 
-        Events.emit(Events.paginate(props.for), paginateData);
+        Events.dispatchPaginate(props.for, paginateData);
     }
 
     function next() {
@@ -49,7 +59,15 @@
         paginate(page - 1);
     }
 
-    function onInputPageChange(event: Event) {
+    function debounce(fn: (...args: any[]) => unknown, delay: number) {
+        let timeout: NodeJS.Timeout;
+        return (...args: any[]) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => fn(...args), delay);
+        };
+    }
+
+    function onInputPageChange(event: Event): void {
         const currentPage = page;
         let value = +(event.target as HTMLInputElement).value;
 
@@ -74,18 +92,24 @@
 {#snippet pageInput()}
     <Input
         value={page}
-        on:input={onInputPageChange}
-        props={{ type: 'text', class: 'min-w-9 px-0 text-center', width_dynamic: true }}
+        oninput={debounce(onInputPageChange, commonDebounce)}
+        disabled={fetching}
+        type="text"
+        class="min-w-9 px-0 text-center"
+        width_dynamic
     />
 {/snippet}
 
 <div class="flex items-center justify-between py-4">
-    <Button onclick={prev} {...{ content: 'Previous', icon: 'solar:arrow-left-linear', disabled: !hasPrevious }} />
+    <Button
+        onclick={prev}
+        {...{ content: 'Previous', icon: 'solar:arrow-left-linear', disabled: !hasPrevious || fetching }}
+    />
 
     <div class="flex items-center justify-between gap-1 text-sm">
         Page {@render pageInput()} of {totalPages}
         <span class="hidden sm:inline">- total of {count} records</span>
     </div>
 
-    <Button onclick={next} {...{ content: 'Next', icon: 'solar:arrow-right-linear', disabled: !hasNext }} />
+    <Button onclick={next} {...{ content: 'Next', icon: 'solar:arrow-right-linear', disabled: !hasNext || fetching }} />
 </div>
