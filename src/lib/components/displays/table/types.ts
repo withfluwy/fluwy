@@ -1,7 +1,5 @@
 import type { Any } from '@/lib/core/contracts.js';
 
-import * as columns from './columns/index.js';
-
 export interface Table {
     /**
      * The unique identifier for the table
@@ -83,24 +81,13 @@ export interface TablePaginationParams {
     page_size?: string;
 }
 
-export type ColumnType = keyof typeof columns;
-export interface ColumnSchema {
+export interface Column {
     header: Any;
-    path: string;
-    type?: ColumnType;
     class?: string;
-}
-
-interface CustomColumnSchema {
-    type: 'custom';
+    on_click?: Any;
     content: Any;
+    record: Record<string, Any>;
 }
-
-export type Column = ColumnSchema &
-    CustomColumnSchema & {
-        value: Any;
-        record: Record<string, Any>;
-    };
 
 export interface PaginationProps {
     for: string;

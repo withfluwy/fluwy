@@ -5,6 +5,7 @@ import { mergeObjects } from '@/lib/core/utils/merge-objects/index.js';
 
 export const Common = {
     spinner: 'svg-spinners:90-ring-with-bg',
+    delay: 100,
     border_radius: {
         lg: 'rounded-xl',
         md: 'rounded-lg',
@@ -15,7 +16,7 @@ export const Common = {
     background_color: 'bg-white dark:bg-neutral-900',
 };
 
-export function useCommon(key: string): string {
+export function useCommon(key: string) {
     const common = get(Common, key, '');
     const theme = useTheme(`common.${key}`);
 
