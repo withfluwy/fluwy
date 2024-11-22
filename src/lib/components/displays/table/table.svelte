@@ -16,11 +16,13 @@
     const props: Table = $props();
 
     const context = useContext();
+    const defaultPerPage = Number(useTheme('displays.table.page_size') ?? 10);
 
     let records = $state<Any[]>([]);
     let count = $state(0);
     let loading = $state(false);
     let fetching = $state(false);
+    let pageSize = $state(props.page_size ?? defaultPerPage);
     const credentials = $derived(props.credentials || 'omit');
 
     const params = $derived(props.pagination?.params ?? { page: 'page', page_size: 'page_size' });
@@ -28,6 +30,7 @@
     const countPath = $derived(props.pagination?.paths?.count || 'count');
     const tableWrapperTheme = useTheme('displays.table.wrapper');
     const commonBorderColor = useCommon('border_color');
+    const commonBorderRadius = useCommon('border_radius.lg');
     const spinner = useCommon('spinner');
     const commonDelay = useCommon('delay');
 
@@ -48,20 +51,20 @@
         fetchData();
     }
 
-    async function fetchData({ page, pageSize }: Paginate = { page: 1, pageSize: 10 }) {
+    async function fetchData({ page = 1, pageSize: newPageSize = pageSize }: Partial<Paginate> = {}) {
         const url = new URL(props.url);
-        const alreadyHasPageSize = url.searchParams.has(params.page_size ?? 'page_size');
+        const hasPageSizeOnUrl = url.searchParams.has(params.page_size ?? 'page_size');
         const alreadyHasPage = url.searchParams.has(params.page ?? 'page');
 
         fetching = true;
 
-        pageSize = alreadyHasPageSize
+        pageSize = hasPageSizeOnUrl
             ? parseInt(url.searchParams.get(params.page_size ?? 'page_size') as string)
-            : pageSize;
+            : newPageSize;
         page = alreadyHasPage ? parseInt(url.searchParams.get(params.page ?? 'page') as string) : page;
 
         if (!alreadyHasPage) url.searchParams.append(params.page ?? 'page', page.toString());
-        if (!alreadyHasPageSize) url.searchParams.append(params.page_size ?? 'page_size', pageSize.toString());
+        if (!hasPageSizeOnUrl) url.searchParams.append(params.page_size ?? 'page_size', pageSize.toString());
 
         const response = await context.fetch(url, {
             credentials,
@@ -109,7 +112,8 @@
 <div
     class={cn(
         commonBorderColor,
-        'relative overflow-hidden rounded-xl border bg-white dark:bg-neutral-800',
+        commonBorderRadius,
+        'relative overflow-hidden border bg-white dark:bg-neutral-800',
         { 'min-h-40': loading },
         tableWrapperTheme
     )}

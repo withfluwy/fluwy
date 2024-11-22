@@ -12,6 +12,12 @@ export interface Table {
 
     pagination?: TablePagination;
 
+    /**
+     * The number of records to display per page by default.
+     * @default 10
+     */
+    page_size?: number;
+
     columns: Column[];
     /**
      * The credentials policy to use for the request. Can be one of:
