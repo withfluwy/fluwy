@@ -6,10 +6,15 @@
     import type { Paginate, PaginationPayload, PaginationProps } from './types.js';
     import { browser } from '$app/environment';
     import { useCommon } from '@/lib/components/common/styles.js';
+    import { cn } from '@/lib/core/utils/index.js';
+    import { useTheme } from '@/lib/core/client/index.js';
 
     const props: PaginationProps = $props();
 
     const commonDebounce: number = useCommon('debounce');
+    const commonBorderColor = useCommon('border_color');
+    const commonBorderRadius = useCommon('border_radius.lg');
+    const paginationTheme = useTheme('displays.table.pagination.wrapper');
 
     let page = $state(1);
     let count = $state(0);
@@ -100,7 +105,15 @@
     />
 {/snippet}
 
-<div class="flex items-center justify-between py-4">
+<div
+    class={cn(
+        commonBorderColor,
+        commonBorderRadius,
+        'flex items-center justify-between py-4',
+        paginationTheme,
+        props.class
+    )}
+>
     <Button
         onclick={prev}
         {...{ content: 'Previous', icon: 'solar:arrow-left-linear', disabled: !hasPrevious || fetching }}

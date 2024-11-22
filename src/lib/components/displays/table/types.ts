@@ -91,6 +91,7 @@ export interface Column {
 
 export interface PaginationProps {
     for: string;
+    class?: string;
 }
 
 export interface PaginationPayload {
