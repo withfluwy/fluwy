@@ -7,10 +7,10 @@
     import { installAdapters } from './adapters/index.js';
     import { onMount, setContext } from 'svelte';
     import { generateColorVariables } from './utils/color/index.js';
-    import { Toaster } from '../ui/sonner/index.js';
+    // import { Toaster } from '../ui/sonner/index.js';
     import { Colors } from './styles.js';
     import { ModeWatcher } from 'mode-watcher';
-    import { addContext, setupContext, createContext } from './context/index.js';
+    import { setupContext, createContext } from './context/index.js';
 
     export let data: RenderResponse;
 
@@ -33,7 +33,7 @@
 </script>
 
 <ModeWatcher />
-<Toaster richColors position="top-right" closeButton />
+<!-- <Toaster richColors position="top-right" closeButton /> -->
 
 {#each $dialogs as dialog}
     <Render context={dialog.context} props={{ [dialog.component]: dialog }} />
