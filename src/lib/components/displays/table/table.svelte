@@ -23,11 +23,11 @@
     let loading = $state(false);
     let fetching = $state(false);
     let pageSize = $state(props.page_size ?? defaultPerPage);
-    const credentials = $derived(props.credentials || 'omit');
 
-    const params = $derived(props.pagination?.params ?? { page: 'page', page_size: 'page_size' });
-    const resultsPath = $derived(props.pagination?.paths?.results || 'results');
-    const countPath = $derived(props.pagination?.paths?.count || 'count');
+    const credentials = $derived(props.credentials || 'omit');
+    const params = $derived(props.params ?? {});
+    const paths = $derived(props.paths ?? {});
+    const defaultSort = $derived(props.sort?.default ?? '-id');
     const tableWrapperTheme = useTheme('displays.table.wrapper');
     const commonBorderColor = useCommon('border_color');
     const commonBorderRadius = useCommon('border_radius.lg');
@@ -55,6 +55,8 @@
         const url = new URL(props.url);
         const hasPageSizeOnUrl = url.searchParams.has(params.page_size ?? 'page_size');
         const alreadyHasPage = url.searchParams.has(params.page ?? 'page');
+        const resultsPath = paths.results ?? 'results';
+        const countPath = paths.count ?? 'count';
 
         fetching = true;
 
@@ -65,13 +67,13 @@
 
         if (!alreadyHasPage) url.searchParams.append(params.page ?? 'page', page.toString());
         if (!hasPageSizeOnUrl) url.searchParams.append(params.page_size ?? 'page_size', pageSize.toString());
+        if (defaultSort) url.searchParams.append(params.sort ?? 'sort', defaultSort);
 
         const response = await context.fetch(url, {
             credentials,
         });
 
         const responseBody = await response.json();
-
         const hasMetadata = resultsPath !== 'root';
 
         if (!hasMetadata) {
@@ -136,6 +138,7 @@
                     {/each}
                 </tr>
             </thead>
+
             <tbody>
                 {#each records as record (record.id)}
                     <TableRow columns={props.columns} table={props} {record} />
