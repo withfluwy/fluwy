@@ -46,6 +46,8 @@ layout:
     # content: border-l
 
 common:
+  # delay: # defaults to 100 milliseconds
+  # debounce: # defaults to 500 milliseconds
   # icon_size: 40
   # border_color:
   # foreground_color:

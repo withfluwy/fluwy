@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { checkScreenshot } from '../utils.js';
+import { checkScreenshot } from '../../utils.js';
 
 test('tabs doc page', async ({ page }) => {
     await page.goto('http://localhost:4173/components/tabs');

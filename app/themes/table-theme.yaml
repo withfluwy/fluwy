@@ -1,6 +1,18 @@
-tables:
-  wrapper:
-  # header: border-r last-of-type:border-r-0
-  row:
-    # default: odd:bg-neutral-50 dark:odd:bg-neutral-800
-    clickable:
+displays:
+  table:
+    page_size:
+    header:
+    wrapper:
+    row:
+      default:
+      clickable:
+      # Bordered rows
+      # default: border-b last-of-type:border-b-0 divide-x
+    cell:
+      default:
+      clickable:
+    pagination:
+      wrapper:
+
+common:
+  debounce:

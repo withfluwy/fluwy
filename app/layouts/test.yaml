@@ -9,4 +9,5 @@ page:
             - Tests
             - spacer:
             - dark_mode_toggler:
+                align: end
     slot: default

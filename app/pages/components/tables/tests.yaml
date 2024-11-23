@@ -4,40 +4,86 @@ theme: table-theme
 container:
   - spacer:
   - h3: Simple Table (Example 1)
+  - dropdown:
+      align: start
+      class: mb-1
+      trigger:
+        row:
+          class: gap-1 items-center
+          text: Per Page
+          icon: solar:alt-arrow-down-line-duotone
+      content:
+        - dropdown_item:
+            text: 10
+            on_click:
+              emit:
+                event: Paginate::contacts_table
+                payload:
+                  pageSize: 10
+        - dropdown_item:
+            text: 25
+            on_click:
+              emit:
+                event: Paginate::contacts_table
+                payload:
+                  pageSize: 25
+        - dropdown_item:
+            text: 50
+            on_click:
+              emit:
+                event: Paginate::contacts_table
+                payload:
+                  pageSize: 50
+        - dropdown_item:
+            text: 100
+            on_click:
+              emit:
+                event: Paginate::contacts_table
+                payload:
+                  pageSize: 100
   - table:
       id: contacts_table
-      url: http://localhost:8055/items/contacts?limit=10&meta=*&fields=*.*
+      url: http://localhost:3000/items/contacts?meta=*&fields=*.*
+      sort:
+        default: -id
       on_row_click:
         log: ${record.first_name}
       hoverable: true
-      pagination:
-        params:
-          page_size: limit
-        paths:
-          results: data
-          count: meta.filter_count
+      params:
+        page_size: limit
+      paths:
+        results: data
+        count: meta.filter_count
       columns:
         - content: ${record.first_name} ${record.last_name}
+          on_click:
+            alert: "Cell operation called: ${record.first_name}"
           header:
             row:
               class: font-bold dark:text-white gap-2
               content:
                 - icon: solar:user-circle-bold
                 - text: Name
-        - header: Email
+        - header: Email Component
           content:
-            text:
-              class: font-bold text-primary hover:underline
+            email:
+              class: no-underline hover:underline
+              content: ${record.email}
+        - header: Email (using Link)
+          content:
+            link:
+              url: mailto:${record.email}
               content: ${record.email}
         - header: Phone
-          class: italic underline opacity-50 hover:opacity-100 duration-75 transition-opacity
+          content:
+            phone: ${record.phone}
         - header: Created At
-          type: datetime
-          path: created_at
+          content:
+            date: ${record.date_created}
         - header: Updated At
-          type: datetime
-          path: updated_at
+          content:
+            date_from_now: ${record.date_updated}
         - header: Created By
-          path: created_by.first_name
+          content: ${record.user_created.first_name} ${record.user_created.last_name}
   - pagination:
       for: contacts_table
