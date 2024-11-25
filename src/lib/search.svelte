@@ -13,10 +13,4 @@
     $: icon = props.icon || 'solar:magnifer-linear';
 </script>
 
-<Input
-    props={{
-        placeholder: 'Search...',
-        icon: icon,
-        class: cn('w-96', props.class),
-    }}
-/>
+<Input placeholder="Search..." {icon} class={cn('w-96', props.class)} />

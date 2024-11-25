@@ -2,8 +2,8 @@
     import { onDestroy, onMount } from 'svelte';
     import type { Any, ValidationError } from '../core/contracts.js';
     import { cn, get } from '../core/utils/index.js';
-    import Input from './input.svelte';
-    import Checkbox from './checkbox.svelte';
+    // import Input from './input.svelte';
+    // import Checkbox from './checkbox.svelte';
     import type { FormProps } from './types.js';
     import { SubmitEvents } from '../core/operations/submit.js';
     import { compile, hasPlaceholders } from '../core/utils/compile/index.js';
@@ -79,19 +79,19 @@
         Events.emit(successEvent, result);
     }
 
-    const components: Record<string, Any> = {
-        default: Input,
-        checkbox: Checkbox,
-    };
+    // const components: Record<string, Any> = {
+    //     default: Input,
+    //     checkbox: Checkbox,
+    // };
 </script>
 
 <form class={cn('flex flex-col gap-3', props.class)} enctype="multipart/form-data">
-    {#each Object.entries(props.fields) as [field, input]}
-        <!-- <svelte:component
+    <!-- {#each Object.entries(props.fields) as [field, input]} -->
+    <!-- <svelte:component
             this={components[input.type ?? 'default'] ?? components['default']}
             bind:value={data[field]}
             errors={errors[field]}
             props={input}
         /> -->
-    {/each}
+    <!-- {/each} -->
 </form>

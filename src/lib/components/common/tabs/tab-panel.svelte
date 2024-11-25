@@ -24,7 +24,9 @@
     const tabPanelTheme = useTheme('common.tab.panel');
 
     onMount(() => {
-        const tabs = document.querySelectorAll(`button[role=tab][data-value="${id}"]`) as NodeListOf<HTMLElement>;
+        const tabs = document.querySelectorAll(
+            `button[role=tab][data-value="${id}"]`
+        ) as globalThis.NodeListOf<HTMLElement>;
 
         tabs.forEach(removeTopLeftRadiusOfTab);
     });
@@ -39,7 +41,7 @@
 
         const panels = document.querySelectorAll(
             `[role="tabpanel"][aria-labelledby="${id}"]`
-        ) as NodeListOf<HTMLElement>;
+        ) as globalThis.NodeListOf<HTMLElement>;
 
         panels.forEach(removeTopLeftRadius);
     }

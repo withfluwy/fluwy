@@ -2,7 +2,7 @@
     import { useTheme } from '@/lib/core/client/index.js';
     import type { Any, ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
-    import { cn, str } from '@/lib/core/utils/index.js';
+    import { cn } from '@/lib/core/utils/index.js';
     import { Tabs } from 'bits-ui';
     import { Random } from '@/lib/core/utils/random/index.js';
 

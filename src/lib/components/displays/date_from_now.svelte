@@ -8,14 +8,8 @@
 
     dayjs.extend(localizedFormat);
     dayjs.extend(relativeTime);
-    interface DatetimeProps extends ElementProps {
-        /**
-         * The format to use for the datetime compatible with `dayjs`
-         */
-        format?: string;
-    }
 
-    const { format, ...props }: DatetimeProps = $props();
+    const props: ElementProps = $props();
 
     const context = useContext();
     const value = $derived(compile(typeof props === 'string' ? props : props.content, context.data));

@@ -64,8 +64,8 @@
         paginate(page - 1);
     }
 
-    function debounce(fn: (...args: any[]) => unknown, delay: number) {
-        let timeout: NodeJS.Timeout;
+    function debounce(fn: (...args: any[]) => any, delay: number) {
+        let timeout: globalThis.NodeJS.Timeout;
         return (...args: any[]) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => fn(...args), delay);

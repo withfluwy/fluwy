@@ -26,6 +26,9 @@ export default [
                 parser: ts.parser,
             },
         },
+        rules: {
+            '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }]
+        },
     },
     {
         ignores: ['build/', '.svelte-kit/', 'dist/'],

@@ -3,9 +3,13 @@
     import { app } from '$lib/index.js';
     import { compile } from './utils/compile/index.js';
     import { setupContext, useContext } from './context/index.js';
+    import Render from './render.svelte';
 
     interface RenderProps {
         props: Any;
+        component?: {
+            name: string;
+        };
         skip?: string[];
         only?: string[];
         context?: Context;
@@ -78,11 +82,12 @@
 {:else if isArray()}
     {#each props as component}
         {#if exists(component)}
+            <!-- eslint-disable-next-line svelte/valid-compile -->
             <svelte:component this={parse(component).value} component={parse(component)} {...parse(component).schema} />
         {:else if typeof component === 'string'}
             {text(component)}
         {:else if 'slot' in (component ?? {})}
-            <svelte:self props={component.slot} component={{ name: 'slot' }} />
+            <Render props={component.slot} component={{ name: 'slot' }} />
         {:else}
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{parse(component).name}</b>
@@ -92,14 +97,16 @@
 {:else if ['string', 'number', 'boolean'].includes(typeof props)}
     {text(props)}
 {:else if 'content' in (props ?? {})}
-    <svelte:self props={props.content} />
+    <Render props={props.content} />
 {:else if 'if' in (props ?? {})}
+    <!-- eslint-disable-next-line svelte/valid-compile -->
     <svelte:component this={app.getComponent('if')} component={{ name: 'if' }} {...props} />
 {:else}
     {#each propsValidEntries as [component, schema]}
         {#if component === 'slot'}
-            <svelte:self props={schema} component={{ name: 'slot' }} />
+            <Render props={schema} component={{ name: 'slot' }} />
         {:else if exists(component)}
+            <!-- eslint-disable-next-line svelte/valid-compile -->
             <svelte:component
                 this={app.getComponent(component)}
                 component={{ name: component }}
