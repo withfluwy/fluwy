@@ -29,13 +29,6 @@
 
     const haveRowClick = $derived(Boolean(table.on_row_click));
 
-    function getColumn(column: Column, record: Record<string, Any>): Column {
-        return {
-            ...column,
-            record,
-        };
-    }
-
     async function onclick() {
         if (!haveRowClick) return;
 
@@ -54,6 +47,6 @@
     )}
 >
     {#each columns as column}
-        <TableCell column={getColumn(column, record)} {table} />
+        <TableCell {column} {table} {record} />
     {/each}
 </tr>

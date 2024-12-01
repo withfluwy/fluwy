@@ -4,17 +4,19 @@
     import { Render, useContext } from '@/lib/core/index.js';
     import { useClient, useTheme } from '@/lib/core/client/index.js';
     import { useCommon } from '../../common/styles.js';
+    import type { Any } from '@/lib/core/contracts.js';
 
     interface Props {
         column: Column;
         table: Table;
+        record: Record<string, Any>;
         class?: string;
     }
 
     const client = useClient();
     const context = useContext();
 
-    const { column, ...props }: Props = $props();
+    const { column, record, ...props }: Props = $props();
 
     const cellTheme = useTheme('displays.table.cell.default');
     const cellClickableTheme = cn(
@@ -30,7 +32,7 @@
 
         event.stopPropagation();
 
-        await client.handleOperations(column.on_click, context, cloneDeep(column.record));
+        await client.handleOperations(column.on_click, context, cloneDeep(record));
     }
 </script>
 
