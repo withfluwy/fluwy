@@ -3,12 +3,15 @@ import * as primitives from './components/primitives/index.js';
 import * as controls from './components/controls/index.js';
 import * as layouts from './components/layouts/index.js';
 import * as common from './components/common/index.js';
+import * as displays from './components/displays/index.js';
 import { createApp } from './core/app/index.js';
 import { str } from './core/utils/index.js';
 import type { Any } from './core/contracts.js';
 import App from './core/app.svelte';
 import 'iconify-icon';
+
 export { default as Render } from './core/render.svelte';
+export { utils } from './core/index.js';
 
 const app = createApp();
 
@@ -25,7 +28,7 @@ registerAll(primitives);
 registerAll(controls);
 registerAll(layouts);
 registerAll(common);
-
+registerAll(displays);
 // Exports
 
 export type { ElementProps } from './core/contracts.js';

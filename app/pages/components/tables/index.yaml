@@ -1,0 +1,279 @@
+layout: doc
+---
+h2: Tables
+p:
+  class: mb-12
+  content: Tables are a way to display data in a structured format.
+doc_content:
+  - h3: Table
+  - p: The table component is used to display data in a structured format.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            table:
+              data:
+                - id: 1
+                  name: John Doe
+                  email: john.doe@example.com
+                  phone: 123-456-7890
+                  created_at: 2024-01-01
+                - id: 2
+                  name: Jane Doe
+                  email: jane.doe@example.com
+                  phone: 123-456-7890
+                  created_at: 2024-02-02
+                - id: 3
+                  name: Jim Doe
+                  email: jim.doe@example.com
+                  phone: 123-456-7890
+                  created_at: 2024-03-03
+                - id: 4
+                  name: Jill Doe
+                  email: jill.doe@example.com
+                  phone: 123-456-7890
+                  created_at: 2024-04-04
+              columns:
+                - header: ID
+                  content: ${record.id}
+                - header: Name
+                  content: ${record.name}
+                - header: Email
+                  content:
+                    email: ${record.email}
+                - header: Phone
+                  content:
+                    phone: ${record.phone}
+                - header: Created At
+                  content:
+                    date: ${record.created_at}
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                table:
+                  id: contacts_table
+                  url: https://api.example.com/contacts
+                  columns:
+                    - header: ID
+                      content: ${record.id}
+                    - header: Name
+                      content: ${record.name}
+                    - header: Email
+                      content:
+                        email: ${record.email}
+                    - header: Phone
+                      content:
+                        phone: ${record.phone}
+                    - header: Created At
+                      content: ${record.created_at}
+      - tab:
+          title: Properties
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                table:
+                  # The unique identifier for the table. Used for pagination and other table events.
+                  id: string
+
+                  # The property to track by. Defaults to "id".
+                  track_by: string
+                  
+                  # The URL to fetch the data from.
+                  url: string
+                  
+                  # The data property is used to display the data in the table.
+                  # It's optional but can be used to display initial data.
+                  data: array
+
+                  # The number of records to display per page by default.
+                  # Defaults to 10.
+                  page_size: number
+
+                  # The name of the parameters to use for the table. They will be used to get the data from the URL.
+                  params: object
+                    # The name of the page parameter in the URL.
+                    # Defaults to "page".
+                    page: string
+
+                    # The name of the page size parameter in the URL.
+                    # Defaults to "page_size".
+                    page_size: string
+
+                    # The name of the sort parameter in the URL.
+                    # Defaults to "sort".
+                    sort: string
+                  
+                  # The paths to data and total in the response from the url.
+                  paths: object
+                    # The path to the data in the response from the url.
+                    # Defaults to "data".
+                    data: string
+                    
+                    # The path to the total in the response from the url.
+                    # Defaults to "total".
+                    total: string
+
+                  # The sorting options to apply to the table.
+                  sort: object
+                    # The default sorting to apply to the table.
+                    # Defaults to "-id".
+                    default: string
+
+                  # The credentials policy to use for the request. Can be one of:
+                  # - `omit`: The request will not include any cookies or authentication headers.
+                  # - `same-origin`: The request will include cookies and authentication headers if the URL is on the same origin as the calling script.
+                  # - `include`: The request will include cookies and authentication headers.
+                  # Defaults to "omit".
+                  credentials: string
+
+                  # The list of operations to perform when a row is clicked.
+                  on_row_click: operations
+
+                  # The columns to display in the table.
+                  columns: array
+                    - # The header of the column. Can be a string or a template.
+                      header: string | template
+                      # Optional class to apply to the cells.
+                      class: string
+                      # The content to display in the column. Can be a string or a template.
+                      content: string | template
+                      # The operations to perform when the cell is clicked.
+                      on_click: operations
+
+  - h3: Real Example
+  - markdown: |
+      This example uses the Fluwy API to fetch data from the Contacts collection. It uses [Directus](https://directus.io/) to generate the
+      API endpoint.
+
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            table:
+              id: contacts_table
+              url: https://api.fluwy.com/items/contacts?meta=*&fields=*.*
+              on_row_click:
+                alert: "Row click event for: ${record.first_name} ${record.last_name}"
+              params:
+                page_size: limit
+              paths:
+                total: meta.filter_count
+              columns:
+                - content: ${record.first_name} ${record.last_name}
+                  on_click:
+                    alert: "Cell click event for: ${record.first_name} ${record.last_name}"
+                  header:
+                    row:
+                      class: font-bold dark:text-white gap-2
+                      content:
+                        - icon: solar:user-circle-bold
+                        - text: Name
+                - header: Email Component
+                  content:
+                    email: ${record.email}
+                - header: Phone
+                  content:
+                    phone: ${record.phone}
+                - header: Created At
+                  content:
+                    date: ${record.date_created}
+                - header: Updated At
+                  content:
+                    date_from_now: ${record.date_updated}
+                - header: Created By
+                  content: ${record.user_created.first_name} ${record.user_created.last_name}
+            pagination:
+              for: contacts_table
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                table:
+                  id: contacts_table
+                  url: https://api.fluwy.com/items/contacts?meta=*&fields=*.*
+                  on_row_click:
+                    alert: "Row click event for: ${record.first_name} ${record.last_name}"
+                  params:
+                    page_size: limit
+                  paths:
+                    total: meta.filter_count
+                  columns:
+                    - content: ${record.first_name} ${record.last_name}
+                      on_click:
+                        alert: "Cell click event for: ${record.first_name} ${record.last_name}"
+                      header:
+                        row:
+                          class: font-bold dark:text-white gap-2
+                          content:
+                            - icon: solar:user-circle-bold
+                            - text: Name
+                    - header: Email Component
+                      content:
+                        email: ${record.email}
+                    - header: Phone
+                      content:
+                        phone: ${record.phone}
+                    - header: Created At
+                      content:
+                        date: ${record.date_created}
+                    - header: Updated At
+                      content:
+                        date_from_now: ${record.date_updated}
+                    - header: Created By
+                      content: ${record.user_created.first_name} ${record.user_created.last_name}
+                pagination:
+                  for: contacts_table
+
+  - h3: Pagination
+  - markdown: |
+      The pagination component is used to navigate through the pages of the table. It's automatically generated based on
+      the response from the API. It's important to match the `id` of the table with the `for` property of the pagination
+      component to ensure the pagination works correctly. You can place the pagination component anywhere in the page.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            pagination:
+              for: contacts_table
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                pagination:
+                  for: contacts_table
+      - tab:
+          title: Properties
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                pagination:
+                  # The id of the table to paginate.
+                  for: string # required
+
+                  # Optional class to apply to the pagination component.
+                  class: string
+  - markdown:
+      class: mt-3
+      content: |
+        > **Note:** To generate the pagination properly you need to specify the `paths.total` property in the table
+        component. By default it's set to `total` from the root of the response, make sure to change it if your endpoint
+        returns a different property. See the examples above for more details.
+
+  - h3: Row Context
+  - markdown: |
+      Each row's context has an object identified by the `record` variable. This object contains the data for the row
+      and represents the data returned from the API response.

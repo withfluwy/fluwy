@@ -4,13 +4,13 @@
     import Render from './render.svelte';
     import { useDialogs } from './stores/dialogs.js';
     import { installOperations } from './operations/index.js';
-    import { createContext } from './context/index.js';
     import { installAdapters } from './adapters/index.js';
     import { onMount, setContext } from 'svelte';
     import { generateColorVariables } from './utils/color/index.js';
-    import { Toaster } from '../ui/sonner/index.js';
+    // import { Toaster } from '../ui/sonner/index.js';
     import { Colors } from './styles.js';
     import { ModeWatcher } from 'mode-watcher';
+    import { setupContext, createContext } from './context/index.js';
 
     export let data: RenderResponse;
 
@@ -21,7 +21,7 @@
     installOperations(client);
     installAdapters(client);
 
-    setContext('context', context);
+    setupContext(context);
     setContext('theme', data.theme);
 
     const colors = mergeThemes('colors', Colors);
@@ -33,7 +33,7 @@
 </script>
 
 <ModeWatcher />
-<Toaster richColors position="top-right" closeButton />
+<!-- <Toaster richColors position="top-right" closeButton /> -->
 
 {#each $dialogs as dialog}
     <Render context={dialog.context} props={{ [dialog.component]: dialog }} />

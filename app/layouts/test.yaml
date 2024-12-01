@@ -1,0 +1,13 @@
+page:
+  class: bg-neutral-50
+  body:
+    header:
+      container:
+        row:
+          class: items-center
+          content:
+            - Tests
+            - spacer:
+            - dark_mode_toggler:
+                align: end
+    slot: default

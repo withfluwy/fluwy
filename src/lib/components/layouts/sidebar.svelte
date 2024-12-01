@@ -25,7 +25,7 @@
     let open = $state(false);
     let isMobile = $state(false);
 
-    const allDomMutations: MutationObserverInit = {
+    const allDomMutations: globalThis.MutationObserverInit = {
         attributes: true,
         childList: true,
         subtree: true,

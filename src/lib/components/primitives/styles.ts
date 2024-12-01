@@ -8,7 +8,7 @@ export const Typography = {
     p: 'text-base leading-7 mb-3 text-black/90 dark:text-white/90 mt-6 first:mt-0',
     ul: 'list-disc space-y-1 pl-6 m-3 mt-6 first:mt-0',
     ol: 'list-decimal space-y-1 pl-6 m-3 mt-6 first:mt-0',
-    link: 'underline decoration-primary/50 hover:decoration-primary/100 hover:decoration-2 font-semibold text-primary transition-all duration-200',
+    link: 'hover:underline decoration-primary/50 hover:decoration-primary/100 hover:decoration-2 font-semibold text-primary transition-all duration-200',
     hr: 'border-t my-6',
     codespan: 'border bg-black/5 dark:bg-white/10 px-1 py-0.5',
 };

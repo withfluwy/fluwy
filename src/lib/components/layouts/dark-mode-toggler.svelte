@@ -6,6 +6,7 @@
 
     interface Props extends ElementProps {
         color?: string;
+        align?: 'start' | 'center' | 'end';
     }
 
     const isMode = (current: 'light' | 'dark' | 'system') => {
@@ -27,6 +28,7 @@
 </script>
 
 <Dropdown
+    {...props}
     trigger={{
         button: {
             class: cn('size-8 opacity-75 hover:opacity-100', props.class),

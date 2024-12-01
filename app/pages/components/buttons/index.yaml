@@ -1,15 +1,23 @@
 layout: doc
 ---
-h1: Buttons
+h2: Buttons
 p: |
   Buttons are really simple to use and super customizable in Fluwy. 
   They come with a set of predefined variants, but you can easily add more variants with your theme file. They also
   support all the colors defined in your palette, and you can also create variants that support all the colors you have.
 doc_content:
-  - h2: Button
+  - h3: Button
   - markdown: |
       The most basic button you can use in your app.
   - tabs:
+      - tab:
+          title: Preview
+          panel:
+            button:
+              text: Click me!
+              icon: solar:heart-linear
+              on_click:
+                alert: Button clicked!
       - tab:
           title: Code
           class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
@@ -23,14 +31,6 @@ doc_content:
                   icon: solar:heart-linear
                   on_click:
                     alert: Button clicked!
-      - tab:
-          title: Preview
-          panel:
-            button:
-              text: Click me!
-              icon: solar:heart-linear
-              on_click:
-                alert: Button clicked!
       - tab:
           title: Properties
           class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
@@ -67,7 +67,7 @@ doc_content:
                       ghost:
                       link:
 
-  - h2: Icon Buttons
+  - h3: Icon Buttons
   - markdown: |
       Buttons can also have icons or be used as icon buttons.
   - tabs:
@@ -121,7 +121,7 @@ doc_content:
         > **Pro Tip:** If you can the button to have the same width and height you can use the `size` class from
         Tailwind CSS. For example, `size-9` will make the button 36px wide and 36px high.
 
-  - h2: Variants
+  - h3: Variants
   - markdown: |
       Buttons come in 4 variants by default: `filled` (the default), `outline`, `ghost`, and `link`.
       You can also define your own variants in your theme file. See the [Customization](#customization) section for more details.
@@ -173,7 +173,7 @@ doc_content:
                     color: primary
                     variant: link
 
-  - h2: Sizes
+  - h3: Sizes
   - markdown: |
       Buttons come with a set of 3 predefined sizes: `sm`, `md`, and `lg`. You can easily override the sizes in your theme file.
       Or add your own sizes.
@@ -214,10 +214,10 @@ doc_content:
                     text: Large
                     size: lg
 
-  - h2: Colors
+  - h3: Colors
   - p: |
       Buttons also come with the default color palette, but you can easily override the colors with your own.
-  - h3: Default
+  - h4: Default
   - tabs:
       - tab:
           title: Preview
@@ -258,7 +258,7 @@ doc_content:
                     text: Link
                     variant: link
 
-  - h3: Primary
+  - h4: Primary
   - tabs:
       - tab:
           title: Preview
@@ -307,7 +307,7 @@ doc_content:
                     color: primary
                     variant: link
 
-  - h3: Gray
+  - h4: Gray
   - tabs:
       - tab:
           title: Preview
@@ -356,7 +356,7 @@ doc_content:
                     color: gray
                     variant: link
 
-  - h3: Positive
+  - h4: Positive
   - tabs:
       - tab:
           title: Preview
@@ -405,7 +405,7 @@ doc_content:
                     color: positive
                     variant: link
 
-  - h3: Destructive
+  - h4: Destructive
   - tabs:
       - tab:
           title: Preview
@@ -454,8 +454,8 @@ doc_content:
                     color: destructive
                     variant: link
 
-  - h2: Customization
-  - h3: Custom Variants
+  - h3: Customization
+  - h4: Custom Variants
   - markdown: |
       You can also define **change** or **add** your own variants using the `forms.button.variants` setting in your theme file.
   - tabs:
@@ -502,7 +502,7 @@ doc_content:
                     variants:
                       my-gradient-variant: bg-gradient-to-r from-color-500 to-purple-500 text-white
 
-  - h3: Custom Sizes
+  - h4: Custom Sizes
   - markdown: |
       You can also define your own sizes in your theme file.
   - tabs:
@@ -541,7 +541,7 @@ doc_content:
         > **Pro Tip:** when adding a new size you should consider adding a `common.border_radius` setting to the size as well.
         For example, if you add a `my-size` size, you should also add a `common.border_radius.my-size` setting in your theme file.
 
-  - h3: Custom Colors
+  - h4: Custom Colors
   - markdown: |
       You can also define your own colors by overriding the `colors` theme or even adding new ones.
       In this example, we'll add a new color called `my-custom-color` to the palette.
@@ -619,7 +619,7 @@ doc_content:
       content: |
         > **Pro Tip:** You can **change** or **add** colors to the palette in your theme file. The built-in colors are: `primary`, `gray`, `positive`, and `destructive`.
 
-  - h3: Support Colors on Variants
+  - h4: Support Colors on Variants
   - markdown: |
       Let's say you want to create a new variant for your buttons that supports **all the colors defined in your palette**. 
       For this we have a special `color` variable for tailwindcss color classes that dynamically changes accordingly to

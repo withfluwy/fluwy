@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ElementProps } from '@/lib/core/contracts.js';
+    import type { Any, ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
     import { Tabs } from 'bits-ui';
@@ -17,7 +17,7 @@
     const props: Props = $props();
     const themeOuterRadius = useTheme('common.tab.outer_radius') ?? true;
     let outerRadius = $derived(props.outer_radius === false || props.outer_radius === 'off' ? false : themeOuterRadius);
-    let tab: any = $state(null);
+    let tab: Any = $state(null);
     let cachedBgColor = 'rgb(255 255 255)';
     let style: CSSStyleDeclaration | undefined = $derived.by(() => (browser ? getComputedStyle(tab) : undefined));
     let observer: MutationObserver | null = null;
@@ -36,7 +36,7 @@
          */
         initialize();
 
-        observeDOMChanges(tab, (mutations) => {
+        observeDOMChanges(tab, () => {
             if (style!.backgroundColor === cachedBgColor) return;
             updateStyle(style!);
         });
@@ -45,8 +45,7 @@
     $effect(() => {
         if (!browser) return;
         if (!outerRadius) return;
-
-        $userPrefersMode && updateStyle(style!);
+        if ($userPrefersMode) updateStyle(style!);
     });
 
     function updateStyle(style: CSSStyleDeclaration) {
@@ -75,7 +74,7 @@
         tab.style.setProperty('border-bottom-right-radius', '0');
     }
 
-    function observeDOMChanges(node: any, callback: MutationCallback) {
+    function observeDOMChanges(node: Any, callback: globalThis.MutationCallback) {
         observer = new MutationObserver(callback);
         observer.observe(node, { childList: true, subtree: true, attributes: true });
     }
@@ -83,7 +82,7 @@
 
 <Tabs.Trigger
     value={props.id}
-    bind:el={tab as any}
+    bind:el={tab as Any}
     class={cn(
         commonBorderRadius,
         commonBorderColor,

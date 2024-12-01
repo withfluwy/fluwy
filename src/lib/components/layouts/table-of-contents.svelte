@@ -72,13 +72,13 @@
         });
     }
 
-    function getHeadings(element: Element): NodeListOf<HTMLHeadingElement> {
+    function getHeadings(element: Element): globalThis.NodeListOf<HTMLHeadingElement> {
         const headingSelectors = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
         const maxLevelSelectors = max_level ? headingSelectors.slice(0, max_level) : headingSelectors;
         return element.querySelectorAll(maxLevelSelectors.join(', '));
     }
 
-    function buildTocStructure(headings: NodeListOf<HTMLHeadingElement>): TocItem[] {
+    function buildTocStructure(headings: globalThis.NodeListOf<HTMLHeadingElement>): TocItem[] {
         const toc: TocItem[] = [];
         const stack: TocItem[] = [];
 

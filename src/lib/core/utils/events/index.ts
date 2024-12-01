@@ -1,4 +1,5 @@
 import type { Any } from '@/lib/core/contracts.js';
+import type { PaginationPayload, Paginate } from '@/lib/components/displays/table/types.js';
 
 export type Listener = (args: Any) => void;
 
@@ -45,12 +46,28 @@ class EventManager {
         return `Pagination::${id}`;
     }
 
+    tableFetching(id: string) {
+        return `TableFetching::${id}`;
+    }
+
     paginate(id: string) {
         return `Paginate::${id}`;
     }
 
     toggleSidebar() {
         return 'ToggleSidebar';
+    }
+
+    dispatchPagination(id: string, payload: PaginationPayload) {
+        this.emit(this.pagination(id), payload);
+    }
+
+    dispatchPaginate(id: string, payload: Paginate) {
+        this.emit(this.paginate(id), payload);
+    }
+
+    dispatchTableFetching(id: string, value: boolean) {
+        this.emit(this.tableFetching(id), value);
     }
 }
 

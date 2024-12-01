@@ -17,7 +17,7 @@
     const props: DropdownProps = $props();
 </script>
 
-<div class={props.class}>
+<div class={cn('inline-flex', props.class)}>
     <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild let:builder>
             <div role="button" use:builder.action {...builder}>

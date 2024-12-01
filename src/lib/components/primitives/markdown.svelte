@@ -72,8 +72,8 @@
                     const listItems = list.items
                         .map((item) => `<li>${this.parser.parseInline(item.tokens)}</li>`)
                         .join('');
-                    const style = list.ordered ? Typography.ol : Typography.ul;
-                    return `<${list.ordered ? 'ol' : 'ul'} class="${classes.ol}">${listItems}</${list.ordered ? 'ol' : 'ul'}>`;
+                    const style = list.ordered ? classes.ol : classes.ul;
+                    return `<${list.ordered ? 'ol' : 'ul'} class="${style}">${listItems}</${list.ordered ? 'ol' : 'ul'}>`;
                 },
             },
             {
@@ -134,6 +134,7 @@
     {#await html}
         <!-- empty -->
     {:then $html}
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html $html}
     {:catch error}
         {error}

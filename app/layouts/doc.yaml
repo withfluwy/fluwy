@@ -47,6 +47,9 @@ page:
                   text: Button
                   url: /components/buttons
               - menu_item:
+                  text: Tables
+                  url: /components/tables
+              - menu_item:
                   text: Tabs
                   url: /components/tabs
               - menu_item:

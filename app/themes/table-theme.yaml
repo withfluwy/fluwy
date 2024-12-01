@@ -1,0 +1,18 @@
+displays:
+  table:
+    page_size:
+    header:
+    wrapper:
+    row:
+      default:
+      clickable:
+      # Bordered rows
+      # default: border-b last-of-type:border-b-0 divide-x
+    cell:
+      default:
+      clickable:
+    pagination:
+      wrapper:
+
+common:
+  debounce:

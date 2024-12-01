@@ -65,8 +65,6 @@ export class Client {
 
         if (Array.isArray(operations)) {
             for (const operation of operations) {
-                if (typeof operation === 'string') return this.handleOperation(operation, {}, context, result);
-
                 for (const [action, args] of Object.entries(operation)) {
                     result = await this.handleOperation(action, args, context, result);
                 }

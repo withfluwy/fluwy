@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Avatar from '$lib/ui/avatar/index.js';
+    // import * as Avatar from '$lib/ui/avatar/index.js';
 
     export let props: AvatarProps;
 
@@ -23,10 +23,10 @@
     }
 </script>
 
-<Avatar.Root class={props.class}>
+<!-- <Avatar.Root class={props.class}>
     <Avatar.Image src={props.url} alt={props.name} class="object-cover" />
 
     {#if props.name}
         <Avatar.Fallback>{fallback}</Avatar.Fallback>
     {/if}
-</Avatar.Root>
+</Avatar.Root> -->

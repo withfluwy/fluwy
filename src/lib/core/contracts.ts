@@ -1,7 +1,7 @@
 import type { Context } from './context/index.js';
 
 export { Client } from './client/index.js';
-export type { ContextData, RawContextData } from './context/index.js';
+export type { ContextData } from './context/index.js';
 export type { Context };
 
 export interface AppConfig {

@@ -12,3 +12,4 @@ export { default as Link } from './link.svelte';
 export { default as Markdown } from './markdown.svelte';
 export { default as P } from './p.svelte';
 export { default as Row } from './row.svelte';
+export { default as Text } from './text.svelte';
