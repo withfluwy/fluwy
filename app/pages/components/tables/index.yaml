@@ -145,6 +145,26 @@ doc_content:
                       content: string | template
                       # The operations to perform when the cell is clicked.
                       on_click: operations
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                displays:
+                  table:
+                    page_size: # number of rows per page
+                    header:
+                    wrapper:
+                    row:
+                      default:
+                      clickable:
+                    cell:
+                      default:
+                      clickable:
+                    pagination:
+                      wrapper:
 
   - h3: Real Example
   - markdown: |
