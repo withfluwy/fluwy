@@ -20,7 +20,6 @@ doc_content:
                   title: Tab 2
                   panel: Content of tab 2
       - tab:
-          id: code
           class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
           title: Code
           panel:

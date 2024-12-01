@@ -44,16 +44,12 @@ container:
   - table:
       id: contacts_table
       url: http://localhost:3000/items/contacts?meta=*&fields=*.*
-      sort:
-        default: -id
       on_row_click:
         log: ${record.first_name}
-      hoverable: true
       params:
         page_size: limit
       paths:
-        results: data
-        count: meta.filter_count
+        total: meta.filter_count
       columns:
         - content: ${record.first_name} ${record.last_name}
           on_click:

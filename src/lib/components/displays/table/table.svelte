@@ -18,12 +18,13 @@
     const context = useContext();
     const defaultPerPage = Number(useTheme('displays.table.page_size') ?? 10);
 
-    let records = $state<Any[]>([]);
-    let count = $state(0);
+    let records = $state<Any[]>(props.data ?? []);
+    let total = $state(0);
     let loading = $state(false);
     let fetching = $state(false);
     let pageSize = $state(props.page_size ?? defaultPerPage);
 
+    const trackBy = $derived(props.track_by ?? 'id');
     const credentials = $derived(props.credentials || 'omit');
     const params = $derived(props.params ?? {});
     const paths = $derived(props.paths ?? {});
@@ -52,11 +53,13 @@
     }
 
     async function fetchData({ page = 1, pageSize: newPageSize = pageSize }: Partial<Paginate> = {}) {
+        if (!props.url) return;
+
         const url = new URL(props.url);
         const hasPageSizeOnUrl = url.searchParams.has(params.page_size ?? 'page_size');
         const alreadyHasPage = url.searchParams.has(params.page ?? 'page');
-        const resultsPath = paths.results ?? 'results';
-        const countPath = paths.count ?? 'count';
+        const dataPath = paths.data ?? 'data';
+        const totalPath = paths.total ?? 'total';
 
         fetching = true;
 
@@ -74,7 +77,7 @@
         });
 
         const responseBody = await response.json();
-        const hasMetadata = resultsPath !== 'root';
+        const hasMetadata = dataPath !== 'root';
 
         if (!hasMetadata) {
             records = responseBody;
@@ -82,13 +85,13 @@
             return;
         }
 
-        records = get(responseBody, resultsPath, []);
-        count = get(responseBody, countPath, 0);
+        records = get(responseBody, dataPath, []);
+        total = get(responseBody, totalPath, 0);
         fetching = false;
 
         Events.dispatchPagination(props.id, {
             page,
-            count,
+            total,
             pageSize,
             recordsLength: records.length,
         });
@@ -140,7 +143,7 @@
             </thead>
 
             <tbody>
-                {#each records as record (record.id)}
+                {#each records as record (record[trackBy])}
                     <TableRow columns={props.columns} table={props} {record} />
                 {/each}
             </tbody>

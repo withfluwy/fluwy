@@ -17,14 +17,14 @@
     const paginationTheme = useTheme('displays.table.pagination.wrapper');
 
     let page = $state(1);
-    let count = $state(0);
+    let total = $state(0);
     let pageSize = $state(10);
     let recordsLength = $state(0);
     let fetching = $state(false);
 
-    const totalPages = $derived(Math.ceil(count / pageSize));
+    const totalPages = $derived(Math.ceil(total / pageSize));
     const hasPrevious = $derived(page > 1);
-    const hasNext = $derived(recordsLength > 0 ? recordsLength === pageSize && count > page * recordsLength : false);
+    const hasNext = $derived(recordsLength > 0 ? recordsLength === pageSize && total > page * recordsLength : false);
 
     onMount(() => {
         if (browser) Events.on(Events.pagination(props.for), onPagination);
@@ -38,7 +38,7 @@
 
     function onPagination(pagination: PaginationPayload) {
         page = pagination.page;
-        count = pagination.count;
+        total = pagination.total;
         pageSize = pagination.pageSize;
         recordsLength = pagination.recordsLength;
     }
@@ -121,7 +121,7 @@
 
     <div class="flex items-center justify-between gap-1 text-sm">
         Page {@render pageInput()} of {totalPages}
-        <span class="hidden sm:inline">- total of {count} records</span>
+        <span class="hidden sm:inline">- total of {total} records</span>
     </div>
 
     <Button onclick={next} {...{ content: 'Next', icon: 'solar:arrow-right-linear', disabled: !hasNext || fetching }} />
