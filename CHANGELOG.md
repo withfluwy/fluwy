@@ -1,5 +1,26 @@
 # @fluwy/ui
 
+## 0.7.0
+
+### Minor Changes
+
+- ad3d1e3: New `utils` module with useful helpers
+- 017f516: New `emit` operation to emit events via `Events` event bus.
+- f1ddc80: New email display component.
+- 6a4d29a: Pagination now reacts to table fetching which disables the navigation buttons and page input when table is fetching.
+- 1fff592: Add alert operation
+- dc89520: Add `displays.table.page_size` theme option to customize the page size of a page. Also supports inline option on the `table` component.
+- a6b6081: Add tables with customizable rows and headers
+- aa3b04c: Make table component themeable
+- 4dc0981: Make pagination themeable
+- 3751196: New `log` operation to log things using `console.log` in the browser.
+
+### Patch Changes
+
+- 7d0f4cf: Add documentation to table with real API example.
+- dba8805: Fixes button disabled opacity on hover. Fixes dark style for table headers.
+- 4ebca50: Fixed horizontal scroll on markdown code blocks
+
 ## 0.6.0
 
 ### Minor Changes
