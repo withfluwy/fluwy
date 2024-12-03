@@ -1,0 +1,116 @@
+layout: test
+theme: tests
+---
+container:
+  content:
+    - h4: Full input with properties
+    - row:
+        class: gap-3
+        content:
+          - input:
+              label: This is the label
+              placeholder: This is the placeholder
+              description: This is the description
+              required: true
+              icon: solar:key-linear
+              trailing_icon: solar:key-linear
+              text: This is the text
+          - input:
+              label: Disabled
+              placeholder: This is a disabled input
+              icon: solar:key-linear
+              disabled: true
+          - input:
+              label:
+                - div: This is a custom label
+                - div: Required
+              type: password
+              placeholder: This is the placeholder
+              description: 
+                - div: This is a custom description
+                - div: Right side of the description
+              icon: solar:key-linear
+              trailing_icon: solar:key-linear
+              text: This is the text
+    - h4: Inline input with button
+    - row:
+        class: mt-4 gap-1 items-center
+        content:
+          - input:
+              icon: solar:magnifer-linear
+              placeholder: Input with button
+              loading: true
+          - button:
+              icon: solar:magnifer-linear
+              color: primary
+    - h4: Input with dynamic width
+    - row:
+        class: gap-2 items-center
+        content:
+          - input:
+              width_dynamic: true
+              value: 12
+          - input:
+              width_dynamic: true
+              value: 1234567
+          - input:
+              width_dynamic: true
+              value: "123456737816247867182634"
+    - h4: Input types
+    - row:
+        class: gap-2 items-center flex-wrap
+        content:
+          - input:
+              icon: solar:text-linear
+              placeholder: Type text
+          - input:
+              icon: solar:key-linear
+              placeholder: Type password
+              type: password
+          - input:
+              icon: solar:hashtag-linear
+              placeholder: Type number
+              type: number
+          - input:
+              icon: solar:magnifer-linear
+              placeholder: Type search
+              type: search
+          - input:
+              icon: solar:calendar-linear
+              placeholder: Type date
+              type: date
+    - h4: Input sizes
+    - row:
+        class: gap-2 items-center
+        content:
+          - input:
+              icon: solar:heart-linear
+              placeholder: Small
+              loading: true
+              size: sm
+          - input:
+              icon: solar:heart-linear
+              placeholder: Medium
+              loading: true
+              size: md
+          - input:
+              icon: solar:heart-linear
+              placeholder: Large
+              loading: true
+              size: lg
+          - input:
+              icon: solar:heart-linear
+              placeholder: Extra Large (Custom theme)
+              loading: true
+              size: xl
+    - h4: Input with description
+    - input:
+        label: This is the label
+        description: This is the description
+    - h4: Input with errors
+    - input:
+        label: This is the label
+        placeholder: This is the placeholder
+        errors:
+          - This is an error message
+          - This is another error message
