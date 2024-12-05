@@ -14,12 +14,12 @@ describe('emit', () => {
         vi.spyOn(Events, 'emit');
     });
 
-    it('requires a filled string or object with event and payload', () => {
-        expect(emit('', context, previousResult)).rejects.toThrow('Event name is required');
-        expect(emit(null, context, previousResult)).rejects.toThrow('Event name is required');
-        expect(emit(undefined, context, previousResult)).rejects.toThrow('Event name is required');
-        expect(emit({ event: '' }, context, previousResult)).rejects.toThrow('Event name is required');
-        expect(emit({ event: 'working' }, context, previousResult)).resolves.toBe(previousResult);
+    it('requires a filled string or object with event and payload', async () => {
+        await expect(emit('', context, previousResult)).rejects.toThrow('Event name is required');
+        await expect(emit(null, context, previousResult)).rejects.toThrow('Event name is required');
+        await expect(emit(undefined, context, previousResult)).rejects.toThrow('Event name is required');
+        await expect(emit({ event: '' }, context, previousResult)).rejects.toThrow('Event name is required');
+        await expect(emit({ event: 'working' }, context, previousResult)).resolves.toBe(previousResult);
     });
 
     it('should emit an event', async () => {
