@@ -1,5 +1,12 @@
 # @fluwy/ui
 
+## 0.8.0
+
+### Minor Changes
+
+- 650933d: Spacer now supports CSS classes as its content so we can easily do something like `spacer: mt-12` if we need some classes for the spacer.
+- cd356e5: New input component.
+
 ## 0.7.0
 
 ### Minor Changes
