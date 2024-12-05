@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
 import { screenshotTest } from '../../utils.js';
 
-test('buttons test', screenshotTest());
-test('buttons test dark mode', screenshotTest({ darkMode: true }));
+test('buttons test', screenshotTest('/components/buttons/tests'));
+test('buttons test dark mode', screenshotTest('/components/buttons/tests', { darkMode: true }));

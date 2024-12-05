@@ -3,7 +3,6 @@ theme: tests
 ---
 container:
   content:
-    - h4: Full input with properties
     - row:
         class: gap-3
         content:
@@ -32,7 +31,6 @@ container:
               icon: solar:key-linear
               trailing_icon: solar:key-linear
               text: This is the text
-    - h4: Inline input with button
     - row:
         class: mt-4 gap-1 items-center
         content:
@@ -43,22 +41,20 @@ container:
           - button:
               icon: solar:magnifer-linear
               color: primary
-    - h4: Input with dynamic width
     - row:
-        class: gap-2 items-center
+        class: gap-2 items-center mt-4
         content:
           - input:
               width_dynamic: true
-              value: 12
+              value: with dynamic width
           - input:
               width_dynamic: true
               value: 1234567
           - input:
               width_dynamic: true
               value: "123456737816247867182634"
-    - h4: Input types
     - row:
-        class: gap-2 items-center flex-wrap
+        class: gap-2 items-center flex-wrap mt-4
         content:
           - input:
               icon: solar:text-linear
@@ -79,9 +75,8 @@ container:
               icon: solar:calendar-linear
               placeholder: Type date
               type: date
-    - h4: Input sizes
     - row:
-        class: gap-2 items-center
+        class: gap-2 items-center mt-4
         content:
           - input:
               icon: solar:heart-linear
@@ -103,11 +98,7 @@ container:
               placeholder: Extra Large (Custom theme)
               loading: true
               size: xl
-    - h4: Input with description
-    - input:
-        label: This is the label
-        description: This is the description
-    - h4: Input with errors
+    - spacer: mt-4
     - input:
         label: This is the label
         placeholder: This is the placeholder
