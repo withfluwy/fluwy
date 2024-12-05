@@ -79,7 +79,7 @@
         "postcss": "^8.4.49",
         "prettier": "^3.4.1",
         "prettier-plugin-svelte": "^3.2.8",
-        "prettier-plugin-tailwindcss": "^0.6.8",
+        "prettier-plugin-tailwindcss": "^0.6.9",
         "publint": "^0.2.12",
         "sass": "^1.80.7",
         "svelte": "5.4.0",
