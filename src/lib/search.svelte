@@ -1,6 +1,6 @@
 <script lang="ts">
     import { cn } from './core/utils/index.js';
-    import { Input } from './form/index.js';
+    import { Input } from '@/lib/components/forms/index.js';
 
     export let props: SearchProps;
 

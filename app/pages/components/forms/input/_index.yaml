@@ -1,0 +1,13 @@
+layout: doc
+---
+h2: Input
+markdown: |
+  The input component is the basic component to collect data from users. It currently supports these types: `text`
+  (the default), `password`, `number`, `search`, `date`
+doc_content:
+  - h3: Usage
+  - p: To use Input Text, import the component and include it in your template.
+  - input:
+      label: Input Text
+      placeholder: Enter text here
+      value: This is my value

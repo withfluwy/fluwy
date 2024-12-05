@@ -26,6 +26,7 @@ export interface ElementProps {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Any = any;
+export type Template = Any;
 export type OperationSchema = Record<string, Any>;
 
 export type RenderResponse = {

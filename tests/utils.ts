@@ -9,7 +9,7 @@ type ScreenshotTestOptions = {
     darkMode?: boolean;
 };
 
-export function screenshotTest({ viewport = { width: 1024, height: 768 }, darkMode }: ScreenshotTestOptions = {}) {
+export function screenshotTest(url: string, { viewport = { width: 1024, height: 768 }, darkMode }: ScreenshotTestOptions = {}) {
     return async ({ page }: { page: Page }) => {
         await page.setViewportSize(viewport);
 
@@ -17,7 +17,7 @@ export function screenshotTest({ viewport = { width: 1024, height: 768 }, darkMo
             await page.emulateMedia({ colorScheme: 'dark' });
         }
 
-        await page.goto('http://localhost:4173/components/buttons/tests');
+        await page.goto(url);
 
         await checkScreenshot(page);
     };

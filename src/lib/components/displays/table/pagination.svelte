@@ -1,13 +1,13 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte';
     import Button from '@/lib/components/forms/button/button.svelte';
-    import { Input } from '@/lib/form/index.js';
     import { Events } from '@/lib/core/utils/events/index.js';
     import type { Paginate, PaginationPayload, PaginationProps } from './types.js';
     import { browser } from '$app/environment';
     import { useCommon } from '@/lib/components/common/styles.js';
     import { cn } from '@/lib/core/utils/index.js';
     import { useTheme } from '@/lib/core/client/index.js';
+    import { Input } from '@/lib/components/forms/index.js';
 
     const props: PaginationProps = $props();
 
@@ -100,7 +100,6 @@
         oninput={debounce(onInputPageChange, commonDebounce)}
         disabled={fetching}
         type="text"
-        class="min-w-9 px-0 text-center"
         width_dynamic
     />
 {/snippet}
