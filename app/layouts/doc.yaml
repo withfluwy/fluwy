@@ -53,9 +53,6 @@ page:
                   text: Tabs
                   url: /components/tabs
               - menu_item:
-                  text: Input
-                  url: /components/forms/input
-              - menu_item:
                   text: Sidebar
                   trailing_icon: solar:clock-circle-linear
                   class: opacity-50 hover:text-orange-600 dark:hover:text-orange-300
