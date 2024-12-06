@@ -1,0 +1,57 @@
+layout: test
+# theme: doc
+---
+container:
+  class: max-w-3xl
+  content:
+    - h4: Testing form component
+    - form:
+        id: testing-form-without-context
+        class: border-2 p-4 rounded-xl
+        data:
+          user:
+            email: marco@mail.com
+            password: mysecretpassword
+        content:
+          - h5: Form without context
+          - input:
+              field: user.email
+              label: Email Address
+              placeholder: Enter email here
+              icon: solar:letter-linear
+          - input:
+              field: user.password
+              type: password
+              label: Password
+              placeholder: Enter your password
+              icon: solar:key-linear
+          - button:
+              text: Submit
+              color: primary
+              on_click:
+                alert: Credentials ${data.user.email}
+          - debug:
+              - ${data.user.email}
+    - spacer: mt-10
+    - form:
+        id: testing-form-with-context
+        class: border-2 p-4 rounded-xl
+        content:
+          - h5: Form with context
+          - input:
+              name: name
+              label: Email Address
+              placeholder: Enter email here
+              icon: solar:letter-linear
+          - input:
+              name: password
+              label: Password
+              placeholder: Enter your password
+              icon: solar:key-linear
+          - button:
+              text: Submit
+              color: primary
+              on_click:
+                alert: Credentials ${record.name}
+          - debug:
+              - ${record.name}

@@ -7,8 +7,10 @@
     import { Common, useCommon } from '@/lib/components/common/styles.js';
     import { Render } from '@/lib/core/index.js';
     import { DefaultSize, Sizes } from '../styles.js';
+    import { getContext } from 'svelte';
+    import type { FormState } from '@/lib/components/forms/form/types.js';
 
-    let { value, errors, oninput, label, size, description, width_dynamic, ...props }: InputProps = $props();
+    let { field, errors, oninput, label, size, description, width_dynamic, ...props }: InputProps = $props();
 
     const id = Random.id();
     const spinner = useTheme('common.spinner', Common.spinner);
@@ -18,25 +20,50 @@
     const sizes = mergeThemes('forms.common.sizes', Sizes);
     const defaultSize = mergeThemes('forms.common.default_size', DefaultSize);
 
+    let form: FormState =
+        getContext('form') ??
+        ({
+            data: {
+                [field ?? id]: props.value ?? '',
+            },
+            errors: {},
+        } satisfies FormState);
+
+    let value = $state(form.data[field ?? id]);
     let inputWidth = $state('auto');
     let input = $state<HTMLInputElement | null>(null);
     let sizer = $state<HTMLSpanElement | null>(null);
 
     $effect(() => {
-        if (!width_dynamic || !sizer) return;
-        
+        value = form.data[field ?? id];
+    });
+
+    $effect(() => {
+        if (!width_dynamic || !sizer) {
+            width_dynamic && console.log('no sizer?', sizer);
+            return;
+        }
+
         sizer.textContent = value?.toString() || '';
         sizer.style.fontSize = getComputedStyle(input as Element).fontSize;
         const padding = 20;
         inputWidth = `${Math.max(sizer.offsetWidth + padding, 36)}px`;
     });
 
+    function onInput(e: Event) {
+        const newValue = (e.target as HTMLInputElement).value;
+        value = form.data[field ?? id] = newValue;
+
+        oninput?.(e);
+    }
+
     const inputLabelTheme = cn(
         'flex justify-between text-base font-medium leading-6 text-neutral-700 dark:text-neutral-200',
         useTheme('forms.input.label')
     );
 
-    const iconDefaultClasses = 'absolute pointer-events-none peer-disabled:opacity-50 text-neutral-400 transition duration-100 peer-focus:text-primary';
+    const iconDefaultClasses =
+        'absolute pointer-events-none peer-disabled:opacity-50 text-neutral-400 transition duration-100 peer-focus:text-primary';
     const inputBaseTheme = useTheme('forms.input.base');
     const inputWrapperTheme = useTheme('forms.input.wrapper');
 
@@ -57,7 +84,7 @@
     {#if width_dynamic}
         <span
             bind:this={sizer}
-            class="whitespace-pre border invisible absolute pointer-events-none border-red-500 opacity-30"
+            class="pointer-events-none invisible absolute whitespace-pre border border-red-500 opacity-30"
             style="font: inherit; padding: 0;"
         ></span>
     {/if}
@@ -72,7 +99,7 @@
                 commonBackgroundColor,
                 commonBorderRadius,
                 sizes[size || defaultSize],
-                'peer w-full border shadow-sm disabled:opacity-50 disabled:cursor-not-allowed outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1',
+                'peer w-full border shadow-sm outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
                 inputBaseTheme,
                 props.class,
                 { 'pl-9': props.icon },
@@ -80,8 +107,8 @@
                 { '!border-destructive ring-destructive focus:border-destructive': errors?.length },
                 { 'min-w-9 p-0 text-center': width_dynamic }
             )}
-            bind:value
-            {oninput}
+            {value}
+            oninput={onInput}
             style:width={width_dynamic ? inputWidth : undefined}
         />
 
