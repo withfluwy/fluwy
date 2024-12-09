@@ -27,8 +27,8 @@ importers:
         specifier: ^3.13.7
         version: 3.13.7
       iconify-icon:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.2.0
+        version: 2.2.0
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
@@ -1515,8 +1515,8 @@ packages:
   human-id@1.0.2:
     resolution: {integrity: sha512-UNopramDEhHJD+VR+ehk8rOslwSfByxPIZyJRfV739NDhN5LF1fa1MqnzKm2lGTQRjNrjK19Q5fhkgIfjlVUKw==}
 
-  iconify-icon@2.1.0:
-    resolution: {integrity: sha512-lto4XU3bwTQnb+D/CsJ4dWAo0aDe+uPMxEtxyOodw9l7R9QnJUUab3GCehlw2M8mDHdeUu/ufx8PvRQiJphhXg==}
+  iconify-icon@2.2.0:
+    resolution: {integrity: sha512-PDYyUWgsI8tp5uTwRAfwfrmjkC9WEzWbUFuByAiZAIuCFigho7u+ApIYJ9fKoZyyp8SBCpnq/dVHewNv4or6bg==}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -4077,7 +4077,7 @@ snapshots:
 
   human-id@1.0.2: {}
 
-  iconify-icon@2.1.0:
+  iconify-icon@2.2.0:
     dependencies:
       '@iconify/types': 2.0.0
 
