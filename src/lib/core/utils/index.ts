@@ -5,12 +5,15 @@ import { Durations } from '../constants.js';
 import type { TransitionConfig } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import _ from 'lodash';
+import { expandObject } from './normalize-object/index.js';
 
 export { Random } from './random/index.js';
 export { parseUriParams } from './parsers/parse-uri-params.js';
 export { str } from './str/index.js';
 export { delay } from './delay/index.js';
 export const { cloneDeep } = _;
+
+export { expandObject };
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -94,14 +97,16 @@ export function get(record: Record<string, Any>, path: string, defaultValue?: An
     if (record === undefined) return defaultValue;
     if (!path.includes('.')) return record[path] ?? defaultValue;
 
-    let value = record;
+    // First expand any dot notation keys into nested objects
+    const expanded = expandObject(record);
+    let value = expanded;
 
     if (isNil(value)) return value;
 
     const pathParts = path.split('.');
 
     for (const part of pathParts) {
-        value = value[part];
+        value = value[part] as Any;
         if (isNil(value)) break;
     }
 

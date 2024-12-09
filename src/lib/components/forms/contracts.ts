@@ -5,6 +5,11 @@ export interface InputProps {
     placeholder?: string;
     label?: Template;
     /**
+     * The name of the input field that will be used in the form. This property
+     * is used to access the value of the input field in the form data in the form context.
+     */
+    field?: string;
+    /**
      * The description of the input that will be displayed below the input.
      */
     description?: Template;

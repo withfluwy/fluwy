@@ -28,6 +28,7 @@ export interface ElementProps {
 export type Any = any;
 export type Template = Any;
 export type OperationSchema = Record<string, Any>;
+export type Operations = OperationSchema | OperationSchema[];
 
 export type RenderResponse = {
     content: Any;

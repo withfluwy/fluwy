@@ -50,7 +50,7 @@ export class Client {
     async handleOperation(event: OperationName, args: Any, context: Context, previousResult: Any) {
         const handle = this.handlers[event];
 
-        if (!handle) throw new Error(`No operation defined for [${event}]`);
+        if (!handle) throw new Error(`Operation [${event}] not found`);
 
         return handle(args, context, previousResult);
     }

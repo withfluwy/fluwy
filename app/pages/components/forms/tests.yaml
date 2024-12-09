@@ -1,0 +1,68 @@
+layout: test
+# theme: doc
+---
+container:
+  content:
+    - h4: Testing form components
+    - div:
+        class: grid md:grid-cols-2 lg:grid-cols-3 gap-4
+        content:
+          - form:
+              id: testing-form-without-context
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl
+              data:
+                user: {}
+              content:
+                - h5: Login Form
+                - input:
+                    field: user.email
+                    placeholder: Enter email here
+                    icon: solar:letter-linear
+                - input:
+                    field: user.password
+                    type: password
+                    placeholder: Enter your password
+                    icon: solar:key-linear
+                - row:
+                    class: gap-2
+                    content:
+                      - button:
+                          class: w-full
+                          text: Reset
+                          type: reset
+                      - button:
+                          class: w-full
+                          text: Login
+                          color: primary
+                          on_click:
+                            # Option 1: use request operator like `post`
+                            post:
+                              url: http://localhost:3000/api/contacts
+                              data: form.data.user
+                              validate_with: payloadcms
+                              on_error:
+                                # TODO: make this work and set errors for input fields.
+                                log: error
+                            log: response
+                - debug: form.data
+          - form:
+              id: testing-form-with-context
+              class: border-2 p-4 rounded-xl
+              content:
+                - h5: Form with context
+                - input:
+                    name: name
+                    label: Email Address
+                    placeholder: Enter email here
+                    icon: solar:letter-linear
+                - input:
+                    name: password
+                    label: Password
+                    placeholder: Enter your password
+                    icon: solar:key-linear
+                - button:
+                    text: Submit
+                    color: primary
+                    on_click:
+                      alert: Credentials ${record.name}
+                - debug: record.name

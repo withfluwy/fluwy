@@ -13,6 +13,7 @@
 
     interface ButtonProps extends ElementProps {
         text?: string;
+        type?: 'submit' | 'reset' | 'button';
         icon?: IconProps | string;
         trailing_icon?: IconProps | string;
         loading?: boolean;
@@ -27,7 +28,7 @@
         children?: Snippet;
     }
 
-    const { component, children, ...props }: ButtonProps = $props();
+    const { component, children, type = 'button', ...props }: ButtonProps = $props();
 
     const componentName = component?.name ?? 'button';
     const context = useContext();
@@ -95,6 +96,7 @@
 
 <button
     onclick={handleClick}
+    {type}
     class={cn(
         commonBorderColor,
         `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
