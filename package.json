@@ -99,7 +99,7 @@
         "clsx": "^2.1.1",
         "color": "^4.2.3",
         "dayjs": "^1.11.13",
-        "dompurify": "^3.2.2",
+        "dompurify": "^3.2.3",
         "hotkeys-js": "^3.13.7",
         "iconify-icon": "^2.1.0",
         "jsdom": "^25.0.1",
