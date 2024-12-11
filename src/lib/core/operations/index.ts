@@ -1,6 +1,7 @@
 import { Client } from '../client/index.js';
 
 import { alert } from './alert/index.js';
+import { clear_form_errors } from '@/lib/core/operations/clear_form_errors/index.js';
 import { close_dialog } from './close_dialog.js';
 import { context } from './context.js';
 import { deleteOperation } from './delete.js';
@@ -17,7 +18,6 @@ import { refresh } from './refresh.js';
 import { set_auth_token } from './set_auth_token.js';
 import { set_auth_user } from './set_auth_user.js';
 import { set_mode } from './set_mode/index.js';
-import { submit } from './submit.js';
 import { transform } from './transform/index.js';
 import { unset_local_storage } from './unset_local_storage.js';
 import { wrap_into } from './wrap_into/index.js';
@@ -25,6 +25,7 @@ import * as cookies from './cookies.js';
 
 export function installOperations(client: Client) {
     client.addOperation('alert', alert);
+    client.addOperation('clear_form_errors', clear_form_errors);
     client.addOperation('close_dialog', close_dialog);
     client.addOperation('context', context);
     client.addOperation('delete', deleteOperation);
