@@ -36,8 +36,8 @@ page:
             url: /theming
         - menu_item:
             icon: solar:file-check-linear
-            text: YAML Key Concepts
-            url: /yaml-key-concepts
+            text: Key Concepts
+            url: /key-concepts
         - menu_group:
             header: Components
             active_if_starts_with: /components
