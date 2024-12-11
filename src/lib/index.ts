@@ -11,7 +11,7 @@ import App from './core/app.svelte';
 import 'iconify-icon';
 
 export { default as Render } from './core/render.svelte';
-export { utils } from './core/index.js';
+export { utils, createContext, useContext } from './core/index.js';
 
 const app = createApp();
 

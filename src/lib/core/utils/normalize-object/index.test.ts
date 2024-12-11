@@ -60,5 +60,38 @@ describe('collapseObject and expandObject', () => {
                 },
             });
         });
+
+        it('expands the object recursively', () => {
+            // Given
+            const object = {
+                id: 1,
+                data: {
+                    'attributes.name': 'John Doe',
+                    'attributes.email': 'john.doe@mail.com',
+                    'attributes.createdAt': new Date(),
+                    'attributes.address.line1': '123 Main St',
+                    'attributes.address.country': null,
+                    'attributes.address.zip': undefined,
+                    'attributes.items': [1, 2, 3],
+                }
+            };
+
+            expect(expandObject(object)).toEqual({
+                id: 1,
+                data: {
+                    attributes: {
+                        name: 'John Doe',
+                        email: 'john.doe@mail.com',
+                        createdAt: expect.any(Date),
+                        items: [1, 2, 3],
+                        address: {
+                            line1: '123 Main St',
+                            country: null,
+                            zip: undefined,
+                        },
+                    }
+                }
+            });
+        });
     });
 });

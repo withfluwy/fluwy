@@ -5,12 +5,16 @@ import { Durations } from '../constants.js';
 import type { TransitionConfig } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import _ from 'lodash';
+import { expandObject } from './normalize-object/index.js';
 
 export { Random } from './random/index.js';
 export { parseUriParams } from './parsers/parse-uri-params.js';
 export { str } from './str/index.js';
 export { delay } from './delay/index.js';
+export { get } from './get/index.js';
 export const { cloneDeep } = _;
+
+export { expandObject };
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -90,24 +94,6 @@ export function hasBrackets(str: string) {
     return str.includes('[') && str.includes(']');
 }
 
-export function get(record: Record<string, Any>, path: string, defaultValue?: Any): Any {
-    if (record === undefined) return defaultValue;
-    if (!path.includes('.')) return record[path] ?? defaultValue;
-
-    let value = record;
-
-    if (isNil(value)) return value;
-
-    const pathParts = path.split('.');
-
-    for (const part of pathParts) {
-        value = value[part];
-        if (isNil(value)) break;
-    }
-
-    return value ?? defaultValue;
-}
-
 export function set(record: Record<string, Any>, path: string, value: Any): void {
     const keys = path.split('.');
     let current = record;
@@ -151,8 +137,8 @@ export function exclude(props: Any, ...keys: string[]): Any {
     return result;
 }
 
-export function deferred(fn: () => void) {
-    setTimeout(fn, Durations.transition);
+export function deferred(fn: () => void, duration = Durations.transition) {
+    setTimeout(fn, duration);
 }
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
