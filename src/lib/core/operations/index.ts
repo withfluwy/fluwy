@@ -12,6 +12,7 @@ import { if_operation } from './if_operation.js';
 import { log } from './log/index.js';
 import { notify } from './notify.js';
 import { open_dialog } from './open_dialog.js';
+import { post } from './post/index.js';
 import { refresh } from './refresh.js';
 import { set_auth_token } from './set_auth_token.js';
 import { set_auth_user } from './set_auth_user.js';
@@ -35,6 +36,7 @@ export function installOperations(client: Client) {
     client.addOperation('log', log);
     client.addOperation('notify', notify);
     client.addOperation('open_dialog', open_dialog);
+    client.addOperation('post', post);
     client.addOperation('refresh', refresh);
     client.addOperation('remove_cookie', cookies.unset_operation);
     client.addOperation('remove_local_storage', unset_local_storage);
@@ -42,7 +44,6 @@ export function installOperations(client: Client) {
     client.addOperation('set_auth_user', set_auth_user);
     client.addOperation('set_cookie', cookies.set_operation);
     client.addOperation('set_mode', set_mode);
-    client.addOperation('submit', submit);
     client.addOperation('transform', transform);
     client.addOperation('unset_cookie', cookies.unset_operation);
     client.addOperation('unset_local_storage', unset_local_storage);
