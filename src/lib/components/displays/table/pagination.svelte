@@ -8,6 +8,7 @@
     import { cn } from '@/lib/core/utils/index.js';
     import { useTheme } from '@/lib/core/client/index.js';
     import { Input } from '@/lib/components/forms/index.js';
+    import type { Any } from '@/lib/core/contracts.js';
 
     const props: PaginationProps = $props();
 
@@ -64,9 +65,9 @@
         paginate(page - 1);
     }
 
-    function debounce(fn: (...args: any[]) => any, delay: number) {
+    function debounce(fn: (...args: Any[]) => Any, delay: number) {
         let timeout: globalThis.NodeJS.Timeout;
-        return (...args: any[]) => {
+        return (...args: Any[]) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => fn(...args), delay);
         };
