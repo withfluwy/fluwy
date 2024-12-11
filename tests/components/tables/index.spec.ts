@@ -20,7 +20,6 @@ test('table component', async ({ page }) => {
 
     await expect(page.getByRole('cell', { name: 'Zaccaria Padfield' })).toBeVisible();
     page.once('dialog', (dialog) => {
-        console.log(`Dialog message: ${dialog.message()}`);
         dialog.dismiss().catch(() => {});
     });
     await page.getByRole('cell', { name: 'Ivy Melloi' }).click();

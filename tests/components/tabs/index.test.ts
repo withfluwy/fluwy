@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { checkScreenshot } from '../../utils.js';
 
 test('tabs doc page', async ({ page }) => {
-    await page.goto('http://localhost:4173/components/tabs');
+    await page.goto('/components/tabs');
 
     // Light mode
     await checkScreenshot(page);
@@ -17,7 +17,7 @@ test('tabs doc page', async ({ page }) => {
 });
 
 test('tabs tests page', async ({ page }) => {
-    await page.goto('http://localhost:4173/components/tabs/tests');
+    await page.goto('/components/tabs/tests');
     await page.getByRole('tab', { name: 'Tab 2.2' }).click();
     await expect(page.getByText('Content of tab 2.2')).toBeVisible();
     await expect(page.getByText('Content of tab 2.1')).not.toBeVisible();
@@ -26,6 +26,6 @@ test('tabs tests page', async ({ page }) => {
 });
 
 test('tabs theme tests page', async ({ page }) => {
-    await page.goto('http://localhost:4173/components/tabs/test-theme');
+    await page.goto('/components/tabs/test-theme');
     await checkScreenshot(page);
 });

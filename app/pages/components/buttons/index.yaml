@@ -118,7 +118,7 @@ doc_content:
   - markdown:
       class: mt-2
       content: |
-        > **Pro Tip:** If you can the button to have the same width and height you can use the `size` class from
+        > **Pro Tip:** If you want the button to have the same width and height you can use the `size` class from
         Tailwind CSS. For example, `size-9` will make the button 36px wide and 36px high.
 
   - h3: Variants

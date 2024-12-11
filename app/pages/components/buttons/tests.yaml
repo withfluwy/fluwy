@@ -1,4 +1,5 @@
 theme: tests
+layout: test
 ---
 container:
   class: pt-6
