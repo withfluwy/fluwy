@@ -19,6 +19,7 @@
     const form: FormState = $state({
         data: collapseObject(props.data ?? {}),
         errors: {},
+        isSubmitting: false,
     });
 
     const method = $derived((props.method || 'POST') as 'POST' | 'GET' | 'DIALOG');
@@ -29,7 +30,12 @@
         if (!props.on_submit) return;
         event.preventDefault();
 
-        await client.handleOperations(props.on_submit, context);
+        try {
+            form.is_submitting = true;
+            await client.handleOperations(props.on_submit, context);
+        } finally {
+            form.is_submitting = false;
+        }
     }
 </script>
 

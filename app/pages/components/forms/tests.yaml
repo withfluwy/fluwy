@@ -1,0 +1,76 @@
+layout: test
+---
+container:
+  content:
+    - h4: Testing form components
+    - div:
+        class: grid md:grid-cols-2 lg:grid-cols-3 gap-4
+        content:
+          - form:
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl h-fit
+              content:
+                - h5: Contact Form - Button Submit
+                - input:
+                    field: firstName
+                    label: First Name
+                - input:
+                    field: lastName
+                    label: Last Name
+                - input:
+                    field: email
+                    label: Email Address
+                - row:
+                    class: gap-2
+                    content:
+                      - button:
+                          text: Clear errors
+                          on_click:
+                            clear_form_errors:
+                      - button:
+                          text: Create Contact
+                          class: grow
+                          type: submit
+                          color: primary
+                          icon: solar:plain-linear
+                          on_click:
+                            post:
+                              url: http://localhost:3000/api/contacts
+                              data: form.data
+                              on_error:
+                                payloadcms.set_form_errors:
+                            clear_form_errors:
+                            log: response
+          - form:
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl h-fit
+              on_submit:
+                post:
+                  url: http://localhost:3000/api/contacts
+                  data: form.data
+                  on_error:
+                    payloadcms.set_form_errors:
+                clear_form_errors:
+                log: response
+              content:
+                - h5: Contact Form - Form Submit
+                - input:
+                    field: firstName
+                    label: First Name
+                - input:
+                    field: lastName
+                    label: Last Name
+                - input:
+                    field: email
+                    label: Email Address
+                - row:
+                    class: gap-2
+                    content:
+                      - button:
+                          text: Clear errors
+                          on_click:
+                            clear_form_errors:
+                      - button:
+                          text: Create Contact
+                          class: grow
+                          type: submit
+                          color: primary
+                          icon: solar:plain-linear

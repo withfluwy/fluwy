@@ -1,39 +1,24 @@
 <script lang="ts">
-    import type { Any, Component } from '@/lib/core/contracts.js';
+    import type { Any } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
     import { useClient, mergeThemes, useTheme } from '@/lib/core/client/index.js';
-    import { type Snippet } from 'svelte';
-    import { compile, Render, useContext, type ElementProps } from '@/lib/core/index.js';
+    import { compile, Render, useContext } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { Variants } from './styles.js';
     import { Sizes, DefaultSize } from '@/lib/components/forms/styles.js';
     import { Colors } from '@/lib/core/styles.js';
     import { useCommon, Common } from '@/lib/components/common/styles.js';
     import { fade } from 'svelte/transition';
-
-    interface ButtonProps extends ElementProps {
-        text?: string;
-        type?: 'submit' | 'reset' | 'button';
-        icon?: IconProps | string;
-        trailing_icon?: IconProps | string;
-        loading?: boolean;
-        disabled?: boolean;
-        class?: string;
-        variant?: string;
-        size?: string;
-        color?: string;
-        on_click?: Any;
-        onclick?: () => Any;
-        component?: Partial<Component>;
-        children?: Snippet;
-    }
+    import type { FormState } from '@/lib/components/forms/form/types.js';
+    import type { ButtonProps } from '@/lib/components/forms/button/types.js';
 
     const { component, children, type = 'button', ...props }: ButtonProps = $props();
 
     const componentName = component?.name ?? 'button';
     const context = useContext();
     const client = useClient();
+    const form: FormState | undefined = context.get('form');
 
     const sizes = mergeThemes('forms.common.sizes', Sizes);
     const colors = mergeThemes('colors', Colors);
@@ -53,6 +38,17 @@
     let loading = $derived(props.loading || innerLoading);
     let disabled = $derived(props.disabled || loading || innerDisabled);
 
+    /**
+     * This effect applies the same loading and disabled state if the button is a submit button and is inside a form
+     * that is currently submitting.
+     */
+    $effect(() => {
+        if (type !== 'submit') return;
+
+        innerDisabled = form?.is_submitting ?? false;
+        deferred(() => (innerLoading = form?.is_submitting ?? false));
+    });
+
     async function handleClick(e: MouseEvent) {
         if (!props.on_click) {
             return props.onclick?.();
@@ -68,8 +64,6 @@
 
         try {
             return await client.handleOperations(props.on_click, context);
-        } catch (error) {
-            console.error(error);
         } finally {
             innerLoading = false;
             done = true;
