@@ -1,0 +1,87 @@
+layout: doc
+---
+h2: Form
+doc_content:
+  - markdown: |
+      The form component is the basic component to collect data from users. It creates its own context to manipulate
+      data. You should use form components to wrap input fields and buttons to validate the data that happens on the
+      server of your API.
+  - tabs:
+      - tab:
+          title: Example
+          panel:
+            form:
+              on_submit:
+                sleep: 1000
+                post:
+                  url: /api/examples/contacts
+                  data: form.data
+                  on_error:
+                    set_form_errors:
+              content:
+                - row:
+                    - input:
+                        label: First Name
+                        field: firstName
+                        placeholder: Enter your first name
+                    - input:
+                        label: Last Name
+                        field: lastName
+                        placeholder: Enter your last name
+                - input:
+                    label: Email Address
+                    field: email
+                    placeholder: Enter your email address
+                - row:
+                    - button:
+                        text: Clear Errors
+                        icon: solar:eraser-linear
+                        on_click:
+                          clear_form_errors:
+                    - button:
+                        text: Submit
+                        type: submit
+                        class: grow
+                        color: primary
+                        icon: solar:plain-3-linear
+
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                form:
+                  on_submit:
+                    post:
+                      url: /api/contacts
+                      data: form.data
+                      on_error:
+                        set_form_errors:
+                  content:
+                    - row:
+                        - input:
+                            label: First Name
+                            field: firstName
+                            placeholder: Enter your first name
+                        - input:
+                            label: Last Name
+                            field: lastName
+                            placeholder: Enter your last name
+                    - input:
+                        label: Email Address
+                        field: email
+                        placeholder: Enter your email address
+                    - row:
+                        - button:
+                            text: Clear Errors
+                            icon: solar:eraser-linear
+                            on_click:
+                              clear_form_errors:
+                        - button:
+                            text: Submit
+                            type: submit
+                            class: grow
+                            color: primary
+                            icon: solar:plain-3-linear
