@@ -17,6 +17,7 @@ import { post } from '@/lib/core/operations/post/index.js';
 import { refresh } from '@/lib/core/operations/refresh.js';
 import { set_auth_token } from '@/lib/core/operations/set_auth_token.js';
 import { set_auth_user } from '@/lib/core/operations/set_auth_user.js';
+import { set_form_errors } from '@/lib/core/operations/set_form_errors/index.js';
 import { set_mode } from '@/lib/core/operations/set_mode/index.js';
 import { transform } from '@/lib/core/operations/transform/index.js';
 import { unset_local_storage } from '@/lib/core/operations/unset_local_storage.js';
@@ -44,6 +45,7 @@ export function installOperations(client: Client) {
     client.addOperation('set_auth_token', set_auth_token);
     client.addOperation('set_auth_user', set_auth_user);
     client.addOperation('set_cookie', cookies.set_operation);
+    client.addOperation('set_form_errors', set_form_errors);
     client.addOperation('set_mode', set_mode);
     client.addOperation('transform', transform);
     client.addOperation('unset_cookie', cookies.unset_operation);
