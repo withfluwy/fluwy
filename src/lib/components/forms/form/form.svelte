@@ -39,6 +39,6 @@
     }
 </script>
 
-<form {id} {onsubmit} {method} class={cn('flex flex-col gap-3', props.class)} enctype="multipart/form-data">
+<form {id} {onsubmit} {method} class={cn('flex flex-col gap-4', props.class)} enctype="multipart/form-data">
     <Render props={content} />
 </form>
