@@ -1,27 +1,27 @@
 import { Client } from '../client/index.js';
 
-import { alert } from './alert/index.js';
+import { alert } from '@/lib/core/operations/alert/index.js';
 import { clear_form_errors } from '@/lib/core/operations/clear_form_errors/index.js';
-import { close_dialog } from './close_dialog.js';
-import { context } from './context.js';
-import { deleteOperation } from './delete.js';
-import { emit } from './emit/index.js';
-import { extract } from './extract/index.js';
-import { get } from './get.js';
-import { goto } from './goto.js';
-import { if_operation } from './if_operation.js';
-import { log } from './log/index.js';
-import { notify } from './notify.js';
-import { open_dialog } from './open_dialog.js';
-import { post } from './post/index.js';
-import { refresh } from './refresh.js';
-import { set_auth_token } from './set_auth_token.js';
-import { set_auth_user } from './set_auth_user.js';
-import { set_mode } from './set_mode/index.js';
-import { transform } from './transform/index.js';
-import { unset_local_storage } from './unset_local_storage.js';
-import { wrap_into } from './wrap_into/index.js';
-import * as cookies from './cookies.js';
+import { close_dialog } from '@/lib/core/operations/close_dialog.js';
+import { context } from '@/lib/core/operations/context.js';
+import { deleteOperation } from '@/lib/core/operations/delete.js';
+import { emit } from '@/lib/core/operations/emit/index.js';
+import { extract } from '@/lib/core/operations/extract/index.js';
+import { get } from '@/lib/core/operations/get.js';
+import { goto } from '@/lib/core/operations/goto.js';
+import { if_operation } from '@/lib/core/operations/if_operation.js';
+import { log } from '@/lib/core/operations/log/index.js';
+import { notify } from '@/lib/core/operations/notify.js';
+import { open_dialog } from '@/lib/core/operations/open_dialog.js';
+import { post } from '@/lib/core/operations/post/index.js';
+import { refresh } from '@/lib/core/operations/refresh.js';
+import { set_auth_token } from '@/lib/core/operations/set_auth_token.js';
+import { set_auth_user } from '@/lib/core/operations/set_auth_user.js';
+import { set_mode } from '@/lib/core/operations/set_mode/index.js';
+import { transform } from '@/lib/core/operations/transform/index.js';
+import { unset_local_storage } from '@/lib/core/operations/unset_local_storage.js';
+import { wrap_into } from '@/lib/core/operations/wrap_into/index.js';
+import * as cookies from '@/lib/core/operations/cookies.js';
 
 export function installOperations(client: Client) {
     client.addOperation('alert', alert);
