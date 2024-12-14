@@ -22,6 +22,8 @@ layout:
   footer:
   sidebar_toggler:
   sidebar_toggler_icon:
+  row:
+  column:
   # Menu item with indicator as an animated highlight
   # menu_item:
   #   default: hover:bg-trasparent dark:hover:bg-transparent

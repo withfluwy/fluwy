@@ -50,6 +50,27 @@ describe('compile', () => {
         expect(compile('Configuration', data)).toEqual('Configuration');
     });
 
+    it('resolves nested variables with dot notation', () => {
+        const form = {
+            id: 1,
+            'connect.database': true,
+            data: {
+                'user.email': 'marco@mail',
+                'user.password': 'mysecretpassword',
+                admin: {
+                    access: true,
+                },
+            },
+        };
+        const context = { form };
+
+        expect(compile('${form.id}', context)).toBe(1);
+        expect(compile('${form.connect.database}', context)).toBe(true);
+        expect(compile('${form.data.user.email}', context)).toBe('marco@mail');
+        expect(compile('${form.data.user.password}', context)).toBe('mysecretpassword');
+        expect(compile('${form.data.admin.access}', context)).toBe(true);
+    });
+
     describe('hasPlaceholders', () => {
         it('should return true if the template has any placeholders', () => {
             expect(hasPlaceholders('${record.id}')).toBe(true);

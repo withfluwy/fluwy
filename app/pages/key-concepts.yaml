@@ -1,6 +1,6 @@
 layout: doc
 ---
-h1: YAML Key Concepts
+h1: Key Concepts
 doc_content:
   markdown: |
     In Fluwy, YAML is used to describe UI components in a clean, human-readable way. This guide will explain several key concepts in Fluwy, including how to use array styles to avoid duplicated keys, and how to use classes effectively with components.

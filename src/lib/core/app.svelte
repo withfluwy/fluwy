@@ -11,11 +11,12 @@
     import { Colors } from './styles.js';
     import { ModeWatcher } from 'mode-watcher';
     import { setupContext, createContext } from './context/index.js';
+    import { PayloadCMS } from '@/lib/plugins/index.js';
 
     export let data: RenderResponse;
 
     const dialogs = useDialogs();
-    const client = useClient();
+    const client = useClient().plug(PayloadCMS);
     const context = createContext();
 
     installOperations(client);

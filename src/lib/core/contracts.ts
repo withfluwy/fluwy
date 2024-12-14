@@ -28,6 +28,7 @@ export interface ElementProps {
 export type Any = any;
 export type Template = Any;
 export type OperationSchema = Record<string, Any>;
+export type Operations = OperationSchema | OperationSchema[];
 
 export type RenderResponse = {
     content: Any;
@@ -48,3 +49,16 @@ export type SimpleResponse = {
     data?: Any;
     errors?: ValidationError;
 };
+
+export interface Plugin {
+    /**
+     * The name of the plugin. This will be used as the prefix for the plugin's features. Recommended to use snake_case
+     * format to be consistent with other plugins and the rest of the framework.
+     */
+    name: string;
+
+    /**
+     * The operations provided by the plugin
+     */
+    operations?: Record<string, Operation>;
+}

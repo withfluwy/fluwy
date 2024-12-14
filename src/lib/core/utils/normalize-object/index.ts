@@ -21,21 +21,36 @@ export function collapseObject(obj: Record<string, unknown>): Record<string, unk
 export function expandObject(obj: Record<string, unknown>): Record<string, unknown> {
     const result: Record<string, unknown> = {};
 
-    for (const [key, value] of Object.entries(obj)) {
-        const keys = key.split('.');
-        let current = result;
+    // First pass: handle non-dotted paths
+    for (const [path, value] of Object.entries(obj)) {
+        if (!path.includes('.')) {
+            if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                result[path] = expandObject(value as Record<string, unknown>);
+            } else {
+                result[path] = value;
+            }
+        }
+    }
 
-        for (let i = 0; i < keys.length - 1; i++) {
-            const key = keys[i];
+    // Second pass: handle dotted paths and merge with existing objects
+    for (const [path, value] of Object.entries(obj)) {
+        if (path.includes('.')) {
+            const parts = path.split('.');
+            let current = result;
 
-            if (!(key in current)) {
-                current[key] = {};
+            // Create nested objects for each part except the last one
+            for (let i = 0; i < parts.length - 1; i++) {
+                const part = parts[i];
+                if (!(part in current)) {
+                    current[part] = {};
+                }
+                current = current[part] as Record<string, unknown>;
             }
 
-            current = current[key] as Record<string, unknown>;
+            // Set the value at the deepest level
+            const lastPart = parts[parts.length - 1];
+            current[lastPart] = value;
         }
-
-        current[keys[keys.length - 1]] = value;
     }
 
     return result;

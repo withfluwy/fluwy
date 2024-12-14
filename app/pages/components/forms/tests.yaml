@@ -1,0 +1,114 @@
+layout: test
+---
+container:
+  content:
+    - h4: Testing form components
+    - div:
+        class: grid md:grid-cols-2 lg:grid-cols-3 gap-4
+        content:
+          - form:
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl h-fit
+              content:
+                - h5: Contact Form - Button Submit
+                - input:
+                    field: firstName
+                    label: First Name
+                - input:
+                    field: lastName
+                    label: Last Name
+                - input:
+                    field: email
+                    label: Email Address
+                - row:
+                    class: gap-2
+                    content:
+                      - button:
+                          text: Clear errors
+                          on_click:
+                            clear_form_errors:
+                      - button:
+                          text: Create Contact
+                          class: grow
+                          type: submit
+                          color: primary
+                          icon: solar:plain-linear
+                          on_click:
+                            post:
+                              url: http://localhost:3000/api/contacts
+                              data: form.data
+                              on_error:
+                                payloadcms.set_form_errors:
+                            clear_form_errors:
+                            log: response
+          - form:
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl h-fit
+              on_submit:
+                post:
+                  url: http://localhost:3000/api/contacts
+                  data: form.data
+                  on_error:
+                    payloadcms.set_form_errors:
+                clear_form_errors:
+                log: response
+              content:
+                - h5: Contact Form - Form Submit
+                - input:
+                    field: firstName
+                    label: First Name
+                - input:
+                    field: lastName
+                    label: Last Name
+                - input:
+                    field: email
+                    label: Email Address
+                - row:
+                    class: gap-2
+                    content:
+                      - button:
+                          text: Clear errors
+                          on_click:
+                            clear_form_errors:
+                      - button:
+                          text: Create Contact
+                          class: grow
+                          type: submit
+                          color: primary
+                          icon: solar:plain-linear
+          - form:
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl h-fit
+              data:
+                firstName: John
+                lastName: Doe
+                email: john.doe
+                address:
+                  line1: 123 Main St
+                  city: London
+                  country: UK
+              on_submit:
+                post:
+                  url: /api/examples/contacts
+                  data: form.data.contact
+                  on_error:
+                    set_form_errors:
+              content:
+                - h5: Contact Form - Nested Data
+                - input:
+                    field: email
+                    placeholder: Email Address
+                - input:
+                    label: Address
+                    field: address.line1
+                    placeholder: Address Line 1
+                - row:
+                    - input:
+                        field: address.city
+                        placeholder: City
+                    - input:
+                        field: address.country
+                        placeholder: Country
+                - button:
+                    text: Submit
+                    type: submit
+                    color: primary
+                    icon: solar:plain-linear
+                - debug: form.data

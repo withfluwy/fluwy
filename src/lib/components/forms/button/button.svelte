@@ -1,37 +1,24 @@
 <script lang="ts">
-    import type { Any, Component } from '@/lib/core/contracts.js';
+    import type { Any } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
     import { useClient, mergeThemes, useTheme } from '@/lib/core/client/index.js';
-    import { type Snippet } from 'svelte';
-    import { compile, Render, useContext, type ElementProps } from '@/lib/core/index.js';
+    import { compile, Render, useContext } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { Variants } from './styles.js';
     import { Sizes, DefaultSize } from '@/lib/components/forms/styles.js';
     import { Colors } from '@/lib/core/styles.js';
     import { useCommon, Common } from '@/lib/components/common/styles.js';
+    import { fade } from 'svelte/transition';
+    import type { FormState } from '@/lib/components/forms/form/types.js';
+    import type { ButtonProps } from '@/lib/components/forms/button/types.js';
 
-    interface ButtonProps extends ElementProps {
-        text?: string;
-        icon?: IconProps | string;
-        trailing_icon?: IconProps | string;
-        loading?: boolean;
-        disabled?: boolean;
-        class?: string;
-        variant?: string;
-        size?: string;
-        color?: string;
-        on_click?: Any;
-        onclick?: () => Any;
-        component?: Partial<Component>;
-        children?: Snippet;
-    }
-
-    const { component, children, ...props }: ButtonProps = $props();
+    const { component, children, type = 'button', ...props }: ButtonProps = $props();
 
     const componentName = component?.name ?? 'button';
     const context = useContext();
     const client = useClient();
+    const form: FormState | undefined = context.get('form');
 
     const sizes = mergeThemes('forms.common.sizes', Sizes);
     const colors = mergeThemes('colors', Colors);
@@ -41,14 +28,26 @@
     const commonBorderColor = useCommon('border_color');
     const spinner = useTheme('common.spinner', Common.spinner);
 
-    let innerLoading = false;
+    let innerLoading = $state(false);
+    let innerDisabled = $state(false);
 
     let text = $derived(compile(props.text ?? '', context.data));
     let size = $derived(compile(props.size || defaultSize, context.data));
     let color = $derived(compile(props.color || 'default', context.data));
     let variant: keyof typeof Variants = $derived(compile(props.variant || 'filled', context.data));
     let loading = $derived(props.loading || innerLoading);
-    let disabled = $derived(props.disabled || loading);
+    let disabled = $derived(props.disabled || loading || innerDisabled);
+
+    /**
+     * This effect applies the same loading and disabled state if the button is a submit button and is inside a form
+     * that is currently submitting.
+     */
+    $effect(() => {
+        if (type !== 'submit') return;
+
+        innerDisabled = form?.submitting ?? false;
+        deferred(() => (innerLoading = form?.submitting ?? false));
+    });
 
     async function handleClick(e: MouseEvent) {
         if (!props.on_click) {
@@ -59,15 +58,16 @@
 
         let done = false;
 
+        innerDisabled = true;
+
         deferred(() => (innerLoading = !done));
 
         try {
             return await client.handleOperations(props.on_click, context);
-        } catch (error) {
-            console.error(error);
         } finally {
             innerLoading = false;
             done = true;
+            innerDisabled = false;
         }
     }
 
@@ -93,11 +93,20 @@
     }
 </script>
 
+{#snippet content()}
+    {#if props.content}
+        <div class={cn({ 'opacity-0 transition-all duration-150': loading })}><Render props={props.content} /></div>
+    {:else if text}
+        <div class={cn({ 'opacity-0 transition-all duration-150': loading })}><Render props={text} /></div>
+    {/if}
+{/snippet}
+
 <button
     onclick={handleClick}
+    {type}
     class={cn(
         commonBorderColor,
-        `flex items-center justify-center gap-1 shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
+        `relative flex shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
         sizes[size],
         variants[variant],
         commonBorderRadiuses[size],
@@ -108,23 +117,23 @@
     {disabled}
     style={setButtonColor}
 >
-    {#if props.icon && !loading}
-        <Icon {...getIcon(props.icon)} />
-    {:else if loading}
-        <Icon {...{ name: spinner }} />
+    {#if props.icon}
+        <Icon {...getIcon(props.icon)} class={cn({ 'opacity-0 transition-all duration-150': loading })} />
     {/if}
 
-    {#if props.content}
-        <Render props={props.content} />
-    {:else if text}
-        <Render props={text} />
+    {#if loading}
+        <div transition:fade={{ duration: 200 }} class={cn('absolute inset-0 flex items-center justify-center')}>
+            <Icon name={spinner} />
+        </div>
     {/if}
+
+    {@render content()}
 
     {#if props.trailing_icon}
-        <Icon {...getIcon(props.trailing_icon)} />
+        <Icon {...getIcon(props.trailing_icon)} class={cn({ 'opacity-0 transition-all duration-150': loading })} />
     {/if}
 
     {#if children}
-        {@render children()}
+        <div class={cn({ 'opacity-0 transition-all duration-150': loading })}>{@render children()}</div>
     {/if}
 </button>
