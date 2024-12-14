@@ -74,3 +74,41 @@ container:
                           type: submit
                           color: primary
                           icon: solar:plain-linear
+          - form:
+              class: border-2 dark:border-neutral-700 p-4 rounded-xl h-fit
+              data:
+                firstName: John
+                lastName: Doe
+                email: john.doe
+                address:
+                  line1: 123 Main St
+                  city: London
+                  country: UK
+              on_submit:
+                post:
+                  url: /api/examples/contacts
+                  data: form.data.contact
+                  on_error:
+                    set_form_errors:
+              content:
+                - h5: Contact Form - Nested Data
+                - input:
+                    field: email
+                    placeholder: Email Address
+                - input:
+                    label: Address
+                    field: address.line1
+                    placeholder: Address Line 1
+                - row:
+                    - input:
+                        field: address.city
+                        placeholder: City
+                    - input:
+                        field: address.country
+                        placeholder: Country
+                - button:
+                    text: Submit
+                    type: submit
+                    color: primary
+                    icon: solar:plain-linear
+                - debug: form.data
