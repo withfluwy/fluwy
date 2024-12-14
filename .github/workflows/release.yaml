@@ -15,17 +15,17 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Capture New Release Version
-        run: |
-          pnpm changeset status --output=release.json
-          echo "NEW_VERSION=$(jq -r '.releases[] | select(.name=="@fluwy/ui") | .newVersion' release.json)" >> "$GITHUB_ENV"
-          rm release.json
-
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
 
       - name: Install Dependencies
         run: pnpm install
+
+      - name: Capture New Release Version
+        run: |
+          pnpm changeset status --output=release.json
+          echo "NEW_VERSION=$(jq -r '.releases[] | select(.name=="@fluwy/ui") | .newVersion' release.json)" >> "$GITHUB_ENV"
+          rm release.json
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
