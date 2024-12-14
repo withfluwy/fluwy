@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fade, slide } from 'svelte/transition';
     import type { InputProps } from '../contracts.js';
-    import { cn, Random } from '@/lib/core/utils/index.js';
+    import { cn, expandObject, get, Random } from '@/lib/core/utils/index.js';
     import { Icon } from '@/lib/components/common/index.js';
     import { mergeThemes, useTheme } from '@/lib/core/client/index.js';
     import { Common, useCommon } from '@/lib/components/common/styles.js';
@@ -9,7 +9,7 @@
     import { DefaultSize, Sizes } from '../styles.js';
     import type { FormState } from '@/lib/components/forms/form/types.js';
 
-    let { field, oninput, label, size, description, width_dynamic, ...props }: InputProps = $props();
+    let { field, oninput, label, size, description, width_dynamic, error_path, ...props }: InputProps = $props();
 
     const id = Random.id();
     const spinner = useTheme('common.spinner', Common.spinner);
@@ -45,7 +45,7 @@
     });
 
     $effect(() => {
-        errors = form.errors[field ?? id];
+        errors = get(expandObject(form.errors), error_path ?? field ?? id);
     });
 
     function onInput(e: Event) {

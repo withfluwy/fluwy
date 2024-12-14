@@ -26,6 +26,10 @@ export interface InputProps {
      */
     errors?: string[];
     /**
+     * The path of the error in the response that will be used to display the error.
+     */
+    error_path?: string;
+    /**
      * The trailing icon of the input that will be displayed on the right side of the input.
      */
     trailing_icon?: string;

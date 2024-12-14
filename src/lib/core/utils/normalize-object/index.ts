@@ -21,16 +21,19 @@ export function collapseObject(obj: Record<string, unknown>): Record<string, unk
 export function expandObject(obj: Record<string, unknown>): Record<string, unknown> {
     const result: Record<string, unknown> = {};
 
+    // First pass: handle non-dotted paths
     for (const [path, value] of Object.entries(obj)) {
-        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-            // For nested objects that don't use dot notation, expand them recursively
-            if (!path.includes('.')) {
+        if (!path.includes('.')) {
+            if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
                 result[path] = expandObject(value as Record<string, unknown>);
-                continue;
+            } else {
+                result[path] = value;
             }
         }
+    }
 
-        // Handle dot notation for all other cases
+    // Second pass: handle dotted paths and merge with existing objects
+    for (const [path, value] of Object.entries(obj)) {
         if (path.includes('.')) {
             const parts = path.split('.');
             let current = result;
@@ -45,10 +48,8 @@ export function expandObject(obj: Record<string, unknown>): Record<string, unkno
             }
 
             // Set the value at the deepest level
-            current[parts[parts.length - 1]] = value;
-        } else {
-            // If no dots in path, just set it directly
-            result[path] = value;
+            const lastPart = parts[parts.length - 1];
+            current[lastPart] = value;
         }
     }
 

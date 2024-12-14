@@ -73,7 +73,7 @@ describe('collapseObject and expandObject', () => {
                     'attributes.address.country': null,
                     'attributes.address.zip': undefined,
                     'attributes.items': [1, 2, 3],
-                }
+                },
             };
 
             expect(expandObject(object)).toEqual({
@@ -89,8 +89,38 @@ describe('collapseObject and expandObject', () => {
                             country: null,
                             zip: undefined,
                         },
-                    }
-                }
+                    },
+                },
+            });
+        });
+
+        it('expands the object merging its properties', () => {
+            // Given
+            const object = {
+                id: 1,
+                data: {
+                    name: 'John Doe',
+                    email: 'john.doe@mail.com',
+                    'address.line1': '123 Main St',
+                    address: {
+                        country: 'US',
+                        zip: '12345',
+                    },
+                    'address.zip': '67890',
+                },
+            };
+
+            expect(expandObject(object)).toEqual({
+                id: 1,
+                data: {
+                    name: 'John Doe',
+                    email: 'john.doe@mail.com',
+                    address: {
+                        line1: '123 Main St',
+                        country: 'US',
+                        zip: '67890',
+                    },
+                },
             });
         });
     });
