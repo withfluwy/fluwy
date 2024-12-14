@@ -14,7 +14,7 @@ describe('sleep', () => {
     });
 
     it('should sleep for specified duration and return previous result', async () => {
-        const sleepSpy = vi.spyOn(utils, 'sleep');
+        const sleepSpy = vi.spyOn(utils, 'sleep').mockResolvedValue(Promise.resolve());
         const duration = '1000';
 
         const result = await sleep(duration, context, previousResult);

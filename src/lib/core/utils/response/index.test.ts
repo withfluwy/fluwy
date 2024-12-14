@@ -102,7 +102,7 @@ describe('HttpResponse', () => {
         it('should read body as JSON', async () => {
             const testData = { test: 'value' };
             const jsonResponse = new HttpResponse(JSON.stringify(testData), {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
             });
             const json = await jsonResponse.asyncJson();
             expect(json).toEqual(testData);
