@@ -45,8 +45,8 @@
     $effect(() => {
         if (type !== 'submit') return;
 
-        innerDisabled = form?.is_submitting ?? false;
-        deferred(() => (innerLoading = form?.is_submitting ?? false));
+        innerDisabled = form?.submitting ?? false;
+        deferred(() => (innerLoading = form?.submitting ?? false));
     });
 
     async function handleClick(e: MouseEvent) {

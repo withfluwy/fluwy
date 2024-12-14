@@ -35,5 +35,5 @@ export interface FormProps extends ElementProps {
 export interface FormState {
     data: Record<string, Any>;
     errors: ValidationError;
-    is_submitting?: boolean;
+    submitting?: boolean;
 }
