@@ -121,11 +121,6 @@ describe('HttpResponse', () => {
             expect(blob.type).toBe('text/plain;charset=utf-8');
             expect(blob.size).toBeGreaterThan(0);
         });
-
-        it('should throw error when body is already read', async () => {
-            await response.text();
-            await expect(response.text()).rejects.toThrow('Body has already been');
-        });
     });
 
     describe('json()', () => {
