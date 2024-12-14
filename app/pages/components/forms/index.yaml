@@ -1,0 +1,275 @@
+layout: doc
+---
+h1: Forms
+markdown: |
+  The form component is the basic component to collect data from users. It creates its own context to manipulate
+  data. You should use the form component to wrap input fields and buttons to change data and submit it to an API
+  server.
+
+  > **Note**: The form component is a work in progress. More features and documentation will be added in the future.
+  We don't intend to change its API though. In the meantime you can join the Discord community or open an issue on
+  Github to get help or request features.
+spacer: mt-12
+doc_content:
+  - h2: Form
+  - markdown: |
+      The example below shows how to use the form component to validate the data with the server and display errors.
+      Click the submit button to see the form data and errors.
+  - tabs:
+      - tab:
+          title: Example
+          panel:
+            form:
+              on_submit:
+                log: form.data
+                sleep: 1000
+                post:
+                  url: /api/examples/contacts
+                  data: form.data
+                  on_error:
+                    set_form_errors:
+              content:
+                - row:
+                    - input:
+                        label: First Name
+                        field: firstName
+                        placeholder: Enter your first name
+                    - input:
+                        label: Last Name
+                        field: lastName
+                        placeholder: Enter your last name
+                - input:
+                    label: Email Address
+                    field: email
+                    placeholder: Enter your email address
+                - row:
+                    - button:
+                        text: Clear Errors
+                        icon: solar:eraser-linear
+                        on_click:
+                          clear_form_errors:
+                    - button:
+                        text: Submit
+                        type: submit
+                        class: grow
+                        color: primary
+                        icon: solar:plain-3-linear
+
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                form:
+                  on_submit:
+                    post:
+                      url: /api/contacts
+                      data: form.data
+                      on_error:
+                        set_form_errors:
+                  content:
+                    - row:
+                        - input:
+                            label: First Name
+                            field: firstName
+                            placeholder: Enter your first name
+                        - input:
+                            label: Last Name
+                            field: lastName
+                            placeholder: Enter your last name
+                    - input:
+                        label: Email Address
+                        field: email
+                        placeholder: Enter your email address
+                    - row:
+                        - button:
+                            text: Clear Errors
+                            icon: solar:eraser-linear
+                            on_click:
+                              clear_form_errors:
+                        - button:
+                            text: Submit
+                            type: submit
+                            class: grow
+                            color: primary
+                            icon: solar:plain-3-linear
+
+      - tab:
+          title: Properties
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                form:
+                  # The unique identifier for the form.
+                  id: string
+
+                  # The initial data to populate the form with.
+                  # This is useful when editing existing records.
+                  data: Record<string, Any>
+
+                  # The operations to run when the form is submitted.
+                  # This can include HTTP requests and other actions.
+                  on_submit: Operations
+
+                  # Additional CSS classes to style the form
+                  class: string
+
+  - markdown:
+      class: mt-4
+      content: |
+        > **Note**: Did you notice that the submit button is disabled when the form is submitting and it displays a spinner? In
+        form components, the spinner is **only displayed when the form is submitting and the operation
+        is taking more than 150 milliseconds** to complete. The example above has a sleep of 1 second on purpose
+        so you can see the spinner. But if the request is too quick you won't see the spinner.
+
+  - h2: Form State
+  - markdown: |
+      The form component creates a context that can be accessed by child components and operations. This context 
+      contains the current state of the form:
+
+      ```yaml
+      # The current form data
+      form.data # Record<string, Any>
+
+      # Current validation errors
+      form.errors # Record<string, string[]>
+
+      # Whether the form is currently being submitted
+      form.submitting # boolean
+      ```
+
+  - h4: Form Data
+  - markdown: |
+      The `form.data` can be used in various operations and components. Here are some common use cases:
+
+      **Submitting form data to an API:**
+      ```yaml
+      form:
+        on_submit:
+          post:
+            url: /api/users
+            data: form.data  # Using the current form data
+      ```
+
+      **Debugging form data:**
+      ```yaml
+      form:
+        on_submit:
+          log: form.data  # Log the form data before submission
+      ```
+      Or in the debug component. See the [Debugging](#debugging) section below.
+      ```yaml
+      form:
+        ...
+        content:
+          debug: form.data
+      ```
+
+  - h2: Operations
+  - p: The form component can execute any operation when submitted. Here are some common operations used with forms.
+  - tabs:
+      - tab:
+          title: Properties
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                # HTTP Operations
+                post:
+                  # The URL to send the request to
+                  url: string
+                  # The data to send with the request
+                  data: object
+                  # Operations to run on error
+                  on_error: Operations
+
+                # Form Operations
+
+                # Sets the errors in the form from the response data returned by the server
+                set_form_errors:
+                  if_response_status: 422 # Optional. Defaults to 400 (Bad Request)
+
+                # Clear all form errors
+                clear_form_errors:
+
+                # Other Operations
+                sleep: number # The number of milliseconds to wait
+
+                # You can use any other operation defined in your app
+                # More operations will be documented in the Operations page
+  - spacer: mt-4
+  - markdown: |
+      > **Note**: You can use any operation defined in your app. More operations will be documented in the
+      Operations page.
+
+  - h2: Validations
+  - markdown: |
+      Fluwy encourages the use of server-side validations only which is more secure and reliable. For that purpose,
+      it comes with built-in operations to help you manage validations that came from the backend. We also provide
+      plugins for some frameworks. Feel free to submit any PR to add support for more frameworks if you'd like.
+
+      **Payload CMS**
+      ```yaml
+      # In your theme file:
+      form:
+        on_submit:
+          post:
+            url: /path/to/endpoint
+            data: form.data
+            on_error:
+              payloadcms.set_form_errors: # Here we use the payloadcms plugin
+      ```
+
+      > **Note**: Implementing plugins for other frameworks is straightforward. A better documentation will be added
+      in the future. In the meantime, you can find the source code for the payloadcms plugin in the
+      [Github repository](https://github.com/withfluwy/fluwy/tree/main/src/lib/plugins/payloadcms/index.ts).
+
+  - h2: Debugging
+  - markdown: |
+      The debug component can be used to debug the form state. It can display the current form data, errors, or
+      anything else you want. This is useful for debugging and testing purposes.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            form:
+              content:
+                - row:
+                    - input:
+                        label: First Name
+                        placeholder: Start typing
+                        field: user.first_name
+                    - input:
+                        label: Last Name
+                        placeholder: Start typing
+                        field: user.last_name
+                - type something in the fields and see the form.data reacting below
+                - debug: form.data
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                form:
+                  content:
+                    - row:
+                        - input:
+                            label: First Name
+                            field: user.first_name
+                        - input:
+                            label: Last Name
+                            field: user.last_name
+                    # Use the debug component to display any object 
+                    # you want that can be JSON stringified.
+                    - debug: form.data # <--
