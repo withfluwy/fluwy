@@ -1,8 +1,9 @@
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createFiles, createTestingDir, deleteDirectory, readFile } from '../test/utils.js';
 import nock from 'nock';
 import { Application, createApp } from './index.js';
-import type { Any } from '../contracts.js';
+import type { Any, Plugin } from '../contracts.js';
+import type { Component } from 'svelte';
 
 describe('App', () => {
     let app: Application;
@@ -124,6 +125,106 @@ describe('App', () => {
 
             httpCalls.contacts?.done();
             httpCalls.address?.done();
+        });
+    });
+
+    describe('plug', () => {
+        beforeEach(() => {
+            app = createApp();
+            app.config({
+                pages: testingDir + '/pages',
+                layouts: testingDir + '/layouts',
+                themes: testingDir + '/themes',
+                error: (status: number, body: Any) => {
+                    throw new Error(`${status}: ${body}`);
+                },
+                redirect: (status: number, location: string | URL) => {
+                    throw new Error(`${status}: ${location}`);
+                },
+            });
+        });
+
+        it('registers a plugin with operations and components', () => {
+            const testPlugin = {
+                name: 'test_plugin',
+                operations: {
+                    testOperation: () => 'test result',
+                    anotherOperation: () => 'another result',
+                },
+                components: {
+                    TestComponent: () => ({ type: 'test' }) as unknown as Component,
+                    AnotherComponent: () => ({ type: 'another' }) as unknown as Component,
+                },
+            };
+
+            app.plug(testPlugin as Plugin);
+
+            // Check if plugin is registered
+            expect(app['registeredPlugins']).toContain('test_plugin');
+
+            // Check if operations are registered
+            expect(app['operations']).toBeDefined();
+            expect(typeof app['operations']['test_plugin.test_operation']).toBe('function');
+            expect(typeof app['operations']['test_plugin.another_operation']).toBe('function');
+
+            // Check if components are registered
+            expect(app['components']).toBeDefined();
+            expect(typeof app['components']['test_plugin.test_component']).toBe('function');
+            expect(typeof app['components']['test_plugin.another_component']).toBe('function');
+        });
+
+        it('handles plugins with nested plugin dependencies', () => {
+            const nestedPlugin = {
+                name: 'nested-plugin',
+                operations: {
+                    nestedOp: () => 'nested',
+                },
+            };
+
+            const parentPlugin = {
+                name: 'parent-plugin',
+                plugins: [nestedPlugin],
+                operations: {
+                    parentOp: () => 'parent',
+                },
+            };
+
+            app.plug(parentPlugin);
+
+            expect(app['registeredPlugins']).toContain('parent-plugin');
+            expect(app['registeredPlugins']).toContain('nested-plugin');
+            expect(typeof app['operations']['parent-plugin.parent_op']).toBe('function');
+            expect(typeof app['operations']['nested-plugin.nested_op']).toBe('function');
+        });
+
+        it('prevents duplicate plugin registration', () => {
+            const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+            const duplicatePlugin = {
+                name: 'duplicate-plugin',
+                operations: {
+                    someOp: () => 'test',
+                },
+            };
+
+            app.plug(duplicatePlugin);
+            app.plug(duplicatePlugin);
+
+            expect(consoleSpy).toHaveBeenCalledWith('Plugin [duplicate-plugin] already registered');
+            expect(app['registeredPlugins'].filter((name) => name === 'duplicate-plugin')).toHaveLength(1);
+
+            consoleSpy.mockRestore();
+        });
+
+        it('handles plugins with no operations or components', () => {
+            const emptyPlugin = {
+                name: 'empty-plugin',
+            };
+
+            app.plug(emptyPlugin);
+
+            expect(app['registeredPlugins']).toContain('empty-plugin');
+            expect(Object.keys(app['operations'] || {})).not.toContain('empty-plugin');
+            expect(Object.keys(app['components'] || {})).not.toContain('empty-plugin');
         });
     });
 });

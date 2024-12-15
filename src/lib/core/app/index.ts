@@ -26,7 +26,7 @@ type DocumentContent = {
 
 export class Application {
     private components: Record<string, Any> = {};
-    private handlers: OperationHandlers = {};
+    private operations: OperationHandlers = {};
     private adapters: Adapters = {};
     private registeredPlugins: string[] = [];
 
@@ -262,15 +262,15 @@ export class Application {
     }
 
     addOperation(operation: string, handler: Operation) {
-        if (this.handlers[operation]) return this;
+        if (this.operations[operation]) return this;
 
-        this.handlers[operation] = handler;
+        this.operations[operation] = handler;
 
         return this;
     }
 
     async handleOperation(event: string, args: Any, context: Context, previousResult: Any) {
-        const handle = this.handlers[event];
+        const handle = this.operations[event];
 
         if (!handle) throw new Error(`Operation [${event}] not found`);
 
