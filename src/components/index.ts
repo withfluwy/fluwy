@@ -1,1 +1,1 @@
-export { default as DocContent } from './doc-content.svelte';
+export { default as Content } from './doc-content.svelte';

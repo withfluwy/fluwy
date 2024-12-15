@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Column, Table } from './types.js';
     import { cn, cloneDeep } from '@/lib/core/utils/index.js';
-    import { Render, useContext } from '@/lib/core/index.js';
-    import { useClient, useTheme } from '@/lib/core/client/index.js';
+    import { app, Render, useContext } from '@/lib/core/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { useCommon } from '../../common/styles.js';
     import type { Any } from '@/lib/core/contracts.js';
 
@@ -13,7 +13,6 @@
         class?: string;
     }
 
-    const client = useClient();
     const context = useContext();
 
     const { column, record, ...props }: Props = $props();
@@ -32,7 +31,7 @@
 
         event.stopPropagation();
 
-        await client.handleOperations(column.on_click, context, cloneDeep(record));
+        await app.handleOperations(column.on_click, context, cloneDeep(record));
     }
 </script>
 

@@ -4,7 +4,7 @@
     import { cn } from '@/lib/core/utils/index.js';
     import { Tabs } from 'bits-ui';
     import { useCommon } from '../styles.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { onMount } from 'svelte';
 
     interface Props extends ElementProps {

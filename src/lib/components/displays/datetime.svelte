@@ -5,7 +5,7 @@
     import type { ElementProps } from '@/lib/core/contracts.js';
     import { formatDate } from './utils.js';
     import { DisplaySettings } from './settings.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { compile, useContext } from '@/lib/core/index.js';
 
     dayjs.extend(localizedFormat);

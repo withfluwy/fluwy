@@ -4,7 +4,7 @@
     import { Avatar } from 'bits-ui';
     import { useCommon } from '../styles.js';
     import { AvatarStyles } from './styles.js';
-    import { mergeThemes } from '@/lib/core/client/index.js';
+    import { mergeThemes } from '@/lib/core/utils/index.js';
 
     interface Props extends ElementProps {
         src?: string;

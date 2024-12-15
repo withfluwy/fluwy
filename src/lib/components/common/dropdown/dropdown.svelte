@@ -2,7 +2,7 @@
     import { DropdownMenu } from 'bits-ui';
     import { Render } from '@/lib/core/index.js';
     import { cn, flyAndScale } from '@/lib/core/utils/index.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { Dropdown } from './styles.js';
     import type { Any } from '@/lib/core/contracts.js';
     import { useCommon } from '../styles.js';

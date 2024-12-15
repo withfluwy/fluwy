@@ -1,13 +1,13 @@
 <script lang="ts">
     import { DropdownMenu } from 'bits-ui';
-    import { type ElementProps, Render, useClient, useContext } from '$lib/core/index.js';
+    import { app, type ElementProps, Render, useContext } from '$lib/core/index.js';
     import { cn, flyAndScale } from '$lib/core/utils/index.js';
     import Icon from '$lib/components/common/icon/icon.svelte';
     import type { IconProps } from '../icon/types.js';
-    import { useTheme } from '@/lib/core/client/index.js';
     import { Dropdown } from './styles.js';
     import type { Any } from '@/lib/core/contracts.js';
     import { useCommon } from '../styles.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
 
     const props: DropdownItemProps = $props();
 
@@ -25,7 +25,6 @@
         useTheme('common.dropdown.item'),
         props?.class
     );
-    const client = useClient();
     const context = useContext();
     const dropdownContent = cn(
         useCommon('border_color'),
@@ -39,7 +38,7 @@
     async function onClick() {
         if (!props.on_click) return;
 
-        await client.handleOperations(props.on_click, context);
+        await app.handleOperations(props.on_click, context);
     }
 
     function getIcon(propValue: Any): IconProps {

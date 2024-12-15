@@ -1,8 +1,9 @@
+import type { Component as SvelteComponent } from 'svelte';
 import type { Context } from './context/index.js';
 
-export { Client } from './client/index.js';
 export type { ContextData } from './context/index.js';
 export type { Context };
+export type { FormState } from '@/lib/components/forms/form/types.js';
 
 export interface AppConfig {
     pages: string;
@@ -11,6 +12,7 @@ export interface AppConfig {
     error: (status: number, body: Any) => never;
     redirect: (status: number, location: string | URL) => never;
 }
+export type RequiredAppConfig = Pick<AppConfig, 'error' | 'redirect'> & Partial<Omit<AppConfig, 'error' | 'redirect'>>;
 
 export interface Component<T = Any> {
     name: string;
@@ -43,9 +45,15 @@ export interface OperationOptions {
 export interface Operation {
     (args: Any, options: OperationOptions): Any;
 }
+export type OperationHandlers = {
+    [event: string]: Operation;
+};
 
 export type AdapterData = { data: Any; context: Context };
 export type Adapter = (data: AdapterData['data'], context: AdapterData['context']) => Promise<AdapterData>;
+export type Adapters = {
+    [name: string]: Adapter;
+};
 
 export type ValidationError = Record<string, string[]>;
 
@@ -66,4 +74,14 @@ export interface Plugin {
      * The operations provided by the plugin
      */
     operations?: Record<string, Operation>;
+
+    /**
+     * The components provided by the plugin
+     */
+    components?: Record<string, SvelteComponent>;
+
+    /**
+     * The plugins required by the plugin
+     */
+    plugins?: Plugin[];
 }

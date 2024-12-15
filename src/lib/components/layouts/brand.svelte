@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
 

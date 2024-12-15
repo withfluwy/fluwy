@@ -1,11 +1,11 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createFiles, createTestingDir, deleteDirectory, readFile } from '../test/utils.js';
 import nock from 'nock';
-import { App, createApp } from './index.js';
+import { Application, createApp } from './index.js';
 import type { Any } from '../contracts.js';
 
 describe('App', () => {
-    let app: App;
+    let app: Application;
     let testingDir: string;
     const testingAppFiles = {
         'layouts/base.yaml': readFile(__dirname, 'layouts/base.yaml'),
@@ -19,7 +19,7 @@ describe('App', () => {
 
         createFiles(testingDir, testingAppFiles);
 
-        app.config = {
+        app.config({
             pages: testingDir + '/pages',
             layouts: testingDir + '/layouts',
             themes: testingDir + '/themes',
@@ -29,7 +29,7 @@ describe('App', () => {
             redirect: (status: number, location: string | URL) => {
                 throw new Error(`${status}: ${location}`);
             },
-        };
+        });
     });
 
     afterAll(() => {
@@ -39,13 +39,13 @@ describe('App', () => {
     describe('createApp helper', () => {
         it('creates an instance of App', async () => {
             expect(app).toBeDefined();
-            expect(app).toBeInstanceOf(App);
+            expect(app).toBeInstanceOf(Application);
         });
 
         it('has default configs', () => {
-            expect(app.config).toBeDefined();
-            expect(app.config.pages).toBe(testingDir + '/pages');
-            expect(app.config.layouts).toBe(testingDir + '/layouts');
+            expect(app.getConfig()).toBeDefined();
+            expect(app.getConfig().pages).toBe(testingDir + '/pages');
+            expect(app.getConfig().layouts).toBe(testingDir + '/layouts');
         });
     });
 

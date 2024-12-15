@@ -1,6 +1,6 @@
 <script lang="ts">
     import { browser } from '$app/environment';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import type { Any } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';

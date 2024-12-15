@@ -2,7 +2,7 @@ import { expect, describe, it, beforeEach, vi } from 'vitest';
 import { post } from './index.js';
 import { createContext, type Context } from '@/lib/core/context/index.js';
 import { HttpResponse } from '@/lib/core/utils/response/index.js';
-import * as client from '@/lib/core/client/index.js';
+import { app } from '@/lib/index.js';
 
 describe('post', () => {
     let context: Context;
@@ -14,9 +14,7 @@ describe('post', () => {
         mockFetch = vi.fn();
         mockHandleOperations = vi.fn();
         context.fetch = mockFetch;
-        vi.spyOn(client, 'useClient').mockReturnValue({
-            handleOperations: mockHandleOperations,
-        } as unknown as client.Client);
+        vi.spyOn(app, 'handleOperations').mockImplementation(mockHandleOperations);
     });
 
     it('should make a successful POST request', async () => {

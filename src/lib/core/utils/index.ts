@@ -6,6 +6,9 @@ import type { TransitionConfig } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import _ from 'lodash';
 import { expandObject } from './normalize-object/index.js';
+import { getContext } from 'svelte';
+import { get } from '@/lib/core/utils/get/index.js';
+import { mergeObjects } from '@/lib/core/utils/merge-objects/index.js';
 
 export { Random } from './random/index.js';
 export { parseUriParams } from './parsers/parse-uri-params.js';
@@ -142,3 +145,15 @@ export function deferred(fn: () => void, duration = Durations.transition) {
 }
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export function useTheme(key: string, defaultValue?: Any): Any {
+    const theme: Any = getContext('theme');
+
+    return get(theme, key, defaultValue);
+}
+
+export function mergeThemes(key: string, defaultValue: Any) {
+    const theme: Any = getContext('theme');
+
+    return mergeObjects(defaultValue, get(theme, key, defaultValue));
+}

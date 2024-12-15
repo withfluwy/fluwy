@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { useTheme } from '$lib/core/client/index.js';
+    import { useTheme } from '$lib/core/utils/index.js';
     import type { ElementProps } from '$lib/core/contracts.js';
     import { Render } from '$lib/core/index.js';
     import { cn, str } from '$lib/core/utils/index.js';

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { useClient, mergeThemes } from './client/index.js';
+    import { mergeThemes } from './utils/index.js';
     import type { RenderResponse } from './contracts.js';
     import Render from './render.svelte';
     import { useDialogs } from './stores/dialogs.js';
@@ -11,16 +11,15 @@
     import { Colors } from './styles.js';
     import { ModeWatcher } from 'mode-watcher';
     import { setupContext, createContext } from './context/index.js';
-    import { PayloadCMS } from '@/lib/plugins/index.js';
+    import { app } from '@/lib/index.js';
 
     export let data: RenderResponse;
 
     const dialogs = useDialogs();
-    const client = useClient().plug(PayloadCMS);
     const context = createContext();
 
-    installOperations(client);
-    installAdapters(client);
+    installOperations(app);
+    installAdapters(app);
 
     setupContext(context);
     setContext('theme', data.theme);

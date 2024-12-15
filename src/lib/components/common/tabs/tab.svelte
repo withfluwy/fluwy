@@ -7,7 +7,7 @@
     import { onMount } from 'svelte';
     import { userPrefersMode } from 'mode-watcher';
     import { browser } from '$app/environment';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
 
     interface Props extends ElementProps {
         id: string;
