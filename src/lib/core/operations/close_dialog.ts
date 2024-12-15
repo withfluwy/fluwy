@@ -1,5 +1,6 @@
+import type { Operation } from '@/lib/core/contracts.js';
 import { useDialogs } from '../stores/dialogs.js';
 
-export function close_dialog() {
+export const close_dialog: Operation = () => {
     return useDialogs().closeLast();
-}
+};

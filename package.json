@@ -20,7 +20,7 @@
         "lint:prettier": "prettier --check ./src",
         "test": "vitest",
         "test:integration": "playwright test",
-        "test:integration:fresh": "rm -rf dist && npm run build && playwright test",
+        "test:integration:fresh": "rm -rf dist && npm run build && sleep 1 && playwright test",
         "test:integration:update": "playwright test --update-snapshots"
     },
     "exports": {

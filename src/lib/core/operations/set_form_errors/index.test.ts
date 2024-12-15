@@ -14,7 +14,7 @@ describe('set_form_errors', () => {
     });
 
     it('should throw error when form context is not present', async () => {
-        await expect(set_form_errors(undefined, context, previousResult)).rejects.toThrow(
+        await expect(set_form_errors(undefined, { context, previousResult })).rejects.toThrow(
             'Operation [set_form_errors] should be used in a form context'
         );
     });
@@ -23,7 +23,7 @@ describe('set_form_errors', () => {
         const form = { errors: {} };
         context.set('form', form);
 
-        await expect(set_form_errors(undefined, context, previousResult)).rejects.toThrow(
+        await expect(set_form_errors(undefined, { context, previousResult })).rejects.toThrow(
             'Operation [set_form_errors] should be used after a response is set in the context'
         );
     });
@@ -43,7 +43,7 @@ describe('set_form_errors', () => {
         context.set('form', form);
         context.set('response', response);
 
-        const result = await set_form_errors(undefined, context, previousResult);
+        const result = await set_form_errors(undefined, { context, previousResult });
 
         expect(result).toBe(previousResult);
         expect(form.errors).toEqual(response.data.errors);
@@ -63,7 +63,7 @@ describe('set_form_errors', () => {
         context.set('form', form);
         context.set('response', response);
 
-        const result = await set_form_errors({ if_response_status: '422' }, context, previousResult);
+        const result = await set_form_errors({ if_response_status: '422' }, { context, previousResult });
 
         expect(result).toBe(previousResult);
         expect(form.errors).toEqual(response.data.errors);
@@ -83,9 +83,9 @@ describe('set_form_errors', () => {
         context.set('form', form);
         context.set('response', response);
 
-        const result = await set_form_errors({ if_response_status: '422' }, context, previousResult);
+        const result = await set_form_errors({ if_response_status: '422' }, { context, previousResult });
 
         expect(result).toBe(previousResult);
-        expect(form.errors).toEqual({});  // Errors should not be set
+        expect(form.errors).toEqual({}); // Errors should not be set
     });
 });

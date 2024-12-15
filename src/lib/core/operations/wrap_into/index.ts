@@ -1,7 +1,7 @@
 import type { Operation } from '../../contracts.js';
 
-export const wrap_into: Operation = async (wrapper: string, _, result) => {
+export const wrap_into: Operation = async (wrapper: string, { previousResult }) => {
     return {
-        [wrapper]: result,
+        [wrapper]: previousResult,
     };
 };

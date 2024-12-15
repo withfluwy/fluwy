@@ -35,8 +35,13 @@ export type RenderResponse = {
     theme?: Any;
 };
 
+export interface OperationOptions {
+    context: Context;
+    previousResult?: Any;
+}
+
 export interface Operation {
-    (args: Any, context: Context, previousResult?: Any): Any;
+    (args: Any, options: OperationOptions): Any;
 }
 
 export type AdapterData = { data: Any; context: Context };

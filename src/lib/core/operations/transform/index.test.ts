@@ -19,7 +19,7 @@ describe('transform operation', () => {
             'attributes.email': 'email',
         };
 
-        const result = await transform(map, context, previousResult);
+        const result = await transform(map, { context, previousResult });
 
         expect(result).toEqual({
             name: 'John Doe',

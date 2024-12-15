@@ -10,7 +10,7 @@ describe('alert operation', () => {
         const previousResult = 1;
         context.set('record', { name: 'John' });
 
-        const result = await alertOperation('Welcome ${record.name}', context, previousResult);
+        const result = await alertOperation('Welcome ${record.name}', { context, previousResult });
         expect(window.alert).toHaveBeenCalledWith('Welcome John');
         expect(result).toBe(previousResult);
     });

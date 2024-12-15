@@ -36,7 +36,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        const result = await post(param, context);
+        const result = await post(param, { context });
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', {
             method: 'POST',
@@ -63,7 +63,7 @@ describe('post', () => {
         };
         context.store.set(testData);
 
-        const result = await post(param, context);
+        const result = await post(param, { context });
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/123', {
             method: 'POST',
@@ -83,7 +83,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(post(param, context)).rejects.toThrow(
+        await expect(post(param, { context })).rejects.toThrow(
             '[post] operation has unresolved placeholders for param [url]'
         );
         expect(mockFetch).not.toHaveBeenCalled();
@@ -105,7 +105,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(post(param, context)).rejects.toThrow();
+        await expect(post(param, { context })).rejects.toThrow();
         expect(mockHandleOperations).toHaveBeenCalledWith(param.on_error, context, { key: 'value' });
     });
 
@@ -124,7 +124,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(post(param, context)).rejects.toThrow(
+        await expect(post(param, { context })).rejects.toThrow(
             "POST operation for [https://api.example.com/data] failed with status [400] and there's no operations set to handle the error"
         );
     });

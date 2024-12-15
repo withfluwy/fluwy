@@ -1,7 +1,7 @@
 import type { Operation } from '../contracts.js';
 import { compile, hasPlaceholders } from '../utils/compile/index.js';
 
-export const deleteOperation: Operation = async (args: string, context) => {
+export const deleteOperation: Operation = async (args: string, { context, previousResult }) => {
     const url = compile(args, context.data);
 
     if (hasPlaceholders(url)) throw new Error(`DELETE URL still has unresolved placeholders [${url}]`);
@@ -12,4 +12,6 @@ export const deleteOperation: Operation = async (args: string, context) => {
         const responseData = await response.json();
         throw new Error(responseData);
     }
+
+    return previousResult;
 };

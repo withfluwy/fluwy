@@ -3,8 +3,8 @@ import { collapseObject } from '../../utils/normalize-object/index.js';
 
 type TransformMapSchema = Record<string, string>;
 
-export const transform: Operation = async (map: TransformMapSchema, _, result) => {
-    const collapsedResult = collapseObject(result);
+export const transform: Operation = async (map: TransformMapSchema, { previousResult }) => {
+    const collapsedResult = collapseObject(previousResult);
     validateMap(map);
 
     const transformedResult: Record<string, unknown> = {};

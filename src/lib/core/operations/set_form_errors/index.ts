@@ -6,7 +6,10 @@ interface SetFormErrorsParams {
     if_response_status?: string;
 }
 
-export const set_form_errors: Operation = async (params: SetFormErrorsParams | undefined, context, previousResults) => {
+export const set_form_errors: Operation = async (
+    params: SetFormErrorsParams | undefined,
+    { context, previousResult }
+) => {
     const form: FormState = context.get('form');
 
     if (!form) throw new Error('Operation [set_form_errors] should be used in a form context');
@@ -16,9 +19,9 @@ export const set_form_errors: Operation = async (params: SetFormErrorsParams | u
     if (!response) throw new Error('Operation [set_form_errors] should be used after a response is set in the context');
 
     const statusToCheck = +(params?.if_response_status ?? '400');
-    if (response.status !== statusToCheck) return previousResults;
+    if (response.status !== statusToCheck) return previousResult;
 
     form.errors = response.data.errors;
 
-    return previousResults;
+    return previousResult;
 };

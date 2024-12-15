@@ -62,7 +62,7 @@ export class Client {
 
         if (!handle) throw new Error(`Operation [${event}] not found`);
 
-        return handle(args, context, previousResult);
+        return handle(args, { context, previousResult });
     }
 
     async handleOperations(operations: Any, context: Context, initialResults?: Any): Promise<Any> {

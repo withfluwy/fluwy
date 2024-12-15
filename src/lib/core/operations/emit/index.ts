@@ -3,7 +3,7 @@ import { Events } from '@/lib/core/utils/events/index.js';
 
 type EmitParams = string | { event: string; payload: Any };
 
-export const emit: Operation = async (params: EmitParams, _, previousResult) => {
+export const emit: Operation = async (params: EmitParams, { previousResult }) => {
     if (typeof params === 'string') {
         if (!params) {
             throw new Error('Event name is required');
