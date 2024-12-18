@@ -4,7 +4,7 @@ h2: Tables
 p:
   class: mb-12
   content: Tables are a way to display data in a structured format.
-doc_content:
+doc.content:
   - h3: Table
   - p: The table component is used to display data in a structured format.
   - tabs:

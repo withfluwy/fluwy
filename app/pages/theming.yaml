@@ -1,7 +1,7 @@
 layout: doc
 ---
 h1: Theme System
-doc_content:
+doc.content:
   markdown: |
     Fluwy's Theme System empowers developers to customize the look and feel of their applications with ease, leveraging TailwindCSS classes directly through YAML configuration files. This system is flexible, allowing both page-specific and global styling through theme files and component-level class overrides. Here's how to set up and use themes effectively in Fluwy:
 

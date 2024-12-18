@@ -10,7 +10,7 @@ markdown: |
   We don't intend to change its API though. In the meantime you can join the Discord community or open an issue on
   Github to get help or request features.
 spacer: mt-12
-doc_content:
+doc.content:
   - h2: Form
   - markdown: |
       The example below shows how to use the form component to validate the data with the server and display errors.
