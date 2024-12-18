@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { set_form_errors } from './index.js';
 import { createContext, type Context } from '@/lib/core/context/index.js';
 import type { FormState } from '@/lib/components/forms/form/types.js';
-import { HttpResponse } from '@/lib/core/utils/response/index.js';
+import { buildHttpResponse } from '@/lib/core/utils/response/index.js';
 import type { PayloadValidationError } from '@/lib/plugins/payloadcms/types.js';
 
 describe('payloadcms.set_form_errors', () => {
@@ -19,29 +19,30 @@ describe('payloadcms.set_form_errors', () => {
     });
 
     it('should map PayloadCMS validation errors to form errors', async () => {
-        const response = new HttpResponse(
-            JSON.stringify({
-                errors: [
-                    {
-                        name: 'ValidationError',
-                        message: 'Validation failed',
-                        data: {
-                            collection: 'users',
-                            errors: [
-                                { message: 'Email is required', path: 'email' },
-                                { message: 'Password is too short', path: 'password' },
-                            ],
-                        },
-                    } satisfies PayloadValidationError,
-                ],
-            }),
-            {
-                headers: { 'Content-Type': 'application/json' },
-            }
+        const response = await buildHttpResponse(
+            new Response(
+                JSON.stringify({
+                    errors: [
+                        {
+                            name: 'ValidationError',
+                            message: 'Validation failed',
+                            data: {
+                                collection: 'users',
+                                errors: [
+                                    { message: 'Email is required', path: 'email' },
+                                    { message: 'Password is too short', path: 'password' },
+                                ],
+                            },
+                        } satisfies PayloadValidationError,
+                    ],
+                }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            )
         );
 
         context.set('response', response);
-        await response.asyncJson();
 
         await set_form_errors(null, { context });
 
@@ -53,11 +54,11 @@ describe('payloadcms.set_form_errors', () => {
 
     it('should throw error when form context is missing', async () => {
         context.set('form', undefined);
-        const response = new HttpResponse('{}', {
+        const response = new Response('{}', {
             headers: { 'Content-Type': 'application/json' },
         });
-        context.set('response', response);
-        await response.asyncJson();
+        const httpResponse = await buildHttpResponse(response);
+        context.set('response', httpResponse);
 
         await expect(set_form_errors(null, { context })).rejects.toThrow(
             'Operation [set_form_errors] should be used in a form context'

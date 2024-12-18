@@ -1,39 +1,36 @@
 import type { Any } from '@/lib/core/contracts.js';
 
-export class HttpResponse extends Response {
-    private _cacheJson: Any;
-    private _parsedJson: boolean = false;
+export interface HttpResponse {
+    data?: Any;
+    status: number;
+    statusText: string;
+    headers: Headers;
+    bodyUsed: boolean;
+    type: string;
+    url: string;
+    redirected: boolean;
+    ok: boolean;
+    text?: string;
+}
 
-    static async fromResponse(response: Response) {
-        const httpResponse = new HttpResponse(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: response.headers,
-        });
+export async function buildHttpResponse(response: Response): Promise<HttpResponse> {
+    const httpResponse: HttpResponse = {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        bodyUsed: response.bodyUsed,
+        type: response.type,
+        url: response.url,
+        redirected: response.redirected,
+        ok: response.ok,
+    };
 
-        const contentType = response.headers.get('Content-Type');
-        if (contentType?.includes('application/json')) {
-            await httpResponse.asyncJson();
-        }
-
-        return httpResponse;
+    const contentType = response.headers.get('Content-Type');
+    if (contentType?.includes('application/json')) {
+        httpResponse.data = await response.json();
+    } else {
+        httpResponse.text = await response.text();
     }
 
-    get data() {
-        return this._cacheJson;
-    }
-
-    async asyncJson() {
-        if (this._parsedJson) return this._cacheJson;
-
-        const contentType = this.headers.get('Content-Type');
-        if (!contentType?.includes('application/json')) {
-            throw new Error('Response is not JSON');
-        }
-
-        this._cacheJson = await super.json();
-        this._parsedJson = true;
-
-        return this._cacheJson;
-    }
+    return httpResponse;
 }
