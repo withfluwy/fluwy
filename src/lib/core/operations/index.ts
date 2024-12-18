@@ -14,6 +14,7 @@ import { log } from '@/lib/core/operations/log/index.js';
 import { notify } from '@/lib/core/operations/notify.js';
 import { open_dialog } from '@/lib/core/operations/open_dialog.js';
 import { post } from '@/lib/core/operations/post/index.js';
+import { put } from '@/lib/core/operations/put/index.js';
 import { refresh } from '@/lib/core/operations/refresh.js';
 import { set_auth_token } from '@/lib/core/operations/set_auth_token.js';
 import { set_auth_user } from '@/lib/core/operations/set_auth_user.js';
@@ -40,6 +41,7 @@ export function installOperations(app: Application) {
     app.addOperation('notify', notify);
     app.addOperation('open_dialog', open_dialog);
     app.addOperation('post', post);
+    app.addOperation('put', put);
     app.addOperation('refresh', refresh);
     app.addOperation('remove_cookie', cookies.unset_operation);
     app.addOperation('remove_local_storage', unset_local_storage);
