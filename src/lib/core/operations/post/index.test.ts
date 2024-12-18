@@ -1,7 +1,6 @@
 import { expect, describe, it, beforeEach, vi } from 'vitest';
 import { post } from './index.js';
 import { createContext, type Context } from '@/lib/core/context/index.js';
-import { HttpResponse } from '@/lib/core/utils/response/index.js';
 import { app } from '@/lib/index.js';
 
 describe('post', () => {
@@ -21,6 +20,7 @@ describe('post', () => {
         const responseData = { success: true };
         const mockResponse = new Response(JSON.stringify(responseData), {
             status: 200,
+            headers: { 'Content-Type': 'application/json' },
         });
         mockFetch.mockResolvedValue(mockResponse);
 
@@ -40,7 +40,7 @@ describe('post', () => {
             method: 'POST',
             body: JSON.stringify({ key: 'value' }),
         });
-        expect(result).toBeInstanceOf(HttpResponse);
+        expect(result.data).toEqual(responseData);
         expect(result.ok).toBe(true);
         expect(context.get('response')).toBe(result);
     });

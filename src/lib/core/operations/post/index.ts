@@ -2,7 +2,7 @@ import { app } from '@/lib/index.js';
 import type { Operation, Operations } from '@/lib/core/contracts.js';
 import { abort } from '@/lib/core/operations/utils.js';
 import { compile, hasPlaceholders } from '@/lib/core/utils/compile/index.js';
-import { HttpResponse } from '@/lib/core/utils/response/index.js';
+import { buildHttpResponse } from '@/lib/core/utils/response/index.js';
 
 export const post: Operation = async (param: PostParam, { context }) => {
     const parsedUrl = compile(param.url, context.data);
@@ -18,7 +18,7 @@ export const post: Operation = async (param: PostParam, { context }) => {
         body: JSON.stringify(data),
     });
 
-    const response = await HttpResponse.fromResponse(baseResponse);
+    const response = await buildHttpResponse(baseResponse);
 
     context.set('response', response);
 

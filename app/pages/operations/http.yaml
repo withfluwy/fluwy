@@ -1,0 +1,64 @@
+layout: doc
+---
+h1: HTTP Operations
+p: |
+  HTTP Operations are a set of build-in operations that you can use on events to make HTTP requests and inject the response
+  into your operation chain.
+spacer: mt-12
+doc.content:
+  - markdown: |
+      ## POST Operation
+      The `post` operation is used to make a POST request to a given URL and inject the response into the context of
+      your operation chain. This is the overall structure of the `post` operation:
+
+      ```yaml
+      post:
+        url: string
+        data: object from context
+        on_error: list of operations to handle the response when the http status code >= 300
+      ```
+
+      Example using Forms
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            - form:
+                on_submit:
+                  post:
+                    url: /api/examples/contacts
+                    data: form.data
+                    on_error:
+                      - alert: response.status
+                content:
+                  - input:
+                      field: Email
+                      label: Email Address
+                  - button:
+                      text: Submit
+                      type: submit
+                      color: primary
+                      icon: solar:plain-linear
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            code:
+              language: yaml
+              content: |
+                form:
+                  on_submit:
+                    post:
+                      url: /api/contacts
+                      data: form.data
+                      on_error:
+                        - alert: response.status
+                  content:
+                    - input:
+                        field: Email
+                        label: Email Address
+                    - button:
+                        text: Submit
+                        type: submit
+                        color: primary
+                        icon: solar:plain-linear
