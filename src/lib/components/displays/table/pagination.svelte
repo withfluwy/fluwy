@@ -6,7 +6,7 @@
     import { browser } from '$app/environment';
     import { useCommon } from '@/lib/components/common/styles.js';
     import { cn } from '@/lib/core/utils/index.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { Input } from '@/lib/components/forms/index.js';
     import type { Any } from '@/lib/core/contracts.js';
 

@@ -18,7 +18,7 @@ describe('log operation', () => {
         const context = createContext();
 
         // When
-        log('test', context);
+        log('test', { context });
 
         // Then
         expect(consoleLog).toHaveBeenCalledWith('test');
@@ -31,7 +31,7 @@ describe('log operation', () => {
         context.set('record', { id: 1 });
 
         // When
-        log('my name is ${name} with ${record.id}', context);
+        log('my name is ${name} with ${record.id}', { context });
 
         // Then
         expect(consoleLog).toHaveBeenCalledWith('my name is John with 1');
@@ -43,7 +43,7 @@ describe('log operation', () => {
         const previousResult = { id: 1 };
 
         // When
-        const newResult = log('test', context, previousResult);
+        const newResult = log('test', { context, previousResult });
 
         // Then
         expect(newResult).toEqual(previousResult);

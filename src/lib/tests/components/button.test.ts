@@ -1,4 +1,4 @@
-import { createApp, type App } from '$lib/core/app/index.js';
+import { createApp, type Application } from '$lib/core/app/index.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 const button = `
@@ -10,7 +10,7 @@ button:
 `;
 
 describe('button component', () => {
-    let app: App;
+    let app: Application;
 
     beforeEach(() => {
         app = createApp();

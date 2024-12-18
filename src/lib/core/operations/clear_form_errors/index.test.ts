@@ -13,15 +13,16 @@ describe('clear_form_errors', () => {
     });
 
     it('should throw error when form context is not present', () => {
-        expect(() => clear_form_errors(null, context, previousResult))
-            .toThrow('Operation [clear_form_errors] should be used in a form context');
+        expect(() => clear_form_errors(null, { context, previousResult })).toThrow(
+            'Operation [clear_form_errors] should be used in a form context'
+        );
     });
 
     it('should clear form errors when form context is present', () => {
         const form = { errors: { field1: 'error1', field2: 'error2' } };
         context.set('form', form);
 
-        const result = clear_form_errors(null, context, previousResult);
+        const result = clear_form_errors(null, { context, previousResult });
 
         expect(result).toBe(previousResult);
         expect(form.errors).toEqual({});

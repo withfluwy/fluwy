@@ -3,7 +3,7 @@
     import type { InputProps } from '../contracts.js';
     import { cn, expandObject, get, Random } from '@/lib/core/utils/index.js';
     import { Icon } from '@/lib/components/common/index.js';
-    import { mergeThemes, useTheme } from '@/lib/core/client/index.js';
+    import { mergeThemes, useTheme } from '@/lib/core/utils/index.js';
     import { Common, useCommon } from '@/lib/components/common/styles.js';
     import { Render, useContext } from '@/lib/core/index.js';
     import { DefaultSize, Sizes } from '../styles.js';

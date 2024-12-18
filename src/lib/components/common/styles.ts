@@ -1,4 +1,4 @@
-import { useTheme } from '@/lib/core/client/index.js';
+import { useTheme } from '@/lib/core/utils/index.js';
 import type { Any } from '@/lib/core/contracts.js';
 import { cn, get } from '@/lib/core/utils/index.js';
 import { mergeObjects } from '@/lib/core/utils/merge-objects/index.js';

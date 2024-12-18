@@ -6,7 +6,7 @@ import type { PayloadValidationError } from '@/lib/plugins/payloadcms/types.js';
 /**
  * Set form errors from a payloadcms response
  */
-export const set_form_errors: Operation = async (_, context, previousResult) => {
+export const set_form_errors: Operation = async (_, { context, previousResult }) => {
     const httpResponse: HttpResponse = context.get('response');
     const form: FormState = context.get('form');
 

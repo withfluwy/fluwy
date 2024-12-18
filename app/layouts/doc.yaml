@@ -35,9 +35,14 @@ page:
             text: Theming
             url: /theming
         - menu_item:
+            icon: solar:widget-add-linear
+            text: Plugins
+            url: /plugins
+        - menu_item:
             icon: solar:file-check-linear
             text: Key Concepts
             url: /key-concepts
+
         - menu_group:
             header: Components
             active_if_starts_with: /components
@@ -70,6 +75,18 @@ page:
                   trailing_icon: solar:clock-circle-linear
                   class: opacity-50 hover:text-orange-600 dark:hover:text-orange-300
                   url: /components/typography
+
+        - menu_group:
+            header: Operations
+            active_if_starts_with: /operations
+            icon: solar:checklist-linear
+            content:
+              - menu_item:
+                  text: Overview
+                  url: /operations
+              - menu_item:
+                  text: Http
+                  url: /operations/http
 
       aside:
         class: pt-10 border-0

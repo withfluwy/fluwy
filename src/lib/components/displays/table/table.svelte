@@ -8,7 +8,7 @@
     import { useContext } from '@/lib/core/index.js';
     import TableRow from './table-row.svelte';
     import TableHeader from './table-header.svelte';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { useCommon } from '@/lib/components/common/styles.js';
     import { Icon } from '@/lib/components/common/index.js';
     import { blur } from 'svelte/transition';

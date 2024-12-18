@@ -1,10 +1,10 @@
-import { useClient } from '@/lib/core/client/index.js';
+import { app } from '@/lib/index.js';
 import type { Operation, Operations } from '@/lib/core/contracts.js';
 import { abort } from '@/lib/core/operations/utils.js';
 import { compile, hasPlaceholders } from '@/lib/core/utils/compile/index.js';
 import { HttpResponse } from '@/lib/core/utils/response/index.js';
 
-export const post: Operation = async (param: PostParam, context) => {
+export const post: Operation = async (param: PostParam, { context }) => {
     const parsedUrl = compile(param.url, context.data);
 
     if (hasPlaceholders(parsedUrl)) {
@@ -24,7 +24,7 @@ export const post: Operation = async (param: PostParam, context) => {
 
     if (!response.ok) {
         if (param.on_error) {
-            await useClient().handleOperations(param.on_error, context, data);
+            await app.handleOperations(param.on_error, context, data);
             abort();
         }
 

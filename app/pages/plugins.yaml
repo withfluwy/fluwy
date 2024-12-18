@@ -1,0 +1,131 @@
+layout: doc
+---
+h1: Plugins
+p: |
+  Plugins are a way to extend the functionality of Fluwy. They are modular components that can add new operations, 
+  components, and other features to your application.
+spacer: mt-12
+doc.content:
+  - h2: Plugin Contract
+  - markdown: |
+      A plugin in Fluwy follows a specific contract that defines its structure and capabilities. Here's the interface
+      that every plugin must implement:
+
+      ```typescript
+      interface Plugin {
+        /**
+         * The name of the plugin in snake_case format
+         */
+        name: string;
+
+        /**
+         * Custom operations provided by the plugin
+         */
+        operations?: Record<string, Operation>;
+
+        /**
+         * Custom Svelte components provided by the plugin
+         */
+        components?: Record<string, SvelteComponent>;
+
+        /**
+         * Other plugins required by this plugin
+         */
+        plugins?: Plugin[];
+      }
+      ```
+  - h2: Creating a Plugin
+  - markdown: |
+      To create a plugin, you need to create an object that implements the Plugin interface. Here's a basic example:
+
+      ```typescript
+      import type { Plugin } from '@fluwy/ui';
+      import CustomComponent from '@/path/to/CustomComponent.svelte';
+      import { custom_operation } from '@/path/to/CustomOperation.js';
+
+      export const MyPlugin: Plugin = {
+        name: 'my_plugin',
+        
+        operations: {
+          custom_operation,
+        },
+        
+        components: {
+          CustomComponent,
+        }
+      };
+      ```
+  - h2: Using Plugins
+  - markdown: |
+      To use a plugin in your Fluwy application, you need to register it using the `app.plug()` method:
+
+      ```typescript
+      import { app } from '@fluwy/ui';
+      import { MyPlugin } from '@/path/to/my-plugin.js';
+
+      app.plug(MyPlugin);
+      ```
+
+      Now you can easily use the plugin's operations and components in your application by accessing them through its
+      name. Something like this:
+
+      ```yaml
+      # To use its components
+      my_plugin.custom_component:
+
+      ...
+
+      # To use its operations
+      button:
+        on_click:
+          my_plugin.custom_operation: ...
+      ```
+
+      If you're using the fluwy-starter template, you will see that your application is a plugin itself under the name
+      `app`. So if you want to install and use another plugin or break your app into multiple plugins, like modules, you
+      can register them in your `app.plug()` method. Something like this:
+
+      ```typescript
+      import { MyPlugin } from '@/path/to/my-plugin.js';
+
+      app.config({ error, redirect }).plug({
+        name: 'app',
+        plugins: [MyPlugin],
+      });
+      ```
+
+      > **Note**: Plugins don't inherit their parent's plugin name. For example, in this case, you would still
+      access the component of MyPlugin as `my_plugin.custom_component` instead of `app.my_plugin.custom_component`.
+      They also don't register more than once. You can have the same plugin registered more than once, but it will
+      only be registered once.
+
+  - h2: Built-in Plugins
+  - markdown: |
+      Fluwy comes with several built-in plugins that provide common functionality:
+
+      ### PayloadCMS Plugin (In progress)
+
+      The PayloadCMS plugin provides integration with PayloadCMS, including form validation and error handling.
+
+      ```typescript
+      import { plugins } from '@fluwy/ui';
+
+      app.plug({
+        name: 'my_app',
+        plugins: [plugins.PayloadCMS]
+      });
+      ```
+
+      Look at the source code for the [PayloadCMS Plugin](https://github.com/withfluwy/fluwy/blob/main/src/lib/plugins/payloadcms/index.ts) to
+      learn more about how it works and all the operations and components it provides.
+  - h2: Plugin Best Practices
+  - markdown: |
+      When creating plugins, follow these best practices:
+
+      - Use snake_case for plugin names and operations to maintain consistency.
+      - Use PascalCase for component names. Fluwy will provide them with snake_case format.
+      - Keep plugins focused on a single responsibility.
+      - Document your plugin's operations and components.
+      - Handle errors gracefully and provide meaningful error messages.
+      - Use TypeScript for better type safety and developer experience.
+      - Test your plugin's functionality thoroughly.

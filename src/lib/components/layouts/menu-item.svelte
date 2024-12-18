@@ -7,7 +7,7 @@
     import { Icon } from '../common/index.js';
     import Spacer from './spacer.svelte';
     import { useCommon } from '../common/styles.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { icon } from '../common/utils.js';
 
     interface MenuItemProps extends ElementProps {

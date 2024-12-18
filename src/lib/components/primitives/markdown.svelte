@@ -5,7 +5,7 @@
     import { browser } from '$app/environment';
     import { cn, str } from '@/lib/core/utils/index.js';
     import { Typography, Blocks } from './styles.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { Events } from '@/lib/core/utils/events/index.js';
     import { useCommon } from '../common/styles.js';
     import hljs from 'highlight.js';

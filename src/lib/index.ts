@@ -4,22 +4,27 @@ import * as controls from './components/controls/index.js';
 import * as layouts from './components/layouts/index.js';
 import * as common from './components/common/index.js';
 import * as displays from './components/displays/index.js';
-import { createApp } from './core/app/index.js';
-import { str } from './core/utils/index.js';
-import type { Any } from './core/contracts.js';
-import App from './core/app.svelte';
 import 'iconify-icon';
-
-export { default as Render } from './core/render.svelte';
-export { utils, createContext, useContext } from './core/index.js';
-
-const app = createApp();
+import * as plugins from '@/lib/plugins/index.js';
+import {
+    abort,
+    AbortOperation,
+    app,
+    App,
+    compile,
+    createApp,
+    createContext,
+    Render,
+    type Any,
+    useContext,
+    utils,
+} from '@/lib/core/index.js';
 
 function registerAll(imports: Record<string, Any>) {
     for (const [key, value] of Object.entries(imports)) {
         if (app.hasComponent(key)) throw new Error(`Component [${key}] already registered`);
 
-        app.registerComponent(str(key).snakeCase(), value);
+        app.registerComponent(utils.str(key).snakeCase(), value);
     }
 }
 
@@ -29,7 +34,20 @@ registerAll(controls);
 registerAll(layouts);
 registerAll(common);
 registerAll(displays);
-// Exports
 
-export type { ElementProps } from './core/contracts.js';
-export { app, registerAll, App, forms, primitives, controls, str };
+// Exports
+export {
+    abort,
+    AbortOperation,
+    app,
+    App,
+    compile,
+    createApp,
+    createContext,
+    plugins,
+    registerAll,
+    Render,
+    useContext,
+    utils,
+};
+export type { ElementProps, FormState, Operation, Plugin } from './core/contracts.js';

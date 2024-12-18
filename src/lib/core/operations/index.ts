@@ -1,4 +1,4 @@
-import { Client } from '../client/index.js';
+import { Application } from '../app/index.js';
 
 import { alert } from '@/lib/core/operations/alert/index.js';
 import { clear_form_errors } from '@/lib/core/operations/clear_form_errors/index.js';
@@ -25,32 +25,32 @@ import { unset_local_storage } from '@/lib/core/operations/unset_local_storage.j
 import { wrap_into } from '@/lib/core/operations/wrap_into/index.js';
 import * as cookies from '@/lib/core/operations/cookies.js';
 
-export function installOperations(client: Client) {
-    client.addOperation('alert', alert);
-    client.addOperation('clear_form_errors', clear_form_errors);
-    client.addOperation('close_dialog', close_dialog);
-    client.addOperation('context', context);
-    client.addOperation('delete', deleteOperation);
-    client.addOperation('emit', emit);
-    client.addOperation('extract', extract);
-    client.addOperation('get', get);
-    client.addOperation('goto', goto);
-    client.addOperation('if', if_operation);
-    client.addOperation('log', log);
-    client.addOperation('notify', notify);
-    client.addOperation('open_dialog', open_dialog);
-    client.addOperation('post', post);
-    client.addOperation('refresh', refresh);
-    client.addOperation('remove_cookie', cookies.unset_operation);
-    client.addOperation('remove_local_storage', unset_local_storage);
-    client.addOperation('set_auth_token', set_auth_token);
-    client.addOperation('set_auth_user', set_auth_user);
-    client.addOperation('set_cookie', cookies.set_operation);
-    client.addOperation('set_form_errors', set_form_errors);
-    client.addOperation('set_mode', set_mode);
-    client.addOperation('sleep', sleep);
-    client.addOperation('transform', transform);
-    client.addOperation('unset_cookie', cookies.unset_operation);
-    client.addOperation('unset_local_storage', unset_local_storage);
-    client.addOperation('wrap_into', wrap_into);
+export function installOperations(app: Application) {
+    app.addOperation('alert', alert);
+    app.addOperation('clear_form_errors', clear_form_errors);
+    app.addOperation('close_dialog', close_dialog);
+    app.addOperation('context', context);
+    app.addOperation('delete', deleteOperation);
+    app.addOperation('emit', emit);
+    app.addOperation('extract', extract);
+    app.addOperation('get', get);
+    app.addOperation('goto', goto);
+    app.addOperation('if', if_operation);
+    app.addOperation('log', log);
+    app.addOperation('notify', notify);
+    app.addOperation('open_dialog', open_dialog);
+    app.addOperation('post', post);
+    app.addOperation('refresh', refresh);
+    app.addOperation('remove_cookie', cookies.unset_operation);
+    app.addOperation('remove_local_storage', unset_local_storage);
+    app.addOperation('set_auth_token', set_auth_token);
+    app.addOperation('set_auth_user', set_auth_user);
+    app.addOperation('set_cookie', cookies.set_operation);
+    app.addOperation('set_form_errors', set_form_errors);
+    app.addOperation('set_mode', set_mode);
+    app.addOperation('sleep', sleep);
+    app.addOperation('transform', transform);
+    app.addOperation('unset_cookie', cookies.unset_operation);
+    app.addOperation('unset_local_storage', unset_local_storage);
+    app.addOperation('wrap_into', wrap_into);
 }

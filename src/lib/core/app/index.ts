@@ -3,18 +3,34 @@ import { parse } from 'yaml';
 import { compile } from '../utils/compile/index.js';
 import fs from 'fs';
 import path from 'path';
-import type { Any, AppConfig, RenderResponse } from '../contracts.js';
-import { get } from '../utils/index.js';
+import type {
+    Adapter,
+    AdapterData,
+    Adapters,
+    Any,
+    AppConfig,
+    Context,
+    Operation,
+    OperationHandlers,
+    Plugin,
+    RenderResponse,
+    RequiredAppConfig,
+} from '../contracts.js';
+import { get, str } from '../utils/index.js';
+import { AbortOperation } from '@/lib/core/operations/utils.js';
 
 type DocumentContent = {
     head?: string;
     body: string;
 };
 
-export class App {
+export class Application {
     private components: Record<string, Any> = {};
+    private operations: OperationHandlers = {};
+    private adapters: Adapters = {};
+    private registeredPlugins: string[] = [];
 
-    public config: AppConfig = {
+    private _config: AppConfig = {
         pages: 'app/pages',
         layouts: 'app/layouts',
         themes: 'app/themes',
@@ -25,6 +41,16 @@ export class App {
             throw new Error('Uninitialized [redirect] function in app config');
         },
     };
+
+    public getConfig() {
+        return this._config;
+    }
+
+    public config(config: RequiredAppConfig): this {
+        Object.assign(this._config, config);
+
+        return this;
+    }
 
     public registerComponent(name: string, component: Any) {
         if (name in Object.keys(this.components)) {
@@ -43,8 +69,8 @@ export class App {
     }
 
     public async render(path: string, options: RenderOptions = {}): Promise<RenderResponse> {
-        const route = findRoute(path || 'index', this.config.pages);
-        if (!route) throw this.config.error(404, 'Not found');
+        const route = findRoute(path || 'index', this._config.pages);
+        if (!route) throw this._config.error(404, 'Not found');
 
         const pageDocument = this.getDocument(route.contents);
         const { meta, context } = await this.parseHead(pageDocument, route.params);
@@ -77,7 +103,7 @@ export class App {
     }
 
     private parseLayout(meta: PageMeta, context: PageContext): Any {
-        const layoutContent = this.findLayoutFile(meta.layout!, this.config.layouts);
+        const layoutContent = this.findLayoutFile(meta.layout!, this._config.layouts);
         if (!layoutContent) throw `Layout not found: [${meta.layout}]`;
 
         const layoutDocument = this.getDocument(layoutContent);
@@ -140,7 +166,7 @@ export class App {
     }
 
     private checkAuth(meta: PageMeta | undefined, options: RenderOptions) {
-        if (meta?.auth && !options.auth_token) this.config.redirect(307, meta.auth);
+        if (meta?.auth && !options.auth_token) this._config.redirect(307, meta.auth);
     }
 
     private async resolveLoaders(meta: PageMeta, context: PageContext, options: RenderOptions) {
@@ -153,8 +179,8 @@ export class App {
             if (options.auth_token) headers.append('Authorization', `Bearer ${options.auth_token}`);
             const response = await fetch(parsedUrl, { headers });
 
-            if (response.status === 404) throw this.config.error(404, 'Not found');
-            if (!response.ok) throw this.config.error(response.status, 'Error loading data');
+            if (response.status === 404) throw this._config.error(404, 'Not found');
+            if (!response.ok) throw this._config.error(response.status, 'Error loading data');
 
             const data = await response.json();
 
@@ -188,15 +214,117 @@ export class App {
     private mergeThemes(meta: PageMeta | undefined): Any {
         if (!meta?.theme) return;
 
-        const themeContents = this.findThemeFile(meta.theme, this.config.themes);
+        const themeContents = this.findThemeFile(meta.theme, this._config.themes);
 
         return themeContents ? parse(themeContents) : undefined;
+    }
+
+    plug(plugin: Plugin): this {
+        if (this.registeredPlugins.includes(plugin.name)) {
+            console.warn(`Plugin [${plugin.name}] already registered`);
+            return this;
+        }
+
+        /**
+         * Register plugin's operations
+         */
+        for (const [operationName, operationHandler] of Object.entries(plugin.operations ?? {})) {
+            const normalizedOperationName = str(operationName).snakeCase();
+            this.addOperation(`${plugin.name}.${normalizedOperationName}`, operationHandler);
+        }
+
+        /**
+         * Register plugin's components
+         */
+        for (const [componentName, component] of Object.entries(plugin.components ?? {})) {
+            const normalizedComponentName = str(componentName).snakeCase();
+            this.registerComponent(`${plugin.name}.${normalizedComponentName}`, component);
+        }
+
+        /**
+         * Register plugin's required plugins
+         */
+        for (const requiredPlugin of plugin.plugins ?? []) {
+            this.plug(requiredPlugin);
+        }
+
+        this.registeredPlugins.push(plugin.name);
+
+        return this;
+    }
+
+    addAdapter(adapterName: string, adapter: Adapter) {
+        if (this.adapters[adapter.name]) throw new Error(`Adapter already exists for [${adapter.name}]`);
+
+        this.adapters[adapterName] = adapter;
+
+        return this;
+    }
+
+    addOperation(operation: string, handler: Operation) {
+        if (this.operations[operation]) return this;
+
+        this.operations[operation] = handler;
+
+        return this;
+    }
+
+    async handleOperation(event: string, args: Any, context: Context, previousResult: Any) {
+        const handle = this.operations[event];
+
+        if (!handle) throw new Error(`Operation [${event}] not found`);
+
+        return handle(args, { context, previousResult });
+    }
+
+    async handleOperations(operations: Any, context: Context, initialResults?: Any): Promise<Any> {
+        let result = initialResults;
+
+        if (!operations) return;
+
+        try {
+            if (typeof operations === 'string') return await this.handleOperation(operations, {}, context, result);
+            if (typeof operations !== 'object')
+                throw new Error(`Invalid User Action document [${JSON.stringify(operations)}]`);
+
+            if (Array.isArray(operations)) {
+                for (const operation of operations) {
+                    for (const [action, args] of Object.entries(operation)) {
+                        result = await this.handleOperation(action, args, context, result);
+                    }
+                }
+
+                return result;
+            }
+
+            for (const [operation, args] of Object.entries(operations || {})) {
+                result = await this.handleOperation(operation, args, context, result);
+            }
+
+            return result;
+        } catch (error) {
+            if (error instanceof AbortOperation) return;
+
+            throw error;
+        }
+    }
+
+    async handleAdapter(adapterName: string = '', data: Any, context: Context): Promise<AdapterData> {
+        if (!adapterName) return { data, context };
+
+        const adapter = this.adapters[adapterName];
+
+        if (!adapter) throw new Error(`No adapter defined for [${adapterName}]`);
+
+        return adapter(data, context);
     }
 }
 
 export function createApp() {
-    return new App();
+    return new Application();
 }
+
+export const app = createApp();
 
 export interface PageSchema {
     page: Any;

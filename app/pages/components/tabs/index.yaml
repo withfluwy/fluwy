@@ -2,7 +2,7 @@ layout: doc
 ---
 h2: Tabs Component
 p: Tabs can be used to create a tabbed interface to switch between different views.
-doc_content:
+doc.content:
   - h3:
       class: "!mt-12"
       content: Simple Tabs

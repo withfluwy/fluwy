@@ -1,6 +1,6 @@
 <script lang="ts">
-    import App from '$lib/core/app.svelte';
-    import '@/docs.js';
+    import { App } from '$lib/index.js';
+    import '@/doc.js';
 
     export let data;
 </script>

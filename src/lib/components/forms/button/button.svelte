@@ -2,7 +2,7 @@
     import type { Any } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
-    import { useClient, mergeThemes, useTheme } from '@/lib/core/client/index.js';
+    import { app } from '@/lib/core/index.js';
     import { compile, Render, useContext } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { Variants } from './styles.js';
@@ -12,12 +12,12 @@
     import { fade } from 'svelte/transition';
     import type { FormState } from '@/lib/components/forms/form/types.js';
     import type { ButtonProps } from '@/lib/components/forms/button/types.js';
+    import { mergeThemes, useTheme } from '@/lib/core/utils/index.js';
 
     const { component, children, type = 'button', ...props }: ButtonProps = $props();
 
     const componentName = component?.name ?? 'button';
     const context = useContext();
-    const client = useClient();
     const form: FormState | undefined = context.get('form');
 
     const sizes = mergeThemes('forms.common.sizes', Sizes);
@@ -63,7 +63,7 @@
         deferred(() => (innerLoading = !done));
 
         try {
-            return await client.handleOperations(props.on_click, context);
+            return await app.handleOperations(props.on_click, context);
         } finally {
             innerLoading = false;
             done = true;

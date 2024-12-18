@@ -8,7 +8,7 @@ describe('sleep', () => {
     const previousResult = 'previousResult';
 
     it('should throw error when duration is not a valid number', async () => {
-        await expect(sleep('invalid', context, previousResult)).rejects.toThrow(
+        await expect(sleep('invalid', { context, previousResult })).rejects.toThrow(
             'Invalid parameter for [sleep] operation: invalid'
         );
     });
@@ -17,7 +17,7 @@ describe('sleep', () => {
         const sleepSpy = vi.spyOn(utils, 'sleep').mockResolvedValue(Promise.resolve());
         const duration = '1000';
 
-        const result = await sleep(duration, context, previousResult);
+        const result = await sleep(duration, { context, previousResult });
 
         expect(sleepSpy).toHaveBeenCalledWith(1000);
         expect(result).toBe(previousResult);

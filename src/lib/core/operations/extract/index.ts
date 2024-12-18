@@ -1,8 +1,8 @@
 import type { Any, Operation } from '../../contracts.js';
 import { collapseObject, expandObject } from '../../utils/normalize-object/index.js';
 
-export const extract: Operation = async (map: Record<string, string>, _, result) => {
-    const collapsedResult = collapseObject(result);
+export const extract: Operation = async (map: Record<string, string>, { previousResult }) => {
+    const collapsedResult = collapseObject(previousResult);
 
     const extractedResult = {} as Any;
 

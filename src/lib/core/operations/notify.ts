@@ -2,7 +2,7 @@ import { toast } from 'svelte-sonner';
 import type { Operation } from '../contracts.js';
 import { compile } from '../utils/compile/index.js';
 
-export const notify: Operation = async (props: string | NotifyProps, context) => {
+export const notify: Operation = async (props: string | NotifyProps, { context }) => {
     if (typeof props === 'string') return toast.success(compile(props, context.data));
 
     if (props.error) return toast.error(compile(props.error, context.data));

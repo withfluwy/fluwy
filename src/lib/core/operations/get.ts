@@ -2,7 +2,7 @@ import type { Operation } from '../contracts.js';
 import { compile, hasPlaceholders } from '../utils/compile/index.js';
 import { get as getAt } from '../utils/index.js';
 
-export const get: Operation = async (param: string | GetParam, { data, fetch }) => {
+export const get: Operation = async (param: string | GetParam, { context: { data, fetch } }) => {
     const url = typeof param === 'string' ? param : param.from;
     const parsedParams = compile(url, data);
 

@@ -43,7 +43,7 @@ describe('payloadcms.set_form_errors', () => {
         context.set('response', response);
         await response.asyncJson();
 
-        await set_form_errors(null, context);
+        await set_form_errors(null, { context });
 
         expect(form.errors).toEqual({
             email: ['Email is required'],
@@ -59,7 +59,7 @@ describe('payloadcms.set_form_errors', () => {
         context.set('response', response);
         await response.asyncJson();
 
-        await expect(set_form_errors(null, context)).rejects.toThrow(
+        await expect(set_form_errors(null, { context })).rejects.toThrow(
             'Operation [set_form_errors] should be used in a form context'
         );
     });
@@ -67,7 +67,7 @@ describe('payloadcms.set_form_errors', () => {
     it('should throw error when response context is missing', async () => {
         context.set('response', undefined);
 
-        await expect(set_form_errors(null, context)).rejects.toThrow(
+        await expect(set_form_errors(null, { context })).rejects.toThrow(
             'Operation [set_form_errors] should be used with a response context'
         );
     });

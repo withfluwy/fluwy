@@ -1,13 +1,12 @@
 <script lang="ts">
     import { cn } from '@/lib/core/utils/index.js';
     import type { FormProps, FormState } from './types.js';
-    import { Render, useClient, createContext } from '@/lib/core/index.js';
+    import { Render, app, createContext } from '@/lib/core/index.js';
     import { collapseObject } from '@/lib/core/utils/normalize-object/index.js';
     import { setupContext } from '@/lib/core/context/index.js';
 
     const { id, content, ...props }: FormProps = $props();
 
-    const client = useClient();
     const context = createContext();
 
     /**
@@ -32,7 +31,7 @@
 
         try {
             form.submitting = true;
-            await client.handleOperations(props.on_submit, context);
+            await app.handleOperations(props.on_submit, context);
         } finally {
             form.submitting = false;
         }

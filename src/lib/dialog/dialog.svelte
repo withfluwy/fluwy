@@ -5,11 +5,10 @@
     import { fade } from 'svelte/transition';
     import { DialogEvents, useDialogs } from '../core/stores/dialogs.js';
     import type { Any, Context } from '../core/contracts.js';
-    import { Render } from '../core/index.js';
+    import { app, Render } from '../core/index.js';
     import { cn, deferred, flyAndScale } from '../core/utils/index.js';
     import { Icon } from '../components/common/icon/index.js';
     import { useContext } from '../core/context/index.js';
-    import { useClient } from '../core/client/index.js';
     import { Durations, Operation } from '../core/constants.js';
     import { Events } from '../core/utils/events/index.js';
 
@@ -30,7 +29,6 @@
     const dialogs = useDialogs();
     const transitionDuration = Durations.transition;
     const context = useContext();
-    const client = useClient();
 
     onMount(async () => {
         open = true;
@@ -59,7 +57,7 @@
             operations = operations as LoadOption;
 
             try {
-                const varValue = await client.handleOperations(operations, context);
+                const varValue = await app.handleOperations(operations, context);
                 context.set(varName, varValue);
             } catch (rejection) {
                 if (rejection === Operation.Cancelled) continue;

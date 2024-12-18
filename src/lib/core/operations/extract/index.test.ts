@@ -1,8 +1,14 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { extract } from './index.js';
-import type { Context } from '../../context/index.js';
+import { createContext, type Context } from '../../context/index.js';
 
 describe('extract operation', () => {
+    let context: Context;
+
+    beforeEach(() => {
+        context = createContext();
+    });
+
     const previousResult = {
         id: 1,
         createdAt: new Date(),
@@ -26,7 +32,7 @@ describe('extract operation', () => {
         };
 
         // When
-        const result = await extract(map, {} as Context, previousResult);
+        const result = await extract(map, { context, previousResult });
 
         // Then
         expect(result).toEqual({
@@ -46,7 +52,7 @@ describe('extract operation', () => {
         };
 
         // When
-        const result = await extract(map, {} as Context, previousResult);
+        const result = await extract(map, { context, previousResult });
 
         // Then
         expect(result).toEqual({

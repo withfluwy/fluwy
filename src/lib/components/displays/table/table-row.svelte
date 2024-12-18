@@ -4,9 +4,9 @@
     import TableCell from './table-cell.svelte';
     import { setupContext, createContext } from '@/lib/core/context/index.js';
     import { cn, cloneDeep } from '@/lib/core/utils/index.js';
-    import { useClient } from '@/lib/core/index.js';
-    import { useTheme } from '@/lib/core/client/index.js';
+    import { useTheme } from '@/lib/core/utils/index.js';
     import { useCommon } from '@/lib/components/common/styles.js';
+    import { app } from '@/lib/core/index.js';
 
     interface TableRowProps {
         columns: Column[];
@@ -16,7 +16,6 @@
 
     const { columns, record, table }: TableRowProps = $props();
     const context = createContext();
-    const client = useClient();
     const commonBorderColor = useCommon('border_color');
     const defaultRowTheme = useTheme('displays.table.row.default');
     const clickableRowTheme = cn(
@@ -32,7 +31,7 @@
     async function onclick() {
         if (!haveRowClick) return;
 
-        return client.handleOperations(table.on_row_click, context, cloneDeep(record));
+        return app.handleOperations(table.on_row_click, context, cloneDeep(record));
     }
 </script>
 
