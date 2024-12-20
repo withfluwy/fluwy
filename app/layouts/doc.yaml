@@ -87,6 +87,9 @@ page:
               - menu_item:
                   text: Http
                   url: /operations/http
+              - menu_item:
+                  text: Form
+                  url: /operations/form
 
       aside:
         class: pt-10 border-0

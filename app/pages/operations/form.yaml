@@ -1,0 +1,60 @@
+layout: doc
+---
+h1: Form Operations
+p: This document page groups all operations that are used within a form component and context.
+spacer: mt-12
+doc.content:
+  - markdown: |
+      ## clear_form_errors
+      The `clear_form_errors` operation is used to clear the form errors. It should be used in a form context. So,
+      inside a form component you can add this operation in a click of a button. For example:
+
+  - tabs:
+      - tab:
+          title: Example
+          panel:
+            form:
+              data:
+                name:
+                email: invalid
+              content:
+                - input:
+                    label: Name
+                    field: name
+                    errors:
+                      - This field is required.
+                - input:
+                    label: Email
+                    field: email
+                    errors:
+                      - This email is invalid.
+                - button:
+                    text: Clear errors
+                    on_click:
+                      - clear_form_errors:
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                form:
+                  data:
+                    email: invalid
+                  content:
+                    - input:
+                        label: Name
+                        field: name
+                        errors:
+                          - This field is required.
+                    - input:
+                        label: Email
+                        field: email
+                        errors:
+                          - This email is invalid.
+                    - button:
+                        text: Clear errors
+                        on_click:
+                          - clear_form_errors:
