@@ -1,5 +1,28 @@
 # @fluwy/ui
 
+## 0.8.0
+
+### Minor Changes
+
+- 7836caa: New `debug` component.
+- e6e34d6: New `clear_form_errors` operation to clean validation errors on forms.
+- 92a6d4e: New `put` http request operation
+- 650933d: Spacer now supports CSS classes as its content so we can easily do something like `spacer: mt-12` if we need some classes for the spacer.
+- cd356e5: New input component.
+- e90b19f: New `set_form_errors` operation for form validation errors from APIs.
+- 6a412b8: New `post` operation to make http requests.
+- 2dade5e: Make `column` and `row` themable under layout variables. It also sets the default gap of `gap-4` for them.
+- 17d3563: Introducing plugins
+- 67ca6ba: Created the Plugin System. Now all applications are basically plugins which contains a name that will be used as namespace.
+- 998c5c0: New context functions for plugin development and library building for the framework: `createContext`, `useContext`.
+- 4b9677c: New `sleep` operation.
+- 382a87d: New `form` component.
+- 8959b80: New `input` component.
+
+### Patch Changes
+
+- e2dfd64: chore: Fix version name for releases
+
 ## 0.7.0
 
 ### Minor Changes
