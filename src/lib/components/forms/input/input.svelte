@@ -8,6 +8,7 @@
     import { Render, useContext } from '@/lib/core/index.js';
     import { DefaultSize, Sizes } from '../styles.js';
     import type { FormState } from '@/lib/components/forms/form/types.js';
+    import { onMount } from 'svelte';
 
     let { field, oninput, label, size, description, width_dynamic, error_path, ...props }: InputProps = $props();
 
@@ -27,6 +28,7 @@
                 [field ?? id]: props.value ?? '',
             },
             errors: {},
+            pristine: true,
         } satisfies FormState);
 
     let value = $state(form.data[field ?? id]);
@@ -48,9 +50,14 @@
         errors = get(expandObject(form.errors), error_path ?? field ?? id);
     });
 
+    onMount(() => {
+        errors = props.errors ?? form.errors[field ?? id];
+    });
+
     function onInput(e: Event) {
         const newValue = (e.target as HTMLInputElement).value;
         value = form.data[field ?? id] = newValue;
+        form.pristine = false;
 
         oninput?.(e);
     }
