@@ -36,4 +36,9 @@ export interface FormState {
     data: Record<string, Any>;
     errors: ValidationError;
     submitting?: boolean;
+    /**
+     * Whether the form has been modified.
+     */
+    pristine?: boolean;
+    readonly dirty?: boolean;
 }

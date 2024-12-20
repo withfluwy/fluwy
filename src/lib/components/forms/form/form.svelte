@@ -19,6 +19,10 @@
         data: collapseObject(props.data ?? {}),
         errors: {},
         submitting: false,
+        pristine: true,
+        get dirty() {
+            return !this.pristine;
+        },
     });
 
     const method = $derived((props.method || 'POST') as 'POST' | 'GET' | 'DIALOG');

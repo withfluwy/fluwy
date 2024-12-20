@@ -142,6 +142,12 @@ doc.content:
 
       # Whether the form is currently being submitted
       form.submitting # boolean
+
+      # Whether the form data has been changed
+      form.pristine # boolean
+
+      # Whether the form data has been changed. Opposite alias for form.pristine
+      form.dirty # boolean
       ```
 
   - h4: Form Data
@@ -273,3 +279,6 @@ doc.content:
                     # Use the debug component to display any object 
                     # you want that can be JSON stringified.
                     - debug: form.data # <--
+
+  - markdown: |
+      > **Note**: Testing
