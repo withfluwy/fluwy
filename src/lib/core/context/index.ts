@@ -25,6 +25,11 @@ export function addContext(key: string, value: Any) {
     useContext().set(key, value);
 }
 
+/**
+ * WARNING: This context must remain a pure JavaScript class, independent of Svelte.
+ * It's used both server-side and client-side (in separate instances) for page rendering
+ * and component interactions. Attaching it to Svelte's context would prevent server-side usage.
+ */
 export function createContext(): Context {
     const store = writable<ContextData>({ svelteKit: { goto } });
 

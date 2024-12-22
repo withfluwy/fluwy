@@ -12,12 +12,14 @@ import type {
     Context,
     Operation,
     OperationHandlers,
+    Operations,
     Plugin,
     RenderResponse,
     RequiredAppConfig,
 } from '../contracts.js';
 import { get, str } from '../utils/index.js';
 import { AbortOperation } from '@/lib/core/operations/utils.js';
+import { createContext } from '@/lib/core/context/index.js';
 
 type DocumentContent = {
     head?: string;
@@ -90,19 +92,16 @@ export class Application {
         return parse(yaml);
     }
 
-    parsePage(
-        pageDocument: DocumentContent,
-        { context, meta }: { context: PageContext; meta: PageMeta | undefined }
-    ): Any {
-        if (!meta?.layout) return parse(compile(pageDocument.body, context));
+    parsePage(pageDocument: DocumentContent, { context, meta }: { context: Context; meta: PageMeta | undefined }): Any {
+        if (!meta?.layout) return parse(compile(pageDocument.body, context.data));
 
         const layout = this.parseLayout(meta, context);
-        const body = parse(compile(pageDocument.body, context)) as Any;
+        const body = parse(compile(pageDocument.body, context.data)) as Any;
 
         return this.replaceSlot(layout, body);
     }
 
-    private parseLayout(meta: PageMeta, context: PageContext): Any {
+    private parseLayout(meta: PageMeta, context: Context): Any {
         const layoutContent = this.findLayoutFile(meta.layout!, this._config.layouts);
         if (!layoutContent) throw `Layout not found: [${meta.layout}]`;
 
@@ -110,7 +109,7 @@ export class Application {
 
         this.resolveMeta(meta, layoutDocument);
 
-        return parse(compile(layoutDocument.body, context));
+        return parse(compile(layoutDocument.body, context.data));
     }
 
     private resolveMeta(meta: PageMeta, layoutDocument: DocumentContent) {
@@ -146,8 +145,9 @@ export class Application {
     private async parseHead(
         contents: DocumentContent,
         params: RouteParams
-    ): Promise<{ meta?: PageMeta; context: PageContext }> {
-        const context: PageContext = { params };
+    ): Promise<{ meta?: PageMeta; context: Context }> {
+        const context = createContext();
+        context.set('params', params);
 
         if (!contents.head) return { context };
 
@@ -156,11 +156,13 @@ export class Application {
         return { meta, context };
     }
 
-    private async executeHead(meta: PageMeta | undefined, context: PageContext, options: RenderOptions) {
+    private async executeHead(meta: PageMeta | undefined, context: Context, options: RenderOptions) {
         if (!meta) return { meta, context };
 
-        await this.resolveLoaders(meta, context, options);
-        this.resolveVars(meta, context);
+        // await this.resolveLoaders(meta, context, options);
+        // await this.executeOperations(meta, context, options);
+        await this.handleOperations(meta.server, context);
+        // this.resolveVars(meta, context);
 
         return { meta, context };
     }
@@ -169,31 +171,31 @@ export class Application {
         if (meta?.auth && !options.auth_token) this._config.redirect(307, meta.auth);
     }
 
-    private async resolveLoaders(meta: PageMeta, context: PageContext, options: RenderOptions) {
-        for (const [varName, loadPath] of Object.entries(meta.load || {})) {
-            const url = typeof loadPath === 'string' ? loadPath : (loadPath as LoadParams).url;
-            const path = typeof loadPath === 'string' ? '' : ((loadPath as LoadParams).path ?? '');
-            const parsedUrl = compile(url, context);
+    // private async resolveLoaders(meta: PageMeta, context: Context, options: RenderOptions) {
+    //     for (const [varName, loadPath] of Object.entries(meta.load || {})) {
+    //         const url = typeof loadPath === 'string' ? loadPath : (loadPath as LoadParams).url;
+    //         const path = typeof loadPath === 'string' ? '' : ((loadPath as LoadParams).path ?? '');
+    //         const parsedUrl = compile(url, context.data);
 
-            const headers = new Headers();
-            if (options.auth_token) headers.append('Authorization', `Bearer ${options.auth_token}`);
-            const response = await fetch(parsedUrl, { headers });
+    //         const headers = new Headers();
+    //         if (options.auth_token) headers.append('Authorization', `Bearer ${options.auth_token}`);
+    //         const response = await fetch(parsedUrl, { headers });
 
-            if (response.status === 404) throw this._config.error(404, 'Not found');
-            // TODO: We should handle 401 and redirect to the auth login as well
-            if (!response.ok) throw this._config.error(response.status, 'Error loading data');
+    //         if (response.status === 404) throw this._config.error(404, 'Not found');
+    //         // TODO: We should handle 401 and redirect to the auth login as well
+    //         if (!response.ok) throw this._config.error(response.status, 'Error loading data');
 
-            const data = await response.json();
+    //         const data = await response.json();
 
-            context[varName] = path ? get(data, path) : data;
-        }
-    }
+    //         context.set(varName, path ? get(data, path) : data);
+    //     }
+    // }
 
-    private resolveVars(meta: PageMeta, context: PageContext) {
-        for (const [varName, value] of Object.entries(meta.vars ?? {})) {
-            context[varName] = compile(value, context);
-        }
-    }
+    // private resolveVars(meta: PageMeta, context: Context) {
+    //     for (const [varName, value] of Object.entries(meta.vars ?? {})) {
+    //         context.set(varName, compile(value, context.data));
+    //     }
+    // }
 
     replaceSlot(layout: Any, body: Any[]): Any {
         if (!layout) return body;
@@ -327,20 +329,21 @@ export function createApp() {
 
 export const app = createApp();
 
-export interface PageSchema {
-    page: Any;
-    params: RouteParams;
-}
+// export interface PageSchema {
+//     page: Any;
+//     params: RouteParams;
+// }
 
-export interface PageContext {
-    params: RouteParams;
-    [key: string]: Any;
-}
+// export interface Context {
+//     params: RouteParams;
+//     [key: string]: Any;
+// }
 
 export type PageMeta = {
     layout?: string;
     theme?: string;
     auth?: string;
+    server?: Operations;
     load?: string | LoadParams;
     vars?: Record<string, string>;
 };
