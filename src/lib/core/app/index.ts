@@ -17,7 +17,7 @@ import type {
     RenderResponse,
     RequiredAppConfig,
 } from '../contracts.js';
-import { get, str } from '../utils/index.js';
+import { str } from '../utils/index.js';
 import { AbortOperation } from '@/lib/core/operations/utils.js';
 import { createContext } from '@/lib/core/context/index.js';
 
@@ -78,7 +78,7 @@ export class Application {
         const { meta, context } = await this.parseHead(pageDocument, route.params);
 
         this.checkAuth(meta, options);
-        await this.executeHead(meta, context, options);
+        await this.runServerOperations(meta, context, options);
 
         const content = this.parsePage(pageDocument, { context, meta });
 
@@ -156,13 +156,14 @@ export class Application {
         return { meta, context };
     }
 
-    private async executeHead(meta: PageMeta | undefined, context: Context, options: RenderOptions) {
-        if (!meta) return { meta, context };
+    private async runServerOperations(meta: PageMeta | undefined, context: Context, options: RenderOptions) {
+        if (!meta?.server) return { meta, context };
 
-        // await this.resolveLoaders(meta, context, options);
-        // await this.executeOperations(meta, context, options);
+        if (options.auth_token) {
+            context.set('auth_token', options.auth_token);
+        }
+
         await this.handleOperations(meta.server, context);
-        // this.resolveVars(meta, context);
 
         return { meta, context };
     }
@@ -171,33 +172,7 @@ export class Application {
         if (meta?.auth && !options.auth_token) this._config.redirect(307, meta.auth);
     }
 
-    // private async resolveLoaders(meta: PageMeta, context: Context, options: RenderOptions) {
-    //     for (const [varName, loadPath] of Object.entries(meta.load || {})) {
-    //         const url = typeof loadPath === 'string' ? loadPath : (loadPath as LoadParams).url;
-    //         const path = typeof loadPath === 'string' ? '' : ((loadPath as LoadParams).path ?? '');
-    //         const parsedUrl = compile(url, context.data);
-
-    //         const headers = new Headers();
-    //         if (options.auth_token) headers.append('Authorization', `Bearer ${options.auth_token}`);
-    //         const response = await fetch(parsedUrl, { headers });
-
-    //         if (response.status === 404) throw this._config.error(404, 'Not found');
-    //         // TODO: We should handle 401 and redirect to the auth login as well
-    //         if (!response.ok) throw this._config.error(response.status, 'Error loading data');
-
-    //         const data = await response.json();
-
-    //         context.set(varName, path ? get(data, path) : data);
-    //     }
-    // }
-
-    // private resolveVars(meta: PageMeta, context: Context) {
-    //     for (const [varName, value] of Object.entries(meta.vars ?? {})) {
-    //         context.set(varName, compile(value, context.data));
-    //     }
-    // }
-
-    replaceSlot(layout: Any, body: Any[]): Any {
+    private replaceSlot(layout: Any, body: Any[]): Any {
         if (!layout) return body;
 
         for (const [key, value] of Object.entries(layout)) {
