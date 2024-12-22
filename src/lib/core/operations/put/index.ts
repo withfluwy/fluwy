@@ -11,12 +11,13 @@ export const put: Operation = async (param: PutParam, { context }) => {
         throw new Error(`[put] operation has unresolved placeholders for param [url]: [${parsedUrl}]`);
     }
 
-    const data = compile(param.data, context.data);
+    const data = param.data ? compile(param.data, context.data) : undefined;
 
     const baseResponse = await context.fetch(parsedUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: data ? JSON.stringify(data) : undefined,
+        credentials: 'include',
     });
 
     const response = await buildHttpResponse(baseResponse);
@@ -46,7 +47,7 @@ type PutParam = {
      * The data to send in the request body. This should be a string that will be compiled
      * using the context data. For example: 'form.data' will be compiled to the actual form data.
      */
-    data: string;
+    data?: string;
     /**
      * The operations to run if the request fails (status >= 400).
      * These operations will receive the context and data as parameters.

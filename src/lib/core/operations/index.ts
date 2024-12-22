@@ -7,7 +7,7 @@ import { context } from '@/lib/core/operations/context.js';
 import { deleteOperation } from '@/lib/core/operations/delete.js';
 import { emit } from '@/lib/core/operations/emit/index.js';
 import { extract } from '@/lib/core/operations/extract/index.js';
-import { get } from '@/lib/core/operations/get.js';
+import { get } from '@/lib/core/operations/get/index.js';
 import { goto } from '@/lib/core/operations/goto.js';
 import { if_operation } from '@/lib/core/operations/if_operation.js';
 import { log } from '@/lib/core/operations/log/index.js';

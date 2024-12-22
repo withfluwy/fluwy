@@ -1,0 +1,4 @@
+layout: protected
+---
+h1: Protected Page
+p: If you're seeing this page, you're authenticated

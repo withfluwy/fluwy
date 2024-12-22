@@ -1,0 +1,16 @@
+auth: /login
+---
+page:
+  class: bg-neutral-50
+  body:
+    header:
+      container:
+        row:
+          class: items-center
+          content:
+            - Protected
+            - spacer:
+            - dark_mode_toggler:
+                align: end
+    container:
+      slot: default

@@ -180,6 +180,7 @@ export class Application {
             const response = await fetch(parsedUrl, { headers });
 
             if (response.status === 404) throw this._config.error(404, 'Not found');
+            // TODO: We should handle 401 and redirect to the auth login as well
             if (!response.ok) throw this._config.error(response.status, 'Error loading data');
 
             const data = await response.json();

@@ -1,0 +1,55 @@
+container:
+  class: max-w-md mx-auto mt-12 text-center
+  content:
+    - h2: Login
+    - form:
+        class: text-left
+        data:
+          email: user@mail.com
+          password: "123123"
+        on_submit:
+          clear_form_errors:
+          post:
+            url: http://localhost:3000/api/users/login
+            data: form.data
+            on_error:
+              payloadcms.set_form_errors:
+              log: response
+          log: response.data.token
+        content:
+          - input:
+              field: email
+              placeholder: Email
+              type: email
+              icon: solar:letter-linear
+          - input:
+              field: password
+              placeholder: Password
+              type: password
+              icon: solar:key-linear
+          - button:
+              text: Login
+              type: submit
+              color: primary
+
+    - h3: Test credentials
+    - row:
+        - button:
+            text: Test Credentials
+            on_click:
+              get:
+                url: http://localhost:3000/api/contacts
+                on_error:
+                  log: response.statusText
+              log: response.data
+
+        - button:
+            text: Logout
+            on_click:
+              post:
+                url: http://localhost:3000/api/users/logout
+              log: Logged out
+        - button:
+            text: Go to protected page
+            on_click:
+              goto: /protected
