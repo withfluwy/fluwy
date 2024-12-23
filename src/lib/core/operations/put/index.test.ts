@@ -40,6 +40,7 @@ describe('put', () => {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ key: 'value' }),
+            credentials: 'include',
         });
         expect(result.data).toEqual(responseData);
         expect(result.ok).toBe(true);

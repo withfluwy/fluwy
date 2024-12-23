@@ -39,6 +39,7 @@ describe('post', () => {
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', {
             method: 'POST',
             body: JSON.stringify({ key: 'value' }),
+            credentials: 'include',
         });
         expect(result.data).toEqual(responseData);
         expect(result.ok).toBe(true);
@@ -66,6 +67,7 @@ describe('post', () => {
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/123', {
             method: 'POST',
             body: JSON.stringify({ key: 'value' }),
+            credentials: 'include',
         });
         expect(result.ok).toBe(true);
     });

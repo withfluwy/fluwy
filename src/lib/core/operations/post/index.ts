@@ -11,11 +11,12 @@ export const post: Operation = async (param: PostParam, { context }) => {
         throw new Error(`[post] operation has unresolved placeholders for param [url]: [${parsedUrl}]`);
     }
 
-    const data = compile(param.data, context.data);
+    const data = param.data ? compile(param.data, context.data) : undefined;
 
     const baseResponse = await context.fetch(parsedUrl, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: data ? JSON.stringify(data) : undefined,
+        credentials: 'include',
     });
 
     const response = await buildHttpResponse(baseResponse);
@@ -44,7 +45,7 @@ type PostParam = {
     /**
      * The data to send.
      */
-    data: string;
+    data?: string;
     /**
      * The validation adapter to use.
      */
