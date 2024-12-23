@@ -1,15 +1,16 @@
 layout: base
-load:
-  contact: http://127.0.0.1:8000/contacts/${params.id}
-  address:
-    url: http://127.0.0.1:8000/address/${params.id}
-    path: data
-vars:
-  trx: contact.transaction
-  currency: trx.currency.symbol
-  amount: ${currency}${trx.amount}
+server:
+  load:
+    contact: http://127.0.0.1:8000/contacts/${params.id}
+    address:
+      url: http://127.0.0.1:8000/address/${params.id}
+      path: data
+  vars:
+    trx: contact.transaction
+    currency: trx.currency.symbol
+    amount: ${currency}${trx.amount}
 ---
 - header: Contact Page ${contact.name} - ${contact.email}
-- div: 'Amount: ${amount}'
+- div: "Amount: ${amount}"
 - div: Should keep unparsed var ${record.id} because record doesn't exit
-- div: 'Address: ${address.street}'
+- div: "Address: ${address.street}"

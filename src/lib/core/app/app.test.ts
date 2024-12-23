@@ -4,6 +4,7 @@ import nock from 'nock';
 import { Application, createApp } from './index.js';
 import type { Any, Plugin } from '../contracts.js';
 import type { Component } from 'svelte';
+import { installOperations } from '@/lib/core/operations/index.js';
 
 describe('App', () => {
     let app: Application;
@@ -16,6 +17,7 @@ describe('App', () => {
 
     beforeAll(() => {
         app = createApp();
+        installOperations(app);
         testingDir = createTestingDir();
 
         createFiles(testingDir, testingAppFiles);

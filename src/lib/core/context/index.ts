@@ -25,6 +25,11 @@ export function addContext(key: string, value: Any) {
     useContext().set(key, value);
 }
 
+/**
+ * WARNING: This context must remain a pure JavaScript class, independent of Svelte.
+ * It's used both server-side and client-side (in separate instances) for page rendering
+ * and component interactions. Attaching it to Svelte's context or client-side only would prevent server-side usage.
+ */
 export function createContext(): Context {
     const store = writable<ContextData>({ svelteKit: { goto } });
 
@@ -40,6 +45,9 @@ export function createContext(): Context {
                 ...fetchOptions,
                 headers: {
                     'Content-Type': 'application/json',
+                    // FIXME(auth): fix how we get the auth token for the fetch of the context. Do we need the fetch in the
+                    // context? Wouldn't it be better to have the token in the context and use a specific http client
+                    // to make the requests based on the context? Maybe the app could do that?
                     ...auth().headers(),
                     ...fetchOptions?.headers,
                 },
