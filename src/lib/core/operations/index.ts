@@ -7,9 +7,10 @@ import { context } from '@/lib/core/operations/context.js';
 import { deleteOperation } from '@/lib/core/operations/delete.js';
 import { emit } from '@/lib/core/operations/emit/index.js';
 import { extract } from '@/lib/core/operations/extract/index.js';
-import { get } from '@/lib/core/operations/get.js';
+import { get } from '@/lib/core/operations/get/index.js';
 import { goto } from '@/lib/core/operations/goto.js';
 import { if_operation } from '@/lib/core/operations/if_operation.js';
+import { load } from '@/lib/core/operations/load/index.js';
 import { log } from '@/lib/core/operations/log/index.js';
 import { notify } from '@/lib/core/operations/notify.js';
 import { open_dialog } from '@/lib/core/operations/open_dialog.js';
@@ -23,6 +24,7 @@ import { set_mode } from '@/lib/core/operations/set_mode/index.js';
 import { sleep } from '@/lib/core/operations/sleep/index.js';
 import { transform } from '@/lib/core/operations/transform/index.js';
 import { unset_local_storage } from '@/lib/core/operations/unset_local_storage.js';
+import { vars } from '@/lib/core/operations/vars/index.js';
 import { wrap_into } from '@/lib/core/operations/wrap_into/index.js';
 import * as cookies from '@/lib/core/operations/cookies.js';
 
@@ -37,6 +39,7 @@ export function installOperations(app: Application) {
     app.addOperation('get', get);
     app.addOperation('goto', goto);
     app.addOperation('if', if_operation);
+    app.addOperation('load', load);
     app.addOperation('log', log);
     app.addOperation('notify', notify);
     app.addOperation('open_dialog', open_dialog);
@@ -54,5 +57,6 @@ export function installOperations(app: Application) {
     app.addOperation('transform', transform);
     app.addOperation('unset_cookie', cookies.unset_operation);
     app.addOperation('unset_local_storage', unset_local_storage);
+    app.addOperation('vars', vars);
     app.addOperation('wrap_into', wrap_into);
 }
