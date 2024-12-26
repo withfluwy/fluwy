@@ -14,8 +14,10 @@ jobs:
           version: 9
       - name: Install Dependencies
         run: pnpm install
-      - name: Lint
+      - name: Sveltekit Check
         run: pnpm check
+      - name: Lint
+        run: pnpm lint
       - name: Build
         run: pnpm build
       - name: Test
