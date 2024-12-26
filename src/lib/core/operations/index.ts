@@ -19,7 +19,6 @@ import { post } from '@/lib/core/operations/post/index.js';
 import { put } from '@/lib/core/operations/put/index.js';
 import { refresh } from '@/lib/core/operations/refresh.js';
 import { set_auth_token } from '@/lib/core/operations/set_auth_token/index.js';
-import { set_auth_user } from '@/lib/core/operations/set_auth_user.js';
 import { set_form_errors } from '@/lib/core/operations/set_form_errors/index.js';
 import { set_mode } from '@/lib/core/operations/set_mode/index.js';
 import { sleep } from '@/lib/core/operations/sleep/index.js';
@@ -52,7 +51,6 @@ export function installOperations(app: Application) {
     app.addOperation('remove_cookie', cookies.unset_operation);
     app.addOperation('remove_local_storage', unset_local_storage);
     app.addOperation('set_auth_token', set_auth_token);
-    app.addOperation('set_auth_user', set_auth_user);
     app.addOperation('set_cookie', cookies.set_operation);
     app.addOperation('set_form_errors', set_form_errors);
     app.addOperation('set_mode', set_mode);
