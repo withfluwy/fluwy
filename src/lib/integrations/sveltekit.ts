@@ -1,4 +1,4 @@
-import { endpoints } from '@/lib/core/operations/cookies.js';
+import { endpoints } from '@/lib/core/operations/cookies/index.js';
 import type { Handle, RequestHandler } from '@sveltejs/kit';
 
 export function createProxyApiHandlers(apiUrl: string) {

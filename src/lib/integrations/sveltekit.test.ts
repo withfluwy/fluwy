@@ -1,13 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createProxyApiHandlers, handle } from './sveltekit.js';
-import { endpoints } from '@/lib/core/operations/cookies.js';
+import { endpoints } from '@/lib/core/operations/cookies/index.js';
 import type { RequestEvent } from '@sveltejs/kit';
-
-vi.mock('@/lib/core/operations/cookies.js', () => ({
-    endpoints: {
-        '/test-endpoint': vi.fn(),
-    },
-}));
 
 describe('createProxyApiHandlers', () => {
     const mockApiUrl = 'https://api.example.com';

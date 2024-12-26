@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { set_auth_token } from './index.js';
-import * as cookies from '@/lib/core/operations/cookies.js';
+import * as cookies from '@/lib/core/operations/cookies/index.js';
 import { createContext } from '@/lib/core/context/index.js';
 import { createApp } from '@/lib/index.js';
 
-vi.mock('@/lib/core/operations/cookies.js', () => ({
+vi.mock('@/lib/core/operations/cookies/index.js', () => ({
     set_operation: vi.fn(),
     unset_operation: vi.fn(),
 }));

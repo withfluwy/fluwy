@@ -1,7 +1,7 @@
-import type { Any, Operation } from '../contracts.js';
-import { compile } from '../utils/compile/index.js';
+import type { Any, Operation } from '../../contracts.js';
+import { compile } from '../../utils/compile/index.js';
 
-export const set_operation: Operation = async (cookie: Record<string, Any>, { context, previousResult }) => {
+export const set_operation: Operation = async (cookie: Record<string, Any>, { context, app, previousResult }) => {
     const cookies: Record<string, Any> = {};
 
     for (const [key, rawValue] of Object.entries(cookie)) {
@@ -19,7 +19,7 @@ export const set_operation: Operation = async (cookie: Record<string, Any>, { co
     return previousResult;
 };
 
-export const unset_operation: Operation = async (cookie: string, { previousResult }) => {
+export const unset_operation: Operation = async (cookie: string, { context, app, previousResult }) => {
     await fetch('/__server__/unset-cookie', {
         body: JSON.stringify({ [cookie]: true }),
         method: 'POST',

@@ -1,4 +1,4 @@
-import * as cookies from '@/lib/core/operations/cookies.js';
+import * as cookies from '@/lib/core/operations/cookies/index.js';
 import type { Operation } from '../../contracts.js';
 import { get } from '@/lib/core/utils/index.js';
 

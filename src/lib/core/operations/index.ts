@@ -28,7 +28,7 @@ import { unset_auth_token } from '@/lib/core/operations/unset_auth_token/index.j
 import { unset_local_storage } from '@/lib/core/operations/unset_local_storage.js';
 import { vars } from '@/lib/core/operations/vars/index.js';
 import { wrap_into } from '@/lib/core/operations/wrap_into/index.js';
-import * as cookies from '@/lib/core/operations/cookies.js';
+import * as cookies from '@/lib/core/operations/cookies/index.js';
 
 export function installOperations(app: Application) {
     app.addOperation('alert', alert);
