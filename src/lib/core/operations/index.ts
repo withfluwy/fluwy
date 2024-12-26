@@ -1,6 +1,7 @@
 import { Application } from '../app/index.js';
 
 import { alert } from '@/lib/core/operations/alert/index.js';
+import { authenticate } from '@/lib/core/operations/authenticate/index.js';
 import { clear_form_errors } from '@/lib/core/operations/clear_form_errors/index.js';
 import { close_dialog } from '@/lib/core/operations/close_dialog.js';
 import { context } from '@/lib/core/operations/context.js';
@@ -30,6 +31,7 @@ import * as cookies from '@/lib/core/operations/cookies.js';
 
 export function installOperations(app: Application) {
     app.addOperation('alert', alert);
+    app.addOperation('authenticate', authenticate);
     app.addOperation('clear_form_errors', clear_form_errors);
     app.addOperation('close_dialog', close_dialog);
     app.addOperation('context', context);
