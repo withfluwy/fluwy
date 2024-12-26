@@ -2,10 +2,9 @@ import { buildHttpResponse } from '@/lib/core/utils/response/index.js';
 import type { Operation, Operations } from '../../contracts.js';
 import { compile, hasPlaceholders } from '../../utils/compile/index.js';
 import { get as getAt } from '../../utils/index.js';
-import { app } from '@/lib/core/app/index.js';
-import { abort } from '@/lib/core/operations/utils.js';
+import { abort } from '@/lib/core/utils/index.js';
 
-export const get: Operation = async (param: GetParam, { context }) => {
+export const get: Operation = async (param: GetParam, { context, app }) => {
     const url = typeof param === 'string' ? param : param.url;
     const parsedUrl = compile(url, context.data);
 
@@ -13,8 +12,15 @@ export const get: Operation = async (param: GetParam, { context }) => {
         throw new Error(`[get] operation has unresolved placeholders for param [url]: [${parsedUrl}]`);
     }
 
-    const baseResponse = await context.fetch(parsedUrl, {
-        headers: { 'Content-Type': 'application/json' },
+    const auth_token = context.get('auth_token');
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+    };
+    if (auth_token) headers['Authorization'] = `Bearer ${auth_token}`;
+
+    const baseResponse = await fetch(parsedUrl, {
+        method: 'GET',
+        headers,
         credentials: 'include',
     });
     const response = await buildHttpResponse(baseResponse);

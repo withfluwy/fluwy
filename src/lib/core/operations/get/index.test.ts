@@ -1,18 +1,19 @@
 import { expect, describe, it, beforeEach, vi } from 'vitest';
 import { get } from './index.js';
 import { createContext, type Context } from '@/lib/core/context/index.js';
-import { app } from '@/lib/index.js';
-import { installOperations } from '@/lib/core/operations/index.js';
+import { createApp } from '@/lib/index.js';
+import type { Application } from '@/lib/core/app/index.js';
 
 describe('get', () => {
     let context: Context;
     let mockFetch: ReturnType<typeof vi.fn>;
+    let app: Application;
 
     beforeEach(() => {
-        installOperations(app);
+        app = createApp();
         context = createContext();
         mockFetch = vi.fn();
-        context.fetch = mockFetch;
+        global.fetch = mockFetch;
     });
 
     it('should make a successful GET request with string param', async () => {
@@ -23,9 +24,10 @@ describe('get', () => {
         });
         mockFetch.mockResolvedValue(mockResponse);
 
-        const result = await get('https://api.example.com/data', { context });
+        const result = await get('https://api.example.com/data', { context, app });
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', {
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
         });
@@ -46,9 +48,10 @@ describe('get', () => {
             path: 'data.nested.value',
         };
 
-        const result = await get(param, { context });
+        const result = await get(param, { context, app });
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', {
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
         });
@@ -74,10 +77,11 @@ describe('get', () => {
         };
         context.store.set(testData);
 
-        await get(param, { context });
+        await get(param, { context, app });
         const response = context.get('response');
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/123', {
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
         });
@@ -93,7 +97,7 @@ describe('get', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(get(param, { context })).rejects.toThrow(
+        await expect(get(param, { context, app })).rejects.toThrow(
             '[get] operation has unresolved placeholders for param [url]'
         );
         expect(mockFetch).not.toHaveBeenCalled();
@@ -113,7 +117,7 @@ describe('get', () => {
             on_error: [{ log: 'response.statusText' }],
         };
 
-        await expect(get(param, { context })).rejects.toThrow();
+        await expect(get(param, { context, app })).rejects.toThrow();
         expect(logger).toHaveBeenCalled();
     });
 
@@ -127,7 +131,7 @@ describe('get', () => {
             url: 'https://api.example.com/data',
         };
 
-        await expect(get(param, { context })).rejects.toThrow(
+        await expect(get(param, { context, app })).rejects.toThrow(
             "GET operation for [https://api.example.com/data] failed with status [404] and there's no operations set to handle the error"
         );
     });

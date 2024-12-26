@@ -16,7 +16,7 @@
     export let data: RenderResponse;
 
     const dialogs = useDialogs();
-    const context = createContext();
+    const context = createContext(data.context);
 
     installOperations(app);
     installAdapters(app);

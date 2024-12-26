@@ -6,7 +6,7 @@ export const deleteOperation: Operation = async (args: string, { context, previo
 
     if (hasPlaceholders(url)) throw new Error(`DELETE URL still has unresolved placeholders [${url}]`);
 
-    const response = await context.fetch(url, { method: 'DELETE' });
+    const response = await fetch(url, { method: 'DELETE' });
 
     if (response.status >= 400) {
         const responseData = await response.json();

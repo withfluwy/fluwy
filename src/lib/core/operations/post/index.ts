@@ -1,10 +1,9 @@
-import { app } from '@/lib/index.js';
 import type { Operation, Operations } from '@/lib/core/contracts.js';
-import { abort } from '@/lib/core/operations/utils.js';
+import { abort } from '@/lib/core/utils/index.js';
 import { compile, hasPlaceholders } from '@/lib/core/utils/compile/index.js';
 import { buildHttpResponse } from '@/lib/core/utils/response/index.js';
 
-export const post: Operation = async (param: PostParam, { context }) => {
+export const post: Operation = async (param: PostParam, { context, app }) => {
     const parsedUrl = compile(param.url, context.data);
 
     if (hasPlaceholders(parsedUrl)) {
@@ -12,10 +11,17 @@ export const post: Operation = async (param: PostParam, { context }) => {
     }
 
     const data = param.data ? compile(param.data, context.data) : undefined;
+    const auth_token = context.get('auth_token');
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+    };
 
-    const baseResponse = await context.fetch(parsedUrl, {
+    if (auth_token) headers['Authorization'] = `Bearer ${auth_token}`;
+
+    const baseResponse = await fetch(parsedUrl, {
         method: 'POST',
         body: data ? JSON.stringify(data) : undefined,
+        headers,
         credentials: 'include',
     });
 

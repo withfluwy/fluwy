@@ -6,7 +6,7 @@
     import { cn, cloneDeep } from '@/lib/core/utils/index.js';
     import { useTheme } from '@/lib/core/utils/index.js';
     import { useCommon } from '@/lib/components/common/styles.js';
-    import { app } from '@/lib/core/index.js';
+    import { app } from '@/lib/index.js';
 
     interface TableRowProps {
         columns: Column[];

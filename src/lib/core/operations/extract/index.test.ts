@@ -1,12 +1,16 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { extract } from './index.js';
 import { createContext, type Context } from '../../context/index.js';
+import type { Application } from '@/lib/core/app/index.js';
+import { createApp } from '@/lib/index.js';
 
 describe('extract operation', () => {
     let context: Context;
+    let app: Application;
 
     beforeEach(() => {
         context = createContext();
+        app = createApp();
     });
 
     const previousResult = {
@@ -32,7 +36,7 @@ describe('extract operation', () => {
         };
 
         // When
-        const result = await extract(map, { context, previousResult });
+        const result = await extract(map, { context, previousResult, app });
 
         // Then
         expect(result).toEqual({
@@ -52,7 +56,7 @@ describe('extract operation', () => {
         };
 
         // When
-        const result = await extract(map, { context, previousResult });
+        const result = await extract(map, { context, previousResult, app });
 
         // Then
         expect(result).toEqual({

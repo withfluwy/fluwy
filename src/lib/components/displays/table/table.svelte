@@ -16,6 +16,7 @@
     const props: Table = $props();
 
     const context = useContext();
+    const authToken = context.get('auth_token');
     const defaultPerPage = Number(useTheme('displays.table.page_size') ?? 10);
 
     let records = $state<Any[]>(props.data ?? []);
@@ -72,8 +73,14 @@
         if (!hasPageSizeOnUrl) url.searchParams.append(params.page_size ?? 'page_size', pageSize.toString());
         if (defaultSort) url.searchParams.append(params.sort ?? 'sort', defaultSort);
 
-        const response = await context.fetch(url, {
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        };
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+
+        const response = await fetch(url, {
             credentials,
+            headers,
         });
 
         const responseBody = await response.json();

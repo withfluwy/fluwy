@@ -10,6 +10,7 @@ import type {
     Any,
     AppConfig,
     Context,
+    ContextData,
     Operation,
     OperationHandlers,
     Operations,
@@ -18,7 +19,7 @@ import type {
     RequiredAppConfig,
 } from '../contracts.js';
 import { str } from '../utils/index.js';
-import { AbortOperation } from '@/lib/core/operations/utils.js';
+import { AbortOperationError, UnauthenticatedError } from '@/lib/core/errors/index.js';
 import { createContext } from '@/lib/core/context/index.js';
 
 type DocumentContent = {
@@ -74,50 +75,86 @@ export class Application {
         const route = findRoute(path || 'index', this._config.pages);
         if (!route) throw this._config.error(404, 'Not found');
 
+        const context = this.createContext(route.params, options);
         const pageDocument = this.getDocument(route.contents);
-        const { meta, context } = await this.parseHead(pageDocument, route.params);
+        const pageHead = this.getPageHead(pageDocument);
+        const layoutDocument = this.getLayoutDocument(pageHead);
+        const layoutHead = this.getLayoutHead(layoutDocument);
 
-        this.checkAuth(meta, options);
-        await this.runServerOperations(meta, context, options);
+        await this.runServerOperations({ pageHead, layoutHead, context });
 
-        const content = this.parsePage(pageDocument, { context, meta });
+        const content = this.parsePage(pageDocument, { context, head: pageHead });
 
         return {
-            theme: this.mergeThemes(meta) ?? {},
+            theme: this.mergeThemes(pageHead) ?? {},
             content,
+            context: this.getContextData(context.data),
         };
+    }
+
+    private getPageHead(pageDocument: DocumentContent): PageHead | undefined {
+        if (!pageDocument.head) return;
+
+        return parse(pageDocument.head) as PageHead;
+    }
+
+    private getLayoutDocument(pageHead?: PageHead | undefined): DocumentContent | undefined {
+        if (!pageHead?.layout) return;
+
+        const layoutContent = this.findLayoutFile(pageHead.layout, this._config.layouts);
+        if (!layoutContent) throw `Layout not found: [${pageHead.layout}]`;
+
+        return this.getDocument(layoutContent);
+    }
+
+    private getLayoutHead(layoutDocument: DocumentContent | undefined): CommonHead | undefined {
+        if (!layoutDocument?.head) return;
+
+        return parse(layoutDocument.head) as CommonHead;
+    }
+
+    private createContext(params: RouteParams, options: RenderOptions): Context {
+        const context = createContext();
+        context.set('params', params);
+
+        if (options.auth_token) context.set('auth_token', options.auth_token);
+
+        return context;
     }
 
     public async parseDocument(yaml: string) {
         return parse(yaml);
     }
 
-    parsePage(pageDocument: DocumentContent, { context, meta }: { context: Context; meta: PageMeta | undefined }): Any {
-        if (!meta?.layout) return parse(compile(pageDocument.body, context.data));
+    private parsePage(
+        pageDocument: DocumentContent,
+        { context, head }: { context: Context; head: PageHead | undefined }
+    ): Any {
+        if (!head?.layout) return parse(compile(pageDocument.body, context.data));
 
-        const layout = this.parseLayout(meta, context);
+        const layout = this.parseLayout(head, context);
         const body = parse(compile(pageDocument.body, context.data)) as Any;
 
         return this.replaceSlot(layout, body);
     }
 
-    private parseLayout(meta: PageMeta, context: Context): Any {
-        const layoutContent = this.findLayoutFile(meta.layout!, this._config.layouts);
-        if (!layoutContent) throw `Layout not found: [${meta.layout}]`;
+    private parseLayout(head: PageHead, context: Context): Any {
+        const layoutContent = this.findLayoutFile(head.layout!, this._config.layouts);
+        if (!layoutContent) throw `Layout not found: [${head.layout}]`;
 
         const layoutDocument = this.getDocument(layoutContent);
 
-        this.resolveMeta(meta, layoutDocument);
+        this.resolveLayoutHead(head, layoutDocument);
 
         return parse(compile(layoutDocument.body, context.data));
     }
 
-    private resolveMeta(meta: PageMeta, layoutDocument: DocumentContent) {
+    private resolveLayoutHead(head: CommonHead, layoutDocument: DocumentContent) {
         if (!layoutDocument.head) return;
 
-        const layoutMeta = parse(layoutDocument.head) as PageMeta;
+        const layoutHead = parse(layoutDocument.head) as CommonHead;
 
-        meta.theme = meta.theme ?? layoutMeta?.theme;
+        head.theme = head.theme ?? layoutHead?.theme;
     }
 
     private findLayoutFile(layoutName: string, layoutsDir: string): string | undefined {
@@ -142,34 +179,23 @@ export class Application {
         return { head, body };
     }
 
-    private async parseHead(
-        contents: DocumentContent,
-        params: RouteParams
-    ): Promise<{ meta?: PageMeta; context: Context }> {
-        const context = createContext();
-        context.set('params', params);
+    private async runServerOperations({
+        pageHead,
+        layoutHead,
+        context,
+    }: {
+        pageHead?: PageHead;
+        layoutHead?: CommonHead;
+        context: Context;
+    }) {
+        if (!pageHead?.server && !layoutHead?.server) return;
 
-        if (!contents.head) return { context };
-
-        const meta = parse(contents.head) as PageMeta;
-
-        return { meta, context };
-    }
-
-    private async runServerOperations(meta: PageMeta | undefined, context: Context, options: RenderOptions) {
-        if (!meta?.server) return { meta, context };
-
-        if (options.auth_token) {
-            context.set('auth_token', options.auth_token);
+        try {
+            await this.handleOperations(layoutHead?.server, context);
+            await this.handleOperations(pageHead?.server, context);
+        } catch (error) {
+            await this.handleError(error);
         }
-
-        await this.handleOperations(meta.server, context);
-
-        return { meta, context };
-    }
-
-    private checkAuth(meta: PageMeta | undefined, options: RenderOptions) {
-        if (meta?.auth && !options.auth_token) this._config.redirect(307, meta.auth);
     }
 
     private replaceSlot(layout: Any, body: Any[]): Any {
@@ -189,7 +215,7 @@ export class Application {
         return layout;
     }
 
-    private mergeThemes(meta: PageMeta | undefined): Any {
+    private mergeThemes(meta: PageHead | undefined): Any {
         if (!meta?.theme) return;
 
         const themeContents = this.findThemeFile(meta.theme, this._config.themes);
@@ -252,7 +278,7 @@ export class Application {
 
         if (!handle) throw new Error(`Operation [${event}] not found`);
 
-        return handle(args, { context, previousResult });
+        return handle(args, { context, previousResult, app: this });
     }
 
     async handleOperations(operations: Any, context: Context, initialResults?: Any): Promise<Any> {
@@ -281,7 +307,7 @@ export class Application {
 
             return result;
         } catch (error) {
-            if (error instanceof AbortOperation) return;
+            if (error instanceof AbortOperationError) return;
 
             throw error;
         }
@@ -296,20 +322,35 @@ export class Application {
 
         return adapter(data, context);
     }
+
+    async handleError(error: Any) {
+        if (error instanceof UnauthenticatedError) {
+            const redirect = error.params?.redirect ?? '/login';
+
+            this._config.redirect(307, redirect);
+        }
+
+        throw error;
+    }
+
+    private getContextData(contextData: ContextData): Any {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { svelteKit, response, ...rest } = contextData;
+
+        return rest;
+    }
 }
 
-export function createApp() {
-    return new Application();
-}
+// export const app = createApp();
 
-export const app = createApp();
-
-export type PageMeta = {
-    layout?: string;
+export interface CommonHead {
     theme?: string;
-    auth?: string;
     server?: Operations;
-};
+}
+
+export interface PageHead extends CommonHead {
+    layout?: string;
+}
 
 export type RenderOptions = {
     auth_token?: string;

@@ -2,7 +2,7 @@
     import type { Any } from '@/lib/core/contracts.js';
     import { cn, deferred } from '@/lib/core/utils/index.js';
     import { Icon, type IconProps } from '@/lib/components/common/icon/index.js';
-    import { app } from '@/lib/core/index.js';
+    import { app } from '@/lib/index.js';
     import { compile, Render, useContext } from '@/lib/core/index.js';
     import { setCurrentColor } from '@/lib/core/utils/color/index.js';
     import { Variants } from './styles.js';

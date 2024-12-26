@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import type { Context } from '../../context/index.js';
 import { transform } from './index.js';
+import { createApp, createContext } from '@/lib/index.js';
 
 describe('transform operation', () => {
     it('transforms the previous result based on the map', async () => {
-        const context = {} as Context;
+        const context = createContext();
+        const app = createApp();
+
         const previousResult = {
             id: 1,
             attributes: {
@@ -19,7 +21,7 @@ describe('transform operation', () => {
             'attributes.email': 'email',
         };
 
-        const result = await transform(map, { context, previousResult });
+        const result = await transform(map, { context, previousResult, app });
 
         expect(result).toEqual({
             name: 'John Doe',

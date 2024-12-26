@@ -9,6 +9,7 @@ server:
     trx: contact.transaction
     currency: trx.currency.symbol
     amount: ${currency}${trx.amount}
+  log: page log
 ---
 - header: Contact Page ${contact.name} - ${contact.email}
 - div: "Amount: ${amount}"
