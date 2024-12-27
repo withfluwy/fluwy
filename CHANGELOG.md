@@ -1,5 +1,34 @@
 # @fluwy/ui
 
+## 0.8.0
+
+### Minor Changes
+
+- dd0fda0: New `vars` and `load` operations.
+- b60702a: New `set_cookie` and `unset_cookie` operations. These operations requires the sveltekit's hook handle into your app.
+- 7836caa: New `debug` component.
+- e6e34d6: New `clear_form_errors` operation to clean validation errors on forms.
+- 92a6d4e: New `put` http request operation
+- 650933d: Spacer now supports CSS classes as its content so we can easily do something like `spacer: mt-12` if we need some classes for the spacer.
+- cd356e5: New input component.
+- b3183e5: Adds the `server` feature for the page head so we can perform operations on the server side only. This is useful when we want to load content from sources and set their results as variables in the context so the page loads from the server with the content populated. This increases the page load speed and is helpful to perform operations that are server-side only.
+- e90b19f: New `set_form_errors` operation for form validation errors from APIs.
+- 6a412b8: New `post` operation to make http requests.
+- 8b69949: New `unset_auth_token` that is usually used as the "logout" operation.
+- 2dade5e: Make `column` and `row` themable under layout variables. It also sets the default gap of `gap-4` for them.
+- 17d3563: Introducing plugins
+- 67ca6ba: Created the Plugin System. Now all applications are basically plugins which contains a name that will be used as namespace.
+- e203702: New `authenticate` operation for server and client sides. A use is considered authenticated if the `auth_token` is set in the server and context. A cookie is created for the authentication process.
+- 998c5c0: New context functions for plugin development and library building for the framework: `createContext`, `useContext`.
+- 6ec2a6e: New `set_auth_token` operation.
+- 4b9677c: New `sleep` operation.
+- 382a87d: New `form` component.
+- 8959b80: New `input` component.
+
+### Patch Changes
+
+- e2dfd64: chore: Fix version name for releases
+
 ## 0.7.0
 
 ### Minor Changes
