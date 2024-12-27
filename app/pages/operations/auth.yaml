@@ -154,3 +154,8 @@ doc.content:
       ```yaml
       unset_cookie: item-1
       ```
+
+      ## remove_cookie
+
+      The `remove_cookie` operation is an alias for the `unset_cookie` operation which means it's just another way to use
+      the `unset_cookie` operation.
