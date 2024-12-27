@@ -28,4 +28,33 @@ describe('set_auth_token', () => {
 
         expect(cookies.set_operation).toHaveBeenCalledWith({ auth_token: undefined }, { context, app });
     });
+
+    it('should set custom token name when using object parameters', async () => {
+        const context = createContext();
+        context.set('response', { token: 'test-token' });
+        const app = createApp();
+
+        await set_auth_token({ path: 'response.token', name: 'custom_token' }, { context, app });
+
+        expect(cookies.set_operation).toHaveBeenCalledWith({ custom_token: 'test-token' }, { context, app });
+    });
+
+    it('should handle undefined token path gracefully with object parameters', async () => {
+        const context = createContext();
+        const app = createApp();
+
+        await set_auth_token({ path: 'invalid.path', name: 'custom_token' }, { context, app });
+
+        expect(cookies.set_operation).toHaveBeenCalledWith({ custom_token: undefined }, { context, app });
+    });
+
+    it('should use default auth_token name when not specified in object parameters', async () => {
+        const context = createContext();
+        context.set('response', { token: 'test-token' });
+        const app = createApp();
+
+        await set_auth_token({ path: 'response.token' }, { context, app });
+
+        expect(cookies.set_operation).toHaveBeenCalledWith({ auth_token: 'test-token' }, { context, app });
+    });
 });

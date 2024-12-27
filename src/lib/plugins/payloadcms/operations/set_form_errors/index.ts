@@ -6,15 +6,21 @@ import type { PayloadValidationError } from '@/lib/plugins/payloadcms/types.js';
 /**
  * Set form errors from a payloadcms response
  */
-export const set_form_errors: Operation = async (_, { context, previousResult }) => {
-    const httpResponse: HttpResponse = context.get('response');
+export const set_form_errors: Operation = async (params: SetFormErrorsParams, { context, previousResult }) => {
     const form: FormState = context.get('form');
 
     if (!form) throw new Error('Operation [set_form_errors] should be used in a form context');
-    if (!httpResponse) throw new Error('Operation [set_form_errors] should be used with a response context');
+
+    const response: HttpResponse = context.get('response');
+
+    if (!response) throw new Error('Operation [set_form_errors] should be used with a response context');
+
+    const statusToCheck = +(params?.if_response_status ?? '400');
+
+    if (response.status !== statusToCheck) return previousResult;
 
     const errors: ValidationError = {};
-    const payloadResponseBody: { errors: PayloadValidationError[] } = httpResponse.data;
+    const payloadResponseBody: { errors: PayloadValidationError[] } = response.data;
 
     payloadResponseBody.errors.forEach((validationError) => {
         validationError.data.errors.forEach((error) => {
@@ -26,3 +32,7 @@ export const set_form_errors: Operation = async (_, { context, previousResult })
 
     return previousResult;
 };
+
+interface SetFormErrorsParams {
+    if_response_status?: string;
+}
