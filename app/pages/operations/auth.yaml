@@ -145,3 +145,12 @@ doc.content:
         item-1: value-1
         item-2: value-2
       ```
+
+      ## unset_cookie
+
+      The `unset_cookie` operation is used to remove a cookie from the browser. It accepts a string parameter with the
+      name of the cookie to remove. Example:
+
+      ```yaml
+      unset_cookie: item-1
+      ```
