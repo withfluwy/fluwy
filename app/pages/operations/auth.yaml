@@ -112,8 +112,8 @@ doc.content:
       With the cookie set, you can now use the token in the request both in the browser and in the server through the
       key you specified.
 
-  - markdown: |
       ## unset_auth_token
+
       The `unset_auth_token` operation is used to remove the authentication token from the context. The strategy used to
       persist this token is via cookies so it also removes the cookie. This is usually used for logging out users.
       So let's say you have a navigation menu where you want to log out a user, you can use the `unset_auth_token` as an
@@ -132,4 +132,16 @@ doc.content:
 
       ```yaml
       unset_auth_token: example-token
+      ```
+
+      ## set_cookie
+
+      The `set_cookie` operation is used to set a cookie in the browser. It's similar to the `set_auth_token` operation
+      but it doesn't set the token in the context. It accepts an object with key-value pairs where the key is the name of the cookie and the value is the value of the
+      cookie. This is useful when you want to set multiple cookies in the browser. Example:
+
+      ```yaml
+      set_cookie:
+        item-1: value-1
+        item-2: value-2
       ```
