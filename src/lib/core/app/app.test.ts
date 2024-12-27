@@ -1,20 +1,22 @@
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createFiles, createTestingDir, deleteDirectory, readFile } from '../test/utils.js';
 import nock from 'nock';
-import { Application, createApp } from './index.js';
+import { Application } from './index.js';
 import type { Any, Plugin } from '../contracts.js';
 import type { Component } from 'svelte';
+import { createApp } from '@/lib/index.js';
 
 describe('App', () => {
     let app: Application;
     let testingDir: string;
+    let consoleLog: ReturnType<typeof vi.spyOn>;
     const testingAppFiles = {
         'layouts/base.yaml': readFile(__dirname, 'layouts/base.yaml'),
         'pages/contacts.yaml': readFile(__dirname, 'pages/contacts.yaml'),
         'pages/contacts/[id]/index.yaml': readFile(__dirname, 'pages/contacts/[id]/index.yaml'),
     };
 
-    beforeAll(() => {
+    beforeEach(() => {
         app = createApp();
         testingDir = createTestingDir();
 
@@ -31,9 +33,10 @@ describe('App', () => {
                 throw new Error(`${status}: ${location}`);
             },
         });
+        consoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
     });
 
-    afterAll(() => {
+    afterEach(() => {
         deleteDirectory(testingDir);
     });
 
@@ -52,6 +55,7 @@ describe('App', () => {
 
     describe('render', () => {
         it('returns a yaml document', async () => {
+            vi.spyOn(console, 'log').mockImplementation(() => {});
             const document = await app.render('/contacts');
             expect(document).toEqual({
                 content: {
@@ -61,11 +65,14 @@ describe('App', () => {
                     },
                 },
                 theme: {},
+                context: {
+                    params: {},
+                },
             });
         });
     });
 
-    describe('load feature on page meta', () => {
+    describe('server operations on page meta', () => {
         const globalFetch = global.fetch;
         const contact = {
             id: 1,
@@ -121,10 +128,36 @@ describe('App', () => {
                         },
                     ],
                 },
+                context: {
+                    params: {
+                        id: 1,
+                    },
+                    contact,
+                    address,
+                    amount: '£100',
+                    currency: '£',
+                    trx: {
+                        id: 2,
+                        amount: 100,
+                        currency: {
+                            symbol: '£',
+                            value: 'USD',
+                        },
+                    },
+                },
             });
 
             httpCalls.contacts?.done();
             httpCalls.address?.done();
+        });
+
+        it('merges with layout server operations', async () => {
+            // When
+            await app.render('/contacts/1');
+
+            // Then
+            expect(consoleLog).toHaveBeenCalledWith('layout base log');
+            expect(consoleLog).toHaveBeenCalledWith('page log');
         });
     });
 

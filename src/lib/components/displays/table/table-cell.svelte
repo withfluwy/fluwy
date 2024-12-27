@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Column, Table } from './types.js';
     import { cn, cloneDeep } from '@/lib/core/utils/index.js';
-    import { app, Render, useContext } from '@/lib/core/index.js';
+    import { app, Render, useContext } from '@/lib/index.js';
     import { useTheme } from '@/lib/core/utils/index.js';
     import { useCommon } from '../../common/styles.js';
     import type { Any } from '@/lib/core/contracts.js';

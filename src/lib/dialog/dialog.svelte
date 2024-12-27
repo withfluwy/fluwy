@@ -5,12 +5,13 @@
     import { fade } from 'svelte/transition';
     import { DialogEvents, useDialogs } from '../core/stores/dialogs.js';
     import type { Any, Context } from '../core/contracts.js';
-    import { app, Render } from '../core/index.js';
+    import { Render } from '../core/index.js';
     import { cn, deferred, flyAndScale } from '../core/utils/index.js';
     import { Icon } from '../components/common/icon/index.js';
     import { useContext } from '../core/context/index.js';
     import { Durations, Operation } from '../core/constants.js';
     import { Events } from '../core/utils/events/index.js';
+    import { app } from '@/lib/index.js';
 
     export let props: DialogProps;
 

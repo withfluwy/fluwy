@@ -6,21 +6,22 @@ import * as common from './components/common/index.js';
 import * as displays from './components/displays/index.js';
 import 'iconify-icon';
 import * as plugins from '@/lib/plugins/index.js';
+export { sveltekit } from '@/lib/integrations/index.js';
 import {
-    abort,
-    AbortOperation,
-    app,
+    AbortOperationError,
+    UnauthenticatedError,
     App,
     compile,
-    createApp,
     createContext,
     Render,
     type Any,
     useContext,
     utils,
+    Application,
+    installOperations,
 } from '@/lib/core/index.js';
 
-function registerAll(imports: Record<string, Any>) {
+function registerAll(app: Application, imports: Record<string, Any>) {
     for (const [key, value] of Object.entries(imports)) {
         if (app.hasComponent(key)) throw new Error(`Component [${key}] already registered`);
 
@@ -28,25 +29,32 @@ function registerAll(imports: Record<string, Any>) {
     }
 }
 
-registerAll(forms);
-registerAll(primitives);
-registerAll(controls);
-registerAll(layouts);
-registerAll(common);
-registerAll(displays);
+export function createApp() {
+    const app = new Application();
+    installOperations(app);
+
+    registerAll(app, forms);
+    registerAll(app, primitives);
+    registerAll(app, controls);
+    registerAll(app, layouts);
+    registerAll(app, common);
+    registerAll(app, displays);
+
+    return app;
+}
+
+export const app = createApp();
 
 // Exports
 export {
-    abort,
-    AbortOperation,
-    app,
+    AbortOperationError,
     App,
     compile,
-    createApp,
     createContext,
     plugins,
     registerAll,
     Render,
+    UnauthenticatedError,
     useContext,
     utils,
 };

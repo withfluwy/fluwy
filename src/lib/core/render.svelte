@@ -82,8 +82,8 @@
 {:else if isArray()}
     {#each props as component}
         {#if exists(component)}
-            <!-- eslint-disable-next-line svelte/valid-compile -->
-            <svelte:component this={parse(component).value} component={parse(component)} {...parse(component).schema} />
+            {@const Component = parse(component).value}
+            <Component component={parse(component)} {...parse(component).schema} />
         {:else if typeof component === 'string'}
             {text(component)}
         {:else if 'slot' in (component ?? {})}
@@ -99,19 +99,15 @@
 {:else if 'content' in (props ?? {})}
     <Render props={props.content} />
 {:else if 'if' in (props ?? {})}
-    <!-- eslint-disable-next-line svelte/valid-compile -->
-    <svelte:component this={app.getComponent('if')} component={{ name: 'if' }} {...props} />
+    {@const Component = app.getComponent('if')}
+    <Component component={{ name: 'if' }} {...props} />
 {:else}
     {#each propsValidEntries as [component, schema]}
         {#if component === 'slot'}
             <Render props={schema} component={{ name: 'slot' }} />
         {:else if exists(component)}
-            <!-- eslint-disable-next-line svelte/valid-compile -->
-            <svelte:component
-                this={app.getComponent(component)}
-                component={{ name: component }}
-                {...parseSchema(schema)}
-            />
+            {@const Component = app.getComponent(component)}
+            <Component component={{ name: component }} {...parseSchema(schema)} />
         {:else if notFound(component)}
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{component}</b>

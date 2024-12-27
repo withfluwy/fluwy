@@ -1,19 +1,19 @@
 import { expect, describe, it, beforeEach, vi } from 'vitest';
 import { post } from './index.js';
 import { createContext, type Context } from '@/lib/core/context/index.js';
-import { app } from '@/lib/index.js';
+import { createApp } from '@/lib/index.js';
+import type { Application } from '@/lib/core/app/index.js';
 
 describe('post', () => {
     let context: Context;
     let mockFetch: ReturnType<typeof vi.fn>;
-    let mockHandleOperations: ReturnType<typeof vi.fn>;
+    let app: Application;
 
     beforeEach(() => {
+        app = createApp();
         context = createContext();
         mockFetch = vi.fn();
-        mockHandleOperations = vi.fn();
-        context.fetch = mockFetch;
-        vi.spyOn(app, 'handleOperations').mockImplementation(mockHandleOperations);
+        global.fetch = mockFetch;
     });
 
     it('should make a successful POST request', async () => {
@@ -34,11 +34,13 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        const result = await post(param, { context });
+        const result = await post(param, { context, app });
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/data', {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ key: 'value' }),
+            credentials: 'include',
         });
         expect(result.data).toEqual(responseData);
         expect(result.ok).toBe(true);
@@ -61,11 +63,13 @@ describe('post', () => {
         };
         context.store.set(testData);
 
-        const result = await post(param, { context });
+        const result = await post(param, { context, app });
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/123', {
             method: 'POST',
             body: JSON.stringify({ key: 'value' }),
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
         });
         expect(result.ok).toBe(true);
     });
@@ -81,7 +85,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(post(param, { context })).rejects.toThrow(
+        await expect(post(param, { context, app })).rejects.toThrow(
             '[post] operation has unresolved placeholders for param [url]'
         );
         expect(mockFetch).not.toHaveBeenCalled();
@@ -92,6 +96,7 @@ describe('post', () => {
             status: 400,
         });
         mockFetch.mockResolvedValue(mockResponse);
+        const mockHandleOperations = vi.spyOn(app, 'handleOperations').mockImplementation(async () => {});
 
         const param = {
             url: 'https://api.example.com/data',
@@ -103,7 +108,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(post(param, { context })).rejects.toThrow();
+        await expect(post(param, { context, app })).rejects.toThrow();
         expect(mockHandleOperations).toHaveBeenCalledWith(param.on_error, context, { key: 'value' });
     });
 
@@ -122,7 +127,7 @@ describe('post', () => {
             svelteKit: { goto: vi.fn() },
         });
 
-        await expect(post(param, { context })).rejects.toThrow(
+        await expect(post(param, { context, app })).rejects.toThrow(
             "POST operation for [https://api.example.com/data] failed with status [400] and there's no operations set to handle the error"
         );
     });

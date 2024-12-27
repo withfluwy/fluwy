@@ -21,15 +21,17 @@
     const avatarSize = $derived(avatarSizes[size]);
     const initialsSize = $derived(AvatarStyles.InitialsSizes[size]);
     const initials = $derived(name ? str(name).initials({ onlyFirstAndLast: only_first_and_last }) : undefined);
+    const commonBorderColor = useCommon('border_color');
+    const commonForegroundColor = useCommon('foreground_color');
 </script>
 
 <Avatar.Root
-    class={cn(useCommon('border_color'), avatarSize, initialsSize, 'flex-shrink-0 rounded-full uppercase', props.class)}
+    class={cn(commonBorderColor, avatarSize, initialsSize, 'flex-shrink-0 rounded-full uppercase', props.class)}
 >
     <div
         class={cn(
-            useCommon('border_color'),
-            useCommon('foreground_color'),
+            commonBorderColor,
+            commonForegroundColor,
             'flex h-full w-full items-center justify-center overflow-hidden rounded-full border'
         )}
     >

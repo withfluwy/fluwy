@@ -1,0 +1,161 @@
+layout: doc
+---
+h1: Auth Operations
+p: |
+  Authentication and authorization operations are present in basically all web applications. This page 
+  groups all Fluwy's operations that are used for authentication and authorization.
+spacer: mt-12
+doc.content:
+  - markdown: |
+      ## set_auth_token
+      The `set_auth_token` operation is used to set the authentication token in the context. The strategy used to
+      persist this token is via cookies. So, inside a form component you can add
+      this operation after successfully logging in a user. For example, consider a login form like bellow:
+
+  - spacer: mt-8
+  - tabs:
+      - tab:
+          title: Example
+          panel:
+            container:
+              class: max-w-md mx-auto my-12 text-center
+              content:
+                - text:
+                    class: text-4xl font-bold
+                    content: Login
+                - form:
+                    data: { email: "user@example.com", password: "123123" }
+                    on_submit:
+                      - post:
+                          url: /api/examples/login
+                          data: form.data
+                          on_error:
+                            payloadcms.set_form_errors:
+                      - log: Successfully logged in (Not really, it's just a demo)
+                      - set_auth_token:
+                          name: example-token
+                          path: response.data.token
+                    content:
+                      - input:
+                          label: Email
+                          field: email
+                          type: email
+                      - input:
+                          label: Password
+                          field: password
+                          type: password
+                      - button:
+                          text: Login
+                          type: submit
+                          color: primary
+      - tab:
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          title: Code
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                container:
+                  class: max-w-md mx-auto my-12 text-center
+                  content:
+                    - h2: Login
+                    - form:
+                        on_submit:
+                          - post:
+                            url: /api/login
+                            data: form.data
+                            on_error:
+                              payloadcms.set_form_errors:
+                          - set_auth_token:
+                              name: example-token
+                              path: response.data.token
+                        content:
+                          - input:
+                              label: Email
+                              field: email
+                              type: email
+                          - input:
+                              label: Password
+                              field: password
+                              type: password
+                          - button:
+                              text: Login
+                              type: submit
+                              color: primary
+
+  - spacer: mt-4
+  - markdown: |
+      > **Note**: If you know how to check for cookies in your browser with your browser's developer tools, you can
+      see that the `example-token` cookie is set after clicking on the "Login" button in the example above. Try it out!
+
+  - spacer: mt-6
+  - markdown: |
+      When you finish the login process you will see that the operation sets a new cookie called `example-token`. The
+      token name is optional and defaults to `auth_token`. You can also set the name using the `name` property. here are
+      all the available parameters for the `set_auth_token` operation:
+
+      ```yaml
+      set_auth_token:
+        name: auth_token # optional. Defaults to 'auth_token'
+        path: response.data.token
+      ```
+
+      If you want to use the default token name `auth_token` you can just pass a string parameter instead of the object
+      one. For example:
+
+      ```yaml
+      set_auth_token: response.data.token
+      ```
+
+      Now the operation will set the `auth_token` cookie with the value from the context path `response.data.token`.
+      With the cookie set, you can now use the token in the request both in the browser and in the server through the
+      key you specified.
+
+      ## unset_auth_token
+
+      The `unset_auth_token` operation is used to remove the authentication token from the context. The strategy used to
+      persist this token is via cookies so it also removes the cookie. This is usually used for logging out users.
+      So let's say you have a navigation menu where you want to log out a user, you can use the `unset_auth_token` as an
+      operation for it. Example:
+
+      ```yaml
+      dropdown_item:
+        text: Logout
+        on_click:
+          unset_auth_token:
+          goto: /login
+      ```
+
+      If you want to customize the name of the cookie used for the authentication token, you can use a string parameter
+      to the `unset_auth_token` operation. Example:
+
+      ```yaml
+      unset_auth_token: example-token
+      ```
+
+      ## set_cookie
+
+      The `set_cookie` operation is used to set a cookie in the browser. It's similar to the `set_auth_token` operation
+      but it doesn't set the token in the context. It accepts an object with key-value pairs where the key is the name of the cookie and the value is the value of the
+      cookie. This is useful when you want to set multiple cookies in the browser. Example:
+
+      ```yaml
+      set_cookie:
+        item-1: value-1
+        item-2: value-2
+      ```
+
+      ## unset_cookie
+
+      The `unset_cookie` operation is used to remove a cookie from the browser. It accepts a string parameter with the
+      name of the cookie to remove. Example:
+
+      ```yaml
+      unset_cookie: item-1
+      ```
+
+      ## remove_cookie
+
+      The `remove_cookie` operation is an alias for the `unset_cookie` operation which means it's just another way to use
+      the `unset_cookie` operation.

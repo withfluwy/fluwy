@@ -7,7 +7,7 @@ p: |
 spacer: mt-12
 doc.content:
   - markdown: |
-      ## POST Operation
+      ## post
       The `post` operation is used to make a POST request to a given URL and inject the response into the context of
       your operation chain. This is the overall structure of the `post` operation:
 
@@ -65,7 +65,7 @@ doc.content:
 
   - spacer: mt-12
   - markdown: |
-      ## PUT Operation
+      ## put
       The `put` operation is usually used to update an existing resource by making a PUT request to a given URL. The response is injected
       into the context of your operation chain. This is the overall structure of the `put` operation:
 

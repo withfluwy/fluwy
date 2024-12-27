@@ -1,33 +1,37 @@
 import { Application } from '../app/index.js';
 
 import { alert } from '@/lib/core/operations/alert/index.js';
+import { authenticate } from '@/lib/core/operations/authenticate/index.js';
 import { clear_form_errors } from '@/lib/core/operations/clear_form_errors/index.js';
 import { close_dialog } from '@/lib/core/operations/close_dialog.js';
 import { context } from '@/lib/core/operations/context.js';
 import { deleteOperation } from '@/lib/core/operations/delete.js';
 import { emit } from '@/lib/core/operations/emit/index.js';
 import { extract } from '@/lib/core/operations/extract/index.js';
-import { get } from '@/lib/core/operations/get.js';
+import { get } from '@/lib/core/operations/get/index.js';
 import { goto } from '@/lib/core/operations/goto.js';
 import { if_operation } from '@/lib/core/operations/if_operation.js';
+import { load } from '@/lib/core/operations/load/index.js';
 import { log } from '@/lib/core/operations/log/index.js';
 import { notify } from '@/lib/core/operations/notify.js';
 import { open_dialog } from '@/lib/core/operations/open_dialog.js';
 import { post } from '@/lib/core/operations/post/index.js';
 import { put } from '@/lib/core/operations/put/index.js';
 import { refresh } from '@/lib/core/operations/refresh.js';
-import { set_auth_token } from '@/lib/core/operations/set_auth_token.js';
-import { set_auth_user } from '@/lib/core/operations/set_auth_user.js';
+import { set_auth_token } from '@/lib/core/operations/set_auth_token/index.js';
 import { set_form_errors } from '@/lib/core/operations/set_form_errors/index.js';
 import { set_mode } from '@/lib/core/operations/set_mode/index.js';
 import { sleep } from '@/lib/core/operations/sleep/index.js';
 import { transform } from '@/lib/core/operations/transform/index.js';
+import { unset_auth_token } from '@/lib/core/operations/unset_auth_token/index.js';
 import { unset_local_storage } from '@/lib/core/operations/unset_local_storage.js';
+import { vars } from '@/lib/core/operations/vars/index.js';
 import { wrap_into } from '@/lib/core/operations/wrap_into/index.js';
-import * as cookies from '@/lib/core/operations/cookies.js';
+import * as cookies from '@/lib/core/operations/cookies/index.js';
 
 export function installOperations(app: Application) {
     app.addOperation('alert', alert);
+    app.addOperation('authenticate', authenticate);
     app.addOperation('clear_form_errors', clear_form_errors);
     app.addOperation('close_dialog', close_dialog);
     app.addOperation('context', context);
@@ -37,6 +41,7 @@ export function installOperations(app: Application) {
     app.addOperation('get', get);
     app.addOperation('goto', goto);
     app.addOperation('if', if_operation);
+    app.addOperation('load', load);
     app.addOperation('log', log);
     app.addOperation('notify', notify);
     app.addOperation('open_dialog', open_dialog);
@@ -46,13 +51,14 @@ export function installOperations(app: Application) {
     app.addOperation('remove_cookie', cookies.unset_operation);
     app.addOperation('remove_local_storage', unset_local_storage);
     app.addOperation('set_auth_token', set_auth_token);
-    app.addOperation('set_auth_user', set_auth_user);
     app.addOperation('set_cookie', cookies.set_operation);
     app.addOperation('set_form_errors', set_form_errors);
     app.addOperation('set_mode', set_mode);
     app.addOperation('sleep', sleep);
     app.addOperation('transform', transform);
+    app.addOperation('unset_auth_token', unset_auth_token);
     app.addOperation('unset_cookie', cookies.unset_operation);
     app.addOperation('unset_local_storage', unset_local_storage);
+    app.addOperation('vars', vars);
     app.addOperation('wrap_into', wrap_into);
 }

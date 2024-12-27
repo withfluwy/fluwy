@@ -1,5 +1,6 @@
 import type { Component as SvelteComponent } from 'svelte';
 import type { Context } from './context/index.js';
+import type { Application } from '@/lib/core/app/index.js';
 
 export type { ContextData } from './context/index.js';
 export type { Context };
@@ -35,11 +36,16 @@ export type Operations = OperationSchema | OperationSchema[];
 export type RenderResponse = {
     content: Any;
     theme?: Any;
+    /**
+     * The initial data of the context from the backend.
+     */
+    context?: Any;
 };
 
 export interface OperationOptions {
     context: Context;
     previousResult?: Any;
+    app: Application;
 }
 
 export interface Operation {

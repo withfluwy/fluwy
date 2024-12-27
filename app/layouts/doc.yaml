@@ -90,6 +90,9 @@ page:
               - menu_item:
                   text: Form
                   url: /operations/form
+              - menu_item:
+                  text: Auth
+                  url: /operations/auth
 
       aside:
         class: pt-10 border-0

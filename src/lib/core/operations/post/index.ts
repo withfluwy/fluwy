@@ -1,21 +1,28 @@
-import { app } from '@/lib/index.js';
 import type { Operation, Operations } from '@/lib/core/contracts.js';
-import { abort } from '@/lib/core/operations/utils.js';
+import { abort } from '@/lib/core/utils/index.js';
 import { compile, hasPlaceholders } from '@/lib/core/utils/compile/index.js';
 import { buildHttpResponse } from '@/lib/core/utils/response/index.js';
 
-export const post: Operation = async (param: PostParam, { context }) => {
+export const post: Operation = async (param: PostParam, { context, app }) => {
     const parsedUrl = compile(param.url, context.data);
 
     if (hasPlaceholders(parsedUrl)) {
         throw new Error(`[post] operation has unresolved placeholders for param [url]: [${parsedUrl}]`);
     }
 
-    const data = compile(param.data, context.data);
+    const data = param.data ? compile(param.data, context.data) : undefined;
+    const auth_token = context.get('auth_token');
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+    };
 
-    const baseResponse = await context.fetch(parsedUrl, {
+    if (auth_token) headers['Authorization'] = `Bearer ${auth_token}`;
+
+    const baseResponse = await fetch(parsedUrl, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: data ? JSON.stringify(data) : undefined,
+        headers,
+        credentials: 'include',
     });
 
     const response = await buildHttpResponse(baseResponse);
@@ -44,7 +51,7 @@ type PostParam = {
     /**
      * The data to send.
      */
-    data: string;
+    data?: string;
     /**
      * The validation adapter to use.
      */

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { DropdownMenu } from 'bits-ui';
-    import { app, type ElementProps, Render, useContext } from '$lib/core/index.js';
+    import { app, type ElementProps, Render, useContext } from '$lib/index.js';
     import { cn, flyAndScale } from '$lib/core/utils/index.js';
     import Icon from '$lib/components/common/icon/icon.svelte';
     import type { IconProps } from '../icon/types.js';

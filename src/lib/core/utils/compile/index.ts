@@ -23,7 +23,7 @@ export function compile(template: string, context: ContextData): Any {
     }
 
     // Expand the context object to handle dot notation
-    const expandedContext = expandObject(cloneDeep(context)); // TODO: fix this typecontext);
+    const expandedContext = expandObject(cloneDeep(context));
 
     // Use a regular expression to find all placeholders in the template
     const compiled = template.replace(PLACEHOLDERS, function (_match, placeholder) {

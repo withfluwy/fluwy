@@ -2,16 +2,19 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { put } from './index.js';
 import { createContext } from '@/lib/core/context/index.js';
 import type { Context } from '@/lib/core/context/index.js';
-import { app } from '@/lib/index.js';
-import { AbortOperation } from '@/lib/core/operations/utils.js';
+import { AbortOperationError } from '@/lib/index.js';
+import { createApp } from '@/lib/index.js';
+import type { Application } from '@/lib/core/app/index.js';
 
 describe('put', () => {
     let context: Context;
+    let app: Application;
     const mockFetch = vi.fn();
 
     beforeEach(() => {
         context = createContext();
-        context.fetch = mockFetch;
+        app = createApp();
+        global.fetch = mockFetch;
         mockFetch.mockReset();
         vi.spyOn(app, 'handleOperations').mockImplementation(() => Promise.resolve());
     });
@@ -33,13 +36,14 @@ describe('put', () => {
                 url: 'https://api.example.com/resource/1',
                 data: 'form.data',
             },
-            { context }
+            { context, app }
         );
 
         expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/resource/1', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ key: 'value' }),
+            credentials: 'include',
         });
         expect(result.data).toEqual(responseData);
         expect(result.ok).toBe(true);
@@ -62,9 +66,9 @@ describe('put', () => {
                     data: 'form.data',
                     on_error: mockOperations,
                 },
-                { context }
+                { context, app }
             )
-        ).rejects.toThrow(AbortOperation);
+        ).rejects.toThrow(AbortOperationError);
 
         expect(app.handleOperations).toHaveBeenCalledWith(mockOperations, context, 'form.data');
     });
@@ -82,7 +86,7 @@ describe('put', () => {
                     url: 'https://api.example.com/resource/1',
                     data: 'form.data',
                 },
-                { context }
+                { context, app }
             )
         ).rejects.toThrow('PUT operation for [https://api.example.com/resource/1] failed with status [404]');
     });
@@ -94,8 +98,39 @@ describe('put', () => {
                     url: 'https://api.example.com/${id}',
                     data: 'form.data',
                 },
-                { context }
+                { context, app }
             )
         ).rejects.toThrow('[put] operation has unresolved placeholders for param [url]');
+    });
+
+    it('should use auth token if its provided', async () => {
+        // Given
+        const mockResponse = new Response(JSON.stringify({ success: true }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
+        mockFetch.mockResolvedValue(mockResponse);
+
+        context.set('auth_token', 'token');
+        context.set('form', {
+            data: { key: 'value' },
+        });
+
+        // When
+        await put(
+            {
+                url: 'https://api.example.com/resource/1',
+                data: 'form.data',
+            },
+            { context, app }
+        );
+
+        // Then
+        expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/resource/1', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer token' },
+            body: JSON.stringify({ key: 'value' }),
+            credentials: 'include',
+        });
     });
 });

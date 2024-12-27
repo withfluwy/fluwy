@@ -1,5 +1,5 @@
 <script lang="ts">
-    // TODO: fix hotkeys usage
+    // FIXME(hotkeys): fix hotkeys usage
     // import hotkeys from 'hotkeys-js';
     import { onDestroy, onMount } from 'svelte';
 
