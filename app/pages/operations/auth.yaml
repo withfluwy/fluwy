@@ -111,3 +111,25 @@ doc.content:
       Now the operation will set the `auth_token` cookie with the value from the context path `response.data.token`.
       With the cookie set, you can now use the token in the request both in the browser and in the server through the
       key you specified.
+
+  - markdown: |
+      ## unset_auth_token
+      The `unset_auth_token` operation is used to remove the authentication token from the context. The strategy used to
+      persist this token is via cookies so it also removes the cookie. This is usually used for logging out users.
+      So let's say you have a navigation menu where you want to log out a user, you can use the `unset_auth_token` as an
+      operation for it. Example:
+
+      ```yaml
+      dropdown_item:
+        text: Logout
+        on_click:
+          unset_auth_token:
+          goto: /login
+      ```
+
+      If you want to customize the name of the cookie used for the authentication token, you can use a string parameter
+      to the `unset_auth_token` operation. Example:
+
+      ```yaml
+      unset_auth_token: example-token
+      ```

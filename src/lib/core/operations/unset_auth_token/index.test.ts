@@ -30,4 +30,15 @@ describe('unset_auth_token', () => {
         expect(context.get('auth_token')).toBeUndefined();
         expect(cookies.unset_operation).toHaveBeenCalledWith('auth_token', { context, app });
     });
+
+    it('should unset custom token name when provided as parameter', async () => {
+        const context = createContext();
+        context.set('custom_token', 'test-token');
+        const app = createApp();
+
+        await unset_auth_token('custom_token', { context, app });
+
+        expect(context.get('custom_token')).toBeUndefined();
+        expect(cookies.unset_operation).toHaveBeenCalledWith('custom_token', { context, app });
+    });
 });
