@@ -13,54 +13,290 @@ describe('createProxyApiHandlers', () => {
         global.fetch = vi.fn();
     });
 
-    it('should create a GET handler that forwards requests to the API', async () => {
-        const mockEvent = {
-            params: { path: '/users' },
-            url: { search: '?page=1' },
-            cookies: { get: vi.fn().mockReturnValue('test-token') },
-            fetch: vi.fn(),
-            getClientAddress: () => '127.0.0.1',
-            locals: {},
-            platform: {},
-            request: new Request('http://localhost'),
-            isDataRequest: false,
-            route: { id: null },
-            setHeaders: vi.fn(),
-        } as unknown as RequestEvent;
+    describe('GET handler', () => {
+        it('should forward requests to the API with auth token', async () => {
+            const mockEvent = {
+                params: { path: '/users' },
+                url: { search: '?page=1' },
+                cookies: { get: vi.fn().mockReturnValue('test-token') },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                request: new Request('http://localhost'),
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
 
-        await handlers.GET(mockEvent);
+            await handlers.GET(mockEvent);
 
-        expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/users?page=1', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer test-token',
-            },
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/users?page=1', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer test-token',
+                },
+            });
+        });
+
+        it('should work without auth token', async () => {
+            const mockEvent = {
+                params: { path: '/public' },
+                url: { search: '' },
+                cookies: { get: vi.fn().mockReturnValue(null) },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                request: new Request('http://localhost'),
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.GET(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/public', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
         });
     });
 
-    it('should create a GET handler that works without auth token', async () => {
-        const mockEvent = {
-            params: { path: '/public' },
-            url: { search: '' },
-            cookies: { get: vi.fn().mockReturnValue(null) },
-            fetch: vi.fn(),
-            getClientAddress: () => '127.0.0.1',
-            locals: {},
-            platform: {},
-            request: new Request('http://localhost'),
-            isDataRequest: false,
-            route: { id: null },
-            setHeaders: vi.fn(),
-        } as unknown as RequestEvent;
+    describe('POST handler', () => {
+        it('should forward POST requests to the API with auth token and body', async () => {
+            const mockBody = { name: 'test', value: 123 };
+            const mockEvent = {
+                params: { path: '/users' },
+                url: { search: '' },
+                cookies: { get: vi.fn().mockReturnValue('test-token') },
+                request: {
+                    json: vi.fn().mockResolvedValue(mockBody),
+                },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
 
-        await handlers.GET(mockEvent);
+            await handlers.POST(mockEvent);
 
-        expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/public', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer test-token',
+                },
+                body: JSON.stringify(mockBody),
+            });
+        });
+
+        it('should work without auth token', async () => {
+            const mockBody = { data: 'public-data' };
+            const mockEvent = {
+                params: { path: '/public' },
+                url: { search: '?type=test' },
+                cookies: { get: vi.fn().mockReturnValue(null) },
+                request: {
+                    json: vi.fn().mockResolvedValue(mockBody),
+                },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.POST(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/public?type=test', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mockBody),
+            });
+        });
+    });
+
+    describe('PUT handler', () => {
+        it('should forward PUT requests to the API with auth token and body', async () => {
+            const mockBody = { id: 1, name: 'updated' };
+            const mockEvent = {
+                params: { path: '/users/1' },
+                url: { search: '' },
+                cookies: { get: vi.fn().mockReturnValue('test-token') },
+                request: {
+                    json: vi.fn().mockResolvedValue(mockBody),
+                },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.PUT(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/users/1', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer test-token',
+                },
+                body: JSON.stringify(mockBody),
+            });
+        });
+
+        it('should work without auth token', async () => {
+            const mockBody = { data: 'public-update' };
+            const mockEvent = {
+                params: { path: '/public/1' },
+                url: { search: '?version=2' },
+                cookies: { get: vi.fn().mockReturnValue(null) },
+                request: {
+                    json: vi.fn().mockResolvedValue(mockBody),
+                },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.PUT(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/public/1?version=2', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mockBody),
+            });
+        });
+    });
+
+    describe('PATCH handler', () => {
+        it('should forward PATCH requests to the API with auth token and body', async () => {
+            const mockBody = { status: 'active' };
+            const mockEvent = {
+                params: { path: '/users/1/status' },
+                url: { search: '' },
+                cookies: { get: vi.fn().mockReturnValue('test-token') },
+                request: {
+                    json: vi.fn().mockResolvedValue(mockBody),
+                },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.PATCH(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/users/1/status', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer test-token',
+                },
+                body: JSON.stringify(mockBody),
+            });
+        });
+
+        it('should work without auth token', async () => {
+            const mockBody = { partial: 'update' };
+            const mockEvent = {
+                params: { path: '/public/partial' },
+                url: { search: '?field=status' },
+                cookies: { get: vi.fn().mockReturnValue(null) },
+                request: {
+                    json: vi.fn().mockResolvedValue(mockBody),
+                },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.PATCH(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/public/partial?field=status', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mockBody),
+            });
+        });
+    });
+
+    describe('DELETE handler', () => {
+        it('should forward DELETE requests to the API with auth token', async () => {
+            const mockEvent = {
+                params: { path: '/users/1' },
+                url: { search: '' },
+                cookies: { get: vi.fn().mockReturnValue('test-token') },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.DELETE(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/users/1', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer test-token',
+                },
+            });
+        });
+
+        it('should work without auth token', async () => {
+            const mockEvent = {
+                params: { path: '/public/temp' },
+                url: { search: '?permanent=true' },
+                cookies: { get: vi.fn().mockReturnValue(null) },
+                fetch: vi.fn(),
+                getClientAddress: () => '127.0.0.1',
+                locals: {},
+                platform: {},
+                isDataRequest: false,
+                route: { id: null },
+                setHeaders: vi.fn(),
+            } as unknown as RequestEvent;
+
+            await handlers.DELETE(mockEvent);
+
+            expect(global.fetch).toHaveBeenCalledWith('https://api.example.com/public/temp?permanent=true', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
         });
     });
 });

@@ -16,7 +16,72 @@ export function createProxyApiHandlers(apiUrl: string) {
         });
     };
 
-    return { GET };
+    const POST: RequestHandler = async ({ params, url, cookies, request }) => {
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        };
+        const authToken = cookies.get('auth_token');
+
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+
+        const data = await request.json();
+
+        return fetch(`${apiUrl}${params.path + url.search}`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(data),
+        });
+    };
+
+    const PUT: RequestHandler = async ({ params, url, cookies, request }) => {
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        };
+        const authToken = cookies.get('auth_token');
+
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+
+        const data = await request.json();
+
+        return fetch(`${apiUrl}${params.path + url.search}`, {
+            method: 'PUT',
+            headers,
+            body: JSON.stringify(data),
+        });
+    };
+
+    const PATCH: RequestHandler = async ({ params, url, cookies, request }) => {
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        };
+        const authToken = cookies.get('auth_token');
+
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+
+        const data = await request.json();
+
+        return fetch(`${apiUrl}${params.path + url.search}`, {
+            method: 'PATCH',
+            headers,
+            body: JSON.stringify(data),
+        });
+    };
+
+    const DELETE: RequestHandler = async ({ params, url, cookies }) => {
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+        };
+        const authToken = cookies.get('auth_token');
+
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+
+        return fetch(`${apiUrl}${params.path + url.search}`, {
+            method: 'DELETE',
+            headers,
+        });
+    };
+
+    return { GET, POST, PUT, PATCH, DELETE };
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
