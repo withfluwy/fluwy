@@ -1,5 +1,13 @@
 # @fluwy/ui
 
+## 0.8.1
+
+### Patch Changes
+
+- c2a0a28: Fix `goto` operation to work on both client-side and server-side.
+- 18127b2: Add missing handlers for `POST`, `PUT`, `PATCH`, and `DELETE` to the sveltekit's `createProxyApiHandlers` method.
+- 35fbd0e: Fix how app render was rendering layouts with null values on it. Any null value was being replaced by the body content of the page. Now this is fixed.
+
 ## 0.8.0
 
 ### Minor Changes
