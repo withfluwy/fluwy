@@ -16,6 +16,7 @@ export { str } from './str/index.js';
 export { delay } from './delay/index.js';
 export { get } from './get/index.js';
 export { abort } from './abort/index.js';
+export { compile } from './compile/index.js';
 export const { cloneDeep } = _;
 
 export { expandObject };
