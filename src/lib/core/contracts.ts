@@ -7,10 +7,25 @@ export type { Context };
 export type { FormState } from '@/lib/components/forms/form/types.js';
 
 export interface AppConfig {
+    /**
+     * The path to the pages directory
+     */
     pages: string;
+    /**
+     * The path to the layouts directory
+     */
     layouts: string;
+    /**
+     * The path to the themes directory
+     */
     themes: string;
+    /**
+     * SvelteKit's `error` function. Should be injected in the app initialization. I can't be bundled with the lib.
+     */
     error: (status: number, body: Any) => never;
+    /**
+     * SvelteKit's `redirect` function. Should be injected in the app initialization. I can't be bundled with the lib.
+     */
     redirect: (status: number, location: string | URL) => never;
 }
 export type RequiredAppConfig = Pick<AppConfig, 'error' | 'redirect'> & Partial<Omit<AppConfig, 'error' | 'redirect'>>;

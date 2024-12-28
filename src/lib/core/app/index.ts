@@ -55,6 +55,13 @@ export class Application {
         return this;
     }
 
+    /**
+     * Uses the `redirect` function from the app config. Usually the sveltekit `redirect` function.
+     */
+    public redirect(status: number, location: string | URL): never {
+        throw this._config.redirect(status, location);
+    }
+
     public registerComponent(name: string, component: Any) {
         if (name in Object.keys(this.components)) {
             throw new Error(`Component ${name} already registered`);

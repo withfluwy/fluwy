@@ -81,18 +81,11 @@ page:
             active_if_starts_with: /operations
             icon: solar:checklist-linear
             content:
-              - menu_item:
-                  text: Overview
-                  url: /operations
-              - menu_item:
-                  text: Http
-                  url: /operations/http
-              - menu_item:
-                  text: Form
-                  url: /operations/form
-              - menu_item:
-                  text: Auth
-                  url: /operations/auth
+              - menu_item: { text: Overview, url: /operations }
+              - menu_item: { text: Auth, url: /operations/auth }
+              - menu_item: { text: Form, url: /operations/form }
+              - menu_item: { text: Http, url: /operations/http }
+              - menu_item: { text: Navigation, url: /operations/navigation }
 
       aside:
         class: pt-10 border-0
