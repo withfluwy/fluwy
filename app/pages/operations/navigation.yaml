@@ -1,0 +1,67 @@
+layout: doc
+---
+h1: Navigation Operations
+p: |
+  Navigation operations are essential for managing the flow and user experience within your application. This document 
+  outlines all the navigation-related operations available in Fluwy, providing you with the tools to create seamless 
+  and intuitive navigation patterns in your web applications.
+spacer: mt-12
+doc.content:
+  - markdown: |
+      ## goto
+      The `goto` operation is used to navigate to a specific route. It can be used as both server and client operations.
+      It accepts a string parameter with the route to navigate to. Example:
+
+      ```yaml
+      goto: /home
+      ```
+
+      It also accepts variables from the context to be parsed into the route. Example:
+
+      ```yaml
+      goto: /user/${id}
+      ```
+
+      If you use a full URL string to it, it will also work and it will open the URL in a new tab if you are in the browser,
+      or it will redirect the user to the URL if the operation was ran on the server. Example:
+
+      ```yaml
+      goto: https://example.com
+      ```
+
+      **Look at some real examples:**
+
+  - tabs:
+      - tab:
+          title: Example
+          panel:
+            row:
+              - button:
+                  text: Go to Plugins
+                  icon: solar:widget-add-linear
+                  on_click:
+                    goto: /plugins
+              - button:
+                  text: Star on Github
+                  icon: mdi:github
+                  on_click:
+                    goto: https://github.com/withfluwy/fluwy
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          panel:
+            class: p-0
+            code:
+              language: yaml
+              content: |
+                row:
+                  - button:
+                      text: Go to Plugins
+                      icon: solar:widget-add-linear
+                      on_click:
+                        goto: /plugins
+                  - button:
+                      text: Star on Github
+                      icon: mdi:github
+                      on_click:
+                        goto: https://github.com/withfluwy/fluwy

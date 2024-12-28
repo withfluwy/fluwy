@@ -1,5 +1,5 @@
 ---
-'@fluwy/ui': minor
+'@fluwy/ui': patch
 ---
 
-New `goto` operation that works on both client-side and server-side.
+Fix `goto` operation to work on both client-side and server-side.
