@@ -207,7 +207,7 @@ export class Application {
                 continue;
             }
 
-            if (typeof value === 'object') {
+            if (value !== null && typeof value === 'object') {
                 layout[key] = this.replaceSlot(value, body);
             }
         }

@@ -5,7 +5,7 @@
     import Icon from '$lib/components/common/icon/icon.svelte';
     import type { IconProps } from '../icon/types.js';
     import { Dropdown } from './styles.js';
-    import type { Any } from '@/lib/core/contracts.js';
+    import type { Any, Operations } from '@/lib/core/contracts.js';
     import { useCommon } from '../styles.js';
     import { useTheme } from '@/lib/core/utils/index.js';
 
@@ -15,7 +15,7 @@
         icon?: string;
         sub_content?: unknown;
         text?: string;
-        on_click?: Any;
+        on_click?: Operations;
     }
 
     const itemClasses = cn(
