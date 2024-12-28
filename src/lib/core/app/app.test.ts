@@ -161,6 +161,123 @@ describe('App', () => {
         });
     });
 
+    describe('replaceSlot', () => {
+        it('should replace slot with body content in a simple layout', () => {
+            const layout = {
+                h1: 'Hello World',
+                slot: null,
+            };
+            const body = [{ type: 'p', text: 'Hello' }];
+
+            const result = app['replaceSlot'](layout, body);
+
+            expect(result).toEqual({
+                h1: 'Hello World',
+                slot: [{ type: 'p', text: 'Hello' }],
+            });
+        });
+
+        it('should replace slot in nested objects', () => {
+            const layout = {
+                type: 'div',
+                content: {
+                    type: 'section',
+                    children: {
+                        type: 'article',
+                        slot: null,
+                    },
+                },
+            };
+            const body = [{ type: 'p', text: 'Hello' }];
+
+            const result = app['replaceSlot'](layout, body);
+
+            expect(result).toEqual({
+                type: 'div',
+                content: {
+                    type: 'section',
+                    children: {
+                        type: 'article',
+                        slot: [{ type: 'p', text: 'Hello' }],
+                    },
+                },
+            });
+        });
+
+        it('should handle multiple slots in different nested levels', () => {
+            const layout = {
+                type: 'div',
+                slot: null,
+                content: {
+                    type: 'section',
+                    children: {
+                        type: 'article',
+                        slot: null,
+                    },
+                },
+            };
+            const body = [{ type: 'p', text: 'Hello' }];
+
+            const result = app['replaceSlot'](layout, body);
+
+            expect(result).toEqual({
+                type: 'div',
+                slot: [{ type: 'p', text: 'Hello' }],
+                content: {
+                    type: 'section',
+                    children: {
+                        type: 'article',
+                        slot: [{ type: 'p', text: 'Hello' }],
+                    },
+                },
+            });
+        });
+
+        it('should return body when layout is undefined', () => {
+            const body = [{ type: 'p', text: 'Hello' }];
+
+            const result = app['replaceSlot'](undefined, body);
+
+            expect(result).toEqual(body);
+        });
+
+        it('should ignore non-object values in layout', () => {
+            const layout = {
+                type: 'div',
+                slot: null,
+                content: 'string value',
+                number: 42,
+                bool: true,
+            };
+            const body = [{ type: 'p', text: 'Hello' }];
+
+            const result = app['replaceSlot'](layout, body);
+
+            expect(result).toEqual({
+                type: 'div',
+                slot: [{ type: 'p', text: 'Hello' }],
+                content: 'string value',
+                number: 42,
+                bool: true,
+            });
+        });
+
+        it('should keep null values in layout', () => {
+            const layout = { type: 'div', slot: null, content: null, number: null, bool: null };
+            const body = [{ type: 'p', text: 'Hello' }];
+
+            const result = app['replaceSlot'](layout, body);
+
+            expect(result).toEqual({
+                type: 'div',
+                slot: [{ type: 'p', text: 'Hello' }],
+                content: null,
+                number: null,
+                bool: null,
+            });
+        });
+    });
+
     describe('plug', () => {
         beforeEach(() => {
             app = createApp();
