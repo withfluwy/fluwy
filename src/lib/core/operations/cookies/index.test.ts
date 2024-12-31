@@ -1,30 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { set_operation, unset_operation, endpoints } from './index.js';
 import { createContext } from '@/lib/core/context/index.js';
 import { createApp } from '@/lib/index.js';
-
-vi.mock('../../utils/compile/index.js', () => ({
-    compile: vi.fn((value, data) => {
-        // Simple mock implementation that replaces {{ variable }} with actual value
-        if (typeof value === 'string' && value.includes('{{')) {
-            const match = value.match(/{{(.+?)}}/);
-            if (match) {
-                const path = match[1].trim().split('.');
-                let result = data;
-                for (const key of path) {
-                    result = result[key];
-                }
-                return result;
-            }
-        }
-        return value;
-    }),
-}));
 
 describe('cookies operations', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         global.fetch = vi.fn();
+        vi.setSystemTime(new Date('2024-12-31T08:59:55-08:00'));
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
     });
 
     describe('set_operation', () => {
@@ -33,10 +20,10 @@ describe('cookies operations', () => {
             const app = createApp();
             context.set('user', { name: 'John' });
 
-            await set_operation({ user_name: '{{ user.name }}' }, { context, app, previousResult: 'previous' });
+            await set_operation({ user_name: { value: '${user.name}' } }, { context, app, previousResult: 'previous' });
 
             expect(global.fetch).toHaveBeenCalledWith('/__server__/set-cookie', {
-                body: JSON.stringify({ user_name: 'John' }),
+                body: JSON.stringify({ user_name: { value: 'John' } }),
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,7 +34,10 @@ describe('cookies operations', () => {
         it('should return previous result', async () => {
             const context = createContext();
             const app = createApp();
-            const result = await set_operation({ test: 'value' }, { context, app, previousResult: 'previous' });
+            const result = await set_operation(
+                { test: { value: 'value' } },
+                { context, app, previousResult: 'previous' }
+            );
 
             expect(result).toBe('previous');
         });
@@ -78,7 +68,112 @@ describe('cookies operations', () => {
 
     describe('server endpoints', () => {
         describe('/__server__/set-cookie', () => {
-            it('should set cookies with correct headers', async () => {
+            it('should not set cookies with default expiration', async () => {
+                const mockEvent = {
+                    request: {
+                        json: vi.fn().mockResolvedValue({ test_cookie: { value: 'test_value' } }),
+                    },
+                    cookies: {
+                        serialize: vi.fn().mockReturnValue('test_cookie=test_value; Path=/'),
+                    },
+                };
+
+                const response = await endpoints['/__server__/set-cookie'](mockEvent);
+                const headers = Object.fromEntries(response.headers.entries());
+
+                expect(mockEvent.cookies.serialize).toHaveBeenCalledWith('test_cookie', 'test_value', {
+                    path: '/',
+                });
+                expect(headers['set-cookie']).toBe('test_cookie=test_value; Path=/');
+                expect(await response.json()).toEqual({ ok: true });
+            });
+
+            it('should set cookies with custom duration', async () => {
+                const mockEvent = {
+                    request: {
+                        json: vi.fn().mockResolvedValue({
+                            test_cookie: {
+                                value: 'test_value',
+                                duration: 3600,
+                            },
+                        }),
+                    },
+                    cookies: {
+                        serialize: vi
+                            .fn()
+                            .mockReturnValue('test_cookie=test_value; Path=/; Expires=Tue, 31 Dec 2024 17:59:55 GMT'),
+                    },
+                };
+
+                const response = await endpoints['/__server__/set-cookie'](mockEvent);
+                const headers = Object.fromEntries(response.headers.entries());
+
+                const expectedExpires = new Date('2024-12-31T08:59:55-08:00');
+                expectedExpires.setSeconds(expectedExpires.getSeconds() + 3600);
+
+                expect(mockEvent.cookies.serialize).toHaveBeenCalledWith('test_cookie', 'test_value', {
+                    path: '/',
+                    expires: expectedExpires,
+                });
+                expect(headers['set-cookie']).toBe(
+                    'test_cookie=test_value; Path=/; Expires=Tue, 31 Dec 2024 17:59:55 GMT'
+                );
+                expect(await response.json()).toEqual({ ok: true });
+            });
+
+            it('should set cookies with expires_at date', async () => {
+                const mockEvent = {
+                    request: {
+                        json: vi.fn().mockResolvedValue({
+                            test_cookie: {
+                                value: 'test_value',
+                                expires_at: '2024-12-31T09:30:00-08:00',
+                            },
+                        }),
+                    },
+                    cookies: {
+                        serialize: vi
+                            .fn()
+                            .mockReturnValue('test_cookie=test_value; Path=/; Expires=Tue, 31 Dec 2024 17:30:00 GMT'),
+                    },
+                };
+
+                const response = await endpoints['/__server__/set-cookie'](mockEvent);
+                const headers = Object.fromEntries(response.headers.entries());
+
+                const expectedExpires = new Date('2024-12-31T09:30:00-08:00');
+
+                expect(mockEvent.cookies.serialize).toHaveBeenCalledWith('test_cookie', 'test_value', {
+                    path: '/',
+                    expires: expectedExpires,
+                });
+                expect(headers['set-cookie']).toBe(
+                    'test_cookie=test_value; Path=/; Expires=Tue, 31 Dec 2024 17:30:00 GMT'
+                );
+                expect(await response.json()).toEqual({ ok: true });
+            });
+
+            it('should convert non-string values to strings', async () => {
+                const mockEvent = {
+                    request: {
+                        json: vi.fn().mockResolvedValue({ test_cookie: { value: 123 } }),
+                    },
+                    cookies: {
+                        serialize: vi.fn().mockReturnValue('test_cookie=123; Path=/'),
+                    },
+                };
+
+                const response = await endpoints['/__server__/set-cookie'](mockEvent);
+                const headers = Object.fromEntries(response.headers.entries());
+
+                expect(mockEvent.cookies.serialize).toHaveBeenCalledWith('test_cookie', '123', {
+                    path: '/',
+                });
+                expect(headers['set-cookie']).toBe('test_cookie=123; Path=/');
+                expect(await response.json()).toEqual({ ok: true });
+            });
+
+            it('should handle legacy string values', async () => {
                 const mockEvent = {
                     request: {
                         json: vi.fn().mockResolvedValue({ test_cookie: 'test_value' }),
@@ -91,6 +186,9 @@ describe('cookies operations', () => {
                 const response = await endpoints['/__server__/set-cookie'](mockEvent);
                 const headers = Object.fromEntries(response.headers.entries());
 
+                expect(mockEvent.cookies.serialize).toHaveBeenCalledWith('test_cookie', 'test_value', {
+                    path: '/',
+                });
                 expect(headers['set-cookie']).toBe('test_cookie=test_value; Path=/');
                 expect(await response.json()).toEqual({ ok: true });
             });

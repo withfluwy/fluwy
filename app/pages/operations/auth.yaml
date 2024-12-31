@@ -133,29 +133,3 @@ doc.content:
       ```yaml
       unset_auth_token: example-token
       ```
-
-      ## set_cookie
-
-      The `set_cookie` operation is used to set a cookie in the browser. It's similar to the `set_auth_token` operation
-      but it doesn't set the token in the context. It accepts an object with key-value pairs where the key is the name of the cookie and the value is the value of the
-      cookie. This is useful when you want to set multiple cookies in the browser. Example:
-
-      ```yaml
-      set_cookie:
-        item-1: value-1
-        item-2: value-2
-      ```
-
-      ## unset_cookie
-
-      The `unset_cookie` operation is used to remove a cookie from the browser. It accepts a string parameter with the
-      name of the cookie to remove. Example:
-
-      ```yaml
-      unset_cookie: item-1
-      ```
-
-      ## remove_cookie
-
-      The `remove_cookie` operation is an alias for the `unset_cookie` operation which means it's just another way to use
-      the `unset_cookie` operation.
