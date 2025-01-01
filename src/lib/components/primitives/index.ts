@@ -1,3 +1,4 @@
+export { default as B } from './b.svelte';
 export { default as Code } from './code.svelte';
 export { default as Column } from './column.svelte';
 export { default as Div } from './div.svelte';
