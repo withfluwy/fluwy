@@ -105,8 +105,8 @@ describe('get', () => {
 
     it('should handle error with on_error operations', async () => {
         const mockResponse = new Response('{"error": "Not Found"}', {
-            status: 404,
-            statusText: 'Not Found',
+            status: 400,
+            statusText: 'Bad Request',
         });
         mockFetch.mockResolvedValue(mockResponse);
 
@@ -123,7 +123,7 @@ describe('get', () => {
 
     it('should throw error when request fails and no on_error handler', async () => {
         const mockResponse = new Response('{"error": "Not Found"}', {
-            status: 404,
+            status: 400,
         });
         mockFetch.mockResolvedValue(mockResponse);
 
@@ -132,7 +132,33 @@ describe('get', () => {
         };
 
         await expect(get(param, { context, app })).rejects.toThrow(
-            "GET operation for [https://api.example.com/data] failed with status [404] and there's no operations set to handle the error"
+            "GET operation for [https://api.example.com/data] failed with status [400] and there's no operations set to handle the error"
         );
+    });
+
+    it('throws 404 error from sveltekit on 404 response', async () => {
+        const mockResponse = new Response('{"error": "Not Found"}', {
+            status: 404,
+            statusText: 'Not Found',
+        });
+        mockFetch.mockResolvedValue(mockResponse);
+
+        const param = {
+            url: 'https://api.example.com/data',
+        };
+
+        try {
+            await get(param, { context, app });
+            throw 'Expected error to be thrown';
+        } catch (err) {
+            expect(err).toEqual(
+                expect.objectContaining({
+                    status: 404,
+                    body: {
+                        message: 'Not Found',
+                    },
+                })
+            );
+        }
     });
 });
