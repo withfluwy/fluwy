@@ -27,6 +27,11 @@ export const get: Operation = async (param: GetParam, { context, app }) => {
 
     context.set('response', response);
 
+    // TODO(http.get): Add tests for the 404
+    if (response.status === 404) {
+        app.notFound();
+    }
+
     if (!response.ok) {
         if (param.on_error) {
             await app.handleOperations(param.on_error, context, context.data);

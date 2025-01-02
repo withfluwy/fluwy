@@ -1,0 +1,62 @@
+layout: doc
+---
+h1: Cookies Operations
+p: |
+  Cookies operations are used to manage and persist data in the browser across multiple pages in a web application. 
+  This page groups all Fluwy's operations that are used for cookies management.
+spacer: mt-12
+doc.content:
+  - markdown: |
+      ## set_cookie
+
+      The `set_cookie` operation is used to set a cookie in the browser. It's similar to the `set_auth_token` operation
+      but it doesn't set the token in the context and some other things. It accepts an object with key-value pairs where 
+      the key is the name of the cookie and the value is the value of the cookie. This is useful when you want to set 
+      multiple cookies in the browser. Example:
+
+      ```yaml
+      set_cookie:
+        item-1: value-1
+        item-2: value-2
+      ```
+
+      The cookies also accept object params where you can specify the `value` (required), `duration` (in seconds) or 
+      `expires_at` (ISO 8601 datetime string or unix timestamp). Example:
+
+      ```yaml
+      set_cookie:
+        item-1:
+          value: value-1
+          duration: 3600 # in seconds
+        item-2:
+          value: value-2
+          expires_at: 2023-01-01
+      ```
+
+      > **Note**: If you don't specify `duration` or `expires_at`, the cookie will never expire. Never set both of them
+      at the same time, otherwise you will get an unexpected behavior.
+
+      You can also specify a path to be resolved from the context data. Example:
+
+      ```yaml
+      set_cookie:
+        item-1:
+          value: response.data.value
+          duration: response.data.duration # in seconds
+          # or
+          expires_at: response.data.expires_at
+      ```
+
+      ## unset_cookie
+
+      The `unset_cookie` operation is used to remove a cookie from the browser. It accepts a string parameter with the
+      name of the cookie to remove. Example:
+
+      ```yaml
+      unset_cookie: item-1
+      ```
+
+      ## remove_cookie
+
+      The `remove_cookie` operation is an alias for the `unset_cookie` operation which means it's just another way to use
+      the `unset_cookie` operation.

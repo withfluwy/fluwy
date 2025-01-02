@@ -62,6 +62,14 @@ export class Application {
         throw this._config.redirect(status, location);
     }
 
+    public notFound(message?: string): never {
+        throw this._config.error(404, message ?? 'Not found');
+    }
+
+    public error(status: number, message?: string): never {
+        throw this._config.error(status, message);
+    }
+
     public registerComponent(name: string, component: Any) {
         if (name in Object.keys(this.components)) {
             throw new Error(`Component ${name} already registered`);

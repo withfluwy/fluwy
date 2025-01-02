@@ -96,7 +96,7 @@
     <Render props={props.content} />
 </Tabs.Trigger>
 
-<style lang="scss">
+<style>
     :global(div[role='tablist'] > button[role='tab'][data-state='active']:not([disabled]):after) {
         z-index: 1;
         content: '';

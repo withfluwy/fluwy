@@ -30,18 +30,16 @@ page:
             icon: solar:compass-linear
             text: Getting Started
             url: /getting-started
-        - menu_item:
-            icon: solar:pallete-2-linear
-            text: Theming
-            url: /theming
-        - menu_item:
+
+        - menu_group:
+            header: Concepts
+            active_if_starts_with: /concepts
             icon: solar:widget-add-linear
-            text: Plugins
-            url: /plugins
-        - menu_item:
-            icon: solar:file-check-linear
-            text: Key Concepts
-            url: /key-concepts
+            content:
+              - menu_item: { text: Routing, url: /concepts/routing }
+              - menu_item: { text: Theming, url: /concepts/theming }
+              - menu_item: { text: Plugins, url: /concepts/plugins }
+              - menu_item: { text: Yaml, url: /concepts/yaml }
 
         - menu_group:
             header: Components
@@ -83,6 +81,7 @@ page:
             content:
               - menu_item: { text: Overview, url: /operations }
               - menu_item: { text: Auth, url: /operations/auth }
+              - menu_item: { text: Cookies, url: /operations/cookies }
               - menu_item: { text: Form, url: /operations/form }
               - menu_item: { text: Http, url: /operations/http }
               - menu_item: { text: Navigation, url: /operations/navigation }

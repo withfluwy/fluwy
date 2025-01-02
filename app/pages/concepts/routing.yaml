@@ -1,0 +1,142 @@
+layout: doc
+---
+h1: Routing
+p: |
+  Routing is the mechanism that allows your application to determine which page to display based on the URL in the browser address bar. 
+  It is the foundation of how users navigate through your application and how they interact with different parts of your application.
+spacer: mt-12
+doc.content:
+  - markdown: |
+      ## Key Principles
+
+      ### Filesystem-Based Routing
+      - Routing is based on a filesystem hierarchy, where each route is represented by a file or directory in a specific directory structure.
+      - This approach allows for easy organization and management of routes, making it simple to add new pages and manage existing ones.
+
+      ### Dynamic Routing
+      - Dynamic routing allows you to create routes that are generated based on user input or other factors.
+      - This can be useful for creating dynamic pages, such as search results or dynamic content based on parameters in the URL.
+
+      ### Index Files
+      - The `index.yaml` file in a route directory is used to define the default page for that route, if it exists. It also
+      defines the root url for the route.
+
+      ## Directory Structure
+      This is the structure of a Fluwy's application:
+
+      ```yaml
+      app/
+        pages/
+        layouts/
+        themes/
+      ```
+
+      - `pages/` directory contains all the pages of the application. Each page is represented by a `.yaml` file. Whatever
+      the name of the file is, it will be the route of the page. It supports nested directories and files.
+      - `layouts/` directory contains all the layouts of the application. Each layout is represented by a `.yaml` file. It
+      doesn't support nested directories or files.
+      - `themes/` directory contains all the themes of the application. Each theme is represented by a `.yaml` file. It
+      doesn't support nested directories or files.
+
+
+      ## Accessing Parameters in Templates
+      Dynamic routes can be expressed using directory names with brackets to capture user input or other factors.
+      These segments can be used to access parameters in templates. 
+
+      **Example:**
+
+      ```yaml
+      app/
+        pages/
+          users/
+            [id]/
+              index.yaml
+      ```
+
+      **Resulting Route:**
+      ```
+      /users/:id
+      ```
+
+      Then you can access the `id` parameter in the `index.yaml` file or **any child page** by using `${params.id}` in the 
+      template.
+
+      ### Real Example
+      Let's say you have a page to display a contact information. In the head of your `app/pages/contacts/[id]/index.yaml` file you have:
+
+      ```yaml
+      server:
+        load:
+          contact: https://api.example.com/contacts/${params.id}
+      ```
+      The URL given will be resolved to something like `https://api.example.com/contacts/123` to fetch the correct url 
+      from the API and display the desired contact information.
+
+      ## Best Practices
+
+      ### File and Directory Naming
+
+      Use **kebab-case** for routes and files.
+
+  - row:
+      class: items-center gap-1
+      content:
+        - icon:
+            name: solar:verified-check-bold
+            class: text-positive
+        - b: "Good:"
+  - markdown: |
+      `pages/user-transactions/index.yaml`
+
+  - row:
+      class: items-center gap-1
+      content:
+        - icon:
+            name: ph:x-bold
+            class: text-destructive
+        - b: "Bad:"
+  - markdown: |
+      `pages/user_transactions/index.yaml`
+
+  - row:
+      class: items-center gap-1
+      content:
+        - icon:
+            name: ph:x-bold
+            class: text-destructive
+        - b: "Also Bad:"
+  - markdown: |
+      `pages/userTransactions/index.yaml`
+
+      ### Parameter Naming
+      Use **snake_case** for parameters in routes using.
+
+  - row:
+      class: items-center gap-1
+      content:
+        - icon:
+            name: solar:verified-check-bold
+            class: text-positive
+        - b: "Good:"
+  - markdown: |
+      `pages/contacts/[contact_id]/tags/index.yaml`
+
+  - row:
+      class: items-center gap-1
+      content:
+        - icon:
+            name: ph:x-bold
+            class: text-destructive
+        - b: "Bad:"
+  - markdown: |
+      `pages/contacts/[contactId]/tags/index.yaml`
+
+  - row:
+      class: items-center gap-1
+      content:
+        - icon:
+            name: ph:x-bold
+            class: text-destructive
+        - b: "Also Bad:"
+  - markdown: |
+      `pages/contacts/[contact-id]/tags/index.yaml`
