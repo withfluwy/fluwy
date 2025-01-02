@@ -1,5 +1,13 @@
 # @fluwy/ui
 
+## 0.9.0
+
+### Minor Changes
+
+- f2cb806: Add `expires_at` option to `set_auth_token` operation. This is useful when the authentication provider gives you a `exp` timestamp from JWT standard which specifies when that token expires. This will be used to set the cookie expiration timestamp.
+- 1270996: Add `duration` and `expires_at` options to `set_cookie` operation. This is usefull when you want to specify the `duration` of a token in seconds, or when it expires with a millisecond timestamp.
+- 3cdcc2d: New `b` component for bold texts.
+
 ## 0.8.1
 
 ### Patch Changes
