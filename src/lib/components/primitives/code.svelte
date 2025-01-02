@@ -2,7 +2,7 @@
     import type { ElementProps } from '@/lib/core/contracts.js';
     import { cn } from '@/lib/core/utils/index.js';
     import { useCommon } from '../common/styles.js';
-    import hljs from 'highlight.js';
+    import hljs from './highlight.js';
     import 'highlight.js/styles/felipec.min.css';
 
     interface Props extends ElementProps {

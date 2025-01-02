@@ -3,6 +3,7 @@ import { get } from './index.js';
 import { createContext, type Context } from '@/lib/core/context/index.js';
 import { createApp } from '@/lib/index.js';
 import type { Application } from '@/lib/core/app/index.js';
+import { error, redirect } from '@sveltejs/kit';
 
 describe('get', () => {
     let context: Context;
@@ -11,6 +12,7 @@ describe('get', () => {
 
     beforeEach(() => {
         app = createApp();
+        app.config({ redirect, error });
         context = createContext();
         mockFetch = vi.fn();
         global.fetch = mockFetch;
@@ -155,7 +157,7 @@ describe('get', () => {
                 expect.objectContaining({
                     status: 404,
                     body: {
-                        message: 'Not Found',
+                        message: 'Not found',
                     },
                 })
             );

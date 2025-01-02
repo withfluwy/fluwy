@@ -377,4 +377,22 @@ describe('App', () => {
             expect(Object.keys(app['components'] || {})).not.toContain('empty-plugin');
         });
     });
+
+    describe('error handling', () => {
+        it('should throw a 404 error with default message', () => {
+            expect(() => app.notFound()).toThrow('404: Not found');
+        });
+
+        it('should throw a 404 error with custom message', () => {
+            expect(() => app.notFound('Custom not found message')).toThrow('404: Custom not found message');
+        });
+
+        it('should throw an error with custom status and message', () => {
+            expect(() => app.error(400, 'Bad request')).toThrow('400: Bad request');
+        });
+
+        it('should throw an error with custom status and undefined message', () => {
+            expect(() => app.error(500)).toThrow('500: undefined');
+        });
+    });
 });

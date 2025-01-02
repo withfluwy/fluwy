@@ -38,7 +38,7 @@ describe('set_auth_token', () => {
         const context = createContext();
         const app = createApp();
 
-        expect(async () => await set_auth_token('invalid.path', { context, app })).rejects.toThrow(
+        await expect(set_auth_token('invalid.path', { context, app })).rejects.toThrow(
             'Invalid path for [set_auth_token] operation: invalid.path. The value is undefined.'
         );
     });
@@ -60,8 +60,8 @@ describe('set_auth_token', () => {
         const context = createContext();
         const app = createApp();
 
-        expect(
-            async () => await set_auth_token({ path: 'invalid.path', name: 'custom_token' }, { context, app })
+        await expect(
+            set_auth_token({ path: 'invalid.path', name: 'custom_token' }, { context, app })
         ).rejects.toThrow('Invalid path for [set_auth_token] operation: invalid.path. The value is undefined.');
     });
 

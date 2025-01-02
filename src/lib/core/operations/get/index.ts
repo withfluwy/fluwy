@@ -3,7 +3,6 @@ import type { Operation, Operations } from '../../contracts.js';
 import { compile, hasPlaceholders } from '../../utils/compile/index.js';
 import { get as getAt } from '../../utils/index.js';
 import { abort } from '@/lib/core/utils/index.js';
-import { error } from '@sveltejs/kit';
 
 export const get: Operation = async (param: GetParam, { context, app }) => {
     const url = typeof param === 'string' ? param : param.url;
@@ -30,7 +29,7 @@ export const get: Operation = async (param: GetParam, { context, app }) => {
 
     // TODO(http.get): Add tests for the 404
     if (response.status === 404) {
-        error(404, 'Not Found');
+        app.notFound();
     }
 
     if (!response.ok) {

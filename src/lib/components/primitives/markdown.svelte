@@ -8,7 +8,7 @@
     import { useTheme } from '@/lib/core/utils/index.js';
     import { Events } from '@/lib/core/utils/events/index.js';
     import { useCommon } from '../common/styles.js';
-    import hljs from 'highlight.js';
+    import hljs from './highlight.js';
 
     interface Props extends ElementProps {
         generate_ids?: boolean;
