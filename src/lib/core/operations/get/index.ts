@@ -52,7 +52,7 @@ export type GetParam = {
      */
     url: string;
     /**
-     *
+     * The path to extract data from the response.
      */
     path?: string;
     /**

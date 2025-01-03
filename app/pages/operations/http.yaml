@@ -7,6 +7,54 @@ p: |
 spacer: mt-12
 doc.content:
   - markdown: |
+      ## get
+      The `get` operation is used to make a GET request to a given URL and inject the response into the context of
+      your operation chain. This is the overall structure of the `get` operation:
+
+      ```yaml
+      get:
+        # URL to make the GET request
+        url: string
+
+        # The path to extract the data from the response
+        path: string # optional
+
+        # list of operations to handle the response when the http status code >= 300
+        on_error: Operations # optional
+      ```
+
+      The best way to use the `get` operation is to load content to be displayed on the page. For
+      example, let's say you want to load the information of a contact in a page. And for this purpose you create a file
+      in `app/pages/contacts/[id]/index.yaml` to respond to the route `/contacts/123` (where `123` is the contact's id). 
+      This is how your `index.yaml` head could look like:
+
+      ```yaml
+      server:
+        get: https://api.example.com/contacts/${params.id}
+        vars:
+          contact: response.data
+      ```
+      The `vars` operation will create a variable called `contact` in the context of the page. Then, in the page 
+      content, you can use the `contact` object to display the contact information. Like this:
+
+      ```yaml
+      h1: Contact Page ${contact.first_name} ${contact.last_name}
+      p: ${contact.email}
+      ```
+
+      If your API usually returns the data wrapped inside a `data` object, you can use the `path` parameter to extract
+      the data from the response. For example:
+
+      ```yaml
+      server:
+        get:
+          url: https://api.example.com/contacts/${params.id}
+          path: data
+      ```
+
+      If you want to load multiple resources at once, you can use the `load` operation. Take a look at the [load](#load)
+      operation below.
+
       ## post
       The `post` operation is used to make a POST request to a given URL and inject the response into the context of
       your operation chain. This is the overall structure of the `post` operation:
@@ -131,3 +179,26 @@ doc.content:
       > **Note:** Did you see the placeholder `${form.data.id}` in the `put` operation's `url` parameter? This is a 
       template string that will be replaced with the value of whatever you have set inside the `${}` syntax, in this 
       case the `form.data.id` field. This is useful when you want to make a PUT request to a specific resource.
+
+      ## load
+
+      The `load` operation is used to make multiple GET requests to given URLs and inject the result of each request
+      into the context with the given variable name. The advantage is that you can load multiple resources at once since
+      they will be executed in parallel at the same time you set those variables.
+
+      **Example**
+
+      ```yaml
+      server:
+        load:
+          contact: https://api.example.com/contacts/${params.id}
+          permissions: https://api.example.com/users/${params.id}/permissions
+      ```
+
+      Then in your page content you can access those variables. This is an example to display the contact information
+      on the page:
+
+      ```yaml
+      h1: Contact ${contact.first_name} ${contact.last_name}
+      p: ${contact.email}
+      ```
