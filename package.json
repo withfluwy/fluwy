@@ -43,9 +43,9 @@
         "!dist/**/*.spec.*"
     ],
     "peerDependencies": {
-        "@sveltejs/kit": "^2.11.1",
-        "highlight.js": "^11.10.0",
-        "svelte": "^5.13.0"
+        "@sveltejs/kit": "^2.0.0",
+        "highlight.js": "^11.0.0",
+        "svelte": "^5.0.0"
     },
     "peerDependenciesMeta": {
         "highlight.js": {
