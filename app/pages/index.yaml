@@ -12,25 +12,48 @@ markdown:
   id: content
   generate_ids: true
   content: |
-    Welcome to [Fluwy](/), an innovative **UI App Framework** designed to revolutionize the way you build enterprise-level applications. Fluwy empowers developers, designers, and organizations to create sophisticated user interfaces quickly and efficiently using simple YML (YAML) files. By eliminating the need for extensive coding knowledge, Fluwy streamlines the development process, allowing you to focus on delivering exceptional user experiences.
+    Welcome to Fluwy, your gateway to building dynamic and elegant web applications effortlessly. Designed for 
+    developers of all skill levels, Fluwy combines the power of a YAML-driven UI framework with the flexibility to 
+    connect seamlessly to any RESTful API. Whether you're a beginner creating your first app or an experienced developer 
+    looking for efficiency, Fluwy provides the tools to make your vision a reality.
 
     ## What is Fluwy?
+    Fluwy is not just a component library—it's a complete App UI Framework crafted to simplify web application development.
 
-    Fluwy is a powerful tool that interprets YML descriptions to seamlessly integrate with API endpoints. It leverages the simplicity of YML-based configuration to define UI structures, enabling rapid development and deployment of full-stack applications. Whether you're building UIs for backend APIs or leveraging Backend-as-a-Service (BaaS) solutions like [Strapi](https://strapi.io/) or [Directus](https://directus.io/), Fluwy accelerates your workflow and reduces time to market.
+    With Fluwy, you can:
+    - Define layouts, behaviors, and themes using straightforward YAML files, eliminating the need for extensive coding.
+    - Customize applications with a plugin system, pre-built operations, and a themeable design system.
+    - Create and extend your own components, operations, and plugins for ultimate flexibility.
+    - Connect to any RESTful API, enabling limitless possibilities for data-driven apps.
 
-    ## Key Features
+    Fluwy's architecture is designed to streamline development:
+    - **Intuitive YAML Configuration**: Quickly define your app's structure and functionality.
+    - **Seamless Theming**: Tailor your app's design with Fluwy's theme system for consistent, reusable styling.
+    - **Zero Downtime Updates**: Make instant changes by saving your YAML file—no rebuilds or restarts required.
+    - **API Agnosticism**: Use Fluwy with any API, whether it's your custom backend or third-party services. Connect 
+    your Fluwy UI application with multiple API servers, creating a unified UI for all your microservices.
 
-    - **YML-Based Configuration**: Define your UI structure effortlessly using simple YML files. This approach makes it accessible for both developers and designers to contribute without deep coding expertise.
+    Whether you're building a prototype or scaling an enterprise application, Fluwy offers a developer experience that 
+    is fast, efficient, and adaptable.
 
-    - **Rapid UI Development**: Accelerate your development process by quickly creating sophisticated user interfaces. Ideal for prototyping and building production-ready UIs connected to your backend services.
+    ## Why Choose Fluwy?
+    Fluwy is designed to streamline your web application development process, offering a range of features that cater 
+    to both novice and experienced developers:
 
-    - **No Coding Required**: Minimize traditional programming. Fluwy allows non-developers to focus on visual aspects using TailwindCSS without needing to learn complex programming languages.
+    - **YAML-Driven Configuration**: Define your UI components and behaviors using straightforward YAML syntax, reducing 
+    the need for complex coding and accelerating development.
+    - **Themeable Design System**: Customize your application's appearance effortlessly with Fluwy's flexible theming 
+    capabilities, ensuring a consistent and appealing user interface.
+    - **Extensible Plugin System**: Enhance functionality by integrating custom plugins and operations, allowing you to 
+    tailor Fluwy to your specific project requirements.
+    - **Zero Downtime Deployments**: Implement changes instantly by updating your YAML files and refreshing the page, 
+    eliminating the need for application rebuilds or restarts.
+    - **API Agnostic Integration**: Seamlessly connect to any RESTful API, including multiple API servers, to build a 
+    unified UI for your microservices, providing the flexibility to build dynamic, data-driven applications without constraints.
 
-    - **TailwindCSS Integration**: Customize the look and feel of your application easily. Fluwy supports design customization through TailwindCSS, providing flexibility in styling.
+    By leveraging these features, Fluwy empowers you to create robust web applications efficiently, regardless of your development experience.
 
-    - **Seamless API Integration**: Effortlessly connect your UIs to APIs or GraphQL backend services. Fluwy is designed to work effectively with API-driven architectures.
 
-    - **Extendable with Svelte Components**: While Fluwy simplifies UI development, it also allows for the creation and extension of Svelte components when necessary, offering additional flexibility.
 
     ## Who is Fluwy For?
 
