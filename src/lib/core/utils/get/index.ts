@@ -1,5 +1,4 @@
 import type { Any } from '@/lib/core/contracts.js';
-import { isNil } from '@/lib/core/utils/index.js';
 import { expandObject } from '@/lib/core/utils/normalize-object/index.js';
 
 export function get(record: Record<string, Any>, path: string, defaultValue?: Any): Any {
@@ -10,13 +9,11 @@ export function get(record: Record<string, Any>, path: string, defaultValue?: An
     const expanded = expandObject(record);
     let value = expanded;
 
-    if (isNil(value)) return value;
-
     const pathParts = path.split('.');
 
     for (const part of pathParts) {
+        if (value === undefined || value === null) break;
         value = value[part] as Any;
-        if (isNil(value)) break;
     }
 
     return value ?? defaultValue;

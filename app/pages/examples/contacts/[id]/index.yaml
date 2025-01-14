@@ -1,0 +1,17 @@
+layout: protected
+server:
+  get: http://localhost:3000/api/contacts/${params.id}
+  vars:
+    contact: response.data
+    list:
+      - item 1
+      - item 2
+---
+h1: Param from route ${params.id}
+h3: "Contact Name: ${contact.firstName} ${contact.lastName}"
+
+for_each:
+  item_of: list
+  as: item
+  content:
+    p: ${item}

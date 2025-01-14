@@ -1,0 +1,46 @@
+server:
+  - authenticate:
+  - load:
+      current_user:
+        url: http://localhost:3000/api/users/me
+        path: user
+        on_error:
+          log: response
+      permissions: http://localhost:3000/api/access
+---
+page:
+  class: bg-neutral-50
+  body:
+    header:
+      container:
+        row:
+          class: items-center
+          content:
+            - Protected
+            - spacer:
+            - dark_mode_toggler:
+                align: end
+            - dropdown:
+                align: end
+                trigger:
+                  avatar:
+                    size: sm
+                    name: ${current_user.firstName} ${current_user.lastName}
+                    src: http://localhost:3000${current_user.avatar.url}
+                content:
+                  - dropdown_item:
+                      text: My Profile
+                      icon: solar:user-circle-linear
+                      url: /profile
+                  - dropdown_item:
+                      text: Settings
+                      icon: solar:settings-linear
+                  - dropdown_separator:
+                  - dropdown_item:
+                      text: Logout
+                      icon: solar:logout-linear
+                      on_click:
+                        unset_auth_token:
+                        goto: /login
+    container:
+      slot: default

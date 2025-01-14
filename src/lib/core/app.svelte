@@ -15,6 +15,8 @@
 
     export let data: RenderResponse;
 
+    console.log('app.svelte', data);
+
     const dialogs = useDialogs();
     const context = createContext(data.context);
 

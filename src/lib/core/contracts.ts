@@ -106,3 +106,8 @@ export interface Plugin {
      */
     plugins?: Plugin[];
 }
+
+export interface Expression {
+    check(expression: string): boolean;
+    evaluate(expression: string, context: Context): Any;
+}

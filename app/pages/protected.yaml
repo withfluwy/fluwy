@@ -1,0 +1,6 @@
+layout: protected
+server:
+  log: log from page
+---
+h1: Protected Page
+p: If you're seeing this page, you're authenticated

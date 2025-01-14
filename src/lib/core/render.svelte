@@ -4,6 +4,7 @@
     import { compile } from './utils/compile/index.js';
     import { setupContext, useContext } from './context/index.js';
     import Render from './render.svelte';
+    import Expression from '@/lib/core/expressions/expression.svelte';
 
     interface RenderProps {
         props: Any;
@@ -28,7 +29,7 @@
         component.name = componentName(rawComponent);
 
         component.value = app.getComponent(component.name);
-        component.schema = parseSchema(rawComponent[component.name]);
+        component.schema = parseTemplate(rawComponent[component.name]);
 
         return component;
     }
@@ -63,17 +64,23 @@
         return compile(String(value), context!.data);
     }
 
-    function parseSchema(schema: Any) {
-        if (typeof schema === 'string') return { content: schema };
-        if (Array.isArray(schema)) return { content: schema };
+    function parseTemplate(template: Any) {
+        if (typeof template === 'string') return { content: template };
+        if (Array.isArray(template)) return { content: template };
 
-        return schema;
+        return template;
     }
 
     function isArray() {
         const array = Boolean(Array.isArray(props) || props['0']);
 
         return array && typeof props !== 'string';
+    }
+
+    function isExpression(expression: Any) {
+        if (typeof expression !== 'string') return false;
+
+        return expression.startsWith('if ');
     }
 </script>
 
@@ -102,12 +109,14 @@
     {@const Component = app.getComponent('if')}
     <Component component={{ name: 'if' }} {...props} />
 {:else}
-    {#each propsValidEntries as [component, schema]}
+    {#each propsValidEntries as [component, template]}
         {#if component === 'slot'}
-            <Render props={schema} component={{ name: 'slot' }} />
+            <Render props={template} component={{ name: 'slot' }} />
         {:else if exists(component)}
             {@const Component = app.getComponent(component)}
-            <Component component={{ name: component }} {...parseSchema(schema)} />
+            <Component component={{ name: component }} {...parseTemplate(template)} />
+        {:else if isExpression(component)}
+            <Expression value={component} {template} />
         {:else if notFound(component)}
             <div class="border border-red-500 bg-red-50 p-3 text-red-900">
                 Component not found: <b>{component}</b>

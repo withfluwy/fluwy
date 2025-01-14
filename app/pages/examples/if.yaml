@@ -1,0 +1,23 @@
+layout: test
+server:
+  vars:
+    email: admin@example.com
+    test:
+      response:
+        status: 200
+
+  log: response
+---
+debug: test
+if test.response.status == 200:
+  button:
+    text: Response Status Is 200
+# else:
+#   - else also works
+# if email is 'admin@example.com':
+#   - work with @ symbol
+#   - if true? "ternary operator works" else "ternary operator does not work":
+# if email is not wrong@example.com and email is not admin@example.com:
+#   - it works with `and` operator
+# for post, index in response.data:
+#   - debug: post
