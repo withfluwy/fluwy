@@ -5,6 +5,7 @@ describe('get function', () => {
     it('returns the value at the specified path', () => {
         expect(get({ name: 'Marco' }, 'name')).toBe('Marco');
     });
+
     it('returns the default value if the path does not exist', () => {
         expect(get({ name: 'Marco' }, 'age', 'default')).toBe('default');
     });
@@ -12,6 +13,14 @@ describe('get function', () => {
     it('returns the default value if the path is undefined', () => {
         expect(get({}, 'age', 'default')).toBe('default');
         expect(get({ age: undefined }, 'age', 'default')).toBe('default');
+    });
+
+    it('returns null if the path is null and no default value is provided', () => {
+        expect(get({ name: null }, 'name')).toBe(null);
+    });
+
+    it('returns the default value if the path is null and a default value is provided', () => {
+        expect(get({ name: null }, 'name', 'default')).toBe('default');
     });
 
     it('returns the value from a nested object with dot notation', () => {
