@@ -1,13 +1,12 @@
 import type { Any } from '$lib/core/contracts.js';
-import { cn } from '../index.js';
+import { cn, isNil } from '../index.js';
 
 export function mergeObjects(obj1: Any, obj2: Any) {
     const result: Any = {};
-    const isUndefined = (value: unknown) => typeof value === 'undefined';
 
     if (obj1 === obj2) return obj2;
 
-    if (isUndefined(obj1) || isUndefined(obj2)) {
+    if (isNil(obj1) || isNil(obj2)) {
         return obj2 ?? obj1;
     }
 
