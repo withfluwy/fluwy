@@ -1,6 +1,6 @@
 <script lang="ts">
     import { useTheme } from '@/lib/core/utils/index.js';
-    import type { Any, ElementProps } from '@/lib/core/contracts.js';
+    import type { Any, ElementProps, Template } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
     import { Tabs } from 'bits-ui';
@@ -14,8 +14,8 @@
     interface Tab {
         id?: string;
         class?: string;
-        title: Any;
-        panel: Any;
+        title: Template;
+        panel: Template;
         outer_radius?: boolean | 'off';
     }
 
@@ -30,8 +30,8 @@
 
     function buildTab({ tab }: TabObject): Tab {
         const id = getId(tab);
-        const title = typeof tab.title === 'object' ? tab.title : { content: tab.title };
-        const panel = typeof tab.panel === 'object' ? tab.panel : { content: tab.panel };
+        const title = Array.isArray(tab.title) || typeof tab.title !== 'object' ? { content: tab.title } : tab.title;
+        const panel = Array.isArray(tab.panel) || typeof tab.panel !== 'object' ? { content: tab.panel } : tab.panel;
 
         return {
             id,

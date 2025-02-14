@@ -71,22 +71,22 @@ doc.content:
       - tab:
           title: Preview
           panel:
-            - form:
-                on_submit:
-                  post:
-                    url: /api/examples/contacts
-                    data: form.data
-                    on_error:
-                      - alert: response.status
-                content:
-                  - input:
-                      field: Email
-                      label: Email Address
-                  - button:
-                      text: Submit
-                      type: submit
-                      color: primary
-                      icon: solar:plain-linear
+            form:
+              on_submit:
+                post:
+                  url: /api/examples/contacts
+                  data: form.data
+                  on_error:
+                    - alert: response.status
+              content:
+                - input:
+                    field: Email
+                    label: Email Address
+                - button:
+                    text: Submit
+                    type: submit
+                    color: primary
+                    icon: solar:plain-linear
       - tab:
           title: Code
           class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800

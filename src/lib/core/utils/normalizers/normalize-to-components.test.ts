@@ -323,29 +323,6 @@ describe('normalizeToComponents', () => {
                 },
             ],
         },
-        // 'handles component properties': {
-        //     input: {
-        //         component: {
-        //             class: 'some css classes',
-        //             id: 'some id',
-        //             something: true,
-        //             content: 'this is the content',
-        //         },
-        //     },
-        //     output: [
-        //         {
-        //             name: 'component',
-        //             props: {
-        //                 something: true,
-        //                 content: 'this is the content',
-        //             },
-        //             attrs: {
-        //                 id: 'some id',
-        //                 class: 'some css classes',
-        //             },
-        //         },
-        //     ],
-        // },
         'ignores reserved names': {
             input: {
                 id: 'some id',
@@ -391,16 +368,6 @@ describe('normalizeToComponents', () => {
             expect(result).toEqual(testCase.output);
         });
     });
-
-    // it('throws an exception if trying to normalize component props as components', () => {
-    //     const reservedNames = ['slot', 'content', 'component', 'class', 'vars'];
-
-    //     for (const name of reservedNames) {
-    //         expect(() => normalizeToComponents({ [name]: 'some value' })).toThrowError(
-    //             `Failed to normalize component: ${JSON.stringify({ [name]: 'some value' })}`
-    //         );
-    //     }
-    // });
 });
 
 type TestCases = {

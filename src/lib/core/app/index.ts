@@ -21,6 +21,7 @@ import type {
 import { str } from '../utils/index.js';
 import { AbortOperationError, UnauthenticatedError } from '@/lib/core/errors/index.js';
 import { createContext } from '@/lib/core/context/index.js';
+import { evaluate } from '@/lib/core/controls/condition/index.js';
 
 type DocumentContent = {
     head?: string;
@@ -296,34 +297,112 @@ export class Application {
         return handle(args, { context, previousResult, app: this });
     }
 
+    private extractOperationEntries(entries: [string, Any][]) {
+        return {
+            mainIf: entries.find(([key]) => key.startsWith('if ')),
+            elseIfs: entries.filter(([key]) => key.startsWith('else if ')),
+            elseEntry: entries.find(([key]) => key === 'else'),
+            regularOps: entries.filter(
+                ([key]) => !key.startsWith('if ') && !key.startsWith('else if ') && key !== 'else'
+            ),
+        };
+    }
+
+    private async handleRegularOperations(operations: [string, Any][], context: Context, result: Any): Promise<Any> {
+        let currentResult = result;
+        for (const [operation, args] of operations) {
+            currentResult = await this.handleOperation(operation, args, context, currentResult);
+        }
+        return currentResult;
+    }
+
+    private async handleConditionalOperations(
+        mainIf: [string, Any],
+        elseIfs: [string, Any][],
+        elseEntry: [string, Any] | undefined,
+        context: Context,
+        result: Any,
+        evaluate: (condition: string, context: Context) => boolean
+    ): Promise<Any> {
+        const [condition, ops] = mainIf;
+
+        if (evaluate(condition, context)) {
+            return await this.handleOperations(ops, context, result);
+        }
+
+        // Try else-if conditions
+        for (const [elseIfCond, elseIfOps] of elseIfs) {
+            // Convert 'else if x' to 'if x' for evaluation
+            const ifCondition = 'if ' + elseIfCond.substring(8);
+            if (evaluate(ifCondition, context)) {
+                return await this.handleOperations(elseIfOps, context, result);
+            }
+        }
+
+        // If no else-if matched, try else
+        if (elseEntry) {
+            const [, elseOps] = elseEntry;
+            return await this.handleOperations(elseOps, context, result);
+        }
+
+        return result;
+    }
+
+    private async handleOperationBlock(
+        entries: [string, Any][],
+        context: Context,
+        result: Any,
+        evaluate: (condition: string, context: Context) => boolean
+    ): Promise<Any> {
+        const { mainIf, elseIfs, elseEntry, regularOps } = this.extractOperationEntries(entries);
+
+        let currentResult = result;
+
+        // Handle conditional operations first
+        if (mainIf) {
+            currentResult = await this.handleConditionalOperations(
+                mainIf,
+                elseIfs,
+                elseEntry,
+                context,
+                currentResult,
+                evaluate
+            );
+        }
+
+        // Handle regular operations
+        currentResult = await this.handleRegularOperations(regularOps, context, currentResult);
+
+        return currentResult;
+    }
+
     async handleOperations(operations: Any, context: Context, initialResults?: Any): Promise<Any> {
         let result = initialResults;
 
-        if (!operations) return;
+        if (!operations) return result;
 
         try {
-            if (typeof operations === 'string') return await this.handleOperation(operations, {}, context, result);
-            if (typeof operations !== 'object')
+            if (typeof operations === 'string') {
+                return await this.handleOperation(operations, {}, context, result);
+            }
+
+            if (typeof operations !== 'object') {
                 throw new Error(`Invalid User Action document [${JSON.stringify(operations)}]`);
+            }
 
             if (Array.isArray(operations)) {
                 for (const operation of operations) {
-                    for (const [action, args] of Object.entries(operation)) {
-                        result = await this.handleOperation(action, args, context, result);
-                    }
+                    const entries = Object.entries(operation);
+                    result = await this.handleOperationBlock(entries, context, result, evaluate);
                 }
-
                 return result;
             }
 
-            for (const [operation, args] of Object.entries(operations || {})) {
-                result = await this.handleOperation(operation, args, context, result);
-            }
-
-            return result;
+            // Handle object format
+            const entries = Object.entries(operations || {});
+            return await this.handleOperationBlock(entries, context, result, evaluate);
         } catch (error) {
-            if (error instanceof AbortOperationError) return;
-
+            if (error instanceof AbortOperationError) return result;
             throw error;
         }
     }
