@@ -1,22 +1,16 @@
 <script lang="ts">
     import { useTheme } from '@/lib/core/utils/index.js';
-    import type { Any, ElementProps, Template } from '@/lib/core/contracts.js';
+    import type { Any, ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
-    import { Tabs } from 'bits-ui';
     import { Random } from '@/lib/core/utils/random/index.js';
+    import { type Tab, type TabsContract } from './types.js';
+    import { setTabs } from './composables.js';
+    import { onMount } from 'svelte';
 
     interface Props extends ElementProps {
         triggers: Any;
         content: TabObject[];
-    }
-
-    interface Tab {
-        id?: string;
-        class?: string;
-        title: Template;
-        panel: Template;
-        outer_radius?: boolean | 'off';
     }
 
     interface TabObject {
@@ -26,7 +20,7 @@
     const { content, ...props }: Props = $props();
     const tabRootTheme = useTheme('common.tab.root');
     const tabListTheme = useTheme('common.tab.list');
-    const tabs = $derived(content.map(buildTab));
+    const tabsList = $derived(content.map(buildTab));
 
     function buildTab({ tab }: TabObject): Tab {
         const id = getId(tab);
@@ -35,6 +29,7 @@
 
         return {
             id,
+            active_by_default: tab.active_by_default ?? false,
             title: {
                 ...title,
                 id,
@@ -58,18 +53,35 @@
         return Random.id();
     }
 
-    const titles = $derived(tabs.map((tab) => tab.title));
-    const panels = $derived(tabs.map((tab) => tab.panel));
+    const titles = $derived(tabsList.map((tab) => tab.title));
+    const panels = $derived(tabsList.map((tab) => tab.panel));
+
+    const tabs: TabsContract = $state<TabsContract>({
+        isActive(id) {
+            return id === this.activeTab?.id;
+        },
+        setActiveTab(id) {
+            this.activeTab = titles.find((tab) => tab.id === id);
+        },
+    });
+
+    onMount(() => {
+        tabs.setActiveTab(tabsList.find((tab) => tab.active_by_default)?.id ?? tabsList[0]?.id ?? '');
+    });
+
+    setTabs(tabs);
 </script>
 
-<Tabs.Root class={cn('w-full min-w-0', tabRootTheme, props.class)}>
-    <Tabs.List class={cn('relative', tabListTheme)}>
+<div class={cn('relative w-full min-w-0 flex-col', tabRootTheme, props.class)}>
+    <div role="tablist" class={cn('relative flex items-center', tabListTheme)}>
         {#each titles as title}
             <Render props={{ tab: title }} />
         {/each}
-    </Tabs.List>
+    </div>
 
     {#each panels as panel}
-        <Render props={{ tab_panel: panel }} />
+        {#if tabs.isActive(panel.for)}
+            <Render props={{ tab_panel: panel }} />
+        {/if}
     {/each}
-</Tabs.Root>
+</div>

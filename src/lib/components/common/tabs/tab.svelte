@@ -2,12 +2,12 @@
     import type { Any, ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
-    import { Tabs } from 'bits-ui';
     import { useCommon } from '../styles.js';
     import { onMount } from 'svelte';
     import { userPrefersMode } from 'mode-watcher';
     import { browser } from '$app/environment';
     import { useTheme } from '@/lib/core/utils/index.js';
+    import { useTabs } from './composables.js';
 
     interface Props extends ElementProps {
         id: string;
@@ -15,11 +15,15 @@
     }
 
     const props: Props = $props();
+    const tabs = useTabs();
     const themeOuterRadius = useTheme('common.tab.outer_radius') ?? true;
+
     let outerRadius = $derived(props.outer_radius === false || props.outer_radius === 'off' ? false : themeOuterRadius);
     let tab: Any = $state(null);
     let cachedBgColor = 'rgb(255 255 255)';
-    let style: CSSStyleDeclaration | undefined = $derived.by(() => (browser ? getComputedStyle(tab) : undefined));
+    let style: CSSStyleDeclaration | undefined = $derived.by(() => {
+        return browser && tab ? getComputedStyle(tab) : undefined;
+    });
     let observer: MutationObserver | null = null;
 
     const commonBorderColor = useCommon('border_color');
@@ -78,26 +82,45 @@
         observer = new MutationObserver(callback);
         observer.observe(node, { childList: true, subtree: true, attributes: true });
     }
+
+    function onclick() {
+        tabs.setActiveTab(props.id);
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onclick();
+        }
+    }
 </script>
 
-<Tabs.Trigger
-    value={props.id}
-    bind:el={tab as Any}
+<div
+    role="tab"
+    tabindex="0"
+    data-value={props.id}
+    bind:this={tab as Any}
+    {onclick}
+    onkeydown={handleKeyDown}
     class={cn(
         commonBorderRadius,
         commonBorderColor,
         commonBackgroundColor,
-        'relative -mb-px border-x border-t px-4 py-1.5 text-sm [&:not([data-state=active])]:border-transparent [&:not([data-state=active])]:bg-transparent',
+        'relative z-10 -mb-px cursor-pointer border-x border-t px-4 py-1.5 text-sm [&:not([data-state=active])]:border-transparent [&:not([data-state=active])]:bg-transparent',
         tabClassTheme,
         tabTitleTheme,
+        {
+            'border-transparent bg-transparent': !tabs.isActive(props.id),
+        },
         props.class
     )}
+    data-state={tabs.isActive(props.id) ? 'active' : 'inactive'}
 >
     <Render props={props.content} />
-</Tabs.Trigger>
+</div>
 
 <style>
-    :global(div[role='tablist'] > button[role='tab'][data-state='active']:not([disabled]):after) {
+    :global(div[role='tablist'] > div[role='tab'][data-state='active']:not([disabled]):after) {
         z-index: 1;
         content: '';
         display: block;
@@ -130,7 +153,7 @@
         background-image: var(--radius-start), var(--radius-end);
     }
 
-    :global(div[role='tablist'] > button[role='tab'][data-state='active']:not([disabled]):first-child:after) {
+    :global(div[role='tablist'] > div[role='tab'][data-state='active']:not([disabled]):first-child:after) {
         background-position: top right;
         background-image: var(--radius-end);
     }

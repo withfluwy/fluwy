@@ -1,4 +1,3 @@
-// import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types.js';
 import '@/doc.js';
 import { app } from '$lib/index.js';
