@@ -18,7 +18,7 @@
         description,
         width_dynamic,
         error_path,
-        value: initialValue = $bindable(),
+        value: incomingValue = $bindable(),
         ...props
     }: InputProps = $props();
 
@@ -35,12 +35,12 @@
         context.get('form') ??
         ({
             data: {
-                [field ?? id]: initialValue ?? '',
+                [field ?? id]: incomingValue ?? '',
             },
             errors: {},
             pristine: true,
         } satisfies FormState);
-
+    let initialValue = $state(incomingValue);
     let value = $state(form.data[field ?? id]);
     let inputWidth = $state('auto');
     let input = $state<HTMLInputElement | null>(null);
@@ -56,8 +56,13 @@
         inputWidth = `${Math.max(sizer.offsetWidth + padding, 36)}px`;
     });
 
+    /**
+     * Update the input value if the value is changed from the outside via prop binding.
+     */
     $effect(() => {
-        form.data[field ?? id] = value = initialValue;
+        if (initialValue === incomingValue) return;
+
+        form.data[field ?? id] = value = initialValue = incomingValue;
     });
 
     $effect(() => {
