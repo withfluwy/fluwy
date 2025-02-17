@@ -97,7 +97,7 @@
 
 {#snippet pageInput()}
     <Input
-        value={page}
+        bind:value={page}
         oninput={debounce(onInputPageChange, commonDebounce)}
         disabled={fetching}
         type="text"
