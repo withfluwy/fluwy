@@ -80,7 +80,7 @@ doc.content:
                     - alert: response.status
               content:
                 - input:
-                    field: Email
+                    field: email
                     label: Email Address
                 - button:
                     text: Submit
@@ -103,7 +103,7 @@ doc.content:
                         - alert: response.status
                   content:
                     - input:
-                        field: Email
+                        field: email
                         label: Email Address
                     - button:
                         text: Submit
@@ -141,7 +141,7 @@ doc.content:
                       - alert: response.statusText
                 content:
                   - input:
-                      field: Email
+                      field: email
                       label: Email Address
                   - button:
                       text: Update
@@ -167,7 +167,7 @@ doc.content:
                         - alert: response.statusText
                   content:
                     - input:
-                        field: Email
+                        field: email
                         label: Email Address
                     - button:
                         text: Update
