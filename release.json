@@ -1,0 +1,69 @@
+{
+  "changesets": [
+    {
+      "releases": [
+        {
+          "name": "@fluwy/ui",
+          "type": "minor"
+        }
+      ],
+      "summary": "Add support conditions to the template. `if`, `else if`, and `else` are supported.",
+      "id": "great-suits-unite"
+    },
+    {
+      "releases": [
+        {
+          "name": "@fluwy/ui",
+          "type": "patch"
+        }
+      ],
+      "summary": "Fix compilation of context variables for `vars` operation.",
+      "id": "long-ducks-call"
+    },
+    {
+      "releases": [
+        {
+          "name": "@fluwy/ui",
+          "type": "minor"
+        }
+      ],
+      "summary": "Fix tabs rendering problems upon navigation. Adds `active_by_default` boolean property to `tab` component, the first tab with this boolean property set to `true` will be set as the active tab.",
+      "id": "rich-berries-ring"
+    },
+    {
+      "releases": [
+        {
+          "name": "@fluwy/ui",
+          "type": "minor"
+        }
+      ],
+      "summary": "Add support to conditions in operations",
+      "id": "sixty-brooms-sleep"
+    },
+    {
+      "releases": [
+        {
+          "name": "@fluwy/ui",
+          "type": "patch"
+        }
+      ],
+      "summary": "Fix `get` helper to return `null` if the value is null from the variable search.",
+      "id": "tasty-mangos-applaud"
+    }
+  ],
+  "releases": [
+    {
+      "name": "@fluwy/ui",
+      "type": "minor",
+      "oldVersion": "0.9.0",
+      "changesets": [
+        "great-suits-unite",
+        "long-ducks-call",
+        "rich-berries-ring",
+        "sixty-brooms-sleep",
+        "tasty-mangos-applaud"
+      ],
+      "newVersion": "0.10.0"
+    }
+  ]
+}
