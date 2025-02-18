@@ -1,0 +1,91 @@
+layout: test
+server:
+  vars:
+    email: admin@example.com
+    name: Marco Avila
+    test:
+      response:
+        status: 200
+    permissions: ["read", "write"]
+    settings:
+      enabled: true
+      theme: "dark"
+      features: ["a", "b", "c"]
+    age: 25
+    score: 85.5
+    items: [1, 2, 3, 4, 5]
+    data: null
+---
+container:
+  class: pt-6 grid grid-cols-2
+  content:
+    - column:
+        - h3: Basic Conditions
+
+        - if test.response.status is 200:
+            doc.check_pass: PASS `if test.response.status is 200:` to be true
+          else:
+            doc.check_fail: FAIL `if test.response.status is 200:` returned false
+        - if email is 'admin@example.com':
+            doc.check_pass: PASS `if email is 'admin@example.com'` to be true
+        - if email is not "wrong@example.com" and email is "admin@example.com":
+            doc.check_pass: PASS `if email is not "wrong@example.com" and email is "admin@example.com":` to be true
+        - if false:
+            doc.check_fail: FAIL `if false:` to be true
+          else:
+            doc.check_pass: PASS `else:` of `if false:`.
+        - if email is admin@example.com:
+            - doc.check_pass: PASS `if email is admin@example.com:` to be true
+        - if name is Marco Avila:
+            - doc.check_pass: PASS `if name is Marco Avila:` to be true
+
+        - h3: Number Comparisons
+        - if age > 20:
+            doc.check_pass: PASS `if age > 20:` to be true
+        - if age >= 25:
+            doc.check_pass: PASS `if age >= 25:` to be true
+        - if age < 30:
+            doc.check_pass: PASS `if age < 30:` to be true
+        - if score > 80.0:
+            doc.check_pass: PASS `if score > 80.0:` to be true
+
+        - h3: Array Operations
+        - if "write" in permissions:
+            doc.check_pass: PASS `if "write" in permissions:` to be true
+        - if 3 in items:
+            doc.check_pass: PASS `if 3 in items:` to be true
+        - if "d" in settings.features:
+            doc.check_fail: FAIL `if "d" in settings.features:` to be true
+          else:
+            doc.check_pass: PASS `else:` of `if "d" in settings.features:`
+
+    - column:
+        - h3: Complex Conditions
+        - if (age > 20 and settings.enabled) or settings.theme is "dark":
+            doc.check_pass: PASS `if (age > 20 and settings.enabled) or settings.theme is "dark":` to be true
+
+        - h3: Null Checks
+        - if data is null:
+            doc.check_pass: PASS `if data is null:` to be true
+        - if data is not null:
+            doc.check_fail: FAIL `if data is not null:` to be true
+          else:
+            doc.check_pass: PASS `else:` of `if data is not null:`
+
+        - h3: Boolean Operations
+        - if settings.enabled:
+            doc.check_pass: PASS `if settings.enabled:` to be true
+        - if settings.enabled is true:
+            doc.check_pass: PASS `if settings.enabled is true:` to be true
+        - if not settings.enabled:
+            doc.check_fail: FAIL `if not settings.enabled:` to be true
+          else:
+            doc.check_pass: PASS `else:` of `if not settings.enabled:`
+
+        - h3: Property Existence
+        - if "theme" in settings:
+            doc.check_pass: PASS `if "theme" in settings:` to be true
+        - if "unknown" in settings:
+            doc.check_fail: FAIL `if "unknown" in settings:` to be true
+          else:
+            doc.check_pass: PASS `else:` of `if "unknown" in settings:`
