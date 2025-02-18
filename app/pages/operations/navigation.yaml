@@ -40,7 +40,7 @@ doc.content:
                   text: Go to Plugins
                   icon: solar:widget-add-linear
                   on_click:
-                    goto: /plugins
+                    goto: /concepts/plugins
               - button:
                   text: Star on Github
                   icon: mdi:github
@@ -59,7 +59,7 @@ doc.content:
                       text: Go to Plugins
                       icon: solar:widget-add-linear
                       on_click:
-                        goto: /plugins
+                        goto: /concepts/plugins
                   - button:
                       text: Star on Github
                       icon: mdi:github

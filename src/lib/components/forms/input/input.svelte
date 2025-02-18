@@ -10,7 +10,17 @@
     import type { FormState } from '@/lib/components/forms/form/types.js';
     import { onMount } from 'svelte';
 
-    let { field, oninput, label, size, description, width_dynamic, error_path, ...props }: InputProps = $props();
+    let {
+        field,
+        oninput,
+        label,
+        size,
+        description,
+        width_dynamic,
+        error_path,
+        value: incomingValue = $bindable(),
+        ...props
+    }: InputProps = $props();
 
     const id = Random.id();
     const spinner = useTheme('common.spinner', Common.spinner);
@@ -25,12 +35,12 @@
         context.get('form') ??
         ({
             data: {
-                [field ?? id]: props.value ?? '',
+                [field ?? id]: incomingValue ?? '',
             },
             errors: {},
             pristine: true,
         } satisfies FormState);
-
+    let initialValue = $state(incomingValue);
     let value = $state(form.data[field ?? id]);
     let inputWidth = $state('auto');
     let input = $state<HTMLInputElement | null>(null);
@@ -44,6 +54,15 @@
         sizer.style.fontSize = getComputedStyle(input as Element).fontSize;
         const padding = 20;
         inputWidth = `${Math.max(sizer.offsetWidth + padding, 36)}px`;
+    });
+
+    /**
+     * Update the input value if the value is changed from the outside via prop binding.
+     */
+    $effect(() => {
+        if (initialValue === incomingValue) return;
+
+        form.data[field ?? id] = value = initialValue = incomingValue;
     });
 
     $effect(() => {

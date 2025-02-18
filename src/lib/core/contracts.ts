@@ -39,7 +39,8 @@ export interface Component<T = Any> {
 export interface ElementProps {
     id?: string;
     class?: string;
-    content?: Any;
+    content?: Template;
+    [key: string]: Template;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

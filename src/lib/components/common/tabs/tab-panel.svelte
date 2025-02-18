@@ -2,10 +2,10 @@
     import type { ElementProps } from '@/lib/core/contracts.js';
     import { Render } from '@/lib/core/index.js';
     import { cn } from '@/lib/core/utils/index.js';
-    import { Tabs } from 'bits-ui';
     import { useCommon } from '../styles.js';
     import { useTheme } from '@/lib/core/utils/index.js';
     import { onMount } from 'svelte';
+    import { useTabs } from './composables.js';
 
     interface Props extends ElementProps {
         for: string;
@@ -13,6 +13,7 @@
     }
 
     const { for: id, outer_radius = true, ...props }: Props = $props();
+    const tabs = useTabs();
 
     const themeOuterRadius = useTheme('common.tab.outer_radius') ?? true;
     let outerRadius = $derived(outer_radius === false || outer_radius === 'off' ? false : themeOuterRadius);
@@ -24,9 +25,7 @@
     const tabPanelTheme = useTheme('common.tab.panel');
 
     onMount(() => {
-        const tabs = document.querySelectorAll(
-            `button[role=tab][data-value="${id}"]`
-        ) as globalThis.NodeListOf<HTMLElement>;
+        const tabs = document.querySelectorAll(`[role=tab][data-value="${id}"]`) as globalThis.NodeListOf<HTMLElement>;
 
         tabs.forEach(removeTopLeftRadiusOfTab);
     });
@@ -52,17 +51,18 @@
     }
 </script>
 
-<Tabs.Content
+<div
     class={cn(
         commonBgColor,
         commonBorderRadius,
         commonBorderColor,
-        'overflow-auto border p-4',
+        'relative z-0 overflow-auto border p-4',
         tabClassTheme,
         tabPanelTheme,
         props.class
     )}
-    value={id}
+    role="tabpanel"
+    aria-labelledby={tabs.activeTab?.id}
 >
     <Render props={props.content} />
-</Tabs.Content>
+</div>

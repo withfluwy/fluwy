@@ -1,20 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { Response } from './http-responses.fixture.js';
 import { checkScreenshot } from '../../utils.js';
+import { mockHttpRequests } from './http-mocks.js';
 
 test('table component', async ({ page }) => {
-    await page.route(
-        'http://localhost:3000/items/contacts?meta=*&fields=*.*&page=1&limit=10&sort=-id',
-        async (route) => {
-            await route.fulfill({ body: JSON.stringify(Response.page1) });
-        }
-    );
-    await page.route(
-        'http://localhost:3000/items/contacts?meta=*&fields=*.*&page=2&limit=10&sort=-id',
-        async (route) => {
-            await route.fulfill({ body: JSON.stringify(Response.page2) });
-        }
-    );
+    await mockHttpRequests(page);
 
     await page.goto('/components/tables/tests');
 
