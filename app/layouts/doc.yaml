@@ -23,18 +23,18 @@ page:
     body:
       sidebar:
         - menu_item:
-            icon: solar:hand-stars-linear
+            icon: solar:hand-stars-line-duotone
             text: Introduction
             url: /
         - menu_item:
-            icon: solar:compass-linear
+            icon: solar:compass-big-line-duotone
             text: Getting Started
             url: /getting-started
 
         - menu_group:
             header: Concepts
             active_if_starts_with: /concepts
-            icon: solar:widget-add-linear
+            icon: solar:widget-add-line-duotone
             content:
               - menu_item: { text: Routing, url: /concepts/routing }
               - menu_item: { text: Theming, url: /concepts/theming }
@@ -44,7 +44,7 @@ page:
         - menu_group:
             header: Components
             active_if_starts_with: /components
-            icon: solar:three-squares-linear
+            icon: solar:three-squares-line-duotone
             content:
               - menu_item:
                   text: Button
@@ -77,7 +77,7 @@ page:
         - menu_group:
             header: Operations
             active_if_starts_with: /operations
-            icon: solar:checklist-linear
+            icon: solar:checklist-bold-duotone
             content:
               - menu_item: { text: Overview, url: /operations }
               - menu_item: { text: Auth, url: /operations/auth }
@@ -86,6 +86,14 @@ page:
               - menu_item: { text: Http, url: /operations/http }
               - menu_item: { text: Navigation, url: /operations/navigation }
 
+        - menu_group:
+            header: Controls
+            active_if_starts_with: /controls
+            icon: solar:branching-paths-down-line-duotone
+            content:
+              - menu_item:
+                  text: Conditions
+                  url: /controls/conditions
       aside:
         class: pt-10 border-0
         table_of_contents:
