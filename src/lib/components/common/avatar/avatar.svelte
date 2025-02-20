@@ -26,7 +26,7 @@
 </script>
 
 <Avatar.Root
-    class={cn(commonBorderColor, avatarSize, initialsSize, 'flex-shrink-0 rounded-full uppercase', props.class)}
+    class={cn(commonBorderColor, avatarSize, initialsSize, 'shrink-0 rounded-full uppercase', props.class)}
 >
     <div
         class={cn(

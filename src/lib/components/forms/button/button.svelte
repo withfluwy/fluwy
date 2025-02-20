@@ -77,10 +77,10 @@
     let defaultColorClasses: typeof Variants = $derived(
         color === 'default'
             ? {
-                  filled: 'text-color-900 dark:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 bg-color-contrast dark:bg-color-700/50 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 border-color-200 dark:border-color-700',
+                  filled: 'text-color-900 dark:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 bg-color-contrast dark:bg-color-700/50 enabled:hover:bg-color-100 dark:enabled:hover:bg-color-700 border-color-200 dark:border-color-700',
                   outline:
-                      'text-color-900 dark:text-color-contrast enabled:bg-white enabled:dark:bg-color-700/50 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 focus:ring-color dark:focus:ring-color border-color-400 dark:border-color-400',
-                  ghost: 'text-color-900 dark:text-color-contrast/75 enabled:dark:hover:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 enabled:hover:bg-color-100 enabled:dark:hover:bg-color-700 border-transparent dark:border-transparent',
+                      'text-color-900 dark:text-color-contrast enabled:bg-white dark:enabled:bg-color-700/50 enabled:hover:bg-color-100 dark:enabled:hover:bg-color-700 focus:ring-color dark:focus:ring-color border-color-400 dark:border-color-400',
+                  ghost: 'text-color-900 dark:text-color-contrast/75 dark:enabled:hover:text-color-contrast focus:ring-color-200 dark:focus:ring-color-700 enabled:hover:bg-color-100 dark:enabled:hover:bg-color-700 border-transparent dark:border-transparent',
                   link: 'text-color-900 underline decoration-color-500 enabled:hover:decoration-2 dark:text-color-contrast focus:ring-color-200',
               }
             : ({} as typeof Variants)
@@ -106,7 +106,7 @@
     {type}
     class={cn(
         commonBorderColor,
-        `relative flex shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap shadow-sm ring-offset-white transition-all duration-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-color focus:ring-offset-2 enabled:active:scale-[0.99] dark:ring-offset-black`,
+        `focus:ring-color relative flex shrink-0 cursor-pointer items-center justify-center gap-1 overflow-hidden whitespace-nowrap shadow-xs ring-offset-white transition-all duration-75 hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden enabled:active:scale-[0.99] dark:ring-offset-black`,
         sizes[size],
         variants[variant],
         commonBorderRadiuses[size],

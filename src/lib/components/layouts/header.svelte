@@ -15,7 +15,7 @@
     class={cn(
         commonBorderColor,
         commonBackgroundColor,
-        'sticky top-0 z-[2] flex min-h-14 items-center gap-3 border-b bg-gray-50/90 px-4 py-3 backdrop-blur dark:bg-neutral-800/80',
+        'sticky top-0 z-2 flex min-h-14 items-center gap-3 border-b bg-gray-50/90 px-4 py-3 backdrop-blur-sm dark:bg-neutral-800/80',
         layoutHeaderTheme,
         props.class
     )}

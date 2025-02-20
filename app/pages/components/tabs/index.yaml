@@ -4,7 +4,7 @@ h2: Tabs Component
 p: Tabs can be used to create a tabbed interface to switch between different views.
 doc.content:
   - h3:
-      class: "!mt-12"
+      class: "mt-12!"
       content: Simple Tabs
   - tabs:
       - tab:
@@ -20,7 +20,7 @@ doc.content:
                   title: Tab 2
                   panel: Content of tab 2
       - tab:
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           title: Code
           panel:
             class: p-2
@@ -36,7 +36,7 @@ doc.content:
                       title: "Tab 2"
                       panel: "Content of tab 2"
       - tab:
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           title: Structure
           panel:
             class: p-2
@@ -78,7 +78,7 @@ doc.content:
                   class: rounded-[20px] border mb-2
                   outer_radius: off
                   title:
-                    class: bg-primary dark:bg-primary text-primary-contrast dark:text-primary-contrast border-primary dark:border-primary dark:[&:is([data-state=active])]:bg-primary dark:[&:is([data-state=active])]:text-primary-contrast dark:text-white
+                    class: bg-primary dark:bg-primary text-primary-contrast dark:text-primary-contrast border-primary dark:border-primary dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-contrast dark:text-white
                     content: Tab 1
                   panel:
                     class:
@@ -87,11 +87,11 @@ doc.content:
                   class: rounded-[20px] border mb-2
                   outer_radius: off
                   title:
-                    class: bg-red-500 dark:bg-red-500 border-red-500 dark:border-red-500 [&:is([data-state=active])]:text-white dark:[&:is([data-state=active])]:text-white
+                    class: bg-red-500 dark:bg-red-500 border-red-500 dark:border-red-500 data-[state=active]:text-white dark:data-[state=active]:text-white
                     content: Tab 2
                   panel: Content of tab 2
       - tab:
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           title: Code
           panel:
             class: p-2
@@ -103,7 +103,7 @@ doc.content:
                       class: rounded-[20px] border mb-2
                       outer_radius: off
                       title:
-                        class: bg-primary dark:bg-primary text-primary-contrast dark:text-primary-contrast border-primary dark:border-primary dark:[&:is([data-state=active])]:bg-primary dark:[&:is([data-state=active])]:text-primary-contrast dark:text-white
+                        class: bg-primary dark:bg-primary text-primary-contrast dark:text-primary-contrast border-primary dark:border-primary dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-contrast dark:text-white
                         content: Tab 1
                       panel:
                         class:
@@ -112,7 +112,7 @@ doc.content:
                       class: rounded-[20px] border mb-2
                       outer_radius: off
                       title:
-                        class: bg-red-500 dark:bg-red-500 border-red-500 dark:border-red-500 [&:is([data-state=active])]:text-white dark:[&:is([data-state=active])]:text-white
+                        class: bg-red-500 dark:bg-red-500 border-red-500 dark:border-red-500 data-[state=active]:text-white dark:data-[state=active]:text-white
                         content: Tab 2
                       panel: Content of tab 2
   - h3: Theme Variables
@@ -120,7 +120,7 @@ doc.content:
   - tabs:
       - tab:
           title: Variables
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:

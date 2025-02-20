@@ -27,7 +27,7 @@
     style:height
     class={cn(
         commonBorderColor,
-        'sticky z-[1] hidden h-screen w-64 shrink-0 overflow-y-auto border-l p-3 xl:block',
+        'sticky z-1 hidden h-screen w-64 shrink-0 overflow-y-auto border-l p-3 xl:block',
         layoutAsideTheme,
         props.class
     )}

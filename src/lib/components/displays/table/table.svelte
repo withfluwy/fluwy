@@ -133,7 +133,7 @@
     {#if loading}
         <div
             transition:blur
-            class="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur dark:bg-neutral-800/50"
+            class="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-sm dark:bg-neutral-800/50"
         >
             <Icon name={spinner} />
         </div>

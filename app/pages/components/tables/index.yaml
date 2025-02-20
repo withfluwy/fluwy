@@ -49,7 +49,7 @@ doc.content:
                     date: ${record.created_at}
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -72,7 +72,7 @@ doc.content:
                       content: ${record.created_at}
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -147,7 +147,7 @@ doc.content:
                       on_click: operations
       - tab:
           title: Theme Settings
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -212,7 +212,7 @@ doc.content:
               for: contacts_table
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -266,7 +266,7 @@ doc.content:
               for: contacts_table
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -275,7 +275,7 @@ doc.content:
                   for: contacts_table
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml

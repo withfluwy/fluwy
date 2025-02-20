@@ -20,7 +20,7 @@ doc.content:
                 alert: Button clicked!
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -33,7 +33,7 @@ doc.content:
                     alert: Button clicked!
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -52,7 +52,7 @@ doc.content:
                   on_click: # Operations
       - tab:
           title: Theme Settings
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -94,7 +94,7 @@ doc.content:
                     loading: true
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -150,7 +150,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -198,7 +198,7 @@ doc.content:
                     size: lg
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -239,7 +239,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -284,7 +284,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -333,7 +333,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -382,7 +382,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -431,7 +431,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -475,7 +475,7 @@ doc.content:
                     variant: my-gradient-variant
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -491,7 +491,7 @@ doc.content:
                     variant: my-gradient-variant
       - tab:
           title: Theme Settings
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -500,7 +500,7 @@ doc.content:
                 forms:
                   button:
                     variants:
-                      my-gradient-variant: bg-gradient-to-r from-color-500 to-purple-500 text-white
+                      my-gradient-variant: bg-linear-to-r from-color-500 to-purple-500 text-white
 
   - h3: Custom Sizes
   - markdown: |
@@ -514,7 +514,7 @@ doc.content:
               size: my-size
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -525,7 +525,7 @@ doc.content:
                   size: my-size
       - tab:
           title: Theme Settings
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -570,7 +570,7 @@ doc.content:
                     variant: link
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:
@@ -594,7 +594,7 @@ doc.content:
                     variant: link
       - tab:
           title: Theme Settings
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-2
             code:

@@ -127,12 +127,12 @@
                 commonBackgroundColor,
                 commonBorderRadius,
                 sizes[size || defaultSize],
-                'peer w-full border shadow-sm outline-none ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
+                'peer w-full border shadow-xs outline-hidden ring-inset ring-primary transition-all duration-200 focus:border-primary focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
                 inputBaseTheme,
                 props.class,
                 { 'pl-9': props.icon },
                 { 'pr-9': props.trailing_icon || props.loading },
-                { '!border-destructive ring-destructive focus:border-destructive': errors?.length },
+                { 'border-destructive! ring-destructive focus:border-destructive': errors?.length },
                 { 'min-w-9 p-0 text-center': width_dynamic }
             )}
             {value}

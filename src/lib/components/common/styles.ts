@@ -13,7 +13,7 @@ export const Common = {
         sm: 'rounded-md',
     },
     border_color: 'border-neutral-200 dark:border-neutral-700',
-    foreground_color: 'bg-black/5 dark:bg-white/10 backdrop-blur',
+    foreground_color: 'bg-black/5 dark:bg-white/10 backdrop-blur-sm',
     background_color: 'bg-white dark:bg-neutral-900',
 };
 

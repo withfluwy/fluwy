@@ -1,30 +1,12 @@
-import { extractTailwindOnYaml, getColors } from './src/lib/integrations/tailwind/index.js';
+import { getColors } from './src/lib/integrations/tailwind/index.js';
 import path from 'path';
-import defaultTheme from 'tailwindcss/defaultTheme';
 
-/** @type {import('tailwindcss').Config} */
+/** @type {import('@tailwindcss/types').Config} */
 export default {
-    darkMode: 'selector',
-    content: {
-        files: ['./src/**/*.{html,js,svelte,ts,yml,yaml}', './app/**/*.{yml,yaml}'],
-        extract: {
-            yaml: extractTailwindOnYaml,
-        },
-    },
+    content: ['./src/**/*.{html,js,svelte,ts,yml,yaml}', './app/**/*.{yml,yaml}'],
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['Mulish', ...defaultTheme.fontFamily.sans],
-            },
-            container: {
-                center: true,
-                padding: '2rem',
-                screens: {
-                    '2xl': '1400px',
-                },
-            },
             colors: getColors(path.join(__dirname, './app/themes')),
         },
     },
-    plugins: [import('@tailwindcss/typography')],
 };

@@ -89,7 +89,7 @@ doc.content:
                     icon: solar:plain-linear
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -150,7 +150,7 @@ doc.content:
                       icon: solar:pen-linear
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml

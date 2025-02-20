@@ -25,9 +25,9 @@
 <div class="ml-auto flex items-center gap-1 text-neutral-500">
     {#each keys as shortcut}
         {#if icons[shortcut]}
-            <iconify-icon icon={icons[shortcut]} class="h-6 w-6 rounded bg-white p-1 shadow-sm"></iconify-icon>
+            <iconify-icon icon={icons[shortcut]} class="h-6 w-6 rounded-sm bg-white p-1 shadow-xs"></iconify-icon>
         {:else}
-            <div class="flex h-6 min-w-6 items-center justify-center rounded bg-white p-1 shadow-sm">
+            <div class="flex h-6 min-w-6 items-center justify-center rounded-sm bg-white p-1 shadow-xs">
                 {shortcut}
             </div>
         {/if}
