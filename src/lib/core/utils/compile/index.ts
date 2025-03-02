@@ -1,4 +1,4 @@
-import { get, has, expandObject } from '../index.js';
+import { get, expandObject } from '../index.js';
 import type { Any } from '../../contracts.js';
 import _ from 'lodash';
 
@@ -10,7 +10,15 @@ const PLACEHOLDERS = /\$\{([^}]+)\}/g;
 
 export const hasPlaceholders = (template: string): boolean => new RegExp(PLACEHOLDERS).test(template);
 
-export function compile(template: string, context: ContextData): Any {
+type CompileOptions = {
+    /**
+     * If true, unresolvable placeholders will be kept in the output.
+     * If false (default), they will be replaced with empty strings.
+     */
+    keepPlaceholders?: boolean;
+};
+
+export function compile(template: string, context: ContextData, options: CompileOptions = {}): Any {
     const havePlaceholders = hasPlaceholders(template);
 
     if (!havePlaceholders) {
@@ -27,15 +35,81 @@ export function compile(template: string, context: ContextData): Any {
 
     // Use a regular expression to find all placeholders in the template
     const compiled = template.replace(PLACEHOLDERS, function (_match, placeholder) {
-        const isValidPath = has(expandedContext, placeholder);
-        if (!isValidPath) return _match;
+        // Handle multiple bracket notations and string literals
+        let value: Any;
 
-        const value = get(expandedContext, placeholder);
-        const isNil = [null, undefined].includes(value);
+        // Extract path segments (both dots and brackets)
+        const segments: string[] = [];
+        let current = '';
+        let inBracket = false;
+        let inQuote = false;
+        let quoteChar: string = '';
 
-        if (isValidPath && isNil) return '';
+        for (let i = 0; i < placeholder.length; i++) {
+            const char = placeholder[i];
 
-        return value !== undefined ? value : _match;
+            if (inQuote) {
+                current += char;
+                if (char === quoteChar) {
+                    inQuote = false;
+                }
+            } else if (inBracket) {
+                current += char;
+                if (char === ']') {
+                    inBracket = false;
+                    segments.push(current);
+                    current = '';
+                } else if (char === '"' || char === "'") {
+                    inQuote = true;
+                    quoteChar = char;
+                }
+            } else if (char === '[') {
+                if (current) {
+                    segments.push(current);
+                    current = '';
+                }
+                inBracket = true;
+                current = char;
+            } else if (char === '.') {
+                if (current) {
+                    segments.push(current);
+                    current = '';
+                }
+            } else {
+                current += char;
+            }
+        }
+
+        if (current) {
+            segments.push(current);
+        }
+
+        // Start with the first segment
+        value = expandedContext[segments[0]];
+        if (value === undefined) {
+            return options.keepPlaceholders ? _match : '';
+        }
+
+        // Process remaining segments
+        for (let i = 1; i < segments.length; i++) {
+            const segment = segments[i];
+
+            if (segment.startsWith('[')) {
+                // Handle bracket notation
+                const key = segment.slice(1, -1).replace(/^['"]|['"]$/g, '');
+                const resolvedKey = expandedContext[key] ?? key;
+                value = value?.[resolvedKey as keyof typeof value];
+            } else {
+                // Handle dot notation
+                value = value?.[segment as keyof typeof value];
+            }
+
+            if (value === undefined) {
+                return options.keepPlaceholders ? _match : '';
+            }
+        }
+
+        return value ?? (options.keepPlaceholders ? _match : '');
     });
 
     return toJavascript(compiled);

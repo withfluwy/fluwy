@@ -4,7 +4,7 @@ import { compile, hasPlaceholders } from '@/lib/core/utils/compile/index.js';
 import { buildHttpResponse } from '@/lib/core/utils/response/index.js';
 
 export const post: Operation = async (param: PostParam, { context, app }) => {
-    const parsedUrl = compile(param.url, context.data);
+    const parsedUrl = compile(param.url, context.data, { keepPlaceholders: true });
 
     if (hasPlaceholders(parsedUrl)) {
         throw new Error(`[post] operation has unresolved placeholders for param [url]: [${parsedUrl}]`);

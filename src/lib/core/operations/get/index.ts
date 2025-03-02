@@ -6,7 +6,7 @@ import { abort } from '@/lib/core/utils/index.js';
 
 export const get: Operation = async (param: GetParam, { context, app }) => {
     const url = typeof param === 'string' ? param : param.url;
-    const parsedUrl = compile(url, context.data);
+    const parsedUrl = compile(url, context.data, { keepPlaceholders: true });
 
     if (hasPlaceholders(parsedUrl)) {
         throw new Error(`[get] operation has unresolved placeholders for param [url]: [${parsedUrl}]`);
