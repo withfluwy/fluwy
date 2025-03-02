@@ -121,7 +121,7 @@ describe('App', () => {
                         { header: 'Contact Page John Doe - john.doe@mail.com' },
                         { div: 'Amount: £100' },
                         {
-                            div: `Unresolved variables should be empty strings`,
+                            div: 'Unresolved variables should keep placeholders: ${record.id}',
                         },
                         {
                             div: `Address: ${address.street}`,

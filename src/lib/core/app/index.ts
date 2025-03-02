@@ -149,7 +149,7 @@ export class Application {
         if (!head?.layout) return parse(compile(pageDocument.body, context.data));
 
         const layout = this.parseLayout(head, context);
-        const body = parse(compile(pageDocument.body, context.data)) as Any;
+        const body = parse(compile(pageDocument.body, context.data, { keepPlaceholders: true })) as Any;
 
         return this.replaceSlot(layout, body);
     }
@@ -347,24 +347,14 @@ export class Application {
         return result;
     }
 
-    private async handleOperationBlock(
-        entries: [string, Any][],
-        context: Context,
-        result: Any
-    ): Promise<Any> {
+    private async handleOperationBlock(entries: [string, Any][], context: Context, result: Any): Promise<Any> {
         const { mainIf, elseIfs, elseEntry, regularOps } = this.extractOperationEntries(entries);
 
         let currentResult = result;
 
         // Handle conditional operations first
         if (mainIf) {
-            currentResult = await this.handleConditionalOperations(
-                mainIf,
-                elseIfs,
-                elseEntry,
-                context,
-                currentResult
-            );
+            currentResult = await this.handleConditionalOperations(mainIf, elseIfs, elseEntry, context, currentResult);
         }
 
         // Handle regular operations
