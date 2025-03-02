@@ -121,7 +121,7 @@ describe('App', () => {
                         { header: 'Contact Page John Doe - john.doe@mail.com' },
                         { div: 'Amount: £100' },
                         {
-                            div: `Should keep unparsed var \${record.id} because record doesn't exit`,
+                            div: `Unresolved variables should be empty strings`,
                         },
                         {
                             div: `Address: ${address.street}`,

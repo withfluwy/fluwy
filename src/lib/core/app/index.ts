@@ -21,7 +21,7 @@ import type {
 import { str } from '../utils/index.js';
 import { AbortOperationError, UnauthenticatedError } from '@/lib/core/errors/index.js';
 import { createContext } from '@/lib/core/context/index.js';
-import { evaluate } from '@/lib/core/controls/condition/index.js';
+import { if_expression } from '@/lib/core/controls/condition/index.js';
 
 type DocumentContent = {
     head?: string;
@@ -321,12 +321,11 @@ export class Application {
         elseIfs: [string, Any][],
         elseEntry: [string, Any] | undefined,
         context: Context,
-        result: Any,
-        evaluate: (condition: string, context: Context) => boolean
+        result: Any
     ): Promise<Any> {
         const [condition, ops] = mainIf;
 
-        if (evaluate(condition, context)) {
+        if (if_expression.evaluate(condition, context)) {
             return await this.handleOperations(ops, context, result);
         }
 
@@ -334,7 +333,7 @@ export class Application {
         for (const [elseIfCond, elseIfOps] of elseIfs) {
             // Convert 'else if x' to 'if x' for evaluation
             const ifCondition = 'if ' + elseIfCond.substring(8);
-            if (evaluate(ifCondition, context)) {
+            if (if_expression.evaluate(ifCondition, context)) {
                 return await this.handleOperations(elseIfOps, context, result);
             }
         }
@@ -351,8 +350,7 @@ export class Application {
     private async handleOperationBlock(
         entries: [string, Any][],
         context: Context,
-        result: Any,
-        evaluate: (condition: string, context: Context) => boolean
+        result: Any
     ): Promise<Any> {
         const { mainIf, elseIfs, elseEntry, regularOps } = this.extractOperationEntries(entries);
 
@@ -365,8 +363,7 @@ export class Application {
                 elseIfs,
                 elseEntry,
                 context,
-                currentResult,
-                evaluate
+                currentResult
             );
         }
 
@@ -393,14 +390,14 @@ export class Application {
             if (Array.isArray(operations)) {
                 for (const operation of operations) {
                     const entries = Object.entries(operation);
-                    result = await this.handleOperationBlock(entries, context, result, evaluate);
+                    result = await this.handleOperationBlock(entries, context, result);
                 }
                 return result;
             }
 
             // Handle object format
             const entries = Object.entries(operations || {});
-            return await this.handleOperationBlock(entries, context, result, evaluate);
+            return await this.handleOperationBlock(entries, context, result);
         } catch (error) {
             if (error instanceof AbortOperationError) return result;
             throw error;
