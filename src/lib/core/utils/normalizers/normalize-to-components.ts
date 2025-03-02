@@ -1,4 +1,6 @@
 import type { Any, Template } from '@/lib/core/contracts.js';
+import { loop_expression } from '@/lib/core/controls/loop/index.js';
+import { if_expression } from '@/lib/core/controls/condition/index.js';
 
 export interface ComponentSchema {
     name: string;
@@ -69,13 +71,6 @@ export function normalizeToComponents(input: Template): ComponentSchema[] {
 type ObjectEntry = [string, unknown];
 
 /**
- * Checks if a key represents a conditional statement (if/else)
- */
-function isConditionalKey(key: string): boolean {
-    return key.startsWith('if ') || key.startsWith('else if ') || key === 'else';
-}
-
-/**
  * Checks if a key continues the current condition chain
  */
 function continuesConditionChain(key: string): boolean {
@@ -100,7 +95,7 @@ function processConditions(entries: ObjectEntry[]): ComponentSchema[] {
     for (let i = 0; i < entries.length; i++) {
         const [key, value] = entries[i];
 
-        if (isConditionalKey(key)) {
+        if (if_expression.check(key)) {
             // Start or continue a condition group
             currentCondition ??= {};
             currentCondition[key] = value;
@@ -113,6 +108,12 @@ function processConditions(entries: ObjectEntry[]): ComponentSchema[] {
                 result.push(createComponent('condition', currentCondition));
                 currentCondition = null;
             }
+            continue;
+        }
+
+        // Handle loop expressions
+        if (loop_expression.check(key)) {
+            result.push(createComponent('loop', { [key]: value }));
             continue;
         }
 
