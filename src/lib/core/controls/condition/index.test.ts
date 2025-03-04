@@ -1,6 +1,6 @@
 import { createContext } from '@/lib/core/context/index.js';
 import type { Template } from '@/lib/core/contracts.js';
-import { check, evaluate, parseCondition, type Condition } from '@/lib/core/controls/condition/index.js';
+import { if_expression, parseCondition, type Condition } from '@/lib/core/controls/condition/index.js';
 import { describe, expect, it } from 'vitest';
 
 describe('if condition parser', () => {
@@ -34,80 +34,80 @@ describe('if condition parser', () => {
 
         describe('.check', () => {
             it('returns true when expression starts with "if "', () => {
-                expect(check('if response.status == 200')).toBe(true);
+                expect(if_expression.check('if response.status == 200')).toBe(true);
             });
 
             it('returns false when doesnt start with "if "', () => {
-                expect(check('response.status == 200')).toBe(false);
+                expect(if_expression.check('response.status == 200')).toBe(false);
             });
         });
 
         describe('.evaluate', () => {
             it('evaluates to true', () => {
-                expect(evaluate('if response.status == 200', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status == 200', context)).toBe(true);
             });
 
             it('evaluates to false', () => {
-                expect(evaluate('if response.status == 404', context)).toBe(false);
+                expect(if_expression.evaluate('if response.status == 404', context)).toBe(false);
             });
 
             it('also evaluates to false when checking for strings', () => {
-                expect(evaluate('if response.status == "200"', context)).toBe(false);
-                expect(evaluate("if response.status == '200'", context)).toBe(false);
+                expect(if_expression.evaluate('if response.status == "200"', context)).toBe(false);
+                expect(if_expression.evaluate("if response.status == '200'", context)).toBe(false);
             });
 
             it('also supports "is" keyword', () => {
-                expect(evaluate('if response.status is 200', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200', context)).toBe(true);
             });
 
             it('also supports "is not" keywords', () => {
-                expect(evaluate('if response.status is not 200', context)).toBe(false);
-                expect(evaluate('if response.status is not 400', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is not 200', context)).toBe(false);
+                expect(if_expression.evaluate('if response.status is not 400', context)).toBe(true);
             });
 
             it('also supports "!=" operator', () => {
-                expect(evaluate('if response.status != 200', context)).toBe(false);
-                expect(evaluate('if response.status != 400', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status != 200', context)).toBe(false);
+                expect(if_expression.evaluate('if response.status != 400', context)).toBe(true);
             });
 
             it('supports "and" concatenation of expressions', () => {
-                expect(evaluate('if response.status == 200 and valid', context)).toBe(true);
-                expect(evaluate('if response.status is 200 and name is "Marco"', context)).toBe(true);
-                expect(evaluate('if response.status == 200 and name is "Marco"', context)).toBe(true);
-                expect(evaluate('if response.status is 200 and name == "Marco"', context)).toBe(true);
-                expect(evaluate('if response.status is 200 and name is not "Marco"', context)).toBe(false);
-                expect(evaluate('if response.status == 200 and name != "Marco"', context)).toBe(false);
-                expect(evaluate('if name is "Marco" and valid is not false', context)).toBe(true);
-                expect(evaluate('if name is "Marco" and valid != false', context)).toBe(true);
-                expect(evaluate('if name is "Marco" and valid is true', context)).toBe(true);
-                expect(evaluate('if name is "Marco" and valid == true', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status == 200 and valid', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200 and name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status == 200 and name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200 and name == "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200 and name is not "Marco"', context)).toBe(false);
+                expect(if_expression.evaluate('if response.status == 200 and name != "Marco"', context)).toBe(false);
+                expect(if_expression.evaluate('if name is "Marco" and valid is not false', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "Marco" and valid != false', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "Marco" and valid is true', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "Marco" and valid == true', context)).toBe(true);
             });
 
             it('supports && operator (and operator)', () => {
-                expect(evaluate('if response.status == 200 && valid', context)).toBe(true);
-                expect(evaluate('if response.status is 200 && name is "Marco"', context)).toBe(true);
-                expect(evaluate('if response.status == 200 && name is "Marco"', context)).toBe(true);
-                expect(evaluate('if response.status is 200 && name == "Marco"', context)).toBe(true);
-                expect(evaluate('if response.status is 200 && name is not "Marco"', context)).toBe(false);
-                expect(evaluate('if response.status == 200 && name != "Marco"', context)).toBe(false);
-                expect(evaluate('if name is "Marco" && valid is not false', context)).toBe(true);
-                expect(evaluate('if name is "Marco" && valid != false', context)).toBe(true);
-                expect(evaluate('if name is "Marco" && valid is true', context)).toBe(true);
-                expect(evaluate('if name is "Marco" && valid == true', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status == 200 && valid', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200 && name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status == 200 && name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200 && name == "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status is 200 && name is not "Marco"', context)).toBe(false);
+                expect(if_expression.evaluate('if response.status == 200 && name != "Marco"', context)).toBe(false);
+                expect(if_expression.evaluate('if name is "Marco" && valid is not false', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "Marco" && valid != false', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "Marco" && valid is true', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "Marco" && valid == true', context)).toBe(true);
             });
 
             it('supports unlimited "and" concatenations with mixed operators', () => {
                 // Test with 3 conditions
-                expect(evaluate('if response.status == 200 and name is "Marco" and valid is true', context)).toBe(true);
+                expect(if_expression.evaluate('if response.status == 200 and name is "Marco" and valid is true', context)).toBe(true);
 
                 // Test with 4 conditions
                 expect(
-                    evaluate('if response.status == 200 and name is "Marco" and valid and settings.enabled', context)
+                    if_expression.evaluate('if response.status == 200 and name is "Marco" and valid and settings.enabled', context)
                 ).toBe(true);
 
                 // Test with 5 conditions including nested properties
                 expect(
-                    evaluate(
+                    if_expression.evaluate(
                         'if response.status == 200 and name is "Marco" and valid and settings.enabled and settings.mode is "dark"',
                         context
                     )
@@ -115,7 +115,7 @@ describe('if condition parser', () => {
 
                 // Test with mixed operators and types
                 expect(
-                    evaluate(
+                    if_expression.evaluate(
                         'if response.type is "success" and response.headers.content-type is "application/json" and age != 30 and settings.mode is not "light" and valid',
                         context
                     )
@@ -124,56 +124,56 @@ describe('if condition parser', () => {
 
             it('supports type-specific comparisons', () => {
                 // String comparisons
-                expect(evaluate('if response.type is "success"', context)).toBe(true);
-                expect(evaluate('if settings.mode == "dark"', context)).toBe(true);
+                expect(if_expression.evaluate('if response.type is "success"', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.mode == "dark"', context)).toBe(true);
 
                 // Numeric comparisons
-                expect(evaluate('if age == 25', context)).toBe(true);
-                expect(evaluate('if age is 25', context)).toBe(true);
+                expect(if_expression.evaluate('if age == 25', context)).toBe(true);
+                expect(if_expression.evaluate('if age is 25', context)).toBe(true);
 
                 // Boolean values
-                expect(evaluate('if valid', context)).toBe(true);
-                expect(evaluate('if settings.enabled is true', context)).toBe(true);
-                expect(evaluate('if settings.enabled == true', context)).toBe(true);
-                expect(evaluate('if settings.enabled != "true"', context)).toBe(true);
+                expect(if_expression.evaluate('if valid', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.enabled is true', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.enabled == true', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.enabled != "true"', context)).toBe(true);
             });
 
             it('supports greater/less than comparisons', () => {
-                expect(evaluate('if age > 20', context)).toBe(true);
-                expect(evaluate('if age >= 25', context)).toBe(true);
-                expect(evaluate('if age < 30', context)).toBe(true);
-                expect(evaluate('if age <= 25', context)).toBe(true);
-                expect(evaluate('if score > 80', context)).toBe(true);
-                expect(evaluate('if score <= 85.5', context)).toBe(true);
+                expect(if_expression.evaluate('if age > 20', context)).toBe(true);
+                expect(if_expression.evaluate('if age >= 25', context)).toBe(true);
+                expect(if_expression.evaluate('if age < 30', context)).toBe(true);
+                expect(if_expression.evaluate('if age <= 25', context)).toBe(true);
+                expect(if_expression.evaluate('if score > 80', context)).toBe(true);
+                expect(if_expression.evaluate('if score <= 85.5', context)).toBe(true);
             });
 
             it('supports array contains/includes checks', () => {
-                expect(evaluate('if "b" in settings.features', context)).toBe(true);
-                expect(evaluate('if "d" in settings.features', context)).toBe(false);
-                expect(evaluate('if "write" in permissions', context)).toBe(true);
-                expect(evaluate('if 3 in items', context)).toBe(true);
+                expect(if_expression.evaluate('if "b" in settings.features', context)).toBe(true);
+                expect(if_expression.evaluate('if "d" in settings.features', context)).toBe(false);
+                expect(if_expression.evaluate('if "write" in permissions', context)).toBe(true);
+                expect(if_expression.evaluate('if 3 in items', context)).toBe(true);
             });
 
             it('supports "or" operator', () => {
-                expect(evaluate('if age == 25 or age == 30', context)).toBe(true);
-                expect(evaluate('if name is "John" or name is "Marco"', context)).toBe(true);
-                expect(evaluate('if age < 20 or age > 24', context)).toBe(true);
+                expect(if_expression.evaluate('if age == 25 or age == 30', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "John" or name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if age < 20 or age > 24', context)).toBe(true);
             });
 
             it('supports || operator (or operator)', () => {
-                expect(evaluate('if age == 25 || age == 30', context)).toBe(true);
-                expect(evaluate('if name is "John" || name is "Marco"', context)).toBe(true);
-                expect(evaluate('if age < 20 || age > 24', context)).toBe(true);
+                expect(if_expression.evaluate('if age == 25 || age == 30', context)).toBe(true);
+                expect(if_expression.evaluate('if name is "John" || name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if age < 20 || age > 24', context)).toBe(true);
             });
 
             it('supports "or" or "||" operator for multiple conditions', () => {
-                expect(evaluate('if age == 25 or age == 30 or name is "John" or name is "Marco"', context)).toBe(true);
-                expect(evaluate('if age < 20 || age > 24 || name is "John" || name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if age == 25 or age == 30 or name is "John" or name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if age < 20 || age > 24 || name is "John" || name is "Marco"', context)).toBe(true);
             });
 
             it('supports combination of "and", "&&", "or" and "||" operators', () => {
                 expect(
-                    evaluate(
+                    if_expression.evaluate(
                         'if (a == "a" and b == "b" && a != b) and (name is "Jane" || name is "John" or a == "a")',
                         context
                     )
@@ -181,40 +181,40 @@ describe('if condition parser', () => {
             });
 
             it('supports "not" operator', () => {
-                expect(evaluate('if not valid is false', context)).toBe(true);
-                expect(evaluate('if not (age < 20)', context)).toBe(true);
-                expect(evaluate('if not ("admin" in permissions)', context)).toBe(true);
+                expect(if_expression.evaluate('if not valid is false', context)).toBe(true);
+                expect(if_expression.evaluate('if not (age < 20)', context)).toBe(true);
+                expect(if_expression.evaluate('if not ("admin" in permissions)', context)).toBe(true);
             });
 
             it('supports property existence checks', () => {
-                expect(evaluate('if "status" in response', context)).toBe(true);
-                expect(evaluate('if "unknown" in response', context)).toBe(false);
-                expect(evaluate('if "content-type" in response.headers', context)).toBe(true);
+                expect(if_expression.evaluate('if "status" in response', context)).toBe(true);
+                expect(if_expression.evaluate('if "unknown" in response', context)).toBe(false);
+                expect(if_expression.evaluate('if "content-type" in response.headers', context)).toBe(true);
             });
 
             it('supports null/undefined checks', () => {
-                expect(evaluate('if response.data is null', context)).toBe(true);
-                expect(evaluate('if response.data is undefined', context)).toBe(false);
-                expect(evaluate('if settings.config is undefined', context)).toBe(true);
-                expect(evaluate('if settings.config is null', context)).toBe(false);
-                expect(evaluate('if settings.unexisting is undefined', context)).toBe(true);
-                expect(evaluate('if settings.config is nil', context)).toBe(true);
-                expect(evaluate('if response.data is nil', context)).toBe(true);
-                expect(evaluate('if settings.unexisting is nil', context)).toBe(true);
-                expect(evaluate('if name is not null', context)).toBe(true);
-                expect(evaluate('if settings.mode is not undefined', context)).toBe(true);
+                expect(if_expression.evaluate('if response.data is null', context)).toBe(true);
+                expect(if_expression.evaluate('if response.data is undefined', context)).toBe(false);
+                expect(if_expression.evaluate('if settings.config is undefined', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.config is null', context)).toBe(false);
+                expect(if_expression.evaluate('if settings.unexisting is undefined', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.config is nil', context)).toBe(true);
+                expect(if_expression.evaluate('if response.data is nil', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.unexisting is nil', context)).toBe(true);
+                expect(if_expression.evaluate('if name is not null', context)).toBe(true);
+                expect(if_expression.evaluate('if settings.mode is not undefined', context)).toBe(true);
             });
 
             it('supports parentheses for grouping', () => {
-                expect(evaluate('if (age > 20 and age < 30) or name is "Marco"', context)).toBe(true);
-                expect(evaluate('if not (age < 20 or age > 30)', context)).toBe(true);
-                expect(evaluate('if (name is "Marco" and age == 25) or (name is "John" and age == 30)', context)).toBe(
+                expect(if_expression.evaluate('if (age > 20 and age < 30) or name is "Marco"', context)).toBe(true);
+                expect(if_expression.evaluate('if not (age < 20 or age > 30)', context)).toBe(true);
+                expect(if_expression.evaluate('if (name is "Marco" and age == 25) or (name is "John" and age == 30)', context)).toBe(
                     true
                 );
             });
 
             it('supports nested properties comparison', () => {
-                expect(evaluate('if valid_status == response.status', context)).toBe(true);
+                expect(if_expression.evaluate('if valid_status == response.status', context)).toBe(true);
             });
         });
     });
