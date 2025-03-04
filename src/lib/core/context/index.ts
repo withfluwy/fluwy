@@ -8,6 +8,7 @@ export type Context = {
     data: ContextData;
     set: (key: string, value: Any) => void;
     get: (key: string) => Any;
+    cloneWith: (additionalData: Partial<ContextData>) => Context;
 };
 
 const contextKey = Symbol('context');
@@ -18,10 +19,6 @@ export function useContext(): Context {
 
 export function setupContext(context: Context) {
     setContextSvelte(contextKey, context);
-}
-
-export function addContext(key: string, value: Any) {
-    useContext().set(key, value);
 }
 
 /**
@@ -44,6 +41,14 @@ export function createContext(initialData: Record<string, Any> = {}): Context {
 
         get(key: string) {
             return get(store)[key];
+        },
+
+        cloneWith(additionalData: Partial<ContextData>) {
+            // Create a deep copy of the current context data
+            const currentData = JSON.parse(JSON.stringify(get(store)));
+            
+            // Merge with the additional data (allowing overrides)
+            return createContext({ ...currentData, ...additionalData });
         },
     } satisfies Context;
 }
