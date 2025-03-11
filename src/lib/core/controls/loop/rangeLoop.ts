@@ -20,26 +20,27 @@ export function* generateRangeValues(range: RangeResult, template: Any, context:
     const endValue = range.isExclusive ? range.end : range.end + 1;
     for (let i = range.start; i < endValue; i++) {
         const itemName = range.itemName || 'n';
-        const loopContext = { ...context.data, [itemName]: i };
+        const loopVariables = { [itemName]: i };
+        const loopContext = context.cloneWith(loopVariables);
 
         if (typeof template === 'object') {
             if (Array.isArray(template)) {
                 for (const templateItem of template) {
-                    const compiledTemplate = compileObject(templateItem, loopContext);
-                    yield { template: compiledTemplate, context: loopContext };
+                    const compiledTemplate = compileObject(templateItem, loopContext.data);
+                    yield { template: compiledTemplate, context: loopContext.data };
                 }
             } else if ('text' in template) {
-                const compiledText = compile(template.text, loopContext);
-                yield { template: { text: compiledText }, context: loopContext };
+                const compiledText = compile(template.text, loopContext.data);
+                yield { template: { text: compiledText }, context: loopContext.data };
             } else {
-                const compiledTemplate = compileObject(template, loopContext);
-                yield { template: compiledTemplate, context: loopContext };
+                const compiledTemplate = compileObject(template, loopContext.data);
+                yield { template: compiledTemplate, context: loopContext.data };
             }
         } else if (typeof template === 'string') {
-            const compiledText = compile(template, loopContext);
-            yield { template: { text: compiledText }, context: loopContext };
+            const compiledText = compile(template, loopContext.data);
+            yield { template: { text: compiledText }, context: loopContext.data };
         } else {
-            yield { template, context: loopContext };
+            yield { template, context: loopContext.data };
         }
     }
 }

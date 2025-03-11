@@ -1,4 +1,4 @@
-import type { Any, Context, ContextData } from '@/lib/core/contracts.js';
+import type { Any, Context } from '@/lib/core/contracts.js';
 import type { LoopItem } from './types.js';
 import { compileObject } from './utils.js';
 import { compile } from '@/lib/core/utils/compile/index.js';
@@ -41,15 +41,16 @@ export function* handleTimesLoop(expression: string, context: Context, template:
 
         // Iterate with a variable
         for (let i = 1; i <= count; i++) {
-            const loopContext = { ...context.data, [varName]: i } as ContextData;
-            yield* processTemplateWithContext(template, loopContext, context.data);
+            const loopVariables = { [varName]: i };
+            const loopContext = context.cloneWith(loopVariables);
+            yield* processTemplateWithContext(template, loopContext.data, context.data);
         }
     } else if (parts.length === 3 && parts[2] === 'do') {
         // Basic times loop: '3 times do'
         for (let i = 0; i < count; i++) {
-            // Empty context for simple times loop without variable
-            const loopContext = {} as ContextData;
-            yield* processTemplateWithContext(template, loopContext, context.data);
+            // Create a clone of the parent context for simple times loop without variable
+            const loopContext = context.cloneWith({});
+            yield* processTemplateWithContext(template, loopContext.data, context.data);
         }
     } else {
         throw new Error('Invalid times loop syntax');
@@ -59,7 +60,7 @@ export function* handleTimesLoop(expression: string, context: Context, template:
 /**
  * Helper function to process templates with the given context for times loops.
  */
-function* processTemplateWithContext(template: Any, loopContext: ContextData, parentContext: Any): Generator<LoopItem> {
+function* processTemplateWithContext(template: Any, loopContext: Record<string, unknown>, parentContext: Any): Generator<LoopItem> {
     // Create merged context
     const mergedContext = { ...parentContext, ...loopContext };
 

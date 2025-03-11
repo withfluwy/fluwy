@@ -236,5 +236,42 @@ describe('Context Module', () => {
             expect(contextWithArrays.get('users')[1].name).toBe('Bob');
             expect(contextWithArrays.get('nestedArrays')[1][1]).toBe(4);
         });
+
+        it('preserves property order in the cloned context', () => {
+            // Create a context with properties in a specific order
+            const orderedContext = createContext({
+                first: 1,
+                second: 2,
+                third: 3,
+                fourth: 4,
+                fifth: 5
+            });
+
+            // Clone with new properties in the middle
+            const clonedContext = orderedContext.cloneWith({
+                third: 'overridden',
+                newProperty: 'inserted'
+            });
+
+            // Get the keys in order from both contexts
+            const originalKeys = Object.keys(get(orderedContext.store));
+            const clonedKeys = Object.keys(get(clonedContext.store));
+
+            // The original keys (except for svelteKit which is always added) should be in the expected order
+            expect(originalKeys.filter(k => k !== 'svelteKit')).toEqual(['first', 'second', 'third', 'fourth', 'fifth']);
+            
+            // The cloned context should maintain the order of original properties
+            // and add new properties at the end (except for overrides which stay in place)
+            const expectedOrder = ['first', 'second', 'third', 'fourth', 'fifth', 'newProperty'];
+            
+            // Filter out svelteKit which is automatically added by createContext
+            const filteredClonedKeys = clonedKeys.filter(k => k !== 'svelteKit');
+            
+            // Verify the order matches our expectation
+            expect(filteredClonedKeys).toEqual(expectedOrder);
+            
+            // Verify that override was applied correctly
+            expect(clonedContext.get('third')).toBe('overridden');
+        });
     });
 });

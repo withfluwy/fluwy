@@ -679,6 +679,49 @@ describe('loop controls', () => {
                     ],
                 },
             },
+            'loop with complex object as template': {
+                context: {
+                    user: {
+                        name: 'Marco',
+                        age: 35,
+                    },
+                    users: [
+                        { name: 'Alice', age: 25 },
+                        { name: 'Bob', age: 30 },
+                    ],
+                },
+                loop: {
+                    'for user of users with index': {
+                        text: '${index}. ${user.name} is ${user.age} years old',
+                        'if user.name is "Marco"': {
+                            'doc.check_fail': '${index}. Context overridden failed for `user.name`. Value: Marco',
+                        },
+                        else: {
+                            'doc.check_pass': '${index}. ${user.name} is ${user.age} years old',
+                        },
+                    },
+                },
+                template: [
+                    {
+                        text: '0. Alice is 25 years old',
+                        'if user.name is "Marco"': {
+                            'doc.check_fail': '0. Context overridden failed for `user.name`. Value: Marco',
+                        },
+                        else: {
+                            'doc.check_pass': '0. Alice is 25 years old',
+                        },
+                    },
+                    {
+                        text: '1. Bob is 30 years old',
+                        'if user.name is "Marco"': {
+                            'doc.check_fail': '1. Context overridden failed for `user.name`. Value: Marco',
+                        },
+                        else: {
+                            'doc.check_pass': '1. Bob is 30 years old',
+                        },
+                    },
+                ],
+            },
         };
 
         Object.entries(loopTestCases).forEach(
@@ -698,6 +741,56 @@ describe('loop controls', () => {
                 });
             }
         );
+
+        test('complext loop with parent context being overridden by loop variable', () => {
+            const context = createContext({
+                inherited: true,
+                user: {
+                    name: 'Marco',
+                    age: 35,
+                },
+                users: [
+                    { name: 'Alice', age: 25 },
+                    { name: 'Bob', age: 30 },
+                ],
+            });
+            const result = loop_expression.evaluate(
+                {
+                    'for user of users with index': {
+                        text: '${index}. ${user.name} is ${user.age} years old',
+                        'if user.name is "Marco"': {
+                            'doc.check_fail': '${index}. Context overridden failed for `user.name`. Value: Marco',
+                        },
+                        else: {
+                            'doc.check_pass': '${index}. ${user.name} is ${user.age} years old',
+                        },
+                    },
+                },
+                context
+            );
+            const items = Array.from(result);
+            expect(items.map((item) => item.template)).toEqual([
+                {
+                    text: '0. Alice is 25 years old',
+                    'if user.name is "Marco"': {
+                        'doc.check_fail': '0. Context overridden failed for `user.name`. Value: Marco',
+                    },
+                    else: {
+                        'doc.check_pass': '0. Alice is 25 years old',
+                    },
+                },
+                {
+                    text: '1. Bob is 30 years old',
+                    'if user.name is "Marco"': {
+                        'doc.check_fail': '1. Context overridden failed for `user.name`. Value: Marco',
+                    },
+                    else: {
+                        'doc.check_pass': '1. Bob is 30 years old',
+                    },
+                },
+            ]);
+            expect(items.every((item) => item.context.inherited === true)).toBe(true);
+        });
 
         // Error handling tests
         test('throws on invalid loop expression', () => {
