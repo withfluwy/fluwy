@@ -5,10 +5,14 @@ test('pagination behaviour', async ({ page }) => {
     await mockHttpRequests(page);
     await page.goto('/components/tables/tests');
     await assertFirstPage(page);
+
     await page.getByRole('button', { name: 'Next' }).first().click();
     await expect(page.getByRole('textbox').first()).toHaveValue('2');
 
     await expect(page.locator('#main')).toMatchAriaSnapshot(`
+      - heading "Simple Table (Example 1)" [level=3]
+      - button "Per Page":
+        - img
       - table:
         - rowgroup:
           - row "Name Email Component Email (using Link) Phone Created At Updated At Created By":
@@ -49,8 +53,7 @@ test('pagination behaviour', async ({ page }) => {
               - link "dbenrp@dedecms.com"
             - cell "dbenrp@dedecms.com":
               - link "dbenrp@dedecms.com"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -82,8 +85,7 @@ test('pagination behaviour', async ({ page }) => {
               - link "latyearm@si.edu"
             - cell "latyearm@si.edu":
               - link "latyearm@si.edu"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -126,12 +128,19 @@ test('pagination behaviour', async ({ page }) => {
               - link "btonkinsonri@yolasite.com"
             - cell "btonkinsonri@yolasite.com":
               - link "btonkinsonri@yolasite.com"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
+      - button "Previous":
+        - img
+      - text: Page
+      - textbox: "2"
+      - text: /of \\d+ - total of \\d+ records/
+      - button "Next":
+        - img
       `);
+
     await page.getByRole('textbox').first().click();
     await page.getByRole('textbox').first().fill('333');
     await expect(page.getByRole('textbox').first()).toHaveValue('113');
@@ -194,6 +203,9 @@ test('pagination behaviour', async ({ page }) => {
 
 async function assertFirstPage(page: Page) {
     await expect(page.locator('#main')).toMatchAriaSnapshot(`
+      - heading "Simple Table (Example 1)" [level=3]
+      - button "Per Page":
+        - img
       - table:
         - rowgroup:
           - row "Name Email Component Email (using Link) Phone Created At Updated At Created By":
@@ -206,27 +218,26 @@ async function assertFirstPage(page: Page) {
             - cell "Updated At"
             - cell "Created By"
         - rowgroup:
-          - row /Zaccaria Padfield zpadfield24@fda\\.gov zpadfield24@fda\\.gov Nov \\d+, \\d+ Admin User/:
+          - row /Zaccaria Padfield zpadfield24@fda\\.gov zpadfield24@fda\\.gov \\d+-\\d+-\\d+ Nov \\d+, \\d+ Admin User/:
             - cell "Zaccaria Padfield"
             - cell "zpadfield24@fda.gov":
               - link "zpadfield24@fda.gov"
             - cell "zpadfield24@fda.gov":
               - link "zpadfield24@fda.gov"
-            - cell:
-              - link
+            - cell /\\d+-\\d+-\\d+/:
+              - link /\\d+-\\d+-\\d+/
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
-          - row /Anissa Rocca arocca25@ezinearticles\\.com arocca25@ezinearticles\\.com Nov \\d+, \\d+ Admin User/:
+          - row /Anissa Rocca arocca25@ezinearticles\\.com arocca25@ezinearticles\\.com Nov \\d+, \\d+ 4 months ago Admin User/:
             - cell "Anissa Rocca"
             - cell "arocca25@ezinearticles.com":
               - link "arocca25@ezinearticles.com"
             - cell "arocca25@ezinearticles.com":
               - link "arocca25@ezinearticles.com"
-            - cell:
-              - link
-            - cell /Nov \\d+, \\d+/
             - cell
+            - cell /Nov \\d+, \\d+/
+            - cell "4 months ago"
             - cell "Admin User"
           - row /Jarrad O'Donoghue jodonoghue26@desdev\\.cn jodonoghue26@desdev\\.cn Nov \\d+, \\d+ Admin User/:
             - cell "Jarrad O'Donoghue"
@@ -234,8 +245,7 @@ async function assertFirstPage(page: Page) {
               - link "jodonoghue26@desdev.cn"
             - cell "jodonoghue26@desdev.cn":
               - link "jodonoghue26@desdev.cn"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -245,8 +255,7 @@ async function assertFirstPage(page: Page) {
               - link "cmcillrick27@narod.ru"
             - cell "cmcillrick27@narod.ru":
               - link "cmcillrick27@narod.ru"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -256,8 +265,7 @@ async function assertFirstPage(page: Page) {
               - link "edoberer28@miitbeian.gov.cn"
             - cell "edoberer28@miitbeian.gov.cn":
               - link "edoberer28@miitbeian.gov.cn"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -267,8 +275,7 @@ async function assertFirstPage(page: Page) {
               - link "binmett29@kickstarter.com"
             - cell "binmett29@kickstarter.com":
               - link "binmett29@kickstarter.com"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -278,8 +285,7 @@ async function assertFirstPage(page: Page) {
               - link "avinker2a@cyberchimps.com"
             - cell "avinker2a@cyberchimps.com":
               - link "avinker2a@cyberchimps.com"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -289,8 +295,7 @@ async function assertFirstPage(page: Page) {
               - link "thartopp2b@stumbleupon.com"
             - cell "thartopp2b@stumbleupon.com":
               - link "thartopp2b@stumbleupon.com"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -300,8 +305,7 @@ async function assertFirstPage(page: Page) {
               - link "bspriddle2c@marketwatch.com"
             - cell "bspriddle2c@marketwatch.com":
               - link "bspriddle2c@marketwatch.com"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
@@ -311,10 +315,16 @@ async function assertFirstPage(page: Page) {
               - link "imelloi23@soup.io"
             - cell "imelloi23@soup.io":
               - link "imelloi23@soup.io"
-            - cell:
-              - link
+            - cell
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
+      - button "Previous" [disabled]:
+        - img
+      - text: Page
+      - textbox: "1"
+      - text: /of \\d+ - total of \\d+ records/
+      - button "Next":
+        - img
       `);
 }
