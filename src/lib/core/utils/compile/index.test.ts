@@ -19,12 +19,18 @@ describe('compile', () => {
     });
 
     it('returns empty string for unresolvable variables', () => {
-        expect(compile('Address: ${contact.address.line1}', { contact })).toBe('Address: ');
-        expect(compile('${record.id} - ${path}', { contact })).toBe(' - ');
+        expect(compile('Address: ${contact.address.line1}', { contact }, { keepPlaceholders: false })).toBe(
+            'Address: '
+        );
+        expect(compile('Address: ${contact.address.line1}', { contact })).toBe('Address: ${contact.address.line1}');
+
+        expect(compile('${record.id} - ${path}', { contact }, { keepPlaceholders: false })).toBe(' - ');
+        expect(compile('${record.id} - ${path}', { contact })).toBe('${record.id} - ${path}');
     });
 
     it('resolves to empty string if the value is null or undefined', () => {
-        expect(compile('test ${contact.age}', { contact })).toBe('test ');
+        expect(compile('test ${contact.age}', { contact }, { keepPlaceholders: false })).toBe('test ');
+        expect(compile('test ${contact.age}', { contact })).toBe('test ${contact.age}');
     });
 
     it('returns the compiled string as a javascript value', () => {
@@ -128,13 +134,16 @@ describe('compile', () => {
         const key = 'age'; // key that doesn't exist
 
         // When the property doesn't exist
-        expect(compile('${person[key]}', { person, key })).toBe('');
+        expect(compile('${person[key]}', { person, key }, { keepPlaceholders: false })).toBe('');
+        expect(compile('${person[key]}', { person, key })).toBe('${person[key]}');
 
         // When the key variable doesn't exist
-        expect(compile('${person[missingKey]}', { person })).toBe('');
+        expect(compile('${person[missingKey]}', { person }, { keepPlaceholders: false })).toBe('');
+        expect(compile('${person[missingKey]}', { person })).toBe('${person[missingKey]}');
 
         // Mixed with static text
-        expect(compile('Name: ${person[key]}', { person, key })).toBe('Name: ');
+        expect(compile('Name: ${person[key]}', { person, key }, { keepPlaceholders: false })).toBe('Name: ');
+        expect(compile('Name: ${person[key]}', { person, key })).toBe('Name: ${person[key]}');
     });
 
     it('resolves nested variables with dot notation', () => {

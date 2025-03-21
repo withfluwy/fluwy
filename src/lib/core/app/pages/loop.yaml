@@ -1,0 +1,20 @@
+server:
+  vars:
+    user:
+      name: Marco
+      age: 35
+    users:
+      - name: Alice
+        age: 25
+      - name: Bob
+        age: 30
+---
+for user of users with index:
+  text: ${user.name}
+  if user.name is "Marco":
+    doc.check_fail: "Context overridden failed for `user.name`. Value: ${user.name}"
+  else:
+    doc.check_pass:
+      div:
+        class: mb-3
+        content: "${index}. ${user.name} is ${user.age} years old"

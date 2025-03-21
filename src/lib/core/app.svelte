@@ -13,7 +13,7 @@
     import { setupContext, createContext } from './context/index.js';
     import { app } from '@/lib/index.js';
 
-    export let data: RenderResponse;
+    const { data } = $props<{ data: RenderResponse }>();
 
     const dialogs = useDialogs();
     const context = createContext(data.context);

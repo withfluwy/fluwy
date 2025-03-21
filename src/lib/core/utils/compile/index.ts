@@ -18,7 +18,11 @@ type CompileOptions = {
     keepPlaceholders?: boolean;
 };
 
-export function compile(template: string, context: ContextData, options: CompileOptions = {}): Any {
+export function compile(
+    template: string,
+    context: ContextData,
+    options: CompileOptions = { keepPlaceholders: true }
+): Any {
     const havePlaceholders = hasPlaceholders(template);
 
     if (!havePlaceholders) {

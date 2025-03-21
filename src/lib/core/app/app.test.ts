@@ -70,6 +70,45 @@ describe('App', () => {
                 },
             });
         });
+
+        it('doesnt parse "template" components with context', async () => {
+            // Add the loop.yaml file to the testing files
+            createFiles(testingDir, {
+                'pages/loop.yaml': readFile(__dirname, 'pages/loop.yaml'),
+            });
+
+            const document = await app.render('/loop');
+            expect(document).toEqual({
+                content: {
+                    'for user of users with index': {
+                        text: '${user.name}',
+                        'if user.name is "Marco"': {
+                            'doc.check_fail': 'Context overridden failed for `user.name`. Value: ${user.name}',
+                        },
+                        else: {
+                            'doc.check_pass': {
+                                div: {
+                                    class: 'mb-3',
+                                    content: '${index}. ${user.name} is ${user.age} years old',
+                                },
+                            },
+                        },
+                    },
+                },
+                theme: {},
+                context: {
+                    params: {},
+                    user: {
+                        name: 'Marco',
+                        age: 35,
+                    },
+                    users: [
+                        { name: 'Alice', age: 25 },
+                        { name: 'Bob', age: 30 },
+                    ],
+                },
+            });
+        });
     });
 
     describe('server operations on page meta', () => {
