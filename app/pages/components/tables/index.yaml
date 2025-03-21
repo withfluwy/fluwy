@@ -199,13 +199,15 @@ doc.content:
                     email: ${record.email}
                 - header: Phone
                   content:
-                    phone: ${record.phone}
+                    if record.phone:
+                      phone: ${record.phone}
                 - header: Created At
                   content:
                     date: ${record.date_created}
                 - header: Updated At
                   content:
-                    date_from_now: ${record.date_updated}
+                    if record.date_updated:
+                      date_from_now: ${record.date_updated}
                 - header: Created By
                   content: ${record.user_created.first_name} ${record.user_created.last_name}
             pagination:
@@ -241,13 +243,15 @@ doc.content:
                         email: ${record.email}
                     - header: Phone
                       content:
-                        phone: ${record.phone}
+                        if record.phone:
+                          phone: ${record.phone}
                     - header: Created At
                       content:
                         date: ${record.date_created}
                     - header: Updated At
                       content:
-                        date_from_now: ${record.date_updated}
+                        if record.date_updated:
+                          date_from_now: ${record.date_updated}
                     - header: Created By
                       content: ${record.user_created.first_name} ${record.user_created.last_name}
                 pagination:
