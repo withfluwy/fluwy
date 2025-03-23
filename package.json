@@ -111,7 +111,7 @@
         "marked": "^15.0.7",
         "mode-watcher": "^0.5.1",
         "svelte-sonner": "^0.3.28",
-        "tailwind-merge": "^3.0.1",
+        "tailwind-merge": "^3.0.2",
         "yaml": "^2.7.0"
     },
     "packageManager": "pnpm@9.12.3"
