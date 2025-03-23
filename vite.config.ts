@@ -5,6 +5,9 @@ import path from 'path';
 
 export default defineConfig({
     plugins: [sveltekit(), svelteTesting()],
+    preview: {
+        allowedHosts: ['fluwy.com'],
+    },
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}'],
         environment: 'jsdom',
