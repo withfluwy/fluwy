@@ -1,0 +1,144 @@
+layout: test
+server:
+  vars:
+    email: admin@example.com
+    name: Marco Avila
+    test:
+      response:
+        status: 200
+    permissions: ["read", "write"]
+    settings:
+      enabled: true
+      theme: "dark"
+      features: ["a", "b", "c"]
+    age: 25
+    number: 3
+    score: 85.5
+    items: [1, 2, 3]
+    data: null
+    user:
+      name: Marco
+      age: 35
+    users:
+      - name: Alice
+        age: 25
+      - name: Bob
+        age: 30
+---
+container:
+  class: grid grid-cols-3 gap-4
+  content:
+    - div:
+        h6: "3 times with number do:"
+        3 times with number do:
+          - if number is 2:
+              - doc.check_pass: "if number is 2: Number ${number}"
+            else if number:
+              - doc.check_pass: Number ${number}
+            else:
+              - doc.check_fail: "Condition failed for variable `number`. Value: ${number}"
+    - div:
+        h6: "for user of users with index:"
+        for user of users with index:
+          text: ${user.name}
+          if user.name is "Marco":
+            doc.check_fail: "Context overridden failed for `user.name`. Value: ${user.name}"
+          else:
+            doc.check_pass:
+              div:
+                class: mb-3
+                content: "${index}. ${user.name} is ${user.age} years old"
+    - div:
+        h6: for item of items
+        for item of items:
+          doc.check_pass: "Array item value: ${item}"
+
+    - div:
+        h6: for prop in settings
+        for prop in settings:
+          doc.check_pass: Setting ${prop} = ${settings[prop]}
+
+    - div:
+        h6: for n of 1..3
+        for n of 1..3:
+          doc.check_pass: Range number ${n}
+
+    - div:
+        h6: 3 times with i do
+        3 times with i do:
+          doc.check_pass: Iteration number ${i}
+
+    - column:
+        class: gap-3
+        content:
+          - div:
+              h6: for n of 1...3 (excludes 3)
+              for n of 1...3:
+                doc.check_pass: Range number ${n}
+
+          - div:
+              h6: each permission of permissions with idx
+              each permission of permissions with idx:
+                doc.check_pass: "Permission ${idx}: ${permission}"
+
+          - div:
+              h6: Array Loop with Conditional Logic
+              for item of items:
+                if item <= 3:
+                  doc.check_pass: "Item ${item} is less than or equal to 3"
+                else:
+                  doc.check_fail: "Item ${item} is greater than 3"
+
+    - column:
+        class: gap-3
+        content:
+          - div:
+              h6: each i of 1..number
+              each i of 1..number:
+                doc.check_pass: Range number ${i}
+          - div:
+              h6: 3 times do
+              3 times do:
+                doc.check_pass: "Repeated component"
+
+          - div:
+              h6: number times do
+              number times do:
+                doc.check_pass: "Dynamic times loop iteration"
+
+    - div:
+        class: p-1 space-y-1
+        h6: for outer of 1..2
+        for outer of 1..2:
+          div:
+            class: mb-2 p-2 bg-black/2 dark:bg-white/2 rounded-xl border border-neutral-300/50 dark:border-neutral-300/5
+            content:
+              - doc.check_pass: "(Outer ${outer}) for inner of 1..3:"
+              - for inner of 1..3:
+                  div:
+                    class: ml-4
+                    doc.check_pass: "  Inner loop: ${inner}"
+
+    - div:
+        h6: for user of users
+        for user of users:
+          doc.check_pass: "User name: ${user.name}"
+          if user.name is "Alice":
+            doc.check_pass: "Parent context access: ${name} can see ${user.name}"
+
+    - div:
+        h6: Loop with Complex Templates
+        for user of users:
+          div:
+            class: mb-2 p-3 border border-neutral-300/50 dark:border-neutral-300/5 bg-black/2 dark:bg-white/2 rounded-xl
+            content:
+              - h5: "${user.name} is ${user.age} years old"
+              - if user.age > 25:
+                  div:
+                    class: bg-blue-500 text-white px-2 py-1 rounded-md
+                    text: "${user.name} is more than 25 years old"
+
+    - div:
+        h6: for key in settings with idx
+        for key in settings with idx:
+          doc.check_pass: "Property #${idx}: ${key} = ${settings[key]}"
