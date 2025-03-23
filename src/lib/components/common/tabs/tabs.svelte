@@ -74,12 +74,12 @@
 
 <div class={cn('relative w-full min-w-0 flex-col', tabRootTheme, props.class)}>
     <div role="tablist" class={cn('relative flex items-center', tabListTheme)}>
-        {#each titles as title}
+        {#each titles as title, index (index)}
             <Render props={{ tab: title }} />
         {/each}
     </div>
 
-    {#each panels as panel}
+    {#each panels as panel, index (index)}
         {#if tabs.isActive(panel.for)}
             <Render props={{ tab_panel: panel }} />
         {/if}

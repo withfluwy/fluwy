@@ -45,7 +45,7 @@
         defaultRowTheme
     )}
 >
-    {#each columns as column}
+    {#each columns as column, index (index)}
         <TableCell {column} {table} {record} />
     {/each}
 </tr>

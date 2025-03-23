@@ -50,6 +50,7 @@
     $effect(() => {
         if (!width_dynamic || !sizer) return;
 
+        // eslint-disable-next-line svelte/no-dom-manipulating
         sizer.textContent = value?.toString() || '';
         sizer.style.fontSize = getComputedStyle(input as Element).fontSize;
         const padding = 20;
@@ -157,7 +158,7 @@
 
     {#if errors?.length}
         <div transition:fade class="flex flex-col transition-all duration-200">
-            {#each errors as error}
+            {#each errors as error, index (index)}
                 <span transition:slide|global={{ duration: 150 }} class={inputErrorsTheme}>
                     {error}
                 </span>

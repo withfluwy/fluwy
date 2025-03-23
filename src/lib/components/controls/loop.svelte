@@ -12,7 +12,7 @@
     const items = $derived.by(() => loop_expression.evaluate(props, context));
 </script>
 
-{#each items as item}
+{#each items as item, index (index)}
     {@const loopContext = context.cloneWith(item.context)}
     <Render props={item.template} context={loopContext} />
 {/each}

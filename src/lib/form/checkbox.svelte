@@ -27,7 +27,7 @@
 
     {#if errors?.length}
         <div transition:fade class="mt-0.5 flex flex-col gap-1">
-            {#each errors as error}
+            {#each errors as error, index (index)}
                 <div transition:slide|global={{ duration: 150 }} class="text-xs text-destructive">
                     {error}
                 </div>

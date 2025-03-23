@@ -12,6 +12,6 @@
 </script>
 
 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-{#each Array(props.times) as _}
+{#each Array(props.times) as _, index (index)}
     <Render props={exclude(props, 'times')} />
 {/each}

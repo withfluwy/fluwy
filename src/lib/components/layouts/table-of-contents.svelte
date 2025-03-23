@@ -178,7 +178,7 @@
         </a>
         {#if tocItem.children.length > 0}
             <ul class="list-none">
-                {#each tocItem.children as child}
+                {#each tocItem.children as child, index (index)}
                     {@render itemElement(child)}
                 {/each}
             </ul>
@@ -190,7 +190,7 @@
     {#if tocData.length > 0}
         <nav>
             <ul class="list-none">
-                {#each tocData as item}
+                {#each tocData as item, index (index)}
                     {@render itemElement(item)}
                 {/each}
             </ul>
