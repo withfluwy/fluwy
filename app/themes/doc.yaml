@@ -1,5 +1,5 @@
 typography:
-  link: bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:to-primary transition-all duration-300
+  link: bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent hover:to-primary transition-all duration-300
 
 layout:
   footer: bg-purple-50 border-purple-500 p-3 border
@@ -51,7 +51,7 @@ forms:
 
   button:
     variants:
-      my-gradient-variant: bg-gradient-to-r from-color-500 to-purple-500 text-white
+      my-gradient-variant: bg-linear-to-r from-color-500 to-purple-500 text-white
 
 common:
   border_radius:

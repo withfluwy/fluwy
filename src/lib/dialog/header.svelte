@@ -11,7 +11,7 @@
 
 <div
     class={cn(
-        'sticky inset-x-0 top-0 z-10 flex items-center border-b bg-white/90 px-5 pt-4 backdrop-blur-sm',
+        'sticky inset-x-0 top-0 z-10 flex items-center border-b bg-white/90 px-5 pt-4 backdrop-blur-xs',
         props.class
     )}
 >
@@ -20,7 +20,7 @@
     </div>
 
     <Dialog.Close
-        class="active:scale-98 focus-visible:ring-foreground focus-visible:ring-offset-background absolute right-3.5 top-3.5 z-10 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        class="active:scale-98 focus-visible:ring-foreground focus-visible:ring-offset-background absolute right-3.5 top-3.5 z-10 rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2"
     >
         <Button
             {...{

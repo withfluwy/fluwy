@@ -4,6 +4,106 @@ import type { Template } from '@/lib/core/contracts.js';
 
 describe('normalizeToComponents', () => {
     const testCases: TestCases = {
+        'parse basic loop syntax': {
+            input: {
+                '3 times do': [{ text: 'Number ${n}' }],
+            },
+            output: [
+                {
+                    name: 'loop',
+                    template: {
+                        '3 times do': [{ text: 'Number ${n}' }],
+                    },
+                },
+            ],
+        },
+        'parse loop with multiple components': {
+            input: {
+                '2 times do': [{ text: 'Index: ${n}' }, { button: 'Click ${n}' }],
+            },
+            output: [
+                {
+                    name: 'loop',
+                    template: {
+                        '2 times do': [{ text: 'Index: ${n}' }, { button: 'Click ${n}' }],
+                    },
+                },
+            ],
+        },
+        'parse nested loops': {
+            input: {
+                'for row of 1..2': [
+                    {
+                        'for col of 1..3': [{ text: 'Cell ${row}-${col}' }],
+                    },
+                ],
+            },
+            output: [
+                {
+                    name: 'loop',
+                    template: {
+                        'for row of 1..2': [
+                            {
+                                'for col of 1..3': [{ text: 'Cell ${row}-${col}' }],
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+        'parse loops with object syntax': {
+            input: {
+                'for row of 1..2': {
+                    component: 'Item ${row}',
+                },
+            },
+            output: [
+                {
+                    name: 'loop',
+                    template: {
+                        'for row of 1..2': { component: 'Item ${row}' },
+                    },
+                },
+            ],
+        },
+        'parse loops with object syntax and nested loops': {
+            input: {
+                'for row of 1..2': {
+                    component: 'Item ${row}',
+                    'for col of 1..3': [{ text: 'Cell ${row}-${col}' }],
+                },
+            },
+            output: [
+                {
+                    name: 'loop',
+                    template: {
+                        'for row of 1..2': {
+                            component: 'Item ${row}',
+                            'for col of 1..3': [{ text: 'Cell ${row}-${col}' }],
+                        },
+                    },
+                },
+            ],
+        },
+        'parse loops with conditions': {
+            input: {
+                'for row of 1..2': {
+                    'if row == 1': { h1: 'Especial 1' },
+                    else: { p: 'Item ${row}' },
+                },
+            },
+            output: [
+                {
+                    name: 'loop',
+                    template: {
+                        'for row of 1..2': {
+                            'if row == 1': { h1: 'Especial 1' },
+                            else: { p: 'Item ${row}' },
+                        },
+                    },
+                },
+            ],
+        },
         'parse plain object': {
             input: {
                 text: 'this is a simple text',

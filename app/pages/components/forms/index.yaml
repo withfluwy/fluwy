@@ -57,7 +57,7 @@ doc.content:
 
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-0
             code:
@@ -99,7 +99,7 @@ doc.content:
 
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-0
             code:
@@ -182,7 +182,7 @@ doc.content:
   - tabs:
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-0
             code:
@@ -261,7 +261,7 @@ doc.content:
                 - debug: form.data
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             class: p-0
             code:

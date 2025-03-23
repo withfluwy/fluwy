@@ -4,24 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'yaml';
 
-export function extractTailwindOnYaml(line: string): string[] {
-    const regex = /[a-zA-Z0-9_-]+: (.*)$/g;
-    const match = line.match(regex) || [];
-
-    if (!match.length) return [];
-
-    const classes = match
-        .map((m) =>
-            m
-                .split(' ')
-                .filter((s) => !s.endsWith(':'))
-                .flat()
-        )
-        .flat();
-
-    return classes;
-}
-
 export function readColorsFrom(dirpath: string): string[] {
     const colors = new Set();
     for (const file of fs.readdirSync(dirpath)) {

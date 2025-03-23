@@ -49,7 +49,7 @@ doc.content:
                     date: ${record.created_at}
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -72,7 +72,7 @@ doc.content:
                       content: ${record.created_at}
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -147,7 +147,7 @@ doc.content:
                       on_click: operations
       - tab:
           title: Theme Settings
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -199,20 +199,22 @@ doc.content:
                     email: ${record.email}
                 - header: Phone
                   content:
-                    phone: ${record.phone}
+                    if record.phone:
+                      phone: ${record.phone}
                 - header: Created At
                   content:
                     date: ${record.date_created}
                 - header: Updated At
                   content:
-                    date_from_now: ${record.date_updated}
+                    if record.date_updated:
+                      date_from_now: ${record.date_updated}
                 - header: Created By
                   content: ${record.user_created.first_name} ${record.user_created.last_name}
             pagination:
               for: contacts_table
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -241,13 +243,15 @@ doc.content:
                         email: ${record.email}
                     - header: Phone
                       content:
-                        phone: ${record.phone}
+                        if record.phone:
+                          phone: ${record.phone}
                     - header: Created At
                       content:
                         date: ${record.date_created}
                     - header: Updated At
                       content:
-                        date_from_now: ${record.date_updated}
+                        if record.date_updated:
+                          date_from_now: ${record.date_updated}
                     - header: Created By
                       content: ${record.user_created.first_name} ${record.user_created.last_name}
                 pagination:
@@ -266,7 +270,7 @@ doc.content:
               for: contacts_table
       - tab:
           title: Code
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml
@@ -275,7 +279,7 @@ doc.content:
                   for: contacts_table
       - tab:
           title: Properties
-          class: bg-neutral-800 dark:bg-neutral-800 [&:is([data-state=active])]:text-white border-slate-800
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
           panel:
             code:
               language: yaml

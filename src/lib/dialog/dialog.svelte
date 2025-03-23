@@ -96,7 +96,7 @@
                     {#if loading}
                         <div
                             transition:fade
-                            class="absolute inset-0 z-20 flex items-center justify-center bg-white/90 backdrop-blur-sm"
+                            class="absolute inset-0 z-20 flex items-center justify-center bg-white/90 backdrop-blur-xs"
                         >
                             <Icon name="svg-spinners:90-ring-with-bg" size={40} class="text-neutral-500" />
                         </div>

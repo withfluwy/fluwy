@@ -19,9 +19,9 @@ forms:
       xl: text-base h-14 p-4 gap-2
   button:
     variants:
-      testing: bg-gradient-to-r from-color-500 to-purple-500 text-white
+      testing: bg-linear-to-r from-color-500 to-purple-500 text-white
   input:
-    wrapper: border dark:border-gray-700 p-1 rounded-xl
+    wrapper: border border-gray-200 dark:border-gray-700 p-1 rounded-xl
     base: focus:shadow-lg
     label: italic font-bold
     errors: italic underline

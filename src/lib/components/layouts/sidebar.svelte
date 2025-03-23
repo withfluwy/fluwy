@@ -97,7 +97,7 @@
         <div
             role="button"
             tabindex="0"
-            class="fixed inset-0 z-40 bg-black/50 backdrop-blur"
+            class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
             onclick={toggleSidebar}
             onkeydown={(e) => e.key === 'Enter' && toggleSidebar()}
             transition:fade={{ duration: 300 }}
@@ -120,7 +120,7 @@
                 name: 'ph:x-bold',
                 size: 16,
             }}
-            class="absolute right-3 top-3 z-40 !size-6 p-0"
+            class="absolute right-3 top-3 z-40 size-6! p-0"
             variant="ghost"
             onclick={toggleSidebar}
         ></Button>
@@ -142,7 +142,7 @@
         class={cn(
             commonBorderColor,
             commonBackgroundColor,
-            'sticky inset-y-0 z-[1] hidden h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3 lg:flex',
+            'sticky inset-y-0 z-1 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto border-r p-3 lg:flex',
             layoutSidebarTheme,
             props.class
         )}

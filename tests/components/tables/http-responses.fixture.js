@@ -14,7 +14,7 @@ export const Response = {
                 first_name: 'Zaccaria',
                 last_name: 'Padfield',
                 email: 'zpadfield24@fda.gov',
-                phone: null,
+                phone: '383-859-1111',
                 user_created: {
                     first_name: 'Admin',
                     last_name: 'User',
@@ -29,7 +29,7 @@ export const Response = {
                 status: 'draft',
                 sort: null,
                 date_created: '2024-11-19T07:54:52.523Z',
-                date_updated: null,
+                date_updated: '2024-11-19T07:54:52.523Z',
                 first_name: 'Anissa',
                 last_name: 'Rocca',
                 email: 'arocca25@ezinearticles.com',

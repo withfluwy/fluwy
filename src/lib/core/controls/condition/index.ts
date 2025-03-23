@@ -12,19 +12,15 @@ type ComparisonValue = string | number | boolean | null | undefined;
  * - Special values (null, undefined, true, false)
  */
 export const if_expression = {
-    check,
+    check(expression: string): boolean {
+        return expression.startsWith('if ') || expression.startsWith('else if ') || expression === 'else';
+    },
 
-    evaluate,
+    evaluate(expression: string, context: Context): boolean {
+        const condition = expression.substring(3).trim(); // remove 'if ' prefix
+        return evaluateExpression(condition, context);
+    }
 };
-
-export function check(expression: string): boolean {
-    return expression.startsWith('if ');
-}
-
-export function evaluate(expression: string, context: Context): boolean {
-    const condition = expression.substring(3).trim(); // remove 'if ' prefix
-    return evaluateExpression(condition, context);
-}
 
 export type Condition = {
     [condition: string]: Template;
@@ -96,13 +92,13 @@ export function parseCondition(condition: Condition, context: Context): Template
     const elseTemplate = extractElseTemplate(entries);
 
     // Evaluate main if condition
-    if (evaluate(mainIf.condition, context)) {
+    if (if_expression.evaluate(mainIf.condition, context)) {
         return mainIf.template;
     }
 
     // Evaluate else if conditions in order
     for (const { condition, template } of elseIfs) {
-        if (evaluate(condition, context)) {
+        if (if_expression.evaluate(condition, context)) {
             return template;
         }
     }

@@ -8,7 +8,7 @@
     const context = useContext();
     const phoneTheme = useTheme('displays.phone');
 
-    const phone = $derived(typeof props === 'string' ? props : props.content);
+    const phone = $derived(typeof props === 'string' ? props : (props.content ?? props));
     const compiledPhone = $derived(typeof phone === 'string' ? compile(phone, context.data) : undefined);
     const hasPhone = $derived(typeof compiledPhone === 'string');
     const href = $derived(hasPhone ? `tel:${compiledPhone}` : undefined);

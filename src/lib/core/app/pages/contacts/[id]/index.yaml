@@ -13,5 +13,5 @@ server:
 ---
 - header: Contact Page ${contact.name} - ${contact.email}
 - div: "Amount: ${amount}"
-- div: Should keep unparsed var ${record.id} because record doesn't exit
+- div: "Unresolved variables should keep placeholders: ${record.id}"
 - div: "Address: ${address.street}"

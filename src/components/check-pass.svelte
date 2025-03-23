@@ -7,7 +7,7 @@
             class: 'items-center gap-1 -mb-3',
             content: [
                 { icon: { name: 'solar:check-circle-bold', class: 'text-positive mb-3' } },
-                { markdown: props.content },
+                typeof props.content === 'string' ? { markdown: props.content } : props,
             ],
         },
     };
