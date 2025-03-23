@@ -40,7 +40,7 @@
 </script>
 
 {#if items && (items?.length || Object.keys(items).length)}
-    {#each Object.entries(items) as entry}
+    {#each Object.entries(items) as entry, index (index)}
         <Render props={content} context={createContextWith(entry)} />
     {/each}
 {/if}

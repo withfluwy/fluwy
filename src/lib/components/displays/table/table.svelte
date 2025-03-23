@@ -143,7 +143,7 @@
         <table class="w-full">
             <thead>
                 <tr>
-                    {#each props.columns as column}
+                    {#each props.columns as column, index (index)}
                         <TableHeader {column} />
                     {/each}
                 </tr>

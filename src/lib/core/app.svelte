@@ -35,7 +35,7 @@
 <ModeWatcher />
 <!-- <Toaster richColors position="top-right" closeButton /> -->
 
-{#each $dialogs as dialog}
+{#each $dialogs as dialog, index (index)}
     <Render context={dialog.context} props={{ [dialog.component]: dialog }} />
 {/each}
 

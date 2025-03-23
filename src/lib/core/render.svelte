@@ -65,7 +65,7 @@
     }
 </script>
 
-{#each components as component}
+{#each components as component, index (index)}
     {#if app.hasComponent(component.name)}
         {@const Component = app.getComponent(component.name)}
         <Component {...normalizeTemplate(component)} />
