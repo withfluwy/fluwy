@@ -94,6 +94,9 @@ page:
               - menu_item:
                   text: Conditions
                   url: /controls/conditions
+              - menu_item:
+                  text: Loops
+                  url: /controls/loops
       aside:
         class: pt-10 border-0
         table_of_contents:
