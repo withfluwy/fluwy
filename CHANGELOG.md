@@ -1,5 +1,22 @@
 # @fluwy/ui
 
+## 0.10.0
+
+### Minor Changes
+
+- c3985cd: Add support for loops on the template. Available loop types: array, objects, ranges, and times.
+- 07d40f7: chore: upgrade to tailwindcss v4.
+- feda0b7: Add support conditions to the template. `if`, `else if`, and `else` are supported.
+- d06b02e: Add support to bracket notation for interpolation like `${user['name']}`.
+- 65ed1b8: Fix tabs rendering problems upon navigation. Adds `active_by_default` boolean property to `tab` component, the first tab with this boolean property set to `true` will be set as the active tab.
+- cb37329: Add support to conditions in operations
+- fc94dfb: Add support for loops like `for`, `each`, and `times`. See the docs for more details.
+
+### Patch Changes
+
+- 7ea8901: Fix compilation of context variables for `vars` operation.
+- 96a86aa: Fix `get` helper to return `null` if the value is null from the variable search.
+
 ## 0.9.0
 
 ### Minor Changes
