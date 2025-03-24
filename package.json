@@ -71,7 +71,7 @@
         "@types/eslint": "^9.6.1",
         "@types/jsdom": "^21.1.7",
         "@types/lodash": "^4.17.16",
-        "@types/node": "^22.13.11",
+        "@types/node": "^22.13.13",
         "@vitest/coverage-istanbul": "^3.0.9",
         "autoprefixer": "^10.4.21",
         "eslint": "^9.23.0",
