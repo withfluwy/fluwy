@@ -1,5 +1,19 @@
 # @fluwy/ui
 
+## 0.11.0
+
+### Minor Changes
+
+- 4a87364: Add `color` property to icon component.
+- 5da91ea: New `void` component useful for creating yaml anchors and variables for the yaml file template.
+- 146b92e: New `dialog` component with support for properties `title`, `description`, `icon`, `color`, `content`, `footer`. Many of them with template support.
+- 9f4abbf: Add support for templates and conditions to boolean properties like button's `disabled` property.
+
+### Patch Changes
+
+- 4ff6e6c: Upgrade bits-ui to v1.0.0+.
+- bed77c1: Upgrade dependencies.
+
 ## 0.10.0
 
 ### Minor Changes
