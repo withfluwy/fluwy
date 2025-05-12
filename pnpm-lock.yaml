@@ -39,8 +39,8 @@ importers:
         specifier: ^15.0.11
         version: 15.0.11
       mode-watcher:
-        specifier: ^1.0.2
-        version: 1.0.2(svelte@5.28.2)
+        specifier: ^1.0.7
+        version: 1.0.7(svelte@5.28.2)
       svelte-sonner:
         specifier: ^0.3.28
         version: 0.3.28(svelte@5.28.2)
@@ -1904,8 +1904,8 @@ packages:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
 
-  mode-watcher@1.0.2:
-    resolution: {integrity: sha512-b3ghU4F4kZeRHHPlsVeCltBgYRHNr7HNyT9JTlvIIvuob7Vulu7iKCfaKNU4FGugBIFWyK5q4bDhqCeZy3Cuxw==}
+  mode-watcher@1.0.7:
+    resolution: {integrity: sha512-ZGA7ZGdOvBJeTQkzdBOnXSgTkO6U6iIFWJoyGCTt6oHNg9XP9NBvS26De+V4W2aqI+B0yYXUskFG2VnEo3zyMQ==}
     peerDependencies:
       svelte: ^5.27.0
 
@@ -4426,7 +4426,7 @@ snapshots:
 
   minipass@7.1.2: {}
 
-  mode-watcher@1.0.2(svelte@5.28.2):
+  mode-watcher@1.0.7(svelte@5.28.2):
     dependencies:
       runed: 0.25.0(svelte@5.28.2)
       svelte: 5.28.2
