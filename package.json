@@ -100,7 +100,7 @@
     "types": "./dist/index.d.ts",
     "type": "module",
     "dependencies": {
-        "bits-ui": "^1.4.2",
+        "bits-ui": "^1.8.0",
         "clsx": "^2.1.1",
         "color": "^5.0.0",
         "dayjs": "^1.11.13",
