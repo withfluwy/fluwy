@@ -13,24 +13,24 @@ describe('Required', () => {
     describe('constructor and properties', () => {
         it('should implement the Rule interface', () => {
             expect(required).toBeInstanceOf(Required);
-            expect(required).toHaveProperty('field');
+            expect(required).toHaveProperty('id');
             expect(required).toHaveProperty('message');
             expect(required).toHaveProperty('check');
             expect(typeof required.check).toBe('function');
         });
 
-        it('should set the field property to "required"', () => {
-            expect(required.field).toBe('required');
+        it('should set the id property to "required"', () => {
+            expect(required.id).toBe('required');
         });
 
         it('should store the custom message', () => {
             expect(required.message).toBe(customMessage);
         });
 
-        it('should make field property readonly (compile-time check)', () => {
+        it('should make id property readonly (compile-time check)', () => {
             // TypeScript readonly is a compile-time check, not runtime
             // This test verifies the property exists and has the correct value
-            expect(required.field).toBe('required');
+            expect(required.id).toBe('required');
             // The @ts-expect-error comment above the assignment would catch compile-time violations
         });
 
@@ -288,7 +288,7 @@ describe('Required', () => {
     describe('Rule interface compliance', () => {
         it('should satisfy Rule interface type checking', () => {
             const rule: Rule = new Required('test message');
-            expect(rule.field).toBe('required');
+            expect(rule.id).toBe('required');
             expect(rule.message).toBe('test message');
             expect(typeof rule.check).toBe('function');
         });
@@ -309,8 +309,8 @@ describe('Required', () => {
 
             expect(rule1.message).toBe('Message 1');
             expect(rule2.message).toBe('Message 2');
-            expect(rule1.field).toBe('required');
-            expect(rule2.field).toBe('required');
+            expect(rule1.id).toBe('required');
+            expect(rule2.id).toBe('required');
 
             // Both should work independently
             expect(await rule1.check('test')).toBe(true);

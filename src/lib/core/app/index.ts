@@ -1,6 +1,6 @@
 import { findRoute, type RouteParams } from '../router/route.js';
 import { parse } from 'yaml';
-import { compile } from '../utils/compile/index.js';
+import { compile } from '$lib/core/utils/compile/index.js';
 import fs from 'fs';
 import path from 'path';
 import type {

@@ -1,7 +1,7 @@
 import type { Rule } from './rule.js';
 
 export class Required implements Rule {
-    public readonly field = 'required';
+    public readonly id = 'required';
 
     constructor(public message: string) {}
 

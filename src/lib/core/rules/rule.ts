@@ -1,5 +1,5 @@
 export interface Rule {
-    field: string;
+    id: string;
     message: string;
     check(value: unknown): Promise<boolean>;
 }
