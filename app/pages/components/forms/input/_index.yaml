@@ -1,13 +1,742 @@
 layout: doc
 ---
-h2: Input
-markdown: |
-  The input component is the basic component to collect data from users. It currently supports these types: `text`
-  (the default), `password`, `number`, `search`, `date`
+h1: Input
+p: |
+  The input component is the fundamental building block for collecting user data in Fluwy applications.
+  It provides a clean, accessible, and highly customizable interface for text input with support for various
+  input types, icons, validation states, and seamless form integration. The component is designed to work
+  seamlessly within Fluwy's form system while maintaining flexibility for standalone usage.
+spacer: mt-12
 doc.content:
-  - h3: Usage
-  - p: To use Input Text, import the component and include it in your element.
-  - input:
-      label: Input Text
-      placeholder: Enter text here
-      value: This is my value
+  - h2: Basic Usage
+  - markdown: |
+      The input component can be used standalone or within a form context. It automatically integrates with
+      Fluwy's form system when used inside a form component, providing automatic data binding and validation.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            input:
+              label: Full Name
+              placeholder: Enter your full name
+              icon: solar:user-linear
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                input:
+                  label: Full Name
+                  placeholder: Enter your full name
+                  icon: solar:user-linear
+      - tab:
+          title: Properties
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                input:
+                  # Input type - text, password, number, search, date, email
+                  type: # string (default: "text")
+
+                  # Placeholder text displayed when input is empty
+                  placeholder: # string
+
+                  # Label displayed above the input
+                  label: # string | template
+
+                  # Field name for form data binding
+                  field: # string
+
+                  # Description text displayed below the input
+                  description: # string | template
+
+                  # CSS classes for custom styling
+                  class: # string
+
+                  # Leading icon from icones.js.org
+                  icon: # string
+
+                  # Trailing icon from icones.js.org
+                  trailing_icon: # string
+
+                  # Input size - sm, md, lg, or custom theme size
+                  size: # string (default: "md")
+
+                  # Initial or bound value
+                  value: # any
+
+                  # Array of error messages to display
+                  errors: # string[]
+
+                  # Path for the error when it's different from the "field" for custom error handling
+                  error_path: # string
+
+                  # Whether the field is required
+                  required: # boolean
+
+                  # Whether the input is disabled
+                  disabled: # boolean
+
+                  # Enable dynamic width based on content
+                  width_dynamic: # boolean
+
+                  # Show loading spinner
+                  loading: # boolean
+
+                  # Input event handler
+                  oninput: # function
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                forms:
+                  input:
+                    # Base input styling
+                    base: # string
+
+                    # Input wrapper container
+                    wrapper: # string
+
+                    # Label styling
+                    label: # string
+
+                    # Description text styling
+                    description: # string
+
+                    # Error message styling
+                    errors: # string
+
+  - h2: Input Types
+  - markdown: |
+      The input component supports various HTML input types, each optimized for specific data collection needs.
+      Each type provides appropriate keyboard layouts and validation on supported devices.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            column:
+              - input:
+                  icon: solar:text-linear
+                  placeholder: Text input
+                  type: text
+              - input:
+                  icon: solar:key-linear
+                  placeholder: Password input
+                  type: password
+              - input:
+                  icon: solar:hashtag-linear
+                  placeholder: Number input
+                  type: number
+              - input:
+                  icon: solar:magnifer-linear
+                  placeholder: Search input
+                  type: search
+              - input:
+                  icon: solar:calendar-linear
+                  placeholder: Date input
+                  type: date
+              - input:
+                  icon: solar:letter-linear
+                  placeholder: Email input
+                  type: email
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                # Text input (default)
+                - input:
+                    icon: solar:text-linear
+                    placeholder: Text input
+                    type: text
+
+                # Password input with hidden characters
+                - input:
+                    icon: solar:key-linear
+                    placeholder: Password input
+                    type: password
+
+                # Number input with numeric keyboard
+                - input:
+                    icon: solar:hashtag-linear
+                    placeholder: Number input
+                    type: number
+
+                # Search input with search-specific styling
+                - input:
+                    icon: solar:magnifer-linear
+                    placeholder: Search input
+                    type: search
+
+                # Date input with date picker
+                - input:
+                    icon: solar:calendar-linear
+                    placeholder: Date input
+                    type: date
+
+                # Email input with email validation
+                - input:
+                    icon: solar:letter-linear
+                    placeholder: Email input
+                    type: email
+
+  - h2: Icons and Visual Elements
+  - markdown: |
+      Enhance your inputs with leading icons, trailing icons, and loading states. Icons help users quickly
+      identify the purpose of each input field and improve the overall user experience.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-3 flex-wrap
+              content:
+                - input:
+                    label: With Leading Icon
+                    placeholder: Enter username
+                    icon: solar:user-linear
+                - input:
+                    label: With Trailing Icon
+                    placeholder: Enter amount
+                    trailing_icon: solar:dollar-minimalistic-linear
+                - input:
+                    label: With Both Icons
+                    placeholder: Search products
+                    icon: solar:magnifer-linear
+                    trailing_icon: solar:filter-linear
+                - input:
+                    label: Loading State
+                    placeholder: Processing...
+                    icon: solar:user-linear
+                    loading: true
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                # Leading icon
+                - input:
+                    label: With Leading Icon
+                    placeholder: Enter username
+                    icon: solar:user-linear
+
+                # Trailing icon
+                - input:
+                    label: With Trailing Icon
+                    placeholder: Enter amount
+                    trailing_icon: solar:dollar-minimalistic-linear
+
+                # Both icons
+                - input:
+                    label: With Both Icons
+                    placeholder: Search products
+                    icon: solar:magnifer-linear
+                    trailing_icon: solar:filter-linear
+
+                # Loading state (replaces trailing icon)
+                - input:
+                    label: Loading State
+                    placeholder: Processing...
+                    icon: solar:user-linear
+                    loading: true
+  - markdown:
+      class: mt-2
+      content: |
+        > **Pro Tip:** Icons are sourced from [icones.js.org](https://icones.js.org). The loading state automatically
+        replaces any trailing icon with a spinner animation.
+
+  - h2: Sizes
+  - markdown: |
+      The input component comes with three predefined sizes: `sm`, `md` (default), and `lg`. You can also
+      define custom sizes in your theme configuration for specific design requirements.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-3 items-end flex-wrap
+              content:
+                - input:
+                    label: Small
+                    placeholder: Small input
+                    icon: solar:heart-linear
+                    size: sm
+                - input:
+                    label: Medium (Default)
+                    placeholder: Medium input
+                    icon: solar:heart-linear
+                    size: md
+                - input:
+                    label: Large
+                    placeholder: Large input
+                    icon: solar:heart-linear
+                    size: lg
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                # Small size
+                - input:
+                    label: Small
+                    placeholder: Small input
+                    size: sm
+
+                # Medium size (default)
+                - input:
+                    label: Medium (Default)
+                    placeholder: Medium input
+                    size: md
+
+                # Large size
+                - input:
+                    label: Large
+                    placeholder: Large input
+                    size: lg
+
+  - h2: States and Validation
+  - markdown: |
+      Input components support various states including disabled, error, and required states. Error handling
+      integrates seamlessly with Fluwy's form validation system to provide clear user feedback.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            column:
+              - input:
+                  label: Required Field
+                  placeholder: This field is required
+                  required: true
+              - input:
+                  label: Disabled Input
+                  placeholder: This input is disabled
+                  disabled: true
+                  icon: solar:lock-linear
+              - input:
+                  label: Input with Error
+                  placeholder: Enter valid email
+                  icon: solar:letter-linear
+                  errors:
+                    - Please enter a valid email address
+                    - Email is required
+              - input:
+                  label: Input with Description
+                  placeholder: Enter your username
+                  description: Username must be 3-20 characters long
+                  icon: solar:user-linear
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                # Required field
+                - input:
+                    label: Required Field
+                    placeholder: This field is required
+                    required: true
+                    icon: solar:asterisk-linear
+
+                # Disabled state
+                - input:
+                    label: Disabled Input
+                    placeholder: This input is disabled
+                    disabled: true
+                    icon: solar:lock-linear
+
+                # Error state with multiple messages
+                - input:
+                    label: Input with Error
+                    placeholder: Enter valid email
+                    icon: solar:letter-linear
+                    errors:
+                      - Please enter a valid email address
+                      - Email is required
+
+                # With description
+                - input:
+                    label: Input with Description
+                    placeholder: Enter your username
+                    description: Username must be 3-20 characters long
+                    icon: solar:user-linear
+
+  - h2: Dynamic Width
+  - markdown: |
+      The `width_dynamic` property allows inputs to automatically resize based on their content. This is
+      particularly useful for inline editing scenarios or when you want the input to take up minimal space.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2 items-center flex-wrap
+              content:
+                - text: 'Dynamic inputs:'
+                - input:
+                    width_dynamic: true
+                    value: Short
+                - input:
+                    width_dynamic: true
+                    value: Medium length text
+                - input:
+                    width_dynamic: true
+                    value: This is a much longer text that will expand the input
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                row:
+                  class: gap-2 items-center
+                  content:
+                    - text: "Dynamic inputs:"
+                    - input:
+                        width_dynamic: true
+                        value: Short
+                    - input:
+                        width_dynamic: true
+                        value: Medium length text
+                    - input:
+                        width_dynamic: true
+                        value: This is a much longer text that will expand the input
+  - markdown:
+      class: mt-2
+      content: |
+        > **Note:** Dynamic width inputs automatically adjust their width based on content, with a minimum width
+        to ensure usability. This feature is perfect for inline editing and space-efficient layouts.
+
+  - h2: Form Integration
+  - markdown: |
+      Input components integrate seamlessly with Fluwy's form system, providing automatic data binding,
+      validation, and state management. Use the `field` property to bind inputs to form data.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            form:
+              data:
+                user:
+                  firstName: John
+                  lastName: Doe
+                  email: john.doe@example.com
+              content:
+                - row:
+                    - input:
+                        label: First Name
+                        field: user.firstName
+                        placeholder: Enter first name
+                        icon: solar:user-linear
+                    - input:
+                        label: Last Name
+                        field: user.lastName
+                        placeholder: Enter last name
+                        icon: solar:user-linear
+                - input:
+                    label: Email Address
+                    field: user.email
+                    type: email
+                    placeholder: Enter email address
+                    icon: solar:letter-linear
+                    description: We'll never share your email with anyone else
+                - row:
+                    class: justify-between items-center mt-4
+                    content:
+                      - debug: form.data
+                      - button:
+                          text: Submit Form
+                          color: primary
+                          type: submit
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                form:
+                  data:
+                    user:
+                      firstName: John
+                      lastName: Doe
+                      email: john.doe@example.com
+                  content:
+                    - row:
+                        - input:
+                            label: First Name
+                            field: user.firstName
+                            placeholder: Enter first name
+                            icon: solar:user-linear
+                        - input:
+                            label: Last Name
+                            field: user.lastName
+                            placeholder: Enter last name
+                            icon: solar:user-linear
+                    - input:
+                        label: Email Address
+                        field: user.email
+                        type: email
+                        placeholder: Enter email address
+                        icon: solar:letter-linear
+                        description: We'll never share your email with anyone else
+                    - button:
+                        text: Submit Form
+                        color: primary
+                        type: submit
+
+  - h2: Advanced Usage
+  - markdown: |
+      Explore advanced input patterns including search interfaces, inline editing, and complex form layouts.
+      These examples demonstrate the flexibility and power of the input component in real-world scenarios.
+  - h3: Search Interface
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-1 items-center
+              content:
+                - input:
+                    icon: solar:magnifer-linear
+                    placeholder: Search products, users, or content...
+                    loading: false
+                    class: flex-1
+                - button:
+                    icon: solar:magnifer-linear
+                    color: primary
+                    text: Search
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                row:
+                  class: gap-1 items-center
+                  content:
+                    - input:
+                        icon: solar:magnifer-linear
+                        placeholder: Search products, users, or content...
+                        class: flex-1
+                    - button:
+                        icon: solar:magnifer-linear
+                        color: primary
+                        text: Search
+
+  - h3: Inline Editing
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-2 items-center flex-wrap
+              content:
+                - text: 'Edit values inline:'
+                - input:
+                    width_dynamic: true
+                    value: Product Name
+                    class: font-semibold
+                - text: 'costs'
+                - input:
+                    width_dynamic: true
+                    value: '$29.99'
+                    type: text
+                - text: 'and is'
+                - input:
+                    width_dynamic: true
+                    value: 'available'
+                    class: text-green-600
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                row:
+                  class: gap-2 items-center flex-wrap
+                  content:
+                    - text: "Edit values inline:"
+                    - input:
+                        width_dynamic: true
+                        value: Product Name
+                        class: font-semibold
+                    - text: "costs"
+                    - input:
+                        width_dynamic: true
+                        value: "$29.99"
+                        type: text
+                    - text: "and is"
+                    - input:
+                        width_dynamic: true
+                        value: "available"
+                        class: text-green-600
+
+  - h2: Customization
+  - h3: Custom Styling
+  - markdown: |
+      Override default styles using the `class` property or customize the appearance globally through theme configuration.
+      The input component respects Fluwy's theming system while allowing for component-specific customizations.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            row:
+              class: gap-3 flex-wrap
+              content:
+                - input:
+                    label: Custom Border
+                    placeholder: Custom styling
+                    class: border-2 border-purple-300 focus:border-purple-500
+                - input:
+                    label: Custom Background
+                    placeholder: Colored background
+                    class: bg-blue-50 dark:bg-blue-900/20
+                - input:
+                    label: Rounded Style
+                    placeholder: Fully rounded
+                    class: rounded-full
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                # Custom border styling
+                - input:
+                    label: Custom Border
+                    placeholder: Custom styling
+                    class: border-2 border-purple-300 focus:border-purple-500
+
+                # Custom background
+                - input:
+                    label: Custom Background
+                    placeholder: Colored background
+                    class: bg-blue-50 dark:bg-blue-900/20
+
+                # Rounded styling
+                - input:
+                    label: Rounded Style
+                    placeholder: Fully rounded
+                    class: rounded-full
+
+  - h3: Theme Configuration
+  - markdown: |
+      Customize input appearance globally by defining theme settings in your theme file. This allows you to
+      maintain consistent styling across your entire application while supporting component-specific overrides.
+  - tabs:
+      - tab:
+          title: Preview
+          panel:
+            input:
+              label: Themed Input
+              placeholder: This input uses custom theme settings
+              icon: solar:settings-linear
+              description: Styled with custom theme configuration
+      - tab:
+          title: Code
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                input:
+                  label: Themed Input
+                  placeholder: This input uses custom theme settings
+                  icon: solar:settings-linear
+                  description: Styled with custom theme configuration
+      - tab:
+          title: Theme Settings
+          class: bg-neutral-800 dark:bg-neutral-800 data-[state=active]:text-white border-slate-800
+          panel:
+            class: p-2
+            code:
+              language: yaml
+              content: |
+                # In your theme file (e.g., app/themes/my-theme.yaml)
+                forms:
+                  input:
+                    # Base input field styling
+                    base: focus:shadow-lg transition-shadow
+
+                    # Input wrapper container
+                    wrapper: border border-gray-200 dark:border-gray-700 p-1 rounded-xl
+
+                    # Label text styling
+                    label: italic font-bold text-gray-800 dark:text-gray-200
+
+                    # Description text styling
+                    description: text-xs text-gray-500 italic
+
+                    # Error message styling
+                    errors: italic underline text-red-600 font-medium
+
+                  common:
+                    # Custom size definitions
+                    sizes:
+                      xs: text-xs h-6 p-1
+                      xl: text-lg h-14 p-4
+                      xxl: text-xl h-16 p-5
+
+  - h2: Integration Examples
+  - markdown: |
+      The input component works seamlessly with other Fluwy components and external systems. Here are some
+      common integration patterns:
+
+      ### With Validation
+      ```yaml
+      form:
+        on_submit:
+          post:
+            url: /api/validate
+            data: form.data
+            on_error:
+              set_form_errors:
+        content:
+          - input:
+              label: Email
+              field: email
+              type: email
+      ```
+
+      ### With Dynamic Content
+      ```yaml
+      input:
+        label: "Product: ${product.name}"
+        value: product.price
+        field: price
+        disabled: product.locked
+      ```
+
+      > **Pro Tip:** The input component automatically handles form context, data binding, and validation when used
+      within a form component, making it perfect for complex form scenarios.

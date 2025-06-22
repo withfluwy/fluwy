@@ -1,0 +1,87 @@
+layout: test
+theme: tests
+---
+container:
+  content:
+    - h2: Input2 Component with Form Validation Test
+    - p: This page tests the new Input2 component with form integration and validation.
+    
+    - form:
+        data:
+          user:
+            name: ""
+            email: ""
+            age: ""
+        content:
+          - h3: User Registration Form (using input2)
+          - row:
+              class: gap-4
+              content:
+                - input2:
+                    label: Full Name
+                    field: user.name
+                    placeholder: Enter your full name
+                    icon: solar:user-linear
+                    required: true
+                - input2:
+                    label: Email Address
+                    field: user.email
+                    type: email
+                    placeholder: Enter your email
+                    icon: solar:letter-linear
+                    required: true
+          - input2:
+              label: Age
+              field: user.age
+              type: number
+              placeholder: Enter your age
+              icon: solar:hashtag-linear
+              required: true
+          - button:
+              type: submit
+              color: primary
+              content: Submit Form
+              
+    - spacer: mt-8
+    
+    - h3: Standalone Input2 Components
+    - row:
+        class: gap-4
+        content:
+          - input2:
+              label: With Validation
+              placeholder: This field is required
+              icon: solar:shield-check-linear
+              on_input:
+                test_validate_input:
+          - input2:
+              label: Dynamic Width
+              width_dynamic: true
+              value: "Dynamic"
+              icon: solar:text-linear
+              
+    - spacer: mt-4
+    
+    - row:
+        class: gap-4
+        content:
+          - input2:
+              label: Loading State
+              placeholder: Processing...
+              loading: true
+              icon: solar:refresh-linear
+          - input2:
+              label: Disabled State
+              placeholder: Cannot edit
+              disabled: true
+              icon: solar:lock-linear
+              
+    - spacer: mt-4
+    
+    - input2:
+        label: With Errors
+        placeholder: This has validation errors
+        icon: solar:danger-linear
+        errors:
+          - This field is required
+          - Must be at least 3 characters long

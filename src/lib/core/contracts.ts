@@ -1,10 +1,10 @@
 import type { Component as SvelteComponent } from 'svelte';
 import type { Context } from './context/index.js';
 import type { Application } from '@/lib/core/app/index.js';
+import type { FormState } from '@/lib/components/forms/form/types.js';
 
 export type { ContextData } from './context/index.js';
-export type { Context };
-export type { FormState } from '@/lib/components/forms/form/types.js';
+export type { Context, FormState };
 
 export interface AppConfig {
     /**
@@ -107,3 +107,10 @@ export interface Plugin {
      */
     plugins?: Plugin[];
 }
+
+export type InputEvent = {
+    value: Any;
+    valid: boolean;
+    event: Event;
+    field?: string;
+};

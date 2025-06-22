@@ -1,4 +1,4 @@
-import type { Any, Template } from '@/lib/core/contracts.js';
+import type { Any, Operations, Template } from '@/lib/core/contracts.js';
 
 export interface InputProps {
     type?: 'text' | 'date' | 'number' | 'email' | 'password' | 'search';
@@ -38,4 +38,8 @@ export interface InputProps {
     width_dynamic?: boolean;
     loading?: boolean;
     oninput?: (event: Event) => void;
+    /**
+     * Operations to run on input.
+     */
+    on_input?: Operations;
 }

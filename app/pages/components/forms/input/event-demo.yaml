@@ -1,0 +1,108 @@
+layout: test
+theme: tests
+scripts:
+  - |
+    // Demo script to show event listening capabilities
+    console.log('🎉 Input Event Demo - Event listeners are active!');
+    console.log('💡 Interact with the inputs below to see events in real-time');
+
+    // This would be how external systems (like auditing) could listen to input events
+    // Note: In a real implementation, you'd get references to the actual Input instances
+    // This is just a demonstration of the concept
+
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('📝 Event Demo Ready - Start typing in the inputs to see events!');
+    });
+---
+container:
+  content:
+    - h2: Input2 Component - Event System Demo
+    - p: This page demonstrates the event-driven architecture of the Input2 component.
+
+    - h3: Event Logging Demo
+    - p: Open the browser console to see events being dispatched as you interact with the inputs below.
+
+    - row:
+        class: gap-4
+        content:
+          - input2:
+              label: Event Demo Input
+              placeholder: Type here to see events
+              icon: solar:text-linear
+              field: demo_input
+          - input2:
+              label: Validation Demo
+              placeholder: This field is required
+              icon: solar:shield-check-linear
+              field: validation_demo
+              on_input:
+                test_validate_input:
+
+    - spacer: mt-4
+
+    - h3: Form Integration Demo
+    - form:
+        data:
+          user:
+            name: ""
+            email: ""
+        content:
+          - row:
+              class: gap-4
+              content:
+                - input2:
+                    label: Name (with form events)
+                    field: user.name
+                    placeholder: Enter your name
+                    icon: solar:user-linear
+                - input2:
+                    label: Email (with form events)
+                    field: user.email
+                    type: email
+                    placeholder: Enter your email
+                    icon: solar:letter-linear
+          - button:
+              type: submit
+              color: primary
+              content: Submit to see form events
+
+    - spacer: mt-4
+
+    - h3: Dynamic Width with Events
+    - input2:
+        label: Dynamic Width Input
+        width_dynamic: true
+        value: "Watch events as width changes"
+        icon: solar:text-linear
+
+    - spacer: mt-4
+
+    - h3: Loading State Events
+    - input2:
+        label: Loading Input
+        placeholder: This input is loading
+        loading: true
+        icon: solar:refresh-linear
+
+    - spacer: mt-4
+
+    - div:
+        class: p-4 bg-gray-100 rounded-lg
+        content:
+          - h4: Event Types Being Dispatched:
+          - ul:
+              class: list-disc list-inside space-y-1 text-sm
+              content:
+                - li: "valueChanged - When input value changes"
+                - li: "inputReceived - When user types (user input only)"
+                - li: "validationStarted - When validation begins"
+                - li: "validationPassed - When validation succeeds"
+                - li: "validationFailed - When validation fails"
+                - li: "operationsStarted - When operations begin"
+                - li: "operationsCompleted - When operations finish"
+                - li: "operationsTransformed - When operations transform value"
+                - li: "operationsRejected - When operations reject input"
+                - li: "operationsError - When operations fail"
+          - p:
+              class: mt-2 text-sm text-gray-600
+              content: "Open browser console and interact with inputs above to see these events in real-time!"

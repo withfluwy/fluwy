@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fade, slide } from 'svelte/transition';
     import type { InputProps } from '../contracts.js';
-    import { cn, expandObject, get, Random } from '@/lib/core/utils/index.js';
+    import { cn } from '@/lib/core/utils/index.js';
     import { Icon } from '@/lib/components/common/index.js';
     import { mergeThemes, useTheme } from '@/lib/core/utils/index.js';
     import { Common, useCommon } from '@/lib/components/common/styles.js';
@@ -10,7 +10,9 @@
     import type { FormState } from '@/lib/components/forms/form/types.js';
     import { onMount } from 'svelte';
     import { app } from '@/lib/index.js';
-    import type { InputEvent } from '@/lib/core/contracts.js';
+
+    import { Input } from './input.js';
+    import { useChangeNotifier } from '@/lib/core/adapters/svelte.js';
 
     let {
         field,
@@ -25,7 +27,7 @@
         ...props
     }: InputProps = $props();
 
-    const id = Random.id();
+    // Theme and styling setup
     const spinner = useTheme('common.spinner', Common.spinner);
     const commonBorderColor = useCommon('border_color');
     const commonBackgroundColor = useCommon('background_color');
@@ -34,21 +36,39 @@
     const defaultSize = mergeThemes('forms.common.default_size', DefaultSize);
     const context = useContext();
 
+    // Use the changeNotifier adapter for reactive integration
+    const input = useChangeNotifier(new Input({
+        field,
+        initialValue: incomingValue,
+        icon: props.icon,
+        trailing_icon: props.trailing_icon,
+        loading: props.loading,
+        disabled: props.disabled,
+        app,
+        operations: on_input,
+        context,
+    }));
+
+    // Form context setup
     let form: FormState =
         context.get('form') ??
         ({
             data: {
-                [field ?? id]: incomingValue ?? '',
+                [$input.field]: $input.value ?? '',
             },
             errors: {},
             pristine: true,
         } satisfies FormState);
-    let initialValue = $state(incomingValue);
-    let value = $state(form.data[field ?? id]);
-    let inputWidth = $state('auto');
-    let input = $state<HTMLInputElement | null>(null);
+
+    // Update the input model with form reference and data
+    $input.updateConfig({ form: form });
+    if (context.get('form')) {
+        $input.updateFromForm(form, error_path);
+    }
+
+    // DOM references
+    let inputElement = $state<HTMLInputElement | null>(null);
     let sizer = $state<HTMLSpanElement | null>(null);
-    let errors = $state(props.errors ?? form.errors[error_path ?? field ?? id]);
 
     const inputLabelTheme = cn(
         'flex justify-between text-base font-medium leading-6 text-neutral-700 dark:text-neutral-200',
@@ -70,86 +90,47 @@
         useTheme('forms.input.errors')
     );
 
+    // Handle dynamic width calculation - only when user types
+    let lastCalculatedWidth = 'auto';
     $effect(() => {
         if (!width_dynamic || !sizer) return;
 
         // eslint-disable-next-line svelte/no-dom-manipulating
-        sizer.textContent = value?.toString() || '';
-        sizer.style.fontSize = getComputedStyle(input as Element).fontSize;
+        sizer.textContent = $input.value?.toString() || '';
+        if (inputElement) {
+            sizer.style.fontSize = getComputedStyle(inputElement).fontSize;
+        }
         const padding = 20;
-        inputWidth = `${Math.max(sizer.offsetWidth + padding, 36)}px`;
-    });
+        const newWidth = `${Math.max(sizer.offsetWidth + padding, 36)}px`;
 
-    /**
-     * Update the input value if the value is changed from the outside via prop binding.
-     */
-    $effect(() => {
-        if (initialValue === incomingValue) return;
-
-        form.data[field ?? id] = value = initialValue = incomingValue;
-    });
-
-    $effect(() => {
-        errors = get(expandObject(form.errors), error_path ?? field ?? id);
+        // Only update if the width actually changed to prevent loops
+        if (newWidth !== lastCalculatedWidth) {
+            lastCalculatedWidth = newWidth;
+            $input.setDynamicWidth(newWidth);
+        }
     });
 
     onMount(() => {
-        errors = props.errors ?? form.errors[error_path ?? field ?? id];
+        // Initialize errors from props or form only once on mount
+        const initialErrors = props.errors ?? (form.errors[error_path ?? $input.field] || []);
+        if (initialErrors.length > 0) {
+            $input.setErrors(initialErrors);
+        }
     });
 
+    // Handle input events - component level then delegate to domain model
     async function onInput(e: Event) {
-        const newValue = (e.target as HTMLInputElement).value;
-
-        // Call the oninput handler if provided
+        // Call the component-level oninput handler if provided
         oninput?.(e);
 
-        // Set up context for operations
-        if (on_input) {
-            try {
-                // Set relevant context data for operations
-                context.set('input', {
-                    field: field ?? id,
-                    value: newValue,
-                    event: e,
-                    form: form,
-                    valid: true,
-                } as InputEvent);
-
-                // Execute operations and capture result
-                const result = await app.handleOperations(on_input, context);
-
-                // Check if operations returned a transformed value or validation result
-                if (result && typeof result === 'object') {
-                    // If operation returned { valid: false }, don't update form
-                    if (result.valid === false) {
-                        return;
-                    }
-
-                    // If operation returned a transformed value, use it
-                    if ('value' in result) {
-                        // Update form with transformed value
-                        value = form.data[field ?? id] = result.value;
-                        form.pristine = false;
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.error('Error executing input operations:', error);
-                // Don't update form state if operations failed
-                return;
-            }
-        }
-
-        // If no operations or operations didn't handle the value,
-        // update form state with original value
-        value = form.data[field ?? id] = newValue;
-        form.pristine = false;
+        // Then delegate to the Input domain model
+        await $input.handleInput(e);
     }
 </script>
 
 <div class={cn('w-full flex-1', inputWrapperTheme)}>
     {#if label}
-        <label for={id} class={inputLabelTheme}>
+        <label for={$input.id} class={inputLabelTheme}>
             <Render props={label} />
         </label>
     {/if}
@@ -164,8 +145,8 @@
 
     <div class="relative flex items-center">
         <input
-            {id}
-            bind:this={input}
+            id={$input.id}
+            bind:this={inputElement}
             {...props}
             class={cn(
                 commonBorderColor,
@@ -175,34 +156,35 @@
                 'peer ring-primary focus:border-primary w-full border shadow-xs outline-hidden transition-all duration-200 ring-inset focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
                 inputBaseTheme,
                 props.class,
-                { 'pl-9': props.icon },
-                { 'pr-9': props.trailing_icon || props.loading },
-                { 'border-destructive! ring-destructive focus:border-destructive': errors?.length },
+                { 'pl-9': $input.theme.hasIcon },
+                { 'pr-9': $input.theme.hasTrailingIcon },
+                { 'border-destructive! ring-destructive focus:border-destructive': $input.errors?.length },
                 { 'min-w-9 p-0 text-center': width_dynamic }
             )}
-            {value}
+            value={$input.value}
+            disabled={$input.disabled}
             oninput={onInput}
-            style:width={width_dynamic ? inputWidth : undefined}
+            style:width={width_dynamic ? $input.theme.inputWidth : undefined}
         />
 
-        {#if props.icon}
+        {#if $input.theme.hasIcon && props.icon}
             <Icon
                 name={props.icon}
-                class={cn('left-2.5', iconDefaultClasses, { [iconErrorClasses]: errors?.length })}
+                class={cn('left-2.5', iconDefaultClasses, { [iconErrorClasses]: $input.errors?.length })}
             />
         {/if}
 
-        {#if props.trailing_icon || props.loading}
+        {#if $input.theme.hasTrailingIcon}
             <Icon
-                name={props.loading ? spinner : props.trailing_icon}
-                class={cn('right-2.5', iconDefaultClasses, { [iconErrorClasses]: errors?.length })}
+                name={$input.loading ? spinner : (props.trailing_icon || '')}
+                class={cn('right-2.5', iconDefaultClasses, { [iconErrorClasses]: $input.errors?.length })}
             />
         {/if}
     </div>
 
-    {#if errors?.length}
+    {#if $input.errors?.length}
         <div transition:fade class="flex flex-col transition-all duration-200">
-            {#each errors as error, index (index)}
+            {#each $input.errors as error, index (index)}
                 <span transition:slide|global={{ duration: 150 }} class={inputErrorsTheme}>
                     {error}
                 </span>
