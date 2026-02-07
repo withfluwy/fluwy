@@ -59,6 +59,15 @@ To test local Fluwy changes in a consuming project (e.g., fluwy-examples/crm):
 - Kill old server processes before restarting to avoid port accumulation
 - The `pnpm approve-builds` prompt is interactive and blocks automation -- use `npx vite dev` directly to skip it
 
+## CI/CD and E2E Test Caveats
+
+- The CI workflow (`cicd.yaml`) must use `pnpm/action-setup@v4` **without** an explicit `version:` -- it reads from `packageManager` in `package.json`. Never hardcode pnpm versions in CI.
+- Playwright e2e tests with `date_from_now` or any relative-time display **must freeze the clock** using `page.clock.install({ time: ... })` before `page.goto()`. Otherwise screenshots and aria snapshots drift as real time passes.
+- When Playwright is upgraded, aria snapshots may gain new text nodes (e.g., `- text: Label` inside buttons/cells). Check CI diffs carefully -- these are structural additions, not regressions.
+- Aria snapshot assertions for time-dependent text should use regex patterns (`/.+ ago/`) instead of hardcoded strings.
+- To update screenshot snapshots locally: `pnpm build && npx playwright test <path> --update-snapshots`. Must install browsers first with `npx playwright install chromium`.
+- The `gh` CLI requires `required_permissions: ["all"]` to bypass TLS sandbox issues on macOS.
+
 ## Cursor Browser Testing Tips
 
 - Use `browser_reload` to refresh -- `browser_navigate` to the same URL may NOT trigger a page refresh
