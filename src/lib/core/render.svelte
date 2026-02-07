@@ -57,6 +57,7 @@
     {:else if component.name === 'slot'}
         <Render props={component.template} />
     {:else if notFound(component.name)}
+        {@const _ = console.warn(`[fluwy] Component not found: "${component.name}". Make sure it is registered.`)}
         <div class="border border-red-500 bg-red-50 p-3 text-red-900">
             Component not found: <b>{component.name}</b>
         </div>
