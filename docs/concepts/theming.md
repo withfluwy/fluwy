@@ -1,0 +1,133 @@
+# Theme System
+
+Fluwy's Theme System empowers developers to customize the look and feel of their applications with ease, leveraging TailwindCSS classes directly through YAML configuration files. This system is flexible, allowing both page-specific and global styling through theme files and component-level class overrides.
+
+## Creating a Theme File
+
+To define a theme in Fluwy, create a `.yaml` file within the `app/themes/` directory of your project. This file will hold any styling customizations you want for your app.
+
+For example:
+
+```
+app/themes/my-theme.yaml
+```
+
+The file name itself becomes the theme's identifier, which you'll reference within your pages or layouts to apply the theme.
+
+## Applying a Theme to a Page
+
+To use a theme in a specific page, define the theme name in the page's metadata. This tells Fluwy to apply that theme's settings to the page.
+
+For example, if you want to apply `my-theme` to a page called `contacts.yaml` located in `app/pages/`, add the following to the metadata section at the top of `contacts.yaml`:
+
+```yaml
+theme: my-theme
+```
+
+## Structure of a Theme File
+
+A theme file can be as minimal or comprehensive as you need. It may even be empty if only a few specific variables need customization. Typically, themes contain key-value pairs where each key corresponds to a design element (like border color, text color, or background) and each value is a TailwindCSS class.
+
+Example:
+
+```yaml
+common:
+  border_color: "border-blue-500"
+  text_color: "text-gray-800"
+```
+
+> **Note:** Though the Theme System is designed to work best with TailwindCSS classes, you can use any CSS class if needed. Fluwy integrates `tailwind-merge` to intelligently combine and manage Tailwind classes, streamlining the styling experience.
+
+## Styling Components: `class` Property vs. Theme Files
+
+Fluwy offers two distinct ways to style components, giving you the flexibility to decide when to apply unique styles and when to use a consistent theme across your application:
+
+1. **`class` Property on Components**: Use this for unique styling on specific components. Applying classes directly through the `class` property gives that style the highest priority, overriding any theme settings. This is ideal for one-off customizations.
+
+2. **Theme File**: For a cohesive, application-wide look and feel, define styling in the theme file. This approach applies a consistent style to similar elements across multiple components.
+
+By distinguishing between these two methods, you can ensure a clean and maintainable styling approach, choosing between granular control (`class` property) and overarching themes (theme file).
+
+## Defining Multiple Themes
+
+You can create multiple theme files in `app/themes/` to allow for different looks across pages or sections of your app. However, only one theme can be applied per page or layout at a time. This single-theme-per-page rule ensures consistency within each page.
+
+### Applying a Theme at the Layout Level
+
+To apply a theme across all pages that share a layout, set the `theme` key in the layout file's metadata. This will ensure all pages using that layout inherit the specified theme unless overridden on a specific page.
+
+## Theme File Structure Reference
+
+```yaml
+# Colors palette
+colors:
+  primary:
+    DEFAULT: "#3b82f6"
+    50: "#eff6ff"
+    100: "#dbeafe"
+    # ... through 950
+  gray:
+    # ...
+  positive:
+    # ...
+  destructive:
+    # ...
+
+# Common settings shared across components
+common:
+  border_color: "border-neutral-200 dark:border-neutral-700"
+  border_radius:
+    sm: "rounded"
+    md: "rounded-md"
+    lg: "rounded-lg"
+  tab:
+    class:
+    outer_radius:
+    title:
+    panel:
+    root:
+    list:
+  dialog:
+    overlay:
+    wrapper:
+    title:
+    description:
+    content:
+    footer:
+
+# Form component styles
+forms:
+  button:
+    variants:
+      default:
+      filled:
+      outline:
+      ghost:
+      link:
+  common:
+    sizes:
+      sm:
+      md:
+      lg:
+  input:
+    # Input-specific theme settings
+
+# Display component styles
+displays:
+  table:
+    page_size:
+    header:
+    wrapper:
+    row:
+      default:
+      clickable:
+    cell:
+      default:
+      clickable:
+    pagination:
+      wrapper:
+```
+
+---
+
+Fluwy's Theme System simplifies theming by combining the power of TailwindCSS with flexible, YAML-driven configuration, making it easy to achieve both global and unique component styles. Whether you need consistent branding or specific component tweaks, the Theme System provides a streamlined approach to styling in Fluwy.
