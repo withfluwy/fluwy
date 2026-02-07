@@ -62,6 +62,7 @@ To test local Fluwy changes in a consuming project (e.g., fluwy-examples/crm):
 ## CI/CD and E2E Test Caveats
 
 - The CI workflow (`cicd.yaml`) must use `pnpm/action-setup@v4` **without** an explicit `version:` -- it reads from `packageManager` in `package.json`. Never hardcode pnpm versions in CI.
+- **pnpm 10 strict isolation**: pnpm 10 does NOT hoist transitive dependencies. Any package directly imported in config files (e.g., `@eslint/js` in `eslint.config.js`) must be an explicit devDependency in `package.json`, even if it's a transitive dep of another package (like `eslint`). When upgrading pnpm versions, check for `ERR_MODULE_NOT_FOUND` errors on transitive deps and add them explicitly.
 - Playwright e2e tests with `date_from_now` or any relative-time display **must freeze the clock** using `page.clock.install({ time: ... })` before `page.goto()`. Otherwise screenshots and aria snapshots drift as real time passes.
 - When Playwright is upgraded, aria snapshots may gain new text nodes (e.g., `- text: Label` inside buttons/cells). Check CI diffs carefully -- these are structural additions, not regressions.
 - Aria snapshot assertions for time-dependent text should use regex patterns (`/.+ ago/`) instead of hardcoded strings.
