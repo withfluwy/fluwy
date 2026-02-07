@@ -33,8 +33,13 @@
     function notFound(component: string) {
         const isReserved = reservedNames.includes(component);
         const isSkipped = skip.includes(component);
+        const missing = !isReserved && !isSkipped;
 
-        return !isReserved && !isSkipped;
+        if (missing) {
+            console.warn(`[fluwy] Component not found: "${component}". Make sure it is registered.`);
+        }
+
+        return missing;
     }
 
     /**

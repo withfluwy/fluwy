@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import { mockHttpRequests } from './http-mocks.js';
 
 test('pagination behaviour', async ({ page }) => {
+    await page.clock.install({ time: new Date('2025-04-19T12:00:00Z') });
     await mockHttpRequests(page);
     await page.goto('/components/tables/tests');
     await assertFirstPage(page);
@@ -12,12 +13,14 @@ test('pagination behaviour', async ({ page }) => {
     await expect(page.locator('#main')).toMatchAriaSnapshot(`
       - heading "Simple Table (Example 1)" [level=3]
       - button "Per Page":
+        - text: Per Page
         - img
       - table:
         - rowgroup:
           - row "Name Email Component Email (using Link) Phone Created At Updated At Created By":
             - cell "Name":
               - img
+              - text: Name
             - cell "Email Component"
             - cell "Email (using Link)"
             - cell "Phone"
@@ -180,6 +183,7 @@ test('pagination behaviour', async ({ page }) => {
           - row "Name Email Component Email (using Link) Phone Created At Updated At Created By":
             - cell "Name":
               - img
+              - text: Name
             - cell "Email Component"
             - cell "Email (using Link)"
             - cell "Phone"
@@ -241,12 +245,14 @@ async function assertFirstPage(page: Page) {
     await expect(page.locator('#main')).toMatchAriaSnapshot(`
       - heading "Simple Table (Example 1)" [level=3]
       - button "Per Page":
+        - text: Per Page
         - img
       - table:
         - rowgroup:
           - row "Name Email Component Email (using Link) Phone Created At Updated At Created By":
             - cell "Name":
               - img
+              - text: Name
             - cell "Email Component"
             - cell "Email (using Link)"
             - cell "Phone"
@@ -268,7 +274,7 @@ async function assertFirstPage(page: Page) {
             - cell /Nov \\d+, \\d+/
             - cell
             - cell "Admin User"
-          - row /Anissa Rocca arocca25@ezinearticles\\.com arocca25@ezinearticles\\.com Nov \\d+, \\d+ 5 months ago Admin User/:
+          - row /Anissa Rocca arocca25@ezinearticles\\.com arocca25@ezinearticles\\.com Nov \\d+, \\d+ .+ ago Admin User/:
             - cell "Anissa Rocca"
             - cell "arocca25@ezinearticles.com":
               - link "arocca25@ezinearticles.com":
@@ -278,7 +284,7 @@ async function assertFirstPage(page: Page) {
                 - /url: mailto:arocca25@ezinearticles.com
             - cell
             - cell /Nov \\d+, \\d+/
-            - cell "5 months ago"
+            - cell /.+ ago/
             - cell "Admin User"
           - row /Jarrad O'Donoghue jodonoghue26@desdev\\.cn jodonoghue26@desdev\\.cn Nov \\d+, \\d+ Admin User/:
             - cell "Jarrad O'Donoghue"

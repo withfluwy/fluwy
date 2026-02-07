@@ -1,0 +1,77 @@
+---
+description: Fluwy development workflow, debugging tips, and common caveats
+globs:
+alwaysApply: true
+---
+
+# Fluwy Development Workflow
+
+## Scaffolding New Projects
+
+- Always use `pnpx degit withfluwy/fluwy-starter my-app` as the Getting Started guide recommends
+- Do NOT manually create project files -- the starter has specific SvelteKit hooks, routes, and component registration that must match
+- After scaffolding, check that the `@fluwy/ui` version in `package.json` matches the current Fluwy release
+
+## Building and Rebuilding
+
+When working on the Fluwy framework source (`/fluwy`) and testing in a linked project:
+
+- **Components/TypeScript changes**: Run `pnpm package` (svelte-kit sync + svelte-package + publint)
+- **CSS/Styles changes**: Run `pnpm styles` (tailwindcss CLI rebuilds dist/styles.css)
+- **Both**: Run `pnpm build` (package + styles)
+- After rebuilding, **restart the consuming project's dev server** (kill the Vite process, then `npx vite dev`)
+- The `dist/styles.css` can become stale -- if overlay/dialog styles look broken, rebuild styles first
+
+## Linking Local Fluwy to a Project
+
+To test local Fluwy changes in a consuming project (e.g., fluwy-examples/crm):
+
+1. Set dependency in the project's `package.json`: `"@fluwy/ui": "link:../../fluwy"`
+2. Run `pnpm install --no-frozen-lockfile`
+3. Rebuild Fluwy: `pnpm build` (in the fluwy directory)
+4. Start the project dev server
+
+## Debugging "Component not found" Errors
+
+- Fluwy shows a **red banner in the UI** and logs `[fluwy] Component not found: "<name>"` to the browser console
+- Component registration flow: PascalCase exports in category `index.ts` files -> `registerAll()` in `src/lib/index.ts` -> converted to snake_case
+- To verify a component is registered: check its category export file (e.g., `src/lib/components/common/index.ts`)
+- If a component exists in source but not in `dist/`, run `pnpm package` to rebuild
+
+## Tailwind CSS Version Compatibility
+
+- Fluwy v0.10.0+ uses **Tailwind CSS v4** and ships pre-compiled styles in `@fluwy/ui/styles.css`
+- The fluwy-starter template must NOT have `tailwindcss` in the PostCSS config (remove it, keep only `autoprefixer`)
+- The `src/app.css` must NOT have Tailwind v3 imports (`@import 'tailwindcss/base'` etc.) -- they conflict with the v4 pre-compiled CSS
+- If you see CSS parsing errors about `@layer` or oklch colors, it's a Tailwind v3/v4 mismatch
+
+## Releasing New Versions
+
+- Releases are automated via GitHub Actions (`.github/workflows/release.yaml`)
+- Create a changeset file in `.changeset/` with the appropriate bump level (patch/minor/major)
+- Push to a branch and open a PR to `main`
+- When merged, the release workflow creates a release PR or publishes to npm automatically
+- Never run `pnpm changeset publish` locally -- let CI handle it
+
+## Vite Dev Server
+
+- If a port is in use, Vite auto-increments (5200 -> 5201 -> 5202) -- always check terminal output for actual port
+- Kill old server processes before restarting to avoid port accumulation
+- The `pnpm approve-builds` prompt is interactive and blocks automation -- use `npx vite dev` directly to skip it
+
+## CI/CD and E2E Test Caveats
+
+- The CI workflow (`cicd.yaml`) must use `pnpm/action-setup@v4` **without** an explicit `version:` -- it reads from `packageManager` in `package.json`. Never hardcode pnpm versions in CI.
+- **pnpm 10 strict isolation**: pnpm 10 does NOT hoist transitive dependencies. Any package directly imported in config files (e.g., `@eslint/js` in `eslint.config.js`) must be an explicit devDependency in `package.json`, even if it's a transitive dep of another package (like `eslint`). When upgrading pnpm versions, check for `ERR_MODULE_NOT_FOUND` errors on transitive deps and add them explicitly.
+- Playwright e2e tests with `date_from_now` or any relative-time display **must freeze the clock** using `page.clock.install({ time: ... })` before `page.goto()`. Otherwise screenshots and aria snapshots drift as real time passes.
+- When Playwright is upgraded, aria snapshots may gain new text nodes (e.g., `- text: Label` inside buttons/cells). Check CI diffs carefully -- these are structural additions, not regressions.
+- Aria snapshot assertions for time-dependent text should use regex patterns (`/.+ ago/`) instead of hardcoded strings.
+- To update screenshot snapshots locally: `pnpm build && npx playwright test <path> --update-snapshots`. Must install browsers first with `npx playwright install chromium`.
+- The `gh` CLI requires `required_permissions: ["all"]` to bypass TLS sandbox issues on macOS.
+
+## Cursor Browser Testing Tips
+
+- Use `browser_reload` to refresh -- `browser_navigate` to the same URL may NOT trigger a page refresh
+- Resize the browser to at least 1280x800 before interacting -- small viewports cause click failures
+- Dialogs render via portals -- the accessibility snapshot may not capture them, use `browser_take_screenshot` for visual state
+- Always take a screenshot after interactions to see the true rendered result

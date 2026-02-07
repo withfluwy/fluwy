@@ -1,0 +1,134 @@
+---
+description: Fluwy framework context for AI agents
+globs:
+alwaysApply: true
+---
+
+# Fluwy Framework Context
+
+## What is Fluwy?
+
+Fluwy (`@fluwy/ui`, v0.10.0) is a YAML-driven UI framework built on SvelteKit 5, TypeScript, and Tailwind CSS v4. It enables developers to build web applications by defining pages, layouts, components, and behaviors using YAML configuration files instead of writing Svelte components directly.
+
+## Technology Stack
+
+- **Framework**: SvelteKit (Svelte 5) with TypeScript
+- **Styling**: Tailwind CSS v4 with `tailwind-merge`
+- **Build Tool**: Vite
+- **Package Manager**: pnpm
+- **UI Primitives**: bits-ui
+- **Icons**: iconify-icon (browse at icones.js.org)
+- **Markdown**: marked + highlight.js
+- **YAML**: yaml package
+- **Dates**: dayjs
+- **Toasts**: svelte-sonner
+
+## Project Structure
+
+```
+fluwy/
+  app/                     # YAML configuration files
+    pages/                 # Page definitions (filesystem-based routing)
+    layouts/               # Reusable layout templates
+    themes/                # Theme files (TailwindCSS classes)
+  src/
+    lib/                   # Core library
+      core/
+        app/               # Application class and YAML compilation
+        context/           # Reactive state management (Svelte stores)
+        operations/        # Built-in operations (HTTP, auth, nav, etc.)
+        controls/          # Control flow (conditions, loops)
+        router/            # Filesystem-based routing
+        utils/             # Normalizers, parsers, helpers
+        adapters/          # API adapters (Strapi, etc.)
+      components/
+        primitives/        # div, h1-h6, p, text, row, column, link, image, markdown, code, b
+        controls/          # condition, for-each, loop
+        layouts/           # page, header, sidebar, footer, container, menu_group, menu_item, spacer
+        common/            # dialog, dropdown, tabs, icon, avatar, void
+        displays/          # table, pagination, date, date_from_now, email, phone
+        forms/             # button, input, form, checkbox
+      plugins/             # Built-in plugins (payloadcms)
+      sveltekit.ts         # SvelteKit integration
+      tailwind/            # Tailwind CSS integration
+    routes/
+      [...path]/           # Catch-all SvelteKit route
+  docs/                    # Markdown documentation (see docs/README.md)
+  tests/                   # Unit and integration tests
+  static/                  # Static assets
+```
+
+## Key Architecture Concepts
+
+### YAML Page Structure
+Every page file uses `---` to separate head (metadata) from body (content):
+```yaml
+layout: doc
+theme: my-theme
+server:
+  load:
+    data: https://api.example.com/resource
+---
+h1: Page Title
+p: ${data.description}
+```
+
+### Component System
+Components are registered by category in `src/lib/index.ts` via `createApp()`. PascalCase names are converted to snake_case for YAML usage. Every component has implicit `class` and `content` properties.
+
+### Operations
+Operations are functions executed in sequence on events (`on_click`, `on_submit`, etc.). Built-in operations:
+- **HTTP**: `get`, `post`, `put`, `delete`, `load`
+- **Navigation**: `goto`, `refresh`
+- **Auth**: `set_auth_token`, `unset_auth_token`, `authenticate`
+- **Forms**: `set_form_errors`, `clear_form_errors`
+- **UI**: `open_dialog`, `close_dialog`, `alert`, `notify`, `set_mode`
+- **Data**: `vars`, `log`, `context`, `extract`, `transform`, `wrap_into`
+- **Cookies**: `set_cookie`, `unset_cookie`, `remove_cookie`
+- **Control**: `if`, `sleep`, `emit`, `abort`
+- **Storage**: `unset_local_storage`, `remove_local_storage`
+
+### Context
+The `Context` object is a reactive Svelte store available on both server and client. It stores route params (`params.*`), auth tokens, server-loaded data (`vars`), form state (`form.data`, `form.errors`, `form.submitting`), and operation results (`response.data`, `response.status`).
+
+### Template Strings
+Use `${variable.path}` syntax in YAML values to reference context data. Supports dot notation and bracket notation.
+
+### Routing
+Filesystem-based: `app/pages/index.yaml` -> `/`, `app/pages/users/[id]/index.yaml` -> `/users/:id`. Dynamic params via bracket notation.
+
+### Theming
+Theme files in `app/themes/*.yaml` contain TailwindCSS classes. Applied via `theme:` in page/layout head. Component `class` property has highest priority over theme.
+
+### Plugins
+Extend Fluwy with `Plugin` interface: `{ name, operations?, components?, plugins? }`. Registered via `app.plug()`. Namespaced access: `plugin_name.operation_name`.
+
+## Key Source Files
+
+- `src/lib/index.ts` - Main entry, `createApp()`, component registration
+- `src/lib/core/app/index.ts` - `Application` class
+- `src/lib/core/render.svelte` - Recursive component renderer
+- `src/lib/core/router/route.ts` - Route resolution
+- `src/lib/core/context/index.ts` - Context/state management
+- `src/lib/core/operations/index.ts` - Operation system
+- `src/lib/core/utils/normalizers/normalize-to-components.ts` - YAML normalization
+
+## Conventions
+
+- **File naming**: kebab-case for routes/files, snake_case for params
+- **Component names**: PascalCase in TypeScript, snake_case in YAML
+- **Operations**: snake_case names
+- **Plugin names**: snake_case
+- **Testing**: Vitest for unit tests, Playwright for integration
+- **Server-side validations only**: No client-side form validation
+
+## Documentation
+
+Full documentation is in `docs/` directory. See `docs/README.md` for the table of contents.
+
+### Documentation Structure
+- **Getting Started**: introduction, getting-started, architecture
+- **Concepts**: yaml-syntax, routing, theming, plugins
+- **Components**: layouts, buttons, dialogs, dropdown, forms, input, tables, tabs, typography, sidebar, avatar, icon, displays, debug
+- **Operations**: overview, http, navigation, auth, cookies, form-operations, data, ui, control, local-storage
+- **Controls**: conditions, loops
