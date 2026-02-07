@@ -33,8 +33,13 @@
     function notFound(component: string) {
         const isReserved = reservedNames.includes(component);
         const isSkipped = skip.includes(component);
+        const missing = !isReserved && !isSkipped;
 
-        return !isReserved && !isSkipped;
+        if (missing) {
+            console.warn(`[fluwy] Component not found: "${component}". Make sure it is registered.`);
+        }
+
+        return missing;
     }
 
     /**
@@ -57,7 +62,6 @@
     {:else if component.name === 'slot'}
         <Render props={component.template} />
     {:else if notFound(component.name)}
-        {@const _ = console.warn(`[fluwy] Component not found: "${component.name}". Make sure it is registered.`)}
         <div class="border border-red-500 bg-red-50 p-3 text-red-900">
             Component not found: <b>{component.name}</b>
         </div>

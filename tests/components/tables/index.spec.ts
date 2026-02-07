@@ -4,6 +4,7 @@ import { checkScreenshot } from '../../utils.js';
 import { mockHttpRequests } from './http-mocks.js';
 
 test('table component', async ({ page }) => {
+    await page.clock.install({ time: new Date('2025-04-19T12:00:00Z') });
     await mockHttpRequests(page);
 
     await page.goto('/components/tables/tests');
@@ -23,6 +24,7 @@ test('table component', async ({ page }) => {
 });
 
 test('table component in dark mode', async ({ page }) => {
+    await page.clock.install({ time: new Date('2025-04-19T12:00:00Z') });
     await page.emulateMedia({ colorScheme: 'dark' });
     await page.route(
         'http://localhost:3000/items/contacts?meta=*&fields=*.*&page=1&limit=10&sort=-id',
