@@ -42,14 +42,15 @@ button:
 
 | Category | Operations |
 |----------|-----------|
-| HTTP | `get`, `post`, `put`, `delete`, `load` |
-| Navigation | `goto`, `refresh` |
-| Auth | `set_auth_token`, `unset_auth_token`, `authenticate` |
-| Forms | `set_form_errors`, `clear_form_errors` |
-| UI | `open_dialog`, `close_dialog`, `notify`, `alert` |
-| Data | `vars`, `log`, `extract`, `transform` |
-| Cookies | `set_cookie`, `remove_cookie` |
-| Control | `if`, `sleep`, `emit`, `abort` |
+| HTTP | [`get`](get.md), [`post`](post.md), [`put`](put.md), [`delete`](delete.md), [`load`](load.md) |
+| Navigation | [`goto`](goto.md), [`refresh`](refresh.md) |
+| Auth | [`set_auth_token`](set-auth-token.md), [`unset_auth_token`](unset-auth-token.md), [`authenticate`](authenticate.md) |
+| Forms | [`set_form_errors`](set-form-errors.md), [`clear_form_errors`](clear-form-errors.md) |
+| UI | [`open_dialog`](open-dialog.md), [`close_dialog`](close-dialog.md), [`notify`](notify.md), [`alert`](alert.md), [`set_mode`](set-mode.md) |
+| Data | [`vars`](vars.md), [`log`](log.md), [`context`](context-op.md), [`extract`](extract.md), [`transform`](transform.md), [`wrap_into`](wrap-into.md) |
+| Cookies | [`set_cookie`](set-cookie.md), [`unset_cookie`](unset-cookie.md), [`remove_cookie`](remove-cookie.md) |
+| Flow Control | [`if`](if.md), [`sleep`](sleep.md), [`emit`](emit.md), [`abort`](abort.md) |
+| Local Storage | [`unset_local_storage`](unset-local-storage.md), [`remove_local_storage`](remove-local-storage.md) |
 
 ## Custom Operations
 
@@ -100,7 +101,7 @@ To understand more about plugins and how to use them, check the documentation on
 
 ## How to Interrupt an Operation Chain
 
-If you want to interrupt an operation chain, you can use the `abort` helper function. For example, if you want to abort an operation chain if the user is not logged in:
+If you want to interrupt an operation chain, you can use the [`abort`](abort.md) helper function. For example, if you want to abort an operation chain if the user is not logged in:
 
 ```typescript
 import { abort } from '@fluwy/ui';

@@ -70,3 +70,8 @@ debug: contact
 ```
 
 > **Tip:** Remove `debug` components before deploying to production. They are intended for development use only.
+
+## Related
+
+- [`log`](../operations/log.md) -- Log messages to the console
+- [Context](../concepts/context.md) -- What data is available to inspect

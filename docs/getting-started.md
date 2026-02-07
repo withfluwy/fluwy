@@ -55,11 +55,13 @@ Save the file and your page will instantly appear at `/` -- no rebuild required.
 
 ## Next Steps
 
+- **[Tutorial](tutorial.md)** -- Build a complete contacts app step-by-step
 - **[Introduction](introduction.md)** -- Learn what Fluwy is and its core philosophy
 - **[YAML Syntax](concepts/yaml-syntax.md)** -- Understand how YAML maps to UI components
+- **[Context](concepts/context.md)** -- Understand reactive state and template strings
 - **[Routing](concepts/routing.md)** -- Learn about filesystem-based routing
 - **[Theming](concepts/theming.md)** -- Customize the look and feel
-- **[Components](components/buttons.md)** -- Explore available components
+- **[Components](components/layouts/index.md)** -- Explore available components
 - **[Operations](operations/index.md)** -- Learn about event-driven operations
 
 ## Join the Community

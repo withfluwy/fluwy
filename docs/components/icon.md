@@ -101,3 +101,9 @@ menu_item:
 ```
 
 When used as a prop in components like `button`, you can pass either a simple string (icon name) or an object with `name` and `size` properties.
+
+## Related
+
+- [Buttons](buttons.md) -- Icons in buttons
+- [Menu Item](layouts/menu-item.md) -- Icons in navigation
+- [Avatar](avatar.md) -- User avatar component

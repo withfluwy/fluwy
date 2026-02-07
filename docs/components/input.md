@@ -155,3 +155,9 @@ input:
   field: address.city
   placeholder: Enter city
 ```
+
+## Related
+
+- [Forms](forms.md) -- Parent form component
+- [Buttons](buttons.md) -- Submit buttons
+- [Context](../concepts/context.md) -- Form data in the context (`form.data`)

@@ -2,7 +2,7 @@
 
 The sidebar component provides responsive navigation for your application. It appears as a persistent panel on desktop and as a toggleable overlay on mobile.
 
-For full documentation on how the sidebar works together with other layout components, see the [Layout Components](layouts.md) guide.
+For full documentation on how the sidebar works together with other layout components, see the [Layout Components](layouts/index.md) guide.
 
 ## Basic Usage
 
@@ -37,7 +37,7 @@ sidebar:
 ## Behavior
 
 - **Desktop** (`lg:` and above): Always visible as a sticky panel on the left side
-- **Mobile** (below `lg:`): Hidden by default; opens as a full-height overlay when triggered by [`sidebar_toggler`](layouts.md#sidebar-toggler)
+- **Mobile** (below `lg:`): Hidden by default; opens as a full-height overlay when triggered by [`sidebar_toggler`](layouts/sidebar-toggler.md)
 - Automatically closes on mobile after navigation
 - Features an animated indicator bar that tracks the currently active menu item
 
@@ -45,9 +45,16 @@ sidebar:
 
 These components are commonly used inside a sidebar:
 
-- [`brand`](layouts.md#brand) -- Logo with light/dark mode support
-- [`menu_item`](layouts.md#menu-item) -- Navigation link with active state
-- [`menu_group`](layouts.md#menu-group) -- Collapsible group of menu items
-- [`sidebar_toggler`](layouts.md#sidebar-toggler) -- Mobile toggle button (placed in the header)
+- [`brand`](layouts/brand.md) -- Logo with light/dark mode support
+- [`menu_item`](layouts/menu-item.md) -- Navigation link with active state
+- [`menu_group`](layouts/menu-group.md) -- Collapsible group of menu items
+- [`sidebar_toggler`](layouts/sidebar-toggler.md) -- Mobile toggle button (placed in the header)
 
-See [Layout Components](layouts.md) for detailed documentation on each of these components and complete layout composition examples.
+See [Layout Components](layouts/index.md) for detailed documentation on each of these components and complete layout composition examples.
+
+## Related
+
+- [Layout Components](layouts/index.md) -- Full layout composition guide
+- [`sidebar` (layout)](layouts/sidebar.md) -- Sidebar as a layout component
+- [`menu_group`](layouts/menu-group.md) -- Collapsible navigation groups
+- [`menu_item`](layouts/menu-item.md) -- Navigation link items

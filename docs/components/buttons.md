@@ -241,3 +241,9 @@ forms:
       ghost:
       link:
 ```
+
+## Related
+
+- [Forms](forms.md) -- Form component with submit buttons
+- [Dialogs](dialogs.md) -- Buttons inside dialog footers
+- [Operations Overview](../operations/index.md) -- What happens when a button is clicked

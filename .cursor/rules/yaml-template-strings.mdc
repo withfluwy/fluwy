@@ -1,0 +1,47 @@
+---
+description: Rules for using template strings vs plain context paths in Fluwy YAML
+globs: "**/*.yaml"
+alwaysApply: false
+---
+
+# Template Strings vs Plain Context Paths in Fluwy YAML
+
+In Fluwy YAML files, there are two ways to reference context values. Using the wrong one causes bugs.
+
+## Plain context paths (no `${}`) -- for objects, arrays, and data references
+
+Use plain paths when a property expects the **actual value** (object, array, boolean, number). Plain paths resolve to the real JavaScript value.
+
+```yaml
+# CORRECT -- passes the actual array
+table:
+  data: contacts
+
+# CORRECT -- passes the actual object
+post:
+  data: form.data
+
+# CORRECT -- passes the actual value
+vars:
+  contact: response.data
+```
+
+## Template strings (`${...}`) -- for inserting values into text
+
+Use `${...}` when embedding a value inside a **display string** like text content, URLs, or messages. Internally this uses `String.replace()`, which calls `.toString()` on resolved values -- so objects/arrays become `[object Object]`.
+
+```yaml
+# CORRECT -- inserting into text
+h1: Hello, ${user.name}!
+get: /api/contacts/${params.id}
+notify: "Saved ${contact.name}"
+
+# WRONG -- converts array to "[object Object]"
+table:
+  data: ${contacts}
+```
+
+## Quick Rule
+
+- Properties expecting **data structures** (like `data`, `vars` values, `path`): use plain paths
+- Properties expecting **display text** (like `content`, `text`, `title`, URLs): use `${...}`

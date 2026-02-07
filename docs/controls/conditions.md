@@ -217,3 +217,9 @@ Do **not** use `${}` inside conditions. Do **not** use JavaScript operators (`==
     button:
       text: Edit
 ```
+
+## Related
+
+- [`if` (operation)](../operations/if.md) -- Conditional execution in operation chains (different from template conditions)
+- [Loops](loops.md) -- Iteration with `for-of`, `for-in`, ranges, and `times`
+- [Context](../concepts/context.md) -- Data available for conditions

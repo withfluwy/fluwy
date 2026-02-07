@@ -155,3 +155,8 @@ code:
       on_click:
         alert: Hello!
 ```
+
+## Related
+
+- [Theming](../concepts/theming.md) -- Styling text elements
+- [Context](../concepts/context.md) -- Template strings in text content

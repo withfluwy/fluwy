@@ -219,3 +219,10 @@ dropdown:
           unset_auth_token:
           goto: /login
 ```
+
+## Related
+
+- [Buttons](buttons.md) -- Trigger elements for dropdowns
+- [`unset_auth_token`](../operations/unset-auth-token.md) -- Logout from dropdown menus
+- [`goto`](../operations/goto.md) -- Navigation from dropdown items
+- [`set_mode`](../operations/set-mode.md) -- Theme switching from dropdown items

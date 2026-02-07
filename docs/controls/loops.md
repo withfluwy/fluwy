@@ -293,3 +293,9 @@ div:
             class: mt-2 text-sm
             text: ${product.description}
 ```
+
+## Related
+
+- [Conditions](conditions.md) -- Conditional rendering with `if` / `else if` / `else`
+- [Tables](../components/tables.md) -- Alternative for displaying list data
+- [Context](../concepts/context.md) -- Data available for iteration

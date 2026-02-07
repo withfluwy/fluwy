@@ -78,3 +78,8 @@ common:
     root:
     list:
 ```
+
+## Related
+
+- [Layout Components](layouts/index.md) -- Page structure components
+- [Theming](../concepts/theming.md) -- Customizing tab appearance

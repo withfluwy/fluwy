@@ -217,3 +217,10 @@ button:
                 - alert: You agreed
                 - close_dialog:
 ```
+
+## Related
+
+- [`open_dialog`](../operations/open-dialog.md) -- Operation to open a dialog programmatically
+- [`close_dialog`](../operations/close-dialog.md) -- Operation to close the current dialog
+- [Buttons](buttons.md) -- Button components for dialog actions
+- [Forms](forms.md) -- Building forms inside dialogs

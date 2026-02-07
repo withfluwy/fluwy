@@ -143,3 +143,10 @@ displays:
     pagination:
       wrapper:
 ```
+
+## Related
+
+- [Display Components](displays/index.md) -- Format dates, emails, phone numbers in table columns
+- [`refresh`](../operations/refresh.md) -- Refresh a table after data changes
+- [`get`](../operations/get.md) -- How table data is fetched
+- [Conditions](../controls/conditions.md) -- Conditional content in table cells

@@ -79,3 +79,8 @@ row:
         size: sm
     - text: ${user.name}
 ```
+
+## Related
+
+- [Dropdown](dropdown.md) -- Avatars as dropdown triggers
+- [Icon](icon.md) -- Icon component
