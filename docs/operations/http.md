@@ -117,6 +117,57 @@ form:
 
 > **Note:** The placeholder `${form.data.id}` in the `url` parameter is a template string that will be replaced with the value of whatever you have set inside the `${}` syntax. This is useful when you want to make a PUT request to a specific resource.
 
+## delete
+
+The `delete` operation performs an HTTP DELETE request to remove a resource at the given URL.
+
+### Structure
+
+```yaml
+delete: url_template
+```
+
+### Examples
+
+```yaml
+# Delete a resource by ID
+button:
+  text: Delete Contact
+  color: destructive
+  on_click:
+    delete: /api/contacts/${params.id}
+    notify: "Contact deleted"
+    goto: /contacts
+```
+
+```yaml
+# Delete with confirmation dialog
+button:
+  text: Delete
+  color: destructive
+  on_click:
+    open_dialog:
+      dialog:
+        title: Are you sure?
+        description: This action cannot be undone.
+        footer:
+          - button:
+              text: Cancel
+              variant: ghost
+              on_click: close_dialog
+          - button:
+              text: Delete
+              color: destructive
+              on_click:
+                delete: /api/items/${item.id}
+                close_dialog:
+                refresh: items_table
+```
+
+The `delete` operation compiles the URL template with context data, validates that all placeholders are resolved, and performs the DELETE request. If the response status is 400 or higher, an error is thrown with the response data.
+
+---
+
 ## load
 
 The `load` operation is used to make multiple GET requests to given URLs and inject the result of each request into the context with the given variable name. The advantage is that you can load multiple resources at once since they will be executed in parallel, and the variables are set at the same time.

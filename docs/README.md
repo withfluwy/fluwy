@@ -25,15 +25,20 @@ Fluwy is a YAML-driven UI framework built on [SvelteKit](https://kit.svelte.dev/
 
 ### Components
 
+- [Layout Components](components/layouts.md) -- Page, header, footer, sidebar, body, container, menus, and more
 - [Buttons](components/buttons.md) -- Button variants, sizes, colors, and customization
 - [Dialogs](components/dialogs.md) -- Modal dialogs, confirmations, and forms in dialogs
+- [Dropdown](components/dropdown.md) -- Dropdown menus with items, labels, separators, and submenus
 - [Forms](components/forms.md) -- Form component, state management, and validation
 - [Input](components/input.md) -- Input field types, sizes, and configuration
 - [Tables](components/tables.md) -- Data tables with server-side pagination
 - [Tabs](components/tabs.md) -- Tabbed interfaces
 - [Typography](components/typography.md) -- Headings, paragraphs, and text elements
-- [Sidebar](components/sidebar.md) -- Sidebar navigation (coming soon)
-- [Dropdown](components/dropdown.md) -- Dropdown menus (coming soon)
+- [Sidebar](components/sidebar.md) -- Sidebar navigation
+- [Avatar](components/avatar.md) -- User avatar with image and initials fallback
+- [Icon](components/icon.md) -- Icons from Iconify (icones.js.org)
+- [Display Components](components/displays.md) -- Date, datetime, relative time, email, and phone formatting
+- [Debug](components/debug.md) -- Debug component for inspecting context data
 
 ### Operations
 
@@ -43,6 +48,10 @@ Fluwy is a YAML-driven UI framework built on [SvelteKit](https://kit.svelte.dev/
 - [Authentication](operations/auth.md) -- Token management with `set_auth_token` / `unset_auth_token`
 - [Cookies](operations/cookies.md) -- Cookie management with `set_cookie` / `unset_cookie`
 - [Form Operations](operations/form-operations.md) -- Form error handling operations
+- [Data Operations](operations/data.md) -- Variables, logging, extraction, and transformation
+- [UI Operations](operations/ui.md) -- Alerts, notifications, dialogs, and color mode
+- [Control Operations](operations/control.md) -- Conditional execution, sleep, events, refresh, and authentication
+- [Local Storage](operations/local-storage.md) -- Browser localStorage management
 
 ### Controls
 

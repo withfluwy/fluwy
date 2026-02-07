@@ -77,7 +77,16 @@ p: ${data.description}
 Components are registered by category in `src/lib/index.ts` via `createApp()`. PascalCase names are converted to snake_case for YAML usage. Every component has implicit `class` and `content` properties.
 
 ### Operations
-Operations are functions executed in sequence on events (`on_click`, `on_submit`, etc.). Built-in operations: `get`, `post`, `put`, `delete`, `load`, `goto`, `set_auth_token`, `unset_auth_token`, `set_cookie`, `open_dialog`, `close_dialog`, `alert`, `notify`, `vars`, `log`, `sleep`, `if`, `abort`, `set_form_errors`, `clear_form_errors`.
+Operations are functions executed in sequence on events (`on_click`, `on_submit`, etc.). Built-in operations:
+- **HTTP**: `get`, `post`, `put`, `delete`, `load`
+- **Navigation**: `goto`, `refresh`
+- **Auth**: `set_auth_token`, `unset_auth_token`, `authenticate`
+- **Forms**: `set_form_errors`, `clear_form_errors`
+- **UI**: `open_dialog`, `close_dialog`, `alert`, `notify`, `set_mode`
+- **Data**: `vars`, `log`, `context`, `extract`, `transform`, `wrap_into`
+- **Cookies**: `set_cookie`, `unset_cookie`, `remove_cookie`
+- **Control**: `if`, `sleep`, `emit`, `abort`
+- **Storage**: `unset_local_storage`, `remove_local_storage`
 
 ### Context
 The `Context` object is a reactive Svelte store available on both server and client. It stores route params (`params.*`), auth tokens, server-loaded data (`vars`), form state (`form.data`, `form.errors`, `form.submitting`), and operation results (`response.data`, `response.status`).
@@ -116,3 +125,10 @@ Extend Fluwy with `Plugin` interface: `{ name, operations?, components?, plugins
 ## Documentation
 
 Full documentation is in `docs/` directory. See `docs/README.md` for the table of contents.
+
+### Documentation Structure
+- **Getting Started**: introduction, getting-started, architecture
+- **Concepts**: yaml-syntax, routing, theming, plugins
+- **Components**: layouts, buttons, dialogs, dropdown, forms, input, tables, tabs, typography, sidebar, avatar, icon, displays, debug
+- **Operations**: overview, http, navigation, auth, cookies, form-operations, data, ui, control, local-storage
+- **Controls**: conditions, loops

@@ -133,7 +133,7 @@ Fluwy automatically handles different data types:
 - **Strings**: Use quotes for string values. Ex.: `if name is "John":`
 - **Numbers**: Use without quotes. Ex.: `if age is 25:`
 - **Booleans**: Use true/false. Ex.: `if is_active is true:` or simply `if is_active:`
-- **Null/Undefined**: Use is null or is undefined. Ex.: `if data is null:`
+- **Null/Undefined**: Use `is null`, `is undefined`, or `is nil` (checks both). Ex.: `if data is null:`
 
 Example:
 
@@ -157,6 +157,24 @@ Check if a property exists using the `in` operator:
     p: Email is set
 - if "error" in response:
     p: Error occurred
+```
+
+## Important: Conditions vs Template Strings
+
+Conditions and template strings (`${}`) serve different purposes and use different syntax:
+
+- **Conditions** (`if ... :`) reference context paths directly: `if user.role is "admin":`
+- **Template strings** (`${}`) are for inserting values into content strings: `h1: Hello, ${user.name}!`
+
+Do **not** use `${}` inside conditions. Do **not** use JavaScript operators (`===`, `!==`, `typeof`, ternary `?:`) in conditions -- use Fluwy's own operators (`is`, `is not`, `and`, `or`, `in`, `not`).
+
+```yaml
+# Correct
+- if user.role is "admin":
+    p: Welcome, ${user.name}!
+
+# Wrong - do not mix ${}` with conditions
+- if ${user.role} === "admin":     # <-- incorrect
 ```
 
 ## Best Practices

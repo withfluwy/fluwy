@@ -216,12 +216,6 @@ for user of users:
     div:
       class: "user-card active"
       text: ${user.name}
-
-# Apply different styles based on index
-for item of items with i:
-  div:
-    class: ${i % 2 === 0 ? "even-row" : "odd-row"}
-    text: ${item.name}
 ```
 
 ### Loop Variables and Scope
